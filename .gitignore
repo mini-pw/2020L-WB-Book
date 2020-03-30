@@ -1,0 +1,12 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.swp
+_book
+_bookdown_files
+_main.Rmd
+*.log
+*.Rproj
+book.tex
+packages.bib
