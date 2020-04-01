@@ -1,0 +1,22 @@
+## How to measure reproducibility? Classification of problems with reproducing scientific papers
+
+*Authors: Paweł Koźmiński, Anna Urbala, Wojciech Szczypek (Warsaw University of Technology)*
+
+### Abstract
+
+
+### Introduction and Motivation
+
+Reproducibility of scientific papers is one of the most important...
+
+### Related Work
+
+
+### Methodology
+
+
+### Results
+
+
+### Summary and conclusions 
+
