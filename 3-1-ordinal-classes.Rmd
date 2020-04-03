@@ -1,0 +1,23 @@
+## Building an explainable model for ordinal classification. Meeting black box model performance levels.
+
+
+*Authors: Karol Saputa, Małgorzata Wachulec, Aleksandra Wichrowska (Warsaw University of Technology)*
+
+### Abstract
+
+
+### Introduction and Motivation
+
+### Related Work
+
+#### An approach to ordinal classification
+
+#### Comparing black box to linear model
+
+### Methodology
+
+
+### Results
+
+
+### Summary and conclusions 
