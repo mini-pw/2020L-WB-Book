@@ -1,0 +1,22 @@
+## Using interpretable Machine Learning models in the Higgs boson detection
+
+*Authors: Mateusz Bakala, Michal Pastuszka, Karol Pysiak (Warsaw University of Technology)*
+
+### Abstract
+
+
+### Introduction and Motivation
+
+
+### Related Work
+
+
+### Methodology
+
+
+### Results
+
+
+### Summary and conclusions 
+
+ 
