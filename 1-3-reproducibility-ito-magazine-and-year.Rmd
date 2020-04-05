@@ -1,0 +1,23 @@
+## Ways to reproduce articles in terms of release date and magazine
+
+*Authors: Mikołaj Malec, Maciej Paczóski, Bartosz Rożek (Warsaw University of Technology)*
+
+### Abstract
+
+
+### Introduction and Motivation
+
+Reproducibility of scientific papers is one of the most important...
+
+### Related Work
+
+
+### Methodology
+
+
+### Results
+
+
+### Summary and conclusions 
+
+
