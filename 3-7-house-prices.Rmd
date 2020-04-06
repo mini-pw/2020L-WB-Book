@@ -1,0 +1,21 @@
+## What Affects The Price Of A House? US Census Data Revisited After 30 Years.
+
+*Authors: Hubert Baniecki, Mateusz Polakowski (Warsaw University of Technology)*
+
+### Abstract
+
+http://www.cs.toronto.edu/~delve/data/census-house/censusDetail.html
+
+### Introduction
+
+
+### Data
+
+
+### Methodology
+
+
+### Results
+
+
+### Conclusions
