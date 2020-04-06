@@ -1,0 +1,22 @@
+## Explainable feature engineering and comparing with black boxes
+
+*Authors: Łukasz Brzozowski, Wojciech Kretowicz, Kacper Siemaszko (Warsaw University of Technology)*
+
+### Abstract
+
+
+### Introduction and Motivation
+
+Reproducibility of scientific papers is one of the most important...
+
+### Related Work
+
+
+### Methodology
+
+
+### Results
+
+
+### Summary and conclusions 
+
