@@ -1,0 +1,21 @@
+## Ageing articles. How time affects reproducibility of scientific papers?
+
+*Authors: Paweł Morgen, Piotr Sieńko, Konrad Welkier*
+
+### Abstract
+
+
+### Introduction and Motivation
+
+
+### Related Work
+
+
+### Methodology
+
+
+### Results
+
+
+### Summary and conclusions 
+
