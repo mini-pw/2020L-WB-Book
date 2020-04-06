@@ -1,0 +1,20 @@
+## Predicting code defects using interpretable static measures.
+
+*Authors: Wojciech Bogucki, Tomasz Makowski, Dominik Rafacz (Warsaw University of Technology)*
+
+### Abstract
+
+
+### Introduction and Motivation
+
+
+### Related Work
+
+
+### Methodology
+
+
+### Results
+
+
+### Summary and conclusions
