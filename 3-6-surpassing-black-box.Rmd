@@ -1,0 +1,22 @@
+## Surpassing black box model's performance on complicated data with an explainable one's.
+
+*Authors: Witold Merkel, Adam Rydelek, Michał Stawikowski (Warsaw University of Technology)*
+
+### Abstract
+
+
+### Introduction and Motivation
+
+Model's interpretability is equally as important as it's performance...
+
+### Related Work
+
+
+### Methodology
+
+
+### Results
+
+
+### Summary and conclusions 
+
