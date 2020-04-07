@@ -1,0 +1,22 @@
+## How active development affects reproducibility
+
+*Authors: Ngoc Anh Nguyen, Piotr Piątyszek, Marcin Łukaszyk (Warsaw University of Technology)*
+
+### Abstract
+
+
+### Introduction and Motivation
+
+
+### Related Work
+
+
+### Methodology
+
+
+### Results
+
+
+### Summary and conclusions 
+
+
