@@ -6,11 +6,11 @@ bookdown::gitbook:
     toc:
       collapse: section
       before: |
-        <li><a href="./"><h3>XAI Stories</h3> Case studies</a></li>
+        <li><a href="./"><h3>ML Case Studies</h3></a></li>
       after: |
         <li><a href="https://bookdown.org" target="_blank">Published with bookdown</a></li>
     download: [pdf, epub]
-    edit: https://github.com/compstat-lmu/iml_methods_limitations/edit/master/%s
+    edit: https://github.com/mini-pw/2020L-WB-Book/edit/master/%s
     sharing:
       github: yes
       facebook: no
