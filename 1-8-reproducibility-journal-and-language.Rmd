@@ -1,0 +1,21 @@
+## Reproducibility differences of articles published in various journals and using R or Python language
+
+*Authors: Bartłomiej Eljasiak, Konrad Komisarczyk, Mariusz Słapek*
+
+### Abstract
+
+
+### Introduction and Motivation
+
+
+### Related Work
+
+
+### Methodology
+
+
+### Results
+
+
+### Summary and conclusions 
+

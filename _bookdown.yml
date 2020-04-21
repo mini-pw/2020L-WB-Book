@@ -1,5 +1,5 @@
 book_filename: book
-repo: https://github.com/pbiecek/xai_stories/
+repo: https://github.com/mini-pw/2020L-WB-Book
 output_dir: docs
 clean: [packages.bib, bookdown.bbl]
 delete_merged_file: true

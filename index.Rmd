@@ -1,5 +1,5 @@
 --- 
-title: "Case Study Book"
+title: "ML Case Studies"
 author: ""
 date: "`r Sys.Date()`"
 documentclass: krantz
