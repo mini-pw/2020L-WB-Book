@@ -1,13 +1,18 @@
 ## Ways to reproduce articles in terms of release date and magazine
 
-*Authors: Mikołaj Malec, Maciej Paczóski, Bartosz Rożek (Warsaw University of Technology)*
+*Authors: Mikołaj Malec, Maciej Paczóski, Bartosz Rożek*
 
 ### Abstract
 
 
 ### Introduction and Motivation
 
-Reproducibility of scientific papers is one of the most important...
+Reproducibility is a topic which is quite diminished in today's science world. Scientific articles should be current as long as possible. Their results should be achievable by reader and be the same. Thanks to that science and business world can take advantage of them.The more article is difficult to reproduce, the chance of using knowledge coming from it is smaller. Many researchers tried to define or give principles for reproducibility. There is article published in 2016: "What does research reproducibility mean?" [@Goodman2016] which tried to warn about reproducibility crisis. Article in 2017: "Computational reproducibility in archaeological research: basic principles and a case study of their implementation" [@Marwick2016], compered computational reproducibility to archaeological research and give guidelines for researches to use reproducibility in computing research. But these are just two of many articles about reproducibility. Some articles are about tools and techniques for computational reproducibility [@Piccolo2016]. They encourage researchers to compute data using environments like Jupiter [@Kluyver2016] or R markdown [@Marwick2017]. Thanks to that readers can reproduce finding on their own. What’s new about our approach to the subject of reproducibility is focusing on how can release date and magazine affect the amount of work needed to fully reproduce code or is it even possible. A comprehensive comparison of scientific magazines in terms of reproducibility is yet to be created and this article is our best effort to make it happen.
+Mikołaj Malec
+
+
+
+
 
 ### Related Work
 

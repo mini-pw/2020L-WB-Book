@@ -1,4 +1,6 @@
-# XAI Stories. Case studies for eXplainable Artificial Intelligence
+# ML Case Studies
+
+by **Evidence Based Machine Learning Lab**
 
 ebook: https://mini-pw.github.io/2020L-WB-Book
 

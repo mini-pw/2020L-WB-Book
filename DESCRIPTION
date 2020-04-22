@@ -1,5 +1,5 @@
-Package: xai-stories
-Title: XAI Stories. Case studies for eXplainable Artificial Intelligence
+Package: case-studies
+Title: ML Case Studies
 Version: 0.0.1
 Depends:
   devtools,
