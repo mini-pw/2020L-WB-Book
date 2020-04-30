@@ -1,6 +1,7 @@
 on:
   push:
-    branches: master
+    paths-ignore:
+    - 'docs/**'
 
 name: bookdown
 
@@ -37,5 +38,12 @@ jobs:
           R -e 'install.packages("renv")'
           R -e 'install.packages("bookdown")'
           R -e 'renv::restore()'
+      
       - name: Build site
         run: Rscript -e 'bookdown::render_book("index.Rmd", quiet = TRUE)'
+      
+      - name: Commit results
+        run: |
+          git add .
+          git commit  -m 'Render book' || echo "No changes to commit"
+          git push origin || echo "No changes to commit"
