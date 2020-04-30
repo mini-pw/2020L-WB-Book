@@ -7,7 +7,6 @@
 
 ### Introduction and Motivation
 
-Reproducibility of scientific papers is one of the most important...
 
 ### Related Work
 
