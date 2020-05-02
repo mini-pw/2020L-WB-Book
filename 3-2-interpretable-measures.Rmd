@@ -7,11 +7,28 @@
 
 ### Introduction and Motivation
 
+Since the very beginning of the computer revolution there have been attempts to increase efficiency in determining possible defects and failures in the code. An effective method to do so could bring many potential benefits by identifying such sites as early as at the code development stage and eliminating costly errors at the deployment stage. McCabe and Halstead proposed a set of measures that are based on static properties of the code (including basic values, e.g. number of lines of code or number of unique operators, as well as transformations of them, [-@mccabe76, -@halstead77]). In their hypotheses, they argue that these measures can significantly help to build models that predict the sensitive spots in program modules. However, it can be argued that the measures they propose are artificial, non-intuitive, and above all, not necessarily authoritative, not taking into account many aspects of the written code and program [@fenton97].
+
+To support their hypotheses with, McCabe and Halstead collected information about the code used in NASA using scrapers and then used machine learning algorithms. In this article we use the above data sets to build a model that best predicts the vulnerability of the code to errors. We check whether static code measures (being transformations of basic predictors) significantly improve prediction results for the so-called white box models (e.g. trees and linear regression). Our goal is to build, using simple data transformations and easily explainable methods, a so-called white box machine learning model (e.g. tree or logistic regression) that will achieve results comparable to the black box model (such as neural networks or gradient boosting machines) used on data without advanced measures. We also want to compare the effectiveness of the measures proposed by McCabe and Halstead and compare them with the measures we have generated.
 
 ### Related Work
 
+### Dataset
 
-### Methodology
+Our dataset comes from the original research of Halstead and McCabe. We obtained it by combining the sets from OpenML [@OpenML2013] and supplementing them with data from the PROMISE repository [@Sayyad-Shirabad+Menzies:2005].
+
+It contains data collected from NASA systems written in *C* and *C++* languages. The data is in the form of a data frame containing more than 15000 records. Each record describes one "program module". -- with this generic term, the authors defined the simplest unit of functionality (in this case, these are functions). Each record is described with a set of predictors, which can be divided into several groups:
+
+* Basic measures (such as number of lines of code, number of operands, etc.).
+* McCabe's measures how complex the code is in terms of control flow and cross-references .
+* Halstead's measures for general code readability.
+* Target column (1 if module contains defects, 0 if not).
+* Source column we added, specifying from which subsystem the module came (the original 5 datasets came from different systems).
+
+In order to verify our hypotheses, we decided at the beginning to remove the Halstead measures (which were transformations of the basic measures) from the collection to see if we are able to build an effective black box model without them. We also wanted to remove McCabe's measurements, but the basic measurements that he used to calculate his measurements are not preserved in the collection, so we decided to keep them.
+
+### Methodology and tools
+
 
 
 ### Results
