@@ -1,0 +1,37 @@
+## Reproducibility differences of articles published in various journals and using R or Python language
+
+*Authors: Bartłomiej Eljasiak, Konrad Komisarczyk, Mariusz Słapek (Warsaw University of Technology)*
+
+### Abstract
+
+
+
+### Introduction and Motivation
+
+Due to the growing number of research publications and open-source solutions, the importance of repeatability and reproducibility is increasing. Although reproducibility is a cornerstone of science, a large amount of published research results cannot be reproduced [@AAAI1817248]. Repeatability and reproducibility are closely related to science. 
+
+“Reproducibility of a method/test can be defined as the closeness of the agreement between independent results obtained with the same method on the identical subject(s) (or object, or test material) but under different conditions (different observers, laboratories etc.). (...) On the other hand, repeatability denotes the closeness of the agreement between independent results obtained with the same method on the identical subject(s) (or object or test material), under the same conditions.”[@SlezakWaczulikova2011]
+
+Reproducibility is crucial since it is what an researcher can guarantee about a research. This not only ensures that the results are correct, but rather ensures transparency and gives scientists confidence in understanding exactly what was done [@Eisner2018]. It allows science to progress by building on previous work. What is more, it is necessary to prevent scientific misconduct. The increasing number of cases is causing a crisis of confidence in science [@Drummond2012].
+
+In psychology the problem has already been addressed. From 2011 to 2015 over two hundred scientists cooperated to reproduce results of one hundred psychological studies [@Ezcuj]. In computer science (and data science) scientists notice the need for creating tools and guidelines, which help to guarantee reproducibility of solutions [@Archivist, @Stodden1240]. There exist already developed solutions which are tested to be applied [@Elmenreich2018].
+
+Reproducibility can focus on different aspects of the publication, including code, results of analysis and data collection methods. This work will focus mainly on the code - results produced by evaluation of different functions and chunks of code from analysed publications.
+
+In this paper we want to compare journals on the reproducibility of their articles. Moreover, we will present the reproducibility differences between R and Python - two of the most popular programming languages in data science publications.There is discussion between proponents of these two languages, which one is more convenient to use in data science. Different journals also compete between each other. There are already many metrics devised to assess which journal is better regarding this metric [@JournalMetrics].
+There are no publications related to the reproducibility topic which compare different journals and languages. Although there are some exploring reproducibility within one specific journal [@Stodden2584]. What is more, journals notice the importance of this subject [@McNutt679]. Also according to scientists journals should take some responsibility for this subject [@Eisner2018].
+
+
+
+
+### Related Work
+
+
+### Methodology
+
+
+### Results
+
+
+### Summary and conclusions 
+

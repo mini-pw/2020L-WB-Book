@@ -1,0 +1,26 @@
+## Aging articles. How time affects reproducibility of scientific papers?
+
+*Authors: Paweł Morgen, Piotr Sieńko, Konrad Welkier (Warsaw University of Technology)*
+
+### Abstract
+
+Reproduction of a code presented in scientific papers tend to be a laborious yet important process since it enables readers better understanding of the tools proposed by the authors. While recreating an article various difficulties are faced what can result in calling the paper irreproducible. Some reasons why such situations occur stem from the year when the article was published (for example usage of no more supported packages). The purpose of the following paper is to prove whether this is a general trend which means answering the question: is the year when the article was published related to the reproducibility of the paper. To do so a package CodeExtractorR was created that enables extracting code from PDF files. By using this tool a significant number of articles could be analyzed and therefore results received enabled us to give an objective answer to the stated question.
+
+### Introduction 
+
+Every article published in scientific journal is aimed at improving our knowledge in certain field. To prove their theories, authors should provide papers with detailed, working examples and extensive supplementary materials to reproduce results. Unfortunately these conditions are not always fulfilled. In a such case, other researchers are not able to verify and accept solutions presented by the author. Moreover, article is not only useless for the scientific community but also for business recipients. 
+
+Over the years, several different definitions of reproducibility have been proposed. According to Robert Gentleman and Duncan Temple Lang [@gentleman2007statistical], reproducible research are papers with accompanying software tools that allow the reader to directly reproduce methods that are presented in the research paper. Other authors suggest that scientific paper is reproducible only if text, data and code are made available and allow independent researcher to recreate the results [@vandewalle2009reproducible]. Second definition emphasize importance of accessibility to data used in researches, therefore it seems to be more suitable and complete interpretation of reproducibility. In addition, in this article, we used scale based on the spectrum of reproducibility, proposed by Roger D. Peng [@Peng1226]. In his work, he also mentioned reproducibility as minimal requirement for assessing the scientific value of paper. In the past few years, computing has become essential part of scientific workflow. Some best practices for writing and publishing reproducible scientific article were presented by V. Stodden [@Stodden2013SettingTD]. Furthermore, she made brief overview of existing tools and software that facilitate this task. Similar  issue was closely described by Kitzes [@kitzes2017practice]. Tools created solely for reproducibility in R were proposed by Ben Marwick [@marwickrrtools] in package rrtools. 
+
+Although many articles focus on software or framework solutions for reproducibility problems, analysis of scientific papers reproducibility in the context of release date has, to the best of the authors’ knowledge, not been described before. The intention of such research is to find correlations between age of article and its reproducibility. Authors believe that finding these dependencies will allow to calculate estimated life span of data science article. Furthermore, as replicability helps with applying proposed methods and tools, its approximated level might be helpful in estimating usefulness of every scientific article.  
+
+
+
+### Methodology
+
+
+### Results
+
+
+### Summary and conclusions 
+
