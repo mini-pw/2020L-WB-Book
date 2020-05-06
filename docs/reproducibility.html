@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-04-30" />
+<meta name="date" content="2020-05-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -262,11 +262,11 @@
 </div>
 <div id="introduction" class="section level3" number="1.2.2">
 <h3><span class="header-section-number">1.2.2</span> Introduction</h3>
-<p>The idea of reproducibility of scientific researches is crucial especially in the area of data science. It has become more important along with the development of methods and algorithms used in machine learning as they are more and more complex and complicated. This issue concerns users of all types: students, scientists, developers. Moreover, attaching code used in a paper, helps readers to focus on the real content rather than sophisticated explainations and descriptions included in the article. It is also valuable because the users can use the code as examples of using the package. <br></p>
-<p>However problem of the reproduciability is much more complex, because there is no explicit way of measuring it. It means that most of its definitions divide articles into 2 groups - reproducible and irreproducible. Thus, finding an appropriate reproducibility metrics, which would have wider set of values would result in changing the way reproducability is perceived. As a result such a metric would provide much more information for a person who would be interested in reproducing an article.</p>
+<p>The idea of reproducibility of scientific researches is crucial especially in the area of data science. It has become more important along with the development of methods and algorithms used in machine learning as they are more and more complex and complicated. This issue concerns users of all types: students, scientists, developers. Moreover, attaching code used in a paper, helps readers to focus on the real content rather than sophisticated explanations and descriptions included in the article. It is also valuable because the users can use the code as examples of using the package. <br></p>
+<p>However problem of the reproducibility is much more complex, because there is no explicit way of measuring it. It means that most of its definitions divide articles into 2 groups - reproducible and irreproducible. Thus, finding an appropriate reproducibility metrics, which would have wider set of values would result in changing the way reproducability is perceived. As a result such a metric would provide much more information for a person who would be interested in reproducing an article.</p>
 <div id="definition" class="section level4" number="1.2.2.1">
 <h4><span class="header-section-number">1.2.2.1</span> Definition</h4>
-<p>Reproducibility as a problem has been addressed by scientists of various fields of studies. The exact definition also differs among areas of studies. For instance, Patrick Vandewall in 2009 suggestesd a definition of a reproducible research work: “A research work is called reproducible if all information relevant to the work, including, but not limited to, text, data and code, is made available, such that an independent researcher can reproduce the results” (1). On the other hand, Association for Computing Machinery divides the problem into three tasks as follows:<br>
+<p>Reproducibility as a problem has been addressed by scientists of various fields of studies. The exact definition also differs among areas of studies. For instance, Patrick Vandewall in 2009 suggested a definition of a reproducible research work: “A research work is called reproducible if all information relevant to the work, including, but not limited to, text, data and code, is made available, such that an independent researcher can reproduce the results” <span class="citation">(Vandewalle, Kovacevic, and Vetterli <a href="#ref-vandewalle2009reproducible" role="doc-biblioref">2009</a>)</span>. On the other hand, Association for Computing Machinery divides the problem into three tasks as follows:<br>
 * <strong>Repeatability</strong> (Same team, same experimental setup):<br>
 The measurement can be obtained with stated precision by the same team using the same measurement procedure, the same measuring system, under the same operating conditions, in the same location on multiple trials. For computational experiments, this means that a researcher can reliably repeat her own computation.</p>
 <ul>
@@ -277,16 +277,13 @@ The measurement can be obtained with stated precision by a different team, a dif
 <br></p></li>
 </ul>
 <p>For the needs of this chapter we will use the Vandewalle’s definition and treat papers as fully reproducible only when they meet the conditions listed there.</p>
-<p>((1)Patrick Vandewalle, Reproducible Research in Signal Processing
-Article in IEEE Signal Processing Magazine · June 2009)</p>
 <p>((2)Association for Computing Machinery, <a href="https://www.acm.org/publications/policies/artifact-review-badging" class="uri">https://www.acm.org/publications/policies/artifact-review-badging</a>)</p>
 </div>
 </div>
 <div id="related-work-1" class="section level3" number="1.2.3">
 <h3><span class="header-section-number">1.2.3</span> Related Work</h3>
-<p>Reproducibility is a hot topic. “Open Science in Software Engineering”(3) describes the essence of <em>open source</em>, <em>open data</em>, <em>open access</em> and other <em>openness</em>. The article mentions that ability to reproduce work is important for the value of research. <em>Open Science</em> has many positive effects: increases access and citation counts, supports cooperation through open repositories. “Reproducibility Guide”(4) contains a lot of informations and tips on how to make research easier to reproduce. The guide also contains the list of tools that can make our research more reproducible (for example version control and automation. And the most important for us: it includes the checklist of questions that help verify the ability to reproduce. Edward Raff emphasizes the word <em>independent</em> in his article(5). <em>Independent reproducibility</em> means that we can obtain similar results independently of the author and his code.</p>
+<p>Reproducibility is a hot topic. “Open Science in Software Engineering” <span class="citation">(Fernández et al. <a href="#ref-Fernndez2019OpenSI" role="doc-biblioref">2019</a>)</span> describes the essence of <em>open source</em>, <em>open data</em>, <em>open access</em> and other <em>openness</em>. The article mentions that ability to reproduce work is important for the value of research. <em>Open Science</em> has many positive effects: increases access and citation counts, supports cooperation through open repositories. “Reproducibility Guide”(4) contains a lot of informations and tips on how to make research easier to reproduce. The guide also contains the list of tools that can make our research more reproducible (for example version control and automation. And the most important for us: it includes the checklist of questions that help verify the ability to reproduce. Edward Raff emphasizes the word <em>independent</em> in his article(5). <em>Independent reproducibility</em> means that we can obtain similar results independently of the author and his code.</p>
 <p>These articles highlight various aspects of reproducibility. We want to verify how the authors care about reproducibility, what are their biggest reproduction issues and what type of problems can we encounter reproducing articles.</p>
-<p>((3)Daniel Mendez, Daniel Graziotin, Stefan Wagner, Heidi Seibold. <em>Open Science in Software Engineering</em>, 2019 <a href="https://arxiv.org/pdf/1904.06499.pdf" class="uri">https://arxiv.org/pdf/1904.06499.pdf</a>)</p>
 <p>((4)<em>Reproducibility in Science. A Guide to enhancing reproducibility in scientific results and writing</em>, <a href="http://ropensci.github.io/reproducibility-guide/" class="uri">http://ropensci.github.io/reproducibility-guide/</a>)</p>
 <p>((5)Edward Raff. <em>Quantifying Independently Reproducible Machine Learning</em>, 2020 <a href="https://thegradient.pub/independently-reproducible-machine-learning/" class="uri">https://thegradient.pub/independently-reproducible-machine-learning/</a>)</p>
 </div>
@@ -499,6 +496,9 @@ There are no publications related to the reproducibility topic which compare dif
 </div>
 <div id="ref-JournalMetrics">
 <p>Elsevier. n.d. “Journal Metrics - Impact, Speed and Reach.”</p>
+</div>
+<div id="ref-Fernndez2019OpenSI">
+<p>Fernández, Daniel Méndez, Daniel Graziotin, Stefan Wagner, and Heidi Seibold. 2019. “Open Science in Software Engineering.” <em>ArXiv</em> abs/1904.06499.</p>
 </div>
 <div id="ref-fomel2013madagascar">
 <p>Fomel, Sergey, Paul Sava, Ioan Vlad, Yang Liu, and Vladimir Bashkardin. 2013. “Madagascar: Open-Source Software Project for Multidimensional Data Analysis and Reproducible Computational Experiments.” <em>Journal of Open Research Software</em> 1 (November): e8. <a href="https://doi.org/10.5334/jors.ag">https://doi.org/10.5334/jors.ag</a>.</p>

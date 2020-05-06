@@ -7,12 +7,12 @@
 
 ### Introduction
 
-The idea of reproducibility of scientific researches is crucial especially in the area of data science. It has become more important along with the development of methods and algorithms used in machine learning as they are more and more complex and complicated. This issue concerns users of all types: students, scientists, developers. Moreover, attaching code used in a paper, helps readers to focus on the real content rather than sophisticated explainations and descriptions included in the article. It is also valuable because the users can use the code as examples of using the package. <br>
+The idea of reproducibility of scientific researches is crucial especially in the area of data science. It has become more important along with the development of methods and algorithms used in machine learning as they are more and more complex and complicated. This issue concerns users of all types: students, scientists, developers. Moreover, attaching code used in a paper, helps readers to focus on the real content rather than sophisticated explanations and descriptions included in the article. It is also valuable because the users can use the code as examples of using the package. <br>
 
-However problem of the reproduciability is much more complex, because there is no explicit way of measuring it. It means that most of its definitions divide articles into 2 groups - reproducible and irreproducible. Thus, finding an appropriate reproducibility metrics, which would have wider set of values would result in changing the way reproducability is perceived. As a result such a metric would provide much more information for a person who would be interested in reproducing an article.
+However problem of the reproducibility is much more complex, because there is no explicit way of measuring it. It means that most of its definitions divide articles into 2 groups - reproducible and irreproducible. Thus, finding an appropriate reproducibility metrics, which would have wider set of values would result in changing the way reproducability is perceived. As a result such a metric would provide much more information for a person who would be interested in reproducing an article.
 
 #### Definition
-Reproducibility as a problem has been addressed by scientists of various fields of studies. The exact definition also differs among areas of studies. For instance, Patrick Vandewall in 2009 suggestesd a definition of a reproducible research work: "A research work is called reproducible if all information relevant to the work, including, but not limited to, text, data and code, is made available, such that an independent researcher can reproduce the results" (1). On the other hand, Association for Computing Machinery divides the problem into three tasks as follows:<br>
+Reproducibility as a problem has been addressed by scientists of various fields of studies. The exact definition also differs among areas of studies. For instance, Patrick Vandewall in 2009 suggested a definition of a reproducible research work: "A research work is called reproducible if all information relevant to the work, including, but not limited to, text, data and code, is made available, such that an independent researcher can reproduce the results" [@vandewalle2009reproducible]. On the other hand, Association for Computing Machinery divides the problem into three tasks as follows:<br>
 * **Repeatability** (Same team, same experimental setup):<br>
 The measurement can be obtained with stated precision by the same team using the same measurement procedure, the same measuring system, under the same operating conditions, in the same location on multiple trials. For computational experiments, this means that a researcher can reliably repeat her own computation.
 
@@ -26,18 +26,15 @@ The measurement can be obtained with stated precision by a different team, a dif
 For the needs of this chapter we will use the Vandewalle's definition and treat papers as fully reproducible only when they meet the conditions listed there.
 
 
-((1)Patrick Vandewalle, Reproducible Research in Signal Processing
-Article in IEEE Signal Processing Magazine · June 2009)
 
 ((2)Association for Computing Machinery, https://www.acm.org/publications/policies/artifact-review-badging)
 
 
 ### Related Work
-Reproducibility is a hot topic. "Open Science in Software Engineering"(3) describes the essence of *open source*, *open data*, *open access* and other *openness*. The article mentions that ability to reproduce work is important for the value of research. *Open Science* has many positive effects: increases access and citation counts, supports cooperation through open repositories. "Reproducibility Guide"(4) contains a lot of informations and tips on how to make research easier to reproduce. The guide also contains the list of tools that can make our research more reproducible (for example version control and automation. And the most important for us: it includes the checklist of questions that help verify the ability to reproduce. Edward Raff emphasizes the word *independent* in his article(5). *Independent reproducibility* means that we can obtain similar results independently of the author and his code.
+Reproducibility is a hot topic. "Open Science in Software Engineering" [@Fernndez2019OpenSI] describes the essence of *open source*, *open data*, *open access* and other *openness*. The article mentions that ability to reproduce work is important for the value of research. *Open Science* has many positive effects: increases access and citation counts, supports cooperation through open repositories. "Reproducibility Guide"(4) contains a lot of informations and tips on how to make research easier to reproduce. The guide also contains the list of tools that can make our research more reproducible (for example version control and automation. And the most important for us: it includes the checklist of questions that help verify the ability to reproduce. Edward Raff emphasizes the word *independent* in his article(5). *Independent reproducibility* means that we can obtain similar results independently of the author and his code.
 
 These articles highlight various aspects of reproducibility. We want to verify how the authors care about reproducibility, what are their biggest reproduction issues and what type of problems can we encounter reproducing articles.
 
-((3)Daniel Mendez, Daniel Graziotin, Stefan Wagner, Heidi Seibold. *Open Science in Software Engineering*, 2019 https://arxiv.org/pdf/1904.06499.pdf)
 
 ((4)*Reproducibility in Science. A Guide to enhancing reproducibility in scientific results and writing*, http://ropensci.github.io/reproducibility-guide/)
 
