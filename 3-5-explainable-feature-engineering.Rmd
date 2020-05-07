@@ -1,4 +1,4 @@
-## Explainable feature engineering and comparing with black boxes
+## Optimizing features' transformations for linear regression
 
 *Authors: Łukasz Brzozowski, Wojciech Kretowicz, Kacper Siemaszko (Warsaw University of Technology)*
 
@@ -7,7 +7,7 @@
 
 ### Introduction and Motivation
 
-Reproducibility of scientific papers is one of the most important...
+Linear regression is one of the simplest and the easiest to interpret of the predictive models. While it has alread been thorougly analysed over the years (ref), there remain some unsolved questions. One such question is how to transform the data features in order to maximize the model's effectiveness in predicting the new data. An example of a known and widely used approach is the Box-Cox transformation of the target variable, which allows one to improve the model's performance with minimal increase in computational complexity. However, choice of the predictive features' transformations is often left to intuition and trial-and-error approach. In the article, we wish to compare various methods of features' transformations and compare the resulting models' performances while also comparing their computational complexities and differences in feature importance.
 
 ### Related Work
 
