@@ -1,21 +1,34 @@
-## What Affects The Price Of A House? US Census Data Revisited After 30 Years.
+## Which Neighbours Affected the Price of a House in the '90s? 
 
 *Authors: Hubert Baniecki, Mateusz Polakowski (Warsaw University of Technology)*
 
-### Abstract
-
-http://www.cs.toronto.edu/~delve/data/census-house/censusDetail.html
 
 ### Introduction
+  
+Real estate value varies over numerous factors. These may be obvious like location or interior design, but also less apparent like the ethnicity and age of neighbours. Therefore, property price estimation is a demanding job that often requires a lot of experience and market knowledge. Is or was, because nowadays, Artificial Intelligence (AI) surpasses humans in this task. Interested parties more often use tools like supervised Machine Learning (ML) models to precisely evaluate the property value and gain a competitive advantage.
 
+The dilemma is in blindly trusting the prediction given by so-called black-box models. These are ML algorithms that take loads of various real estate data as input and return a house price estimation without giving their reasoning. Black-box complex nature is its biggest strength and weakness at the same time. This trait regularly entails high effectiveness but does not allow for interpretation of model outputs. Because of that, specialists interested in supporting their work with automated ML decision-making are more eager to use white-box models like linear regression or decision trees. These do not achieve state-of-the-art performance efficiently, but instead, provide valuable information about the relationships present in data through model interpretation.
+
+For many years houses have been the most popular properties; thus, they are of particular interest for ordinary people. What exact influence had the demographic characteristics of the house neighbourhood on its price in the '90s? Although in the absence of current technology, it has been hard to answer such question years ago, now we can.
+
+In this paper, we perform a case study on the actual US. Census data from 1990 and deliver an interpretable white-box model that estimates the median house price by the region. We present multiple approaches to this problem and choose the best model, which achieves similar performance to complex black-boxes. Finally, using its interpretable nature, we answer various questions that give a new life to this historical data. 
+
+<!-- Add citations -->
 
 ### Data
 
+<!-- http://www.cs.toronto.edu/~delve/data/census-house/censusDetail.html -->
+
+Data description. Done but not polished.
 
 ### Methodology
 
+In this section, we are going to focus on developing the best white-box model predicting house prices median, which provides interpretability of features. Finally, we will compare these results with black-box models.
 
 ### Results
 
+Better than black-box?? Spoiler alert.
 
 ### Conclusions
+
+Spoiler: Trees are cool. House prices are ethnically biased.
