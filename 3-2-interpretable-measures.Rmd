@@ -27,9 +27,54 @@ It contains data collected from NASA systems written in *C* and *C++* languages.
 
 In order to verify our hypotheses, we decided at the beginning to remove the Halstead measures (which were transformations of the basic measures) from the collection to see if we are able to build an effective black box model without them. We also wanted to remove McCabe's measurements, but the basic measurements that he used to calculate his measurements are not preserved in the collection, so we decided to keep them.
 
-### Methodology and tools
+### Methodology
+
+Our research consist of the following stages:
+
+1. Data exploration.
+2. Initial data preparation.
+3. Building of black-box and white-box models and comparing them against the relevant measurements.
+4. Repeating the cycle:
+   
+   (a) Improvement of white box models by modifying their parameters or data.  
+   (b) Measuring the effectiveness of the models built.
+   (c) Analysis of the resulting models.
+   (d) Keeping or rejecting changes for further work.
+   
+5. Selection of the best white box model and final comparison with the black box model.
+
+We use R programming language [ref] and popular machine learning project management packages - mlr and drake [ref]. 
+
+#### Data exploration
+
+At this stage, we are taking a closer look at what the data looks like and we are analyzing their distributions, gaps, correlations and simple relationships using the DataExplorer and visdat packages [ref].
+
+#### Initial data preparation
+
+This stage consists mainly of merging the data sets, as mentioned earlier, and adding a source column. Since there were very few data gaps, we are imputing them with the median, because this method is effective and fast. [ref]
+
+Imputation is necessary from the very beginning, as many models cannot cope with missing values. Since there were very few missing values, it does not affect significantly the result of those models that models that would still work. We are not carrying out further transformations at this stage because we do not want to disturb the results of the next stage.
+
+#### Starting models
+
+We're building models on this almost unaltered data. We are using the following:
+
+1. Well interpretable models (white-boxes) [ref]:
+
+   * logistic regression
+   * the decision tree
+   * k-nearest neighbors algorithm
+   
+2. Poorly interpretable models (black-boxes) [ref]:
+
+   * random forest
+   * gradient boosting machine
 
 
+
+#### Improving white-boxes
+
+#### Selecting the best model
 
 ### Results
 
