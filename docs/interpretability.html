@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-05-06" />
+<meta name="date" content="2020-05-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -177,7 +177,7 @@
 <li class="chapter" data-level="3.3.5" data-path="interpretability.html"><a href="interpretability.html#results-10"><i class="fa fa-check"></i><b>3.3.5</b> Results</a></li>
 <li class="chapter" data-level="3.3.6" data-path="interpretability.html"><a href="interpretability.html#summary-and-conclusions-10"><i class="fa fa-check"></i><b>3.3.6</b> Summary and conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="interpretability.html"><a href="interpretability.html#explainable-feature-engineering-and-comparing-with-black-boxes"><i class="fa fa-check"></i><b>3.4</b> Explainable feature engineering and comparing with black boxes</a>
+<li class="chapter" data-level="3.4" data-path="interpretability.html"><a href="interpretability.html#optimizing-features-transformations-for-linear-regression"><i class="fa fa-check"></i><b>3.4</b> Optimizing features’ transformations for linear regression</a>
 <ul>
 <li class="chapter" data-level="3.4.1" data-path="interpretability.html"><a href="interpretability.html#abstract-11"><i class="fa fa-check"></i><b>3.4.1</b> Abstract</a></li>
 <li class="chapter" data-level="3.4.2" data-path="interpretability.html"><a href="interpretability.html#introduction-and-motivation-9"><i class="fa fa-check"></i><b>3.4.2</b> Introduction and Motivation</a></li>
@@ -302,15 +302,15 @@
 
 </div>
 </div>
-<div id="explainable-feature-engineering-and-comparing-with-black-boxes" class="section level2" number="3.4">
-<h2><span class="header-section-number">3.4</span> Explainable feature engineering and comparing with black boxes</h2>
+<div id="optimizing-features-transformations-for-linear-regression" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Optimizing features’ transformations for linear regression</h2>
 <p><em>Authors: Łukasz Brzozowski, Wojciech Kretowicz, Kacper Siemaszko (Warsaw University of Technology)</em></p>
 <div id="abstract-11" class="section level3" number="3.4.1">
 <h3><span class="header-section-number">3.4.1</span> Abstract</h3>
 </div>
 <div id="introduction-and-motivation-9" class="section level3" number="3.4.2">
 <h3><span class="header-section-number">3.4.2</span> Introduction and Motivation</h3>
-<p>Reproducibility of scientific papers is one of the most important…</p>
+<p>Linear regression is one of the simplest and the easiest to interpret of the predictive models. While it has alread been thorougly analysed over the years (ref), there remain some unsolved questions. One such question is how to transform the data features in order to maximize the model’s effectiveness in predicting the new data. An example of a known and widely used approach is the Box-Cox transformation of the target variable, which allows one to improve the model’s performance with minimal increase in computational complexity. However, choice of the predictive features’ transformations is often left to intuition and trial-and-error approach. In the article, we wish to compare various methods of features’ transformations and compare the resulting models’ performances while also comparing their computational complexities and differences in feature importance.</p>
 </div>
 <div id="related-work-10" class="section level3" number="3.4.3">
 <h3><span class="header-section-number">3.4.3</span> Related Work</h3>
