@@ -13,6 +13,20 @@ Linear regression is one of the simplest and the easiest to interpret of the pre
 
 
 ### Methodology
+The main goal of our research is to compare various methods of transforming the data in order to improve the linear regression's performance. While we do not aim to derive an explicitly best solution to the problem, we wish to compare some known approaches and propose new ones, simultaneously verifying legitimacy of their usage. The second goal of the research is to compare the achieved models' performances with black box models to generally compare their effectiveness, having in mind that the linear regression remains highly interpretable. We also wish to compare the models feature importance to check for notable differences.
+
+The main methods of feature transformation compared in the article include:
+1. By-hand-transformations - we will use our expertise to derive possibly the best transformations of the dataset, but in this scenario we do not automate the process. Based on various visualizations, including, but not limited to residual plots, Feature Importance plots, Partial Dependency plots and Accumulated Dependency plots, we aim to maximize the model's performance by hand.
+
+2. Brute Force method - this method of data transformation generates huge amount of additional features being transformations of the existing features. They include e.g. taking square of the variable value or multiplying two variables. While the method is known to provide good results, its complexity is much higher than other methods' and may lead to overfitting.
+
+3. Bayesian Optimization method - we wish to treat the task of finding optimal data transformation as an optimization problem. Once we restrict the transformations e.g. by choosing maximal degree of a polynomial transformation of each variable, we may then search the possible models' space with the use of Bayesian Optimization in order to maximize their performance. This way we may also restrain the model from generating a lrage number of variables, while also hopefully yielding good results.
+
+4. //Wojtek
+
+The research is conducted on *Concrete_Data* dataset from the OpenML database. The data describes the amount of ingredients in the samples - cement, blast furnace slag, fly ash, water, coarse aggregate and fine aggregate - in kilograms per cubic meter; it also contains the drying time of the samples in days, referred to as age. The target variable of the dataset is the compressive strength of each sample in megapascals (MPa), therefore rendering the task to be regressive. The dataset contains 1030 instances with no missing values. There are also no symbolic features, as we aim to investigate continuous transformations of the data.
+
+We use standard and verified methods to compare results of the models. As the target variable is continuous, we may calculate Mean Square Error (MSE), Mean Absolute Error (MAE), and R-squared measures for each model, which provides us with proper and measurable way to compare the models' performances. The same measures may be applied to black box models. The feature importance measure used in the after-evaluation comparison is based on the permutation feature importance, easily applied to any predictive machine learning model and therefore not constraining us to choose from a restricted set. In order provide unbiased results, we calculate the measures' values during cross-validation process for each model, 
 
 
 ### Results
