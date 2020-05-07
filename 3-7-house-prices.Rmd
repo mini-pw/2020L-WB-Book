@@ -2,6 +2,7 @@
 
 *Authors: Hubert Baniecki, Mateusz Polakowski (Warsaw University of Technology)*
 
+<!-- What Affects The Price Of A House? US Census Data Revisited After 30 Years.-->
 
 ### Introduction
   
