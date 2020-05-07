@@ -10,12 +10,6 @@
 Linear regression is one of the simplest and the easiest to interpret of the predictive models. While it has alread been thorougly analysed over the years (ref), there remain some unsolved questions. One such question is how to transform the data features in order to maximize the model's effectiveness in predicting the new data. An example of a known and widely used approach is the Box-Cox transformation of the target variable, which allows one to improve the model's performance with minimal increase in computational complexity. However, choice of the predictive features' transformations is often left to intuition and trial-and-error approach. In the article, we wish to compare various methods of features' transformations and compare the resulting models' performances while also comparing their computational complexities and differences in feature importance.
 
 ### Related Work
-There exist many papers related to feature engineering. We will shortly present few of them.
-
-One of these papers is "Enhancing Regression Models for Complex Systems Using Evolutionary Techniques for Feature Engineering" Patricia Arroba, José L. Risco-Martín, Marina Zapater, José M. Moya & José L. Ayala. This paper describes, how feature transformations in linear regression can be chosen based on the genetic algorithms.
-
-Another one is "Automatic feature engineering for regression models with machine learning: An evolutionary computation and statistics hybrid" Vinícius Veloso de Melo, Wolfgang Banzhaf. Similarly to the previous one, this paper tries to automate feature engineering using evolutionar computation to make a hybrid model - final model is simple linear regression while its features are found by more complex algorithm.
-
 
 
 ### Methodology
