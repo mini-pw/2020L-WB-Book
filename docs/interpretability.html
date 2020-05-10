@@ -345,7 +345,7 @@
 <li>Target column (1 if module contains defects, 0 if not).</li>
 <li>Source column we added, specifying from which subsystem the module came (the original 5 datasets came from different systems).</li>
 </ul>
-<p>In order to verify our hypotheses, we decided at the beginning to remove the Halstead measures (which were transformations of the basic measures) from the collection to see if we are able to build an effective black box model without them. We also wanted to remove McCabe’s measurements, but the basic measurements that he used to calculate his measurements are not preserved in the collection, so we decided to keep them.</p>
+<p>In order to verify our hypotheses, we decided at the beginning to remove the Halstead’s measures (which were transformations of the basic measures) from the collection to see if we are able to build an effective black box model without them. We also wanted to remove McCabe’s measurements, but the basic measurements that he used to calculate his measurements are not preserved in the collection, so we decided to keep them.</p>
 <p>There are not many records with openly missing data in the set (&lt; 1%), however, the values of some columns raise doubts – in the column containing information about the number of lines of code of a given module in many cases there is a value 0, which is not reliable. We consider 0 in this column to be missing data and remove records that have 0 here (almost 2000 records).</p>
 </div>
 <div id="methodology-9" class="section level3" number="3.2.4">
@@ -365,36 +365,35 @@
 </ol></li>
 <li><p>Selection of the best white box model and final comparison with the black box model.</p></li>
 </ol>
-<p>We use R programming language [ref] and popular machine learning project management packages - mlr and drake [ref].</p>
+<p>We use R programming language and popular machine learning project management packages - mlr and drake <span class="citation">(Bischl et al. <a href="#ref-mlr" role="doc-biblioref">2016</a>, <span class="citation">@drake</span>)</span>.</p>
 <div id="data-exploration" class="section level4" number="3.2.4.1">
 <h4><span class="header-section-number">3.2.4.1</span> Data exploration</h4>
-<p>At this stage, we are taking a closer look at what the data looks like and we are analyzing their distributions, gaps, correlations and simple relationships using the DataExplorer and visdat packages [ref].</p>
+<p>At this stage, we are taking a closer look at what the data looks like and we are analyzing their distributions, gaps, correlations and simple relationships.</p>
 </div>
 <div id="initial-data-preparation" class="section level4" number="3.2.4.2">
 <h4><span class="header-section-number">3.2.4.2</span> Initial data preparation</h4>
-<p>This stage consists mainly of merging the data sets, as mentioned earlier, and adding a source column (in fact, we added five indicator columns, which contain one-hot-encoded value, as models generally do not cope well with character columns). Since there were very few data gaps, we are imputing them with the median, because this method is effective and fast. [ref]</p>
+<p>This stage consists mainly of merging the data sets, as mentioned earlier, and adding a source column (in fact, we added five indicator columns, which contain one-hot-encoded value, as models generally do not cope well with character columns). Since there were very few data gaps, we are imputing them with the median, because this method is effective and fast.</p>
 <p>Imputation is necessary from the very beginning, as many models cannot cope with missing values. Since there were very few missing values, it does not affect significantly the result of those models that models that would still work. We are not carrying out further transformations at this stage because we do not want to disturb the results of the next stage.</p>
 </div>
 <div id="starting-models" class="section level4" number="3.2.4.3">
 <h4><span class="header-section-number">3.2.4.3</span> Starting models</h4>
-<p>We’re building models on this almost unaltered data. We are using one poorly interpretable model (black-box) – random forest, specifically ranger package [ref], because it is fast and low-effort. Among well interpretable models (white-boxes) used in our work there are:</p>
+<p>We’re building models on this almost unaltered data. We are using one poorly interpretable model (black-box) – random forest, specifically ranger package <span class="citation">(Wright and Ziegler <a href="#ref-ranger" role="doc-biblioref">2017</a>)</span>, because it is fast and low-effort. Among well interpretable models (white-boxes) used in our work there are:</p>
 <ul>
-<li>logistic regression [ref]</li>
-<li>decision tree [ref]</li>
-<li>k-nearest neighbors algorithm [ref]</li>
+<li>logistic regression,</li>
+<li>decision tree,</li>
+<li>k-nearest neighbors algorithm.</li>
 </ul>
-<p>We train the models into data that we have divided into five folds with a similar distribution of the decision variable, on which we will perform cross-validation. Then we compare the results using commonly used measure – AUC (Area Under Curve) [ref], which not only assesses whether the observations are well classified, but also takes into account the likelihood of belonging to a class. We use AUC as the main comparative criterion of the models also in the further part of our work.</p>
+<p>We train the models into data that we have divided into five folds with a similar distribution of the decision variable, on which we will perform cross-validation. Then we compare the results using commonly used measure – AUC (Area Under Curve) <span class="citation">(Flach, Hernandez-Orallo, and Ferri <a href="#ref-auc" role="doc-biblioref">2011</a>)</span>, which not only assesses whether the observations are well classified, but also takes into account the likelihood of belonging to a class. We use AUC as the main comparative criterion of the models also in the further part of our work.</p>
 </div>
 <div id="improving-white-boxes" class="section level4" number="3.2.4.4">
 <h4><span class="header-section-number">3.2.4.4</span> Improving white-boxes</h4>
-<p>This is a key part of our work. In the iterative cycle we use different methods to improve the quality of the white box models. After applying each of these methods, we check whether it has improved our score and possibly analyze the model, using statistical methods (residuals analysis) and explanatory machine learning (DALEX package [ref]), to draw indications of what should be done next.</p>
-<p>We are trying the following methods:</p>
-<ul>
-<li><strong>Logarithmic and exponential transformations of individual variables</strong> – So that linear relationships can be better captured and to reduce the influence of outliers, we transform variables using exponential and polynomial functions.</li>
-<li><strong>Discretization of continuous features</strong> – Some variables do not have a linear effect on the response variable, even if they are transformed by simple functions like exponential function, sometimes there are clear thresholds – so we can replace the variable with indexes of individual segments. The rSAFE package helps with this [ref].</li>
-<li><strong>Generating new columns as functions of other columns</strong> – There may be interactions between variables that cannot be captured by linear models. In order to take them into account, we generate new columns, applying to the rest of them various transformations – we take their inverses, products, quotients, elevations to power, and so on. As a result of these operations, a lot of new predictors are created, which we later evaluate. We also analyze their interpretability, i.e. to what extent they are translatable into an intuitive understanding of such a measure. At this point we also consider Halstead and McCabe’s measurements.</li>
-<li><strong>Oversampling and undersampling</strong> – On the basis of the data set, we generate more observations from the minority class using the SMOTE algorithm [ref] and remove some of the observations from the majority class so that the model more emphasizes the differences in characteristics of individual classes.</li>
-</ul>
+<p>This is a key part of our work. In the iterative cycle we use different methods to improve the quality of the white box models. After applying each of these methods, we check whether it has improved our score and possibly analyze the model, using statistical methods (residuals analysis) and explanatory machine learning (DALEX package <span class="citation">(Biecek <a href="#ref-DALEX" role="doc-biblioref">2018</a>)</span>), to draw indications of what should be done next.</p>
+<p>We are trying the following methods:
+* <strong>Tuning hyperparameters of models</strong> – Default hyperparameters for models are generally good, but in specific cases using specific hyperparameters may yield in better results, so we use model-based optimization for tuning those parameters <span class="citation">(Bischl et al. <a href="#ref-mlrmbo" role="doc-biblioref">2017</a>)</span>.
+* <strong>Logarithmic and exponential transformations of individual variables</strong> – So that linear relationships can be better captured and to reduce the influence of outliers, we transform variables using exponential and polynomial functions.
+* <strong>Discretization of continuous features</strong> – Some variables do not have a linear effect on the response variable, even if they are transformed by simple functions like exponential function, sometimes there are clear thresholds – so we can replace the variable with indexes of individual segments. The SAFE algorithm helps with this <span class="citation">(Gosiewska et al. <a href="#ref-gosiewska2019safe" role="doc-biblioref">2019</a>)</span>.
+* <strong>Generating new columns as functions of other columns</strong> – There may be interactions between variables that cannot be captured by linear models. In order to take them into account, we generate new columns, applying to the rest of them various transformations – we take their inverses, products, quotients, elevations to power, and so on. As a result of these operations, a lot of new predictors are created, which we later evaluate. We also analyze their interpretability, i.e. to what extent they are translatable into an intuitive understanding of such a measure. At this point we also consider Halstead and McCabe’s measurements.
+* <strong>Oversampling and undersampling</strong> – On the basis of the data set, we generate more observations from the minority class using the SMOTE algorithm <span class="citation">(Hu and Li <a href="#ref-smote" role="doc-biblioref">2013</a>)</span> and remove some of the observations from the majority class so that the model more emphasizes the differences in characteristics of individual classes.</p>
 </div>
 <div id="selecting-the-best-model" class="section level4" number="3.2.4.5">
 <h4><span class="header-section-number">3.2.4.5</span> Selecting the best model</h4>
@@ -561,8 +560,26 @@ annually based on census data.</p>
 <div id="ref-UME">
 <p>accenture. 2018. “UNDERSTANDING Machines: EXPLAINABLE Ai,” 19. <a href="https://www.accenture.com/_acnmedia/pdf-85/accenture-understanding-machines-explainable-ai.pdf?fbclid=IwAR0ZtyDNzHR8dMUJHPwa0CkuQXgOOE68UQV4JCcBxXudO3dlm14LjqX-B8g">https://www.accenture.com/_acnmedia/pdf-85/accenture-understanding-machines-explainable-ai.pdf?fbclid=IwAR0ZtyDNzHR8dMUJHPwa0CkuQXgOOE68UQV4JCcBxXudO3dlm14LjqX-B8g</a>.</p>
 </div>
+<div id="ref-DALEX">
+<p>Biecek, Przemyslaw. 2018. “DALEX: Explainers for Complex Predictive Models in R.” <em>Journal of Machine Learning Research</em> 19 (84): 1–5. <a href="http://jmlr.org/papers/v19/18-416.html">http://jmlr.org/papers/v19/18-416.html</a>.</p>
+</div>
+<div id="ref-mlr">
+<p>Bischl, Bernd, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Erich Studerus, Giuseppe Casalicchio, and Zachary M. Jones. 2016. “mlr: Machine Learning in R.” <em>Journal of Machine Learning Research</em> 17 (170): 1–5. <a href="http://jmlr.org/papers/v17/15-066.html">http://jmlr.org/papers/v17/15-066.html</a>.</p>
+</div>
+<div id="ref-mlrmbo">
+<p>Bischl, Bernd, Jakob Richter, Jakob Bossek, Daniel Horn, Janek Thomas, and Michel Lang. 2017. “MlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions.” <em>arXiv Preprint arXiv:1703.03373</em>.</p>
+</div>
 <div id="ref-fenton97">
 <p>Fenton, N. E., and S. L. Pfleeger. 1997. <em>Software Metrics: A Rigorous &amp; Practical Approach</em>. International Thompson Press.</p>
+</div>
+<div id="ref-auc">
+<p>Flach, Peter, Jose Hernandez-Orallo, and Cèsar Ferri. 2011. “A Coherent Interpretation of Auc as a Measure of Aggregated Classification Performance.” In <em>Proceedings of the 28th International Conference on Machine Learning, ICML 2011</em>, 657–64.</p>
+</div>
+<div id="ref-gosiewska2019safe">
+<p>Gosiewska, Alicja, Aleksandra Gacek, Piotr Lubon, and Przemyslaw Biecek. 2019. “SAFE Ml: Surrogate Assisted Feature Extraction for Model Learning.” <a href="http://arxiv.org/abs/1902.11035">http://arxiv.org/abs/1902.11035</a>.</p>
+</div>
+<div id="ref-smote">
+<p>Hu, Feng, and Hang Li. 2013. “A Novel Boundary Oversampling Algorithm Based on Neighborhood Rough Set Model: NRSBoundary-Smote.” <em>Mathematical Problems in Engineering</em> 2013 (November). <a href="https://doi.org/10.1155/2013/694809">https://doi.org/10.1155/2013/694809</a>.</p>
 </div>
 <div id="ref-mccabe76">
 <p>McCabe, T. J. 1976. “A Complexity Measure.” <em>IEEE Transactions on Software Engineering</em> 2 (4): 308–20.</p>
@@ -581,6 +598,9 @@ annually based on census data.</p>
 </div>
 <div id="ref-OpenML2013">
 <p>Vanschoren, Joaquin, Jan N. van Rijn, Bernd Bischl, and Luis Torgo. 2013. “OpenML: Networked Science in Machine Learning.” <em>SIGKDD Explorations</em> 15 (2): 49–60. <a href="https://doi.org/10.1145/2641190.2641198">https://doi.org/10.1145/2641190.2641198</a>.</p>
+</div>
+<div id="ref-ranger">
+<p>Wright, Marvin N., and Andreas Ziegler. 2017. “ranger: A Fast Implementation of Random Forests for High Dimensional Data in C++ and R.” <em>Journal of Statistical Software</em> 77 (1): 1–17. <a href="https://doi.org/10.18637/jss.v077.i01">https://doi.org/10.18637/jss.v077.i01</a>.</p>
 </div>
 </div>
             </section>
