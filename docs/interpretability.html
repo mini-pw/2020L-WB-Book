@@ -524,7 +524,7 @@ They can help us during transformation of the original data set or, for example,
 </div>
 <div id="initial-data-preparation" class="section level4" number="3.5.5.2">
 <h4><span class="header-section-number">3.5.5.2</span> Initial Data Preparation</h4>
-<p>The main focus of this part is to analyze and input the missing data. The side tasks are handling outliers and transformation of skewed variables using logistic functions. A few most popular inputation methods will be compared. We are not only going to use basic aggregation functions like mean and mode but also other machine learning models and advance inputation methods like <a href="https://www.jstatsoft.org/article/view/v045i03">MICE</a>. The results are going to be compared using a model that is robust to missing data which is a basic decision tree.</p>
+<p>The main focus of this part is to analyze and input the missing data. The side tasks are handling outliers and transformation of skewed variables using logistic functions. A few most popular inputation methods will be compared. We are not only going to use basic aggregation functions like mean and mode but also other machine learning models and advance inputation methods like <span class="citation">(Stef van Buuren <a href="#ref-MICE" role="doc-biblioref">2011</a>)</span>. The results are going to be compared using a model that is robust to missing data which is a basic decision tree.</p>
 <div id="missing-data-by-feature" class="section level5" number="3.5.5.2.1">
 <h5><span class="header-section-number">3.5.5.2.1</span> Missing Data by Feature</h5>
 <div class="figure">
@@ -588,7 +588,7 @@ They can help us during transformation of the original data set or, for example,
 <img src="12.png" alt="" />
 <p class="caption">First results</p>
 </div>
-<p>The best result was achieved by logistic regression which was surprising and shows how capable explainable models can be even on complex data. The next best explainable model ranked by AUPRC was KNN. That is the reason why we are going to focus on this model and try to achieve similar results to Black Box models using it. During the Feature Engineering we will utilize strategies such as transformating and extracting features using the SAFE algorithm mentioned in the article above. Amongst other strategies we will use variable selection and <a href="https://arxiv.org/abs/1703.03373">Bayesian Optimization</a>. We are also going to do our best to explain the results and way of computing of the KNN model.</p>
+<p>The best result was achieved by logistic regression which was surprising and shows how capable explainable models can be even on complex data. The next best explainable model ranked by AUPRC was KNN. That is the reason why we are going to focus on this model and try to achieve similar results to Black Box models using it. During the Feature Engineering we will utilize strategies such as transformating and extracting features using the SAFE algorithm mentioned in the article above. Amongst other strategies we will use variable selection and <span class="citation">(Bernd Bischl <a href="#ref-BO" role="doc-biblioref">2018</a>)</span>. We are also going to do our best to explain the results and way of computing of the KNN model.</p>
 
 </div>
 </div>
@@ -693,6 +693,9 @@ They can help us during transformation of the original data set or, for example,
 <div id="ref-UME">
 <p>accenture. 2018. “UNDERSTANDING Machines: EXPLAINABLE Ai,” 19. <a href="https://www.accenture.com/_acnmedia/pdf-85/accenture-understanding-machines-explainable-ai.pdf?fbclid=IwAR0ZtyDNzHR8dMUJHPwa0CkuQXgOOE68UQV4JCcBxXudO3dlm14LjqX-B8g">https://www.accenture.com/_acnmedia/pdf-85/accenture-understanding-machines-explainable-ai.pdf?fbclid=IwAR0ZtyDNzHR8dMUJHPwa0CkuQXgOOE68UQV4JCcBxXudO3dlm14LjqX-B8g</a>.</p>
 </div>
+<div id="ref-BO">
+<p>Bernd Bischl, Jakob Bossek, Jakob Richter. 2018. “MlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions,” 23. <a href="https://arxiv.org/abs/1703.03373">https://arxiv.org/abs/1703.03373</a>.</p>
+</div>
 <div id="ref-christophmonlar">
 <p>Molnar, Christoph. 2019. <em>Interpretable Machine Learning: A Guide for Making Black Box Models Explainable</em>. <a href="https://christophm.github.io/interpretable-ml-book/simple.html">https://christophm.github.io/interpretable-ml-book/simple.html</a>.</p>
 </div>
@@ -701,6 +704,9 @@ They can help us during transformation of the original data set or, for example,
 </div>
 <div id="ref-IML">
 <p>Pandey. 2019. “Interpretable Machine Learning: Extracting Human Understandable Insights from Any Machine Learning Model,” April. <a href="https://towardsdatascience.com/interpretable-machine-learning-1dec0f2f3e6b">https://towardsdatascience.com/interpretable-machine-learning-1dec0f2f3e6b</a>.</p>
+</div>
+<div id="ref-MICE">
+<p>Stef van Buuren, Karin Groothuis-Oudshoorn. 2011. “Mice: Multivariate Imputation by Chained Equations in R.” <a href="https://www.jstatsoft.org/article/view/v045i03">https://www.jstatsoft.org/article/view/v045i03</a>.</p>
 </div>
 </div>
             </section>
