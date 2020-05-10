@@ -98,7 +98,7 @@ The density of people earning more than $50000 is skewed toward the elderly.
 
 #### Initial Data Preparation
 
-The main focus of this part is to analyze and input the missing data. The side tasks are handling outliers and transformation of skewed variables using logistic functions. A few most popular inputation methods will be compared. We are not only going to use basic aggregation functions like mean and mode but also other machine learning models and advance inputation methods like [MICE](https://www.jstatsoft.org/article/view/v045i03). The results are going to be compared using a model that is robust to missing data which is a basic decision tree. 
+The main focus of this part is to analyze and input the missing data. The side tasks are handling outliers and transformation of skewed variables using logistic functions. A few most popular inputation methods will be compared. We are not only going to use basic aggregation functions like mean and mode but also other machine learning models and advance inputation methods like [@MICE]. The results are going to be compared using a model that is robust to missing data which is a basic decision tree. 
 
 ##### Missing Data by Feature
 
@@ -151,7 +151,7 @@ Firstly we are going to compare a few most popular Machine Learning models on ou
 
 ![First results](12.png)
 
-The best result was achieved by logistic regression which was surprising and shows how capable explainable models can be even on complex data. The next best explainable model ranked by AUPRC was KNN. That is the reason why we are going to focus on this model and try to achieve similar results to Black Box models using it. During the Feature Engineering we will utilize strategies such as transformating and extracting features using the SAFE algorithm mentioned in the article above. Amongst other strategies we will use variable selection and [Bayesian Optimization](https://arxiv.org/abs/1703.03373). We are also going to do our best to explain the results and way of computing of the KNN model.
+The best result was achieved by logistic regression which was surprising and shows how capable explainable models can be even on complex data. The next best explainable model ranked by AUPRC was KNN. That is the reason why we are going to focus on this model and try to achieve similar results to Black Box models using it. During the Feature Engineering we will utilize strategies such as transformating and extracting features using the SAFE algorithm mentioned in the article above. Amongst other strategies we will use variable selection and [@BO]. We are also going to do our best to explain the results and way of computing of the KNN model.
 
 
 
