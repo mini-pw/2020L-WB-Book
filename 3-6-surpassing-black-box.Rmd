@@ -1,22 +1,30 @@
-## Surpassing black box model's performance on complicated data with an explainable one's.
-
+## Surpassing black box model's performance on unbalanced data with an interpretable one.
+	
 *Authors: Witold Merkel, Adam Rydelek, Michał Stawikowski (Warsaw University of Technology)*
 
 ### Abstract
+	
 
 
 ### Introduction and Motivation
 
-Model's interpretability is equally as important as it's performance...
+Recently, an increase in demand of interpretable models can be seen. Machine learning models have gained in popularity in recent years among many fields of business science, industry and also more and more often in medicine.
+"Interpretability is a quickly growing field in machine learning, and there have been multiple works examining various aspects of interpretations (sometimes under the heading explainable AI).” [@IMLDEA]
+ The problem, however, turned out to be blackbox models, which did not provide sufficient information about the motivation in making specific decisions by the models.
+‘’Machine Learning models have been branded as ‘Black Boxes’ by many. This means that though we can get accurate predictions from them, we cannot clearly explain or identify the logic behind these predictions.” [@IML]
 
-### Related Work
+Interpretability of models is a desirable feature among specialists in fields other than machine learning, it helps them make better decisions, justify their choices, and combine expert knowledge with the model's indications.
+‘’ Machines and humans work differently in how they sense, understand and learn. Machines are better at recognizing low-level patterns in huge amounts of data, while people excel at connecting the dots among high-level patterns. To make better decisions, we need both working together. ‘’ [@UME]
+Trust and transparency are also demanded.
 
+There are many methods that can help us create an interpretable model
+‘’The easiest way to achieve interpretability is to use only a subset of algorithms that create interpretable models. Linear regression, logistic regression and the decision tree are commonly used interpretable models.’’ [@christophmonlar]
 
-### Methodology
+Another way may be to use blackboxes to create an interpretable model. 
+They can help us during transformation of the original data set or, for example, in selecting variables.
+In this article, we will discuss the process of creating an interpretable model whose target effectiveness will be comparable to blackbox models. We will present the whole
+workflow, during which we will get acquainted with the dataset with which we will work, we will use advanced feature engineering methods and compare the results obtained during all phases of process. An additional problem we will face during work will be unbalanced data and creating a model that will take them into account during prediction.
 
-
-### Results
-
-
-### Summary and conclusions 
+We will use machine learning tools and frameworks available in R and Python. The subject of our analysis will be the "Adult" data set - (https://www.openml.org/d/179?fbclid=IwAR3W2OO_QNLM9cLmThzwmtJjOZ-GteprmynSTumIcTyT93BVeTX4gbGbZtM). The goal is to predict whether income exceeds 50 000 $ 
+annually based on census data.
 
