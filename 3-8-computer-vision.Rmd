@@ -1,0 +1,20 @@
+## Explainable Computer Vision with embeddings and KNN classifier.
+
+*Authors: Olaf Werner, Bogdan Jastrzębski (Warsaw University of Technology)*
+
+### Abstract
+
+
+### Introduction
+Computer vision is widely known use case for neural networks. However neural networks are infamous for their complexity and lack of interpretability. On the other hand simple classifiers like KNN have really poor results for complex tasks like image recognition. In this article we will prove that it is possible to get best of both worlds using emmbeddings. 
+
+### Data
+We are going to use dataset [Fashion-Mnist](https://www.openml.org/d/40996). Fashion-MNIST is a dataset of Zalando's article images, consisting of a training set of 60,000 examples and a test set of 10,000 examples. Each example is a 28x28 grayscale image, associated with a label from 10 classes. Classes are following: T-shirt/top, Trouser, Pullover, Dress, Coat, Sandal, Shirt, Sneaker, Bag, Ankle boot.
+
+### Methodology
+
+
+### Results
+
+
+### Conclusions
