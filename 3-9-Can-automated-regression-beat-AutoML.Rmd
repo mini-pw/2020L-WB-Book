@@ -7,7 +7,33 @@
 
 ### Introduction and Motivation
 
+Health-related problems have been a topic of multiple papers throughout the years and machine learning brought some new methods to modern medicine. We care so much about our lives that every single algorithm and method eventually gets tested on some medical data.
+
+What is unique about health data is that black-box models are completely useless in this subject. Almost always doctors know whether a patient is sick or not. What is important to them is the reason **why** he is sick. That's why explainable machine learning is the key to make all of us healthier. However, making a good explainable model for health data might be close to impossible. Medical problems of all kinds can be very unique, complex, or completely random. That's why researchers spend numerous hours on improving their explainable models and that's why **we** decided to test our approach on `liver disorders` dataset.
+
+The following dataset is well known in the field of machine learning and that's exactly the reason why we chose it. It is described in the next chapter. Our goal was to find a relatively clean dataset with many models already done by other people. We don't want to show that properly cleaned data gives better results but to achieve, an explainable model found after a complex analysis that we want to test.
+
+In this paper we do a case study on `liver disorders` dataset and want to prove that by using automated regression it is possible to build an easy to understand prediction that outperforms black-box models on the real dataset and at the same time achieve similar results to other researchers.
+
+
 ### Data
+
+The dataset we use to test our hypothesis is a well-known `liver-disorders` first created by 'BUPA Medical Research Ltd.' containing a single male patient as a row. The data consists of 5 features which are the results of blood tests a physician might use to inform diagnosis. There is no ground truth in the data set relating to the presence or absence of a disorder. The target feature is attribute drinks, which are numerical. Some of the researchers tend to split the patients into 2 groups: 0 - patients that drink less than 3 half-pint equivalents of alcoholic beverages per day and 1 - patients that drink more or equal to 3 and focus on a classification problem.
+
+All of the features are numerical. The data is available for 345 patients and contains 0 missing values. 
+
+The dataset consists of 7 attributes:
+
+1. mcv - mean corpuscular volume
+2. alkphos - alkaline phosphatase
+3. sgpt - alanine aminotransferase
+4. sgot - aspartate aminotransferase
+5. gammagt - gamma-glutamyl transpeptidase 
+6. drinks - number of half-pint equivalents of alcoholic beverages drunk per day
+7. selector - field created by the BUPA researchers to split the data into train/test sets
+
+For further readings on the dataset and misunderstandings related to the selector column incorrectly treated as target refer to: "McDermott & Forsyth 2016, Diagnosing a disorder in a classification benchmark, Pattern Recognition Letters, Volume 73."
+
 
 ### Methodology
 
