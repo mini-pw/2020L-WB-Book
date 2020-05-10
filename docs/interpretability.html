@@ -509,9 +509,26 @@ annually based on census data.</p>
 </div>
 <div id="introduction-and-motivation-11" class="section level3" number="3.8.2">
 <h3><span class="header-section-number">3.8.2</span> Introduction and Motivation</h3>
+<p>Health-related problems have been a topic of multiple papers throughout the years and machine learning brought some new methods to modern medicine. We care so much about our lives that every single algorithm and method eventually gets tested on some medical data.</p>
+<p>What is unique about health data is that black-box models are completely useless in this subject. Almost always doctors know whether a patient is sick or not. What is important to them is the reason <strong>why</strong> he is sick. That’s why explainable machine learning is the key to make all of us healthier. However, making a good explainable model for health data might be close to impossible. Medical problems of all kinds can be very unique, complex, or completely random. That’s why researchers spend numerous hours on improving their explainable models and that’s why <strong>we</strong> decided to test our approach on <code>liver disorders</code> dataset.</p>
+<p>The following dataset is well known in the field of machine learning and that’s exactly the reason why we chose it. It is described in the next chapter. Our goal was to find a relatively clean dataset with many models already done by other people. We don’t want to show that properly cleaned data gives better results but to achieve, an explainable model found after a complex analysis that we want to test.</p>
+<p>In this paper we do a case study on <code>liver disorders</code> dataset and want to prove that by using automated regression it is possible to build an easy to understand prediction that outperforms black-box models on the real dataset and at the same time achieve similar results to other researchers.</p>
 </div>
 <div id="data-2" class="section level3" number="3.8.3">
 <h3><span class="header-section-number">3.8.3</span> Data</h3>
+<p>The dataset we use to test our hypothesis is a well-known <code>liver-disorders</code> first created by ‘BUPA Medical Research Ltd.’ containing a single male patient as a row. The data consists of 5 features which are the results of blood tests a physician might use to inform diagnosis. There is no ground truth in the data set relating to the presence or absence of a disorder. The target feature is attribute drinks, which are numerical. Some of the researchers tend to split the patients into 2 groups: 0 - patients that drink less than 3 half-pint equivalents of alcoholic beverages per day and 1 - patients that drink more or equal to 3 and focus on a classification problem.</p>
+<p>All of the features are numerical. The data is available for 345 patients and contains 0 missing values.</p>
+<p>The dataset consists of 7 attributes:</p>
+<ol style="list-style-type: decimal">
+<li>mcv - mean corpuscular volume</li>
+<li>alkphos - alkaline phosphatase</li>
+<li>sgpt - alanine aminotransferase</li>
+<li>sgot - aspartate aminotransferase</li>
+<li>gammagt - gamma-glutamyl transpeptidase</li>
+<li>drinks - number of half-pint equivalents of alcoholic beverages drunk per day</li>
+<li>selector - field created by the BUPA researchers to split the data into train/test sets</li>
+</ol>
+<p>For further readings on the dataset and misunderstandings related to the selector column incorrectly treated as target refer to: “McDermott &amp; Forsyth 2016, Diagnosing a disorder in a classification benchmark, Pattern Recognition Letters, Volume 73.”</p>
 </div>
 <div id="methodology-14" class="section level3" number="3.8.4">
 <h3><span class="header-section-number">3.8.4</span> Methodology</h3>
