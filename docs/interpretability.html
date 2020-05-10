@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-05-08" />
+<meta name="date" content="2020-05-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -208,6 +208,15 @@
 <li class="chapter" data-level="3.7.4" data-path="interpretability.html"><a href="interpretability.html#methodology-13"><i class="fa fa-check"></i><b>3.7.4</b> Methodology</a></li>
 <li class="chapter" data-level="3.7.5" data-path="interpretability.html"><a href="interpretability.html#results-13"><i class="fa fa-check"></i><b>3.7.5</b> Results</a></li>
 <li class="chapter" data-level="3.7.6" data-path="interpretability.html"><a href="interpretability.html#conclusions-1"><i class="fa fa-check"></i><b>3.7.6</b> Conclusions</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="interpretability.html"><a href="interpretability.html#can-automated-regression-beat-linear-model"><i class="fa fa-check"></i><b>3.8</b> Can Automated Regression beat linear model?</a>
+<ul>
+<li class="chapter" data-level="3.8.1" data-path="interpretability.html"><a href="interpretability.html#abstract-14"><i class="fa fa-check"></i><b>3.8.1</b> Abstract</a></li>
+<li class="chapter" data-level="3.8.2" data-path="interpretability.html"><a href="interpretability.html#introduction-and-motivation-11"><i class="fa fa-check"></i><b>3.8.2</b> Introduction and Motivation</a></li>
+<li class="chapter" data-level="3.8.3" data-path="interpretability.html"><a href="interpretability.html#data-2"><i class="fa fa-check"></i><b>3.8.3</b> Data</a></li>
+<li class="chapter" data-level="3.8.4" data-path="interpretability.html"><a href="interpretability.html#methodology-14"><i class="fa fa-check"></i><b>3.8.4</b> Methodology</a></li>
+<li class="chapter" data-level="3.8.5" data-path="interpretability.html"><a href="interpretability.html#results-14"><i class="fa fa-check"></i><b>3.8.5</b> Results</a></li>
+<li class="chapter" data-level="3.8.6" data-path="interpretability.html"><a href="interpretability.html#summary-and-conclusions-12"><i class="fa fa-check"></i><b>3.8.6</b> Summary and conclusions</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>4</b> Acknowledgements</a></li>
@@ -492,6 +501,43 @@ annually based on census data.</p>
 
 </div>
 </div>
+<div id="can-automated-regression-beat-linear-model" class="section level2" number="3.8">
+<h2><span class="header-section-number">3.8</span> Can Automated Regression beat linear model?</h2>
+<p><em>Authors: Bartłomiej Granat, Szymon Maksymiuk, (Warsaw University of Technology)</em></p>
+<div id="abstract-14" class="section level3" number="3.8.1">
+<h3><span class="header-section-number">3.8.1</span> Abstract</h3>
+</div>
+<div id="introduction-and-motivation-11" class="section level3" number="3.8.2">
+<h3><span class="header-section-number">3.8.2</span> Introduction and Motivation</h3>
+</div>
+<div id="data-2" class="section level3" number="3.8.3">
+<h3><span class="header-section-number">3.8.3</span> Data</h3>
+</div>
+<div id="methodology-14" class="section level3" number="3.8.4">
+<h3><span class="header-section-number">3.8.4</span> Methodology</h3>
+<p>AutoMl Model <span class="math inline">\(M_{aml}\)</span> and the dataset <span class="math inline">\(D\)</span> that consists of <span class="math inline">\(D_{X} = X\)</span> which is set of independent variables and <span class="math inline">\(D_{y} = y\)</span> - dependent variable (ie. target). We assume that <span class="math inline">\(M_{aml}\)</span> is an unknown function <span class="math inline">\(M_{aml}: \mathbb{R}^{p} \to \mathbb{R}\)</span>, where p is a snumber of features in the <span class="math inline">\(D\)</span> Dataset, that satisfies <span class="math inline">\(y = M_{aml}(X) + \epsilon\)</span> where <span class="math inline">\(\epsilon\)</span> is an error vector. Automated regression constructs known vector function <span class="math inline">\(G_{AR} : \mathbb{R}^{n \times p} \to \mathbb{R}^{n \times p}\)</span> where <span class="math inline">\(n\)</span> is a number of observations, that satisfies <span class="math inline">\(y = G_{AR}(X)\beta + \epsilon\)</span> thus it is linear regression model fitted for transformated data.</p>
+<p>To find <span class="math inline">\(G_{AR}\)</span> we have to put some constraints. First of all we want it to minimize loss function <span class="math inline">\(L: \mathbb{R}^{n} \to \mathbb{R}\)</span> given by following formula <span class="math inline">\(L : \frac{\sum_{i=1}^{n}(y_{i}-\hat{y_{i}})^{2}\sum_{i=1}^{n}(y_{i}-\bar{y_{i}})^{2}}{\sum_{i=1}^{n}(\hat{y_{i}}-\bar{y_{i}})^{2}}\)</span> which can be interpreted as Mean Square Error divided by the R-squred coefficient of determination and stands as a tradeoff between fit and results. Another constraint is a domain of valid transformations of particular variables. For given dataset, described in the previous paragraphs we decided to use:
+* Feature selection
++ XAI feature Importance
++ AIC/BIC
+* Continuous transformation
++ Polynomial transformation
++ Lograthmic transformation
+* Discrete transformation
++ SAFE method
+* Feature concatenation
++ Multiplication of pair of features.</p>
+<p>Obviously, XAI related methods are conducted using AutoML Model. We’ve decided to omit data imputation as an element of valid transformations dataset because liver-disorders dataset does not meet with the problem of missing values.</p>
+<p>The optimization process is conducted based on Bayesian Optimization and the backtracing idea. Each main element of the domain of valid transformations is one step in the process of creation <span class="math inline">\(G_{AR}\)</span> function. Within each step, Bayesian optimization will be used to find the best transformation for the given level. During further steps, if any of transformation did not improve model, ie. <span class="math inline">\(L\)</span> function was only growing, the algorithm takes second, the third, etc. solution from previous steps according to backtracking idea. If for no one of <span class="math inline">\(k\)</span> such iterations, where k is known parameter, a better solution is found, step is omitted.</p>
+</div>
+<div id="results-14" class="section level3" number="3.8.5">
+<h3><span class="header-section-number">3.8.5</span> Results</h3>
+</div>
+<div id="summary-and-conclusions-12" class="section level3" number="3.8.6">
+<h3><span class="header-section-number">3.8.6</span> Summary and conclusions</h3>
+
+</div>
+</div>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
@@ -564,6 +610,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
