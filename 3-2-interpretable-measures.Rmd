@@ -70,11 +70,21 @@ We train the models into data that we have divided into five folds with a simila
 This is a key part of our work. In the iterative cycle we use different methods to improve the quality of the white box models. After applying each of these methods, we check whether it has improved our score and possibly analyze the model, using statistical methods (residuals analysis) and explanatory machine learning (DALEX package [@DALEX]), to draw indications of what should be done next.
 
 We are trying the following methods:
+
 * **Tuning hyperparameters of models** -- Default hyperparameters for models are generally good, but in specific cases using specific hyperparameters may yield in better results, so we use model-based optimization for tuning those parameters [@mlrmbo].
 * **Logarithmic and exponential transformations of individual variables** -- So that linear relationships can be better captured and to reduce the influence of outliers, we transform variables using exponential and polynomial functions.
 * **Discretization of continuous features** -- Some variables do not have a linear effect on the response variable, even if they are transformed by simple functions like exponential function, sometimes there are clear thresholds -- so we can replace the variable with indexes of individual segments. The SAFE algorithm helps with this [@gosiewska2019safe].
 * **Generating new columns as functions of other columns** -- There may be interactions between variables that cannot be captured by linear models. In order to take them into account, we generate new columns, applying to the rest of them various transformations -- we take their inverses, products, quotients, elevations to power, and so on. As a result of these operations, a lot of new predictors are created, which we later evaluate. We also analyze their interpretability, i.e. to what extent they are translatable into an intuitive understanding of such a measure. At this point we also consider Halstead and McCabe's measurements. 
 * **Oversampling and undersampling** -- On the basis of the data set, we generate more observations from the minority class using the SMOTE algorithm [@smote] and remove some of the observations from the majority class so that the model more emphasizes the differences in characteristics of individual classes.
+* **Reducing outliers** -- For each variable a two-value vector that indicates the thresholds for which the values are considered as outliers is generated. Then all outliers are changed to the nearest value of obtained earlier vector.
+
+
+Our goal is to beat black-box model. In our case we chose random forest model from package ranger. As a white-box model we used logistic regression. Results were tested on dataset with different transformations.
+```{r echo=FALSE, results='asis'}
+library(knitr)
+kable(data.frame(red=c('no','yes','yes','no'),disc=c('no','no','no','yes'),log=c('no','no','yes','no'),ranger=c(0.7907, 0.7897,0.7782, 0.7593),logreg=c(0.7354,0.7431,0.7435,0.7305)),col.names=c("Outliers reduction","Discretization","Logarithm","Ranger","Logistic regression"), caption="White-box and black-box comparison")
+
+```
 
 #### Selecting the best model
 
