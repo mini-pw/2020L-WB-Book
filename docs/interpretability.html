@@ -730,17 +730,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="methodology-11" class="section level3" number="3.4.4">
 <h3><span class="header-section-number">3.4.4</span> Methodology</h3>
 <p>AutoMl Model <span class="math inline">\(M_{aml}\)</span> and the dataset <span class="math inline">\(D\)</span> that consists of <span class="math inline">\(D_{X} = X\)</span> which is set of independent variables and <span class="math inline">\(D_{y} = y\)</span> - dependent variable (ie. target). We assume that <span class="math inline">\(M_{aml}\)</span> is an unknown function <span class="math inline">\(M_{aml}: \mathbb{R}^{p} \to \mathbb{R}\)</span>, where p is a snumber of features in the <span class="math inline">\(D\)</span> Dataset, that satisfies <span class="math inline">\(y = M_{aml}(X) + \epsilon\)</span> where <span class="math inline">\(\epsilon\)</span> is an error vector. Automated regression constructs known vector function <span class="math inline">\(G_{AR} : \mathbb{R}^{n \times p} \to \mathbb{R}^{n \times p}\)</span> where <span class="math inline">\(n\)</span> is a number of observations, that satisfies <span class="math inline">\(y = G_{AR}(X)\beta + \epsilon\)</span> thus it is linear regression model fitted for transformated data.</p>
-<p>To find <span class="math inline">\(G_{AR}\)</span> we have to put some constraints. First of all we want it to minimize loss function <span class="math inline">\(L: \mathbb{R}^{n} \to \mathbb{R}\)</span> given by following formula <span class="math inline">\(L : \frac{\sum_{i=1}^{n}(y_{i}-\hat{y_{i}})^{2}\sum_{i=1}^{n}(y_{i}-\bar{y_{i}})^{2}}{\sum_{i=1}^{n}(\hat{y_{i}}-\bar{y_{i}})^{2}}\)</span> which can be interpreted as Mean Square Error divided by the R-squred coefficient of determination and stands as a tradeoff between fit and results. Another constraint is a domain of valid transformations of particular variables. For given dataset, described in the previous paragraphs we decided to use:
-* Feature selection
-+ XAI feature Importance
-+ AIC/BIC
-* Continuous transformation
-+ Polynomial transformation
-+ Lograthmic transformation
-* Discrete transformation
-+ SAFE method
-* Feature concatenation
-+ Multiplication of pair of features.</p>
+<p>To find <span class="math inline">\(G_{AR}\)</span> we have to put some constraints. First of all we want it to minimize loss function <span class="math inline">\(L: \mathbb{R}^{n} \to \mathbb{R}\)</span> given by following formula <span class="math inline">\(L : \frac{\sum_{i=1}^{n}(y_{i}-\hat{y_{i}})^{2}\sum_{i=1}^{n}(y_{i}-\bar{y_{i}})^{2}}{\sum_{i=1}^{n}(\hat{y_{i}}-\bar{y_{i}})^{2}}\)</span> which can be interpreted as Mean Square Error divided by the R-squred coefficient of determination and stands as a tradeoff between fit and results. Another constraint is a domain of valid transformations of particular variables. For given dataset, described in the previous paragraphs we decided to use:</p>
+<ul>
+<li>Feature selection
+<ul>
+<li>XAI feature Importance</li>
+<li>AIC/BIC</li>
+</ul></li>
+<li>Continuous transformation
+<ul>
+<li>Polynomial transformation</li>
+<li>Lograthmic transformation</li>
+</ul></li>
+<li>Discrete transformation
+<ul>
+<li>SAFE method</li>
+</ul></li>
+<li>Feature concatenation
+<ul>
+<li>Multiplication of pair of features.</li>
+</ul></li>
+</ul>
 <p>Obviously, XAI related methods are conducted using AutoML Model. We’ve decided to omit data imputation as an element of valid transformations dataset because liver-disorders dataset does not meet with the problem of missing values.</p>
 <p>The optimization process is conducted based on Bayesian Optimization and the backtracing idea. Each main element of the domain of valid transformations is one step in the process of creation <span class="math inline">\(G_{AR}\)</span> function. Within each step, Bayesian optimization will be used to find the best transformation for the given level. During further steps, if any of transformation did not improve model, ie. <span class="math inline">\(L\)</span> function was only growing, the algorithm takes second, the third, etc. solution from previous steps according to backtracking idea. If for no one of <span class="math inline">\(k\)</span> such iterations, where k is known parameter, a better solution is found, step is omitted.</p>
 </div>
