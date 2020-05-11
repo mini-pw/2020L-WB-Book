@@ -196,7 +196,7 @@
 <li class="chapter" data-level="3.6" data-path="interpretability.html"><a href="interpretability.html#which-neighbours-affected-house-prices-in-the-90s"><i class="fa fa-check"></i><b>3.6</b> Which Neighbours Affected House Prices in the ’90s?</a>
 <ul>
 <li class="chapter" data-level="3.6.1" data-path="interpretability.html"><a href="interpretability.html#introduction-2"><i class="fa fa-check"></i><b>3.6.1</b> Introduction</a></li>
-<li class="chapter" data-level="3.6.2" data-path="interpretability.html"><a href="interpretability.html#related-work-11"><i class="fa fa-check"></i><b>3.6.2</b> Related Work</a></li>
+<li class="chapter" data-level="3.6.2" data-path="interpretability.html"><a href="interpretability.html#related-work-10"><i class="fa fa-check"></i><b>3.6.2</b> Related Work</a></li>
 <li class="chapter" data-level="3.6.3" data-path="interpretability.html"><a href="interpretability.html#data-1"><i class="fa fa-check"></i><b>3.6.3</b> Data</a></li>
 <li class="chapter" data-level="3.6.4" data-path="interpretability.html"><a href="interpretability.html#methodology-12"><i class="fa fa-check"></i><b>3.6.4</b> Methodology</a></li>
 <li class="chapter" data-level="3.6.5" data-path="interpretability.html"><a href="interpretability.html#results-12"><i class="fa fa-check"></i><b>3.6.5</b> Results</a></li>
@@ -668,7 +668,7 @@ annually based on census data.</p>
 <p>In this paper, we perform a case study on the actual US. Census data from 1990 and deliver an interpretable white-box model that estimates the median house price by the region. We present multiple approaches to this problem and choose the best model, which achieves similar performance to complex black-boxes. Finally, using its interpretable nature, we answer various questions that give a new life to this historical data.</p>
 <p><strong>TODO</strong> add citations</p>
 </div>
-<div id="related-work-11" class="section level3" number="3.6.2">
+<div id="related-work-10" class="section level3" number="3.6.2">
 <h3><span class="header-section-number">3.6.2</span> Related Work</h3>
 <p><strong>TODO</strong></p>
 <p><a href="https://arxiv.org/abs/1901.01774" class="uri">https://arxiv.org/abs/1901.01774</a></p>
@@ -717,7 +717,7 @@ The comprehensive description of used data can be found in &lt;&gt;.</p>
 </div>
 <div id="rsafe" class="section level4" number="3.6.4.2">
 <h4><span class="header-section-number">3.6.4.2</span> rSAFE</h4>
-<p>The first approach was using the SAFE <span class="citation">(<span class="citeproc-not-found" data-reference-id="safe"><strong>???</strong></span>)</span> technique to engineer new features and produce a linear regression model. We took a well-performing black-box <code>ranger</code> <span class="citation">(<span class="citeproc-not-found" data-reference-id="ranger"><strong>???</strong></span>)</span> model and extracted new interpretable features using its Partial Dependence Profiles. Then we used these features to craft a new linear model which indeed was better than the baseline linear model by about 10%. It is worth noting that both of these linear models had a hard time succeeding because of target skewness.</p>
+<p>The first approach was using the SAFE <span class="citation">(<span class="citeproc-not-found" data-reference-id="safe"><strong>???</strong></span>)</span> technique to engineer new features and produce a linear regression model. We took a well-performing black-box <code>ranger</code> <span class="citation">(Wright and Ziegler <a href="#ref-ranger" role="doc-biblioref">2017</a>)</span> model and extracted new interpretable features using its Partial Dependence Profiles. Then we used these features to craft a new linear model which indeed was better than the baseline linear model by about 10%. It is worth noting that both of these linear models had a hard time succeeding because of target skewness.</p>
 </div>
 <div id="divide-and-conquer" class="section level4" number="3.6.4.3">
 <h4><span class="header-section-number">3.6.4.3</span> Divide-and-conquer</h4>
