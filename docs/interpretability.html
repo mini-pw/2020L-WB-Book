@@ -516,12 +516,58 @@
 <div id="improving-white-boxes" class="section level4" number="3.2.4.4">
 <h4><span class="header-section-number">3.2.4.4</span> Improving white-boxes</h4>
 <p>This is a key part of our work. In the iterative cycle we use different methods to improve the quality of the white box models. After applying each of these methods, we check whether it has improved our score and possibly analyze the model, using statistical methods (residuals analysis) and explanatory machine learning (DALEX package <span class="citation">(Biecek <a href="#ref-DALEX" role="doc-biblioref">2018</a>)</span>), to draw indications of what should be done next.</p>
-<p>We are trying the following methods:
-* <strong>Tuning hyperparameters of models</strong> – Default hyperparameters for models are generally good, but in specific cases using specific hyperparameters may yield in better results, so we use model-based optimization for tuning those parameters <span class="citation">(Bischl et al. <a href="#ref-mlrmbo" role="doc-biblioref">2017</a>)</span>.
-* <strong>Logarithmic and exponential transformations of individual variables</strong> – So that linear relationships can be better captured and to reduce the influence of outliers, we transform variables using exponential and polynomial functions.
-* <strong>Discretization of continuous features</strong> – Some variables do not have a linear effect on the response variable, even if they are transformed by simple functions like exponential function, sometimes there are clear thresholds – so we can replace the variable with indexes of individual segments. The SAFE algorithm helps with this <span class="citation">(Gosiewska et al. <a href="#ref-gosiewska2019safe" role="doc-biblioref">2019</a>)</span>.
-* <strong>Generating new columns as functions of other columns</strong> – There may be interactions between variables that cannot be captured by linear models. In order to take them into account, we generate new columns, applying to the rest of them various transformations – we take their inverses, products, quotients, elevations to power, and so on. As a result of these operations, a lot of new predictors are created, which we later evaluate. We also analyze their interpretability, i.e. to what extent they are translatable into an intuitive understanding of such a measure. At this point we also consider Halstead and McCabe’s measurements.
-* <strong>Oversampling and undersampling</strong> – On the basis of the data set, we generate more observations from the minority class using the SMOTE algorithm <span class="citation">(Hu and Li <a href="#ref-smote" role="doc-biblioref">2013</a>)</span> and remove some of the observations from the majority class so that the model more emphasizes the differences in characteristics of individual classes.</p>
+<p>We are trying the following methods:</p>
+<ul>
+<li><strong>Tuning hyperparameters of models</strong> – Default hyperparameters for models are generally good, but in specific cases using specific hyperparameters may yield in better results, so we use model-based optimization for tuning those parameters <span class="citation">(Bischl et al. <a href="#ref-mlrmbo" role="doc-biblioref">2017</a>)</span>.</li>
+<li><strong>Logarithmic and exponential transformations of individual variables</strong> – So that linear relationships can be better captured and to reduce the influence of outliers, we transform variables using exponential and polynomial functions.</li>
+<li><strong>Discretization of continuous features</strong> – Some variables do not have a linear effect on the response variable, even if they are transformed by simple functions like exponential function, sometimes there are clear thresholds – so we can replace the variable with indexes of individual segments. The SAFE algorithm helps with this <span class="citation">(Gosiewska et al. <a href="#ref-gosiewska2019safe" role="doc-biblioref">2019</a>)</span>.</li>
+<li><strong>Generating new columns as functions of other columns</strong> – There may be interactions between variables that cannot be captured by linear models. In order to take them into account, we generate new columns, applying to the rest of them various transformations – we take their inverses, products, quotients, elevations to power, and so on. As a result of these operations, a lot of new predictors are created, which we later evaluate. We also analyze their interpretability, i.e. to what extent they are translatable into an intuitive understanding of such a measure. At this point we also consider Halstead and McCabe’s measurements.</li>
+<li><strong>Oversampling and undersampling</strong> – On the basis of the data set, we generate more observations from the minority class using the SMOTE algorithm <span class="citation">(Hu and Li <a href="#ref-smote" role="doc-biblioref">2013</a>)</span> and remove some of the observations from the majority class so that the model more emphasizes the differences in characteristics of individual classes.</li>
+<li><strong>Reducing outliers</strong> – For each variable a two-value vector that indicates the thresholds for which the values are considered as outliers is generated. Then all outliers are changed to the nearest value of obtained earlier vector.</li>
+</ul>
+<p>Our goal is to beat black-box model. In our case we chose random forest model from package ranger. As a white-box model we used logistic regression. Results were tested on dataset with different transformations.</p>
+<table>
+<caption><span id="tab:unnamed-chunk-1">TABLE 3.1: </span>White-box and black-box comparison</caption>
+<thead>
+<tr class="header">
+<th align="left">Outliers reduction</th>
+<th align="left">Discretization</th>
+<th align="left">Logarithm</th>
+<th align="right">Ranger</th>
+<th align="right">Logistic regression</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">no</td>
+<td align="left">no</td>
+<td align="left">no</td>
+<td align="right">0.7907</td>
+<td align="right">0.7354</td>
+</tr>
+<tr class="even">
+<td align="left">yes</td>
+<td align="left">no</td>
+<td align="left">no</td>
+<td align="right">0.7897</td>
+<td align="right">0.7431</td>
+</tr>
+<tr class="odd">
+<td align="left">yes</td>
+<td align="left">no</td>
+<td align="left">yes</td>
+<td align="right">0.7782</td>
+<td align="right">0.7435</td>
+</tr>
+<tr class="even">
+<td align="left">no</td>
+<td align="left">yes</td>
+<td align="left">no</td>
+<td align="right">0.7593</td>
+<td align="right">0.7305</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="selecting-the-best-model" class="section level4" number="3.2.4.5">
 <h4><span class="header-section-number">3.2.4.5</span> Selecting the best model</h4>
