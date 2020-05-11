@@ -42,6 +42,12 @@ We use standard and verified methods to compare results of the models. As the ta
 
 ### Results
 
+```{r, cache = FALSE}
+require(rmarkdown, quietly = TRUE)
+res <- read.csv("data/interpretability_3_5_results.csv", sep = ";")
+paged_table(res )
+```
 
+As the results presented above show, brute force method has already surpassed all the black box models trained on the plain data, while by hand method yielded slightly worse results.
 ### Summary and conclusions 
 

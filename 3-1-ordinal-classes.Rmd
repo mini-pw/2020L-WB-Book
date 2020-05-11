@@ -19,6 +19,12 @@ Our experiments are based on 'eucalyptus' dataset from OpenML. The dataset's obj
 
 #### An approach to ordinal classification
 
+##### Ordinal classification as a regression task
+
+As described in [2], one of the most fundamental techniques is to cast target labels to a sequence of numbers. Then, a standard regression can be applied. There is an additional information about the classes in comparison to usual nominal classification. Also a metric used is different than in a classification task - mean square error used in a regression task takes into account similarities between two labels when conversion is applied. 
+
+##### Transformation to multiple binary classification problems
+
 #### Comparing black box to linear model
 
 ### Methodology
@@ -69,18 +75,45 @@ As this model cannot be run with missing data, they were deleted from the traini
 
 As mentioned before, the explainable model was enhanced by applying existing approaches to ordinal classification, feature transformation and selection and missing data imputation. The refinement process consisted of, but was not limited to, the following:
 
-1. Transforming Latitude variable from factor to numeric.
-2. Splitting a multiclass classification problem into 3 binary classification problems, like explained in the An approach to ordinal classification section of this article, and using the rpart model on each of the binary problems.
-3. Selecting variables: deleting the site names and specific location tags. 
-4. Imputing missing data in the training set.
-5. Tunning the model.
 
-The third step has a scientific justification. The experiment for which the data was collected was focused on finding the best seedlot for soil conservation in seasonally dry hill country. All the data in this dataset comes from New Zealand, but there is a chance that the results of such experiment would be used for other geographical regions. So far our model was making the prediction based also on specific flat map coordinates and site names, that are present both in the training and the test set. This means it would be impossible to use this model for judging seedlots of eucalypti planted outside of New Zealand. To make this possible, we have decided to take away all the variables that give away the exact position of the seedlots, leaving features such as latitude and the characteristics of plants and their habitat.
+1. Splitting a multiclass classification problem into 3 binary classification problems, like explained in the An approach to ordinal classification section of this article, and using the rpart model on each of the binary problems.
+2. Changing the levels of the target variable:"low", "average", "good", "best" into numeric values: 1, 2, 3, 4, respectively and running a regression rpart model.
+3. Imputing missing data in the training set.
+4. Selecting variables: deleting the site names and specific location tags. 
+5. Transforming Latitude variable from factor to numeric.
+
+The fourth step has a scientific justification. The experiment for which the data was collected was focused on finding the best seedlot for soil conservation in seasonally dry hill country. All the data in this dataset comes from New Zealand, but there is a chance that the results of such experiment would be used for other geographical regions. So far our model was making the prediction based also on specific flat map coordinates and site names, that are present both in the training and the test set. This means it would be impossible to use this model for judging seedlots of eucalypti planted outside of New Zealand. To make this possible, we have decided to take away all the variables that give away the exact position of the seedlots, leaving features such as latitude and the characteristics of plants and their habitat.
 
 After each improvement the model was retrained and the results obtained on the test set were saved and compared with the previous version of the model. If the new change has improved the model’s performance on the test set then it became the base for further development. Instead, if it has not improved the model’s performance, the previous version of the model was being further developed.
 
-### Model explanantion
-
 ### Results
 
+![](3-1-graphs/CompareModels.png)
+
+**Explainable models**:
+
+| Model  | AUC | MSE | ACC | ACC1| Percent Best AUC | 
+|-------|---|---|---|---|-----|
+| Basic rpart | 0.8259145 | 0.5284076 | 0.5835207 | 0.9797400 | 95,89% | 
+| Three binary rparts | 0.8430115 | 0.5392606 | 0.5816277 | 0.9826626 | 97,88% |
+| Regression rpart | 0.86115629	| 0.4994688 |	0.5814851	| 0.93207583 |	99,99% | 
+| Regression rpart  with imputation| 0.8597930 |	0.5038168 |	0.5798347 |	0.9306883 |	99,83% |
+| Regression rpart  with no location | 0.8612852 |	0.4995913	| 0.5815428 |	0.9323226 |	100,00% |
+| Regression rpart  with no location and numeric lattitide| 0.8612474 | 0.4993377 |	0.5816065 |	0.9322628 |	100,00% |
+
+**Black box models**:
+
+| Model  | AUC | MSE | ACC | ACC1| Percent Best AUC | 
+|-------|---|---|---|---|-----|
+| Xgboost | 0.8589771 | 0.4466546 | 0.6247675 | 0.9873244 | 99.73% |
+| Xgboost with nrounds=5 | 0.8405102 | 0.4997935 | 0.6043936 | 0.9830193 | 97,59% | 
+
+
+### Model explanantion
+
 ### Summary and conclusions 
+
+### References
+
+1. Frank, Eibe & Hall, Mark. (2001). A Simple Approach to Ordinal Classification. Lecture Notes in Computer Science. 2167. 145-156. 10.1007/3-540-44795-4_13
+2. P. A. Gutiérrez, M. Pérez-Ortiz, J. Sánchez-Monedero, F. Fernández-Navarro and C. Hervás-Martínez, "Ordinal Regression Methods: Survey and Experimental Study," in IEEE Transactions on Knowledge and Data Engineering, vol. 28, no. 1, pp. 127-146, 1 Jan. 2016, doi: 10.1109/TKDE.2015.2457911.
