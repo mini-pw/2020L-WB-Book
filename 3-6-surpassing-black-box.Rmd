@@ -22,9 +22,133 @@ There are many methods that can help us create an interpretable model
 
 Another way may be to use blackboxes to create an interpretable model. 
 They can help us during transformation of the original data set or, for example, in selecting variables.
-In this article, we will discuss the process of creating an interpretable model whose target effectiveness will be comparable to blackbox models. We will present the whole
-workflow, during which we will get acquainted with the dataset with which we will work, we will use advanced feature engineering methods and compare the results obtained during all phases of process. An additional problem we will face during work will be unbalanced data and creating a model that will take them into account during prediction.
 
-We will use machine learning tools and frameworks available in R and Python. The subject of our analysis will be the "Adult" data set - (https://www.openml.org/d/179?fbclid=IwAR3W2OO_QNLM9cLmThzwmtJjOZ-GteprmynSTumIcTyT93BVeTX4gbGbZtM). The goal is to predict whether income exceeds 50 000 $ 
-annually based on census data.
+In this article, we will discuss the process of creating an interpretable model whose target effectiveness will be comparable to blackbox models. We will present the whole workflow, during which we will get acquainted with the dataset with which we will work, we will use advanced feature engineering methods and compare the results obtained during all phases of process. An additional problem we will face during work will be unbalanced data and creating a model that will take them into account during prediction.
 
+We will use machine learning tools and frameworks available in R and Python.
+
+### Data
+
+The dataset used is the adult dataset from OpenML. The original data comes from UCI and was extracted by Barry Becker from the 1994 Census database. The  task is to predict whether a given adult makes more than $50,000 a year based attributes such as:
+* age,
+* race,
+* sex,
+* education,
+* native country,
+* work class,
+* weekly work hours,
+* capital gain,
+* capital loss,
+* proximation for the demographic backgroud of people,
+* relationship,
+* marital status,
+* occupation.
+
+In the above mentioned dataset we can observe a problem with target class distribution which is vastly unbalanced. The ratio of positive and negative values is around one to four. The dataset has overall of more than fourty eight thousand observations and fifteen features, some of which are scarce. 
+
+### Related work
+
+Many works concerning Explainable Artificial Intelligence have arose during the last few years as the topic got more and more popular. [Explainable Artificial Intelligence (XAI): Concepts, Taxonomies, Opportunities and Challenges toward Responsible AI](https://arxiv.org/abs/1910.10045?fbclid=IwAR1PriUQDAOqBYKCbQqB2JgNj2d0b7cg_CNx_CQLzsw1d-NcIYDLLUgK8g4) is a paper about XAI in general and many challenges concerning the topic. The article addresses all kinds of easily explainable models which set our focus on enhancing kNN and decision tree based models. [SAFE ML: Surrogate Assisted Feature Extraction For Model Learing](https://arxiv.org/pdf/1902.11035.pdf) on the hand focuses on using Black Box models as surrogate models for improving explainable models.
+
+### Methodology
+
+As mentionted before we are going to work on an unbalanced dataset. In order to handle this issue and achieve the best possible results during our future work we are going to use two measures: AUPRC and AUC. The former one is designed to take the lack of balance into account. The dataset will be divided into two partitions using stratication in order to handle scarce factor levels. The training part of the dataset is going to be used to compare the effects of many processes used to enhance the results. We are going to use five fold crossvalidation. The final results are going to be presented using the test dataset.
+
+Our workflow can be divided into the following steps:
+
+#### EDA
+
+In this part we have gotten accustomed with the dataset. We started with feature distribution and definition analysis and studied the dependency of other variables on the target class. The column correlation was also taken into account. 
+
+##### Distribution of numeric variables
+
+![Data distribution](1.png)
+
+On this plot we can see the distribution of numeric variables. Most of them are normally distributed but there are also highly skewed variables such as capital-gain and capital-loss.
+
+##### Correlation plot of numeric variables
+
+![Correlation](2.png)
+
+On this plot we can observe that the numeric variables have weak correlations with each other.
+
+##### Density of observations by age and education
+
+![Density](3.png)
+
+We can see the density of observations divided by age and education-num features. Education-num is a numeric variable that depicts the education level in an ordered way.
+
+##### Level of education by target class
+
+![Education](4.png)
+
+We can observe that the highest rate of positive target class is for PHD and professors which does not surprise.
+
+##### Work class by target class
+
+![Work class](5.png)
+
+The highest rate when divided by work class can be observed for self employeed people.
+
+##### Age by target class
+
+![Age](6.png)
+
+The density of people earning more than $50000 is skewed toward the elderly.
+
+#### Initial Data Preparation
+
+The main focus of this part is to analyze and input the missing data. The side tasks are handling outliers and transformation of skewed variables using logistic functions. A few most popular inputation methods will be compared. We are not only going to use basic aggregation functions like mean and mode but also other machine learning models and advance inputation methods like [@MICE]. The results are going to be compared using a model that is robust to missing data which is a basic decision tree. 
+
+##### Missing Data by Feature
+
+![Missing Data](7.png)
+
+Missing data can be observed in three columns. They account up to eight percent of data. 
+
+##### Missing Data Pattern
+
+![Missing Data Pattern](8.png)
+
+It can be observed that data is missing at random. 
+
+##### Inputation Results
+
+* Data with missing values,        
+`PR AUC:  0.6457237  ROC AUC:  0.8357408`
+* Mean and mode basic inputation,  
+`PR AUC:  0.6472785  ROC AUC:  0.8362379`
+* KNN inputation,                  
+`PR AUC:  0.6547221  ROC AUC:  0.838437`
+* MICE inputation,                 
+`PR AUC:  0.6452505  ROC AUC:  0.834577`
+* Missing data removal.            
+`PR AUC:  0.6515376  ROC AUC:  0.8355305`
+
+We can observe that the best results were achieved using KNN inputation so from now on this will be the used method.
+
+##### Outliers
+
+![Missing Data](9.png)
+
+Some outliers can be observed in fnlwgt columns which is described as proximation for the demographic backgroud of people. The data was cropped to 300000 value.
+
+##### Skewness
+
+![Skewness of fnlwgt](10.png)
+
+The previously mentioned feature was also skewed. The solution for this problem was a basic logistic transformation.
+
+![Transformation of fnlwgt](11.png)
+
+The transformation was succesful and the new feature has an apprioprate distribution.
+
+#### Feature Engineering
+
+Firstly we are going to compare a few most popular Machine Learning models on our initially prepared dataset. We picked three popular explainable models: KNN, Decision Tree and Logistic Regression. 
+
+##### First comparison of models
+
+![First results](12.png)
+
+The best result was achieved by logistic regression which was surprising and shows how capable explainable models can be even on complex data. The next best explainable model ranked by AUPRC was KNN. That is the reason why we are going to focus on this model and try to achieve similar results to Black Box models using it. During the Feature Engineering we will utilize strategies such as transformating and extracting features using the SAFE algorithm mentioned in the article above. Amongst other strategies we will use variable selection and [@BO]. We are also going to do our best to explain the results and way of computing of the KNN model.
