@@ -23,7 +23,6 @@
 
 
 
-
 <meta name="date" content="2020-05-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -252,6 +251,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4.3" data-path="interpretability.html"><a href="interpretability.html#data-1"><i class="fa fa-check"></i><b>3.4.3</b> Data</a></li>
 <li class="chapter" data-level="3.4.4" data-path="interpretability.html"><a href="interpretability.html#methodology-11"><i class="fa fa-check"></i><b>3.4.4</b> Methodology</a></li>
 <li class="chapter" data-level="3.4.5" data-path="interpretability.html"><a href="interpretability.html#results-11"><i class="fa fa-check"></i><b>3.4.5</b> Results</a></li>
+<li class="chapter" data-level="3.4.6" data-path="interpretability.html"><a href="interpretability.html#summary-and-conclusions-11"><i class="fa fa-check"></i><b>3.4.6</b> Summary and conclusions</a></li>
 </ul></li>
 <li class="chapter" data-level="3.5" data-path="interpretability.html"><a href="interpretability.html#optimizing-features-transformations-for-linear-regression"><i class="fa fa-check"></i><b>3.5</b> Optimizing features’ transformations for linear regression</a>
 <ul>
@@ -260,7 +260,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.5.3" data-path="interpretability.html"><a href="interpretability.html#related-work-9"><i class="fa fa-check"></i><b>3.5.3</b> Related Work</a></li>
 <li class="chapter" data-level="3.5.4" data-path="interpretability.html"><a href="interpretability.html#methodology-12"><i class="fa fa-check"></i><b>3.5.4</b> Methodology</a></li>
 <li class="chapter" data-level="3.5.5" data-path="interpretability.html"><a href="interpretability.html#results-12"><i class="fa fa-check"></i><b>3.5.5</b> Results</a></li>
-<li class="chapter" data-level="3.5.6" data-path="interpretability.html"><a href="interpretability.html#summary-and-conclusions-12"><i class="fa fa-check"></i><b>3.5.6</b> Summary and conclusions</a></li>
 </ul></li>
 <li class="chapter" data-level="3.6" data-path="interpretability.html"><a href="interpretability.html#surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one."><i class="fa fa-check"></i><b>3.6</b> Surpassing black box model’s performance on unbalanced data with an interpretable one.</a>
 <ul>
@@ -786,9 +785,8 @@ Many black box regression models use various kinds of feature engineering during
 <p>We use standard and verified methods to compare results of the models. As the target variable is continuous, we may calculate Mean Square Error (MSE), Mean Absolute Error (MAE), and R-squared measures for each model, which provides us with proper and measurable way to compare the models’ performances. The same measures may be applied to black box models. The feature importance measure used in the after-evaluation comparison is based on the permutation feature importance, easily applied to any predictive machine learning model and therefore not constraining us to choose from a restricted set. In order provide unbiased results, we calculate the measures’ values during cross-validation process for each model, using various number of fold to present comparative results.</p>
 <p>//cytowania do dopisania</p>
 </div>
-
-<div id="results-11" class="section level3" number="3.4.5">
-<h3><span class="header-section-number">3.4.5</span> Results</h3>
+<div id="results-12" class="section level3" number="3.5.5">
+<h3><span class="header-section-number">3.5.5</span> Results</h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="interpretability.html#cb1-1"></a><span class="kw">require</span>(rmarkdown, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span>
 <span id="cb1-2"><a href="interpretability.html#cb1-2"></a>res &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/interpretability_3_5_results.csv&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;;&quot;</span>)</span>
 <span id="cb1-3"><a href="interpretability.html#cb1-3"></a><span class="kw">paged_table</span>(res )</span></code></pre></div>
@@ -799,7 +797,6 @@ Many black box regression models use various kinds of feature engineering during
 </div>
 <p>As the results presented above show, brute force method has already surpassed all the black box models trained on the plain data, while by hand method yielded slightly worse results.
 ### Summary and conclusions</p>
-
 
 </div>
 </div>
