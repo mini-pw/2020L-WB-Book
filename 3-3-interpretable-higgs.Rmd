@@ -1,0 +1,60 @@
+## Using interpretable Machine Learning models in the Higgs boson detection.
+
+*Authors: Mateusz Bakala, Michal Pastuszka, Karol Pysiak (Warsaw University of Technology)*
+
+### Abstract
+In this section we compare efficiency of explainable and black-box AI models in detection of the Higgs boson. Afterwards, we explore possible improvements to explainable models which might boost their accuracy to be on par with black-boxes, of which the most notable is R package called `rSAFE`. Lastly, we conclude that (((conclusion depends on results))).
+
+### Introduction and Motivation
+‘We fear that, which we do not understand’. This principle has often been used to portray artificial intelligence in popular culture. The notion that it is something beyond human comprehension became so common, that it started to affect the way we perceive computer algorithms. Because of that, it comes as no surprise that people become wary, hearing that the decisions which affect them directly were made by an AI.
+
+Machine Learning models, regardless of the algorithm used, are often treated as a black box that takes some data as an input and returns a prediction based on said data. This approach is most often seen from people who are unfamiliar with the methods used. In many fields, where the only concern is achieving results that are as accurate as possible, this is not a concern. There are however situations, where the risk of unpredictable or unjustified results is unacceptable. This includes uses in medical and judicial systems, where an incorrect decision may have severe consequences. Artificial intelligence could find plenty of uses in those areas, but it would require creating models, which make decisions based on a transparent set of rules. Those include algorithms such as decision trees and linear regression.
+
+That raises another problem. Such models often underperform in comparison to more advanced algorithms, notably artificial neural networks and ensemble based solutions, which are more capable at detecting nonlinearities and interactions in the data. Being able to achieve results comparable with said models, while retaining explainability would allow to increase the role of machine learning in fields where transparency is required. Furthermore, it would provide tools suitable for scientific analysis of relations between complex phenomena.
+
+The problem we study tackles methods of improving the predictions of simple models while retaining their transparency. In the rest of the paper we will describe methods of transforming the data to increase the quality of predictions. Most notably we will focus on a tool named rSAFE, which allows us to extract nonlinearities in the data, based on predictions of a so called ‘surrogate’ model.
+
+### Related Work
+https://arxiv.org/pdf/1402.4735.pdf -- Searching for Exotic Particles in High-Energy Physics with Deep Learning
+
+### Methodology
+
+#### Data
+Modern high energy physics is being done in colliders, of which the best known is Large Hadron Collider near Geneva. Here, basic particles are accelerated to collide at almost speed of light, resulting in creation of other, searched for particles. However, not every collision leads to desired processes and even then target particles may be highly unstable.
+
+One of such tasks is producing Higgs bosons by colliding two gluons. If a collision is successful, two gluons fuse into electrically-neutral Higgs boson, which then decays into a W boson and electrically-charged Higgs boson, which in turn decays into another W boson and the light Higgs boson. The last one decays mostly into two bottom quarks. However, if a collisions isn’t successful, two gluons create two top quarks, decaying then into a W boson and a bottom quark each, resulting in the same end-products, but without a Higgs boson in an intermediate state. The first process is called ‘signal’, while the second -- ‘background’.
+
+Our dataset is a dataset called ‘higgs’, retrieved from OpenML database. It contains about 100 thousand rows of data generated with an event generator using Monte Carlo method and is a subset of a [HIGGS dataset from UCI Machine Learning Repository](archive.ics.uci.edu/ml/datasets/HIGGS). The purpose of this data is to be used as a basis for approximation of a likelihood function, which in turn is used to extract a subspace of high-dimensional experiment data where null hypothesis can be rejected, effectively leading to a discovery of a new particle.
+
+Each row describes event, which must satisfy a set of requirements. Namely, exactly one electron or muon must be detected, as well as no less than four jets, every of these with the momentum transverse to the beam direction of value $> 20 GeV$ and an absolute value of pseudorapidity less than $2.5$. Also, at least two of the jets must have b-tag, meaning than they come from bottom quarks.
+
+Each event is described by its classification, 1 if a Higgs boson took part in the process or 0 if not. This column is our target, so it’s a two-class classification problem. There are 21 columns describing various low-level features, amongst which there are 16 describing momentum transverse to the beam direction (`jetXpt`), pseudorapidity (`jetXeta`), azimuthal angle (`jetXphi`) and presence of b-tag (`jetXb-tag`) for each of the four jets, as well as three first of these for the lepton (that is, electron or muon) and missing energy magnitude and its azimuthal angle.
+
+There are also 7 columns describing reconstructed invariant mass of particles appearing as non-final products of the collision event. Names like `m_jlv` or `m_wbb` mean that the mass reconstructed is of a particle which products consist of jet, lepton and neutrino or a W boson and two bottom quarks respectively. In this case, these particles are namely top quark and electrically-charged Higgs boson. These columns are so-called top-level features.
+
+#### Measures
+The first measure that we will use is a simple accuracy. It can be misleading, especially when the target variable is unbalanced, but it is very intuitive and in our dataset the target variable is well-balanced. 
+
+Second measure is the AUC score, which stands for Areas Under Curve of Receiver Operating Characteristic. It requires probabilities as an output of the model. We create the curve by moving the threshold of a minimal probability of a positive prediction from 0 to 1 and calculating the true positive rate to false positive rate ratio. This measure is much less prone to give falsely high scores than accuracy. The worst score in the AUC is $0.5$. We want to get AUC score as close as possible to $1$, however, close to $0$ is not bad, we just must invert the labels and we will get a close to $1$ AUC score. 
+
+Our last measure is the Area Under the Precision Recall Curve (AUPRC). It is very similar to AUC score, we just use Precision and Recall measures instead of true and false positive rates. It is quite resistant to a bad balance of the target variable. We want to reach the score as close as possible to $1$ and the score of $0$ is the worst possible case. 
+
+#### Models
+The main goal of this research is to find a way of enhancing the performance of interpretable models, so now we will choose algorithms for this task. For the first test algorithm we chose the logistic regression. It is one of the simplest classification methods. Like in the linear regression algorithm we fit a function to the training data, just instead of a linear function we use a logistic function for the logistic regression algorithm. So the interpretability amounts to the understanding of how points are spread throughout the space. 
+
+The second algorithm that we will use is a decision tree. It’s structure is very intuitive. We start our prediction from the root of a tree. Then we go up to the leaves basing our path on conditions stated in particular nodes. It is similar to how humans make their decisions. If we have to make one big decision we divide it into many smaller decisions which are much easier to make and after answering some yes/no questions we reach the final answer to the question, so to interpret this model we have to understand how these small decisions in every node are made. 
+
+Black box models usually have very complex structure, which gives them advantage in recognising complex structures of the data. On the other hand, they are very hard to interpret and explain compared to white box models. There is a package in the R language named rSAFE that meets halfway between black box models and white box models. It is a kind of a hybrid that uses black box models for extracting new features from the data and then using them to fit interpretable models. We will use it for enhancing our interpretable model and compare them to pure white box models.
+
+To have some perspective of what level of quality of predictions we can reach we will test some black box models. The black box model that we will use is ranger. This is a fast implementation of random forests. This is a light and tunable model, so we will try to reach the best performance as we can with this algorithm.
+
+For easily comparable results we will use exactly the same training and testing dataset. However, we do not limit our feature engineering to only one process for all models, because every algorithm can perform better with different features than the rest. What is more, we will focus on augmenting data in a way that will enable us to get as much as we can from simple, interpretable models.
+
+
+
+### Results
+
+
+### Summary and conclusions
+
+
