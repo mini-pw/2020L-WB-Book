@@ -265,13 +265,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="3.6.1" data-path="interpretability.html"><a href="interpretability.html#abstract-13"><i class="fa fa-check"></i><b>3.6.1</b> Abstract</a></li>
 <li class="chapter" data-level="3.6.2" data-path="interpretability.html"><a href="interpretability.html#introduction-and-motivation-11"><i class="fa fa-check"></i><b>3.6.2</b> Introduction and Motivation</a></li>
+<li class="chapter" data-level="3.6.3" data-path="interpretability.html"><a href="interpretability.html#data-2"><i class="fa fa-check"></i><b>3.6.3</b> Data</a></li>
+<li class="chapter" data-level="3.6.4" data-path="interpretability.html"><a href="interpretability.html#related-work-10"><i class="fa fa-check"></i><b>3.6.4</b> Related work</a></li>
+<li class="chapter" data-level="3.6.5" data-path="interpretability.html"><a href="interpretability.html#methodology-13"><i class="fa fa-check"></i><b>3.6.5</b> Methodology</a></li>
 </ul></li>
 <li class="chapter" data-level="3.7" data-path="interpretability.html"><a href="interpretability.html#which-neighbours-affected-house-prices-in-the-90s"><i class="fa fa-check"></i><b>3.7</b> Which Neighbours Affected House Prices in the ’90s?</a>
 <ul>
 <li class="chapter" data-level="3.7.1" data-path="interpretability.html"><a href="interpretability.html#introduction-2"><i class="fa fa-check"></i><b>3.7.1</b> Introduction</a></li>
-<li class="chapter" data-level="3.7.2" data-path="interpretability.html"><a href="interpretability.html#related-work-10"><i class="fa fa-check"></i><b>3.7.2</b> Related Work</a></li>
-<li class="chapter" data-level="3.7.3" data-path="interpretability.html"><a href="interpretability.html#data-2"><i class="fa fa-check"></i><b>3.7.3</b> Data</a></li>
-<li class="chapter" data-level="3.7.4" data-path="interpretability.html"><a href="interpretability.html#methodology-13"><i class="fa fa-check"></i><b>3.7.4</b> Methodology</a></li>
+<li class="chapter" data-level="3.7.2" data-path="interpretability.html"><a href="interpretability.html#related-work-11"><i class="fa fa-check"></i><b>3.7.2</b> Related Work</a></li>
+<li class="chapter" data-level="3.7.3" data-path="interpretability.html"><a href="interpretability.html#data-3"><i class="fa fa-check"></i><b>3.7.3</b> Data</a></li>
+<li class="chapter" data-level="3.7.4" data-path="interpretability.html"><a href="interpretability.html#methodology-14"><i class="fa fa-check"></i><b>3.7.4</b> Methodology</a></li>
 <li class="chapter" data-level="3.7.5" data-path="interpretability.html"><a href="interpretability.html#results-13"><i class="fa fa-check"></i><b>3.7.5</b> Results</a></li>
 <li class="chapter" data-level="3.7.6" data-path="interpretability.html"><a href="interpretability.html#conclusions"><i class="fa fa-check"></i><b>3.7.6</b> Conclusions</a></li>
 </ul></li>
@@ -279,8 +282,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="3.8.1" data-path="interpretability.html"><a href="interpretability.html#abstract-14"><i class="fa fa-check"></i><b>3.8.1</b> Abstract</a></li>
 <li class="chapter" data-level="3.8.2" data-path="interpretability.html"><a href="interpretability.html#introduction-3"><i class="fa fa-check"></i><b>3.8.2</b> Introduction</a></li>
-<li class="chapter" data-level="3.8.3" data-path="interpretability.html"><a href="interpretability.html#data-3"><i class="fa fa-check"></i><b>3.8.3</b> Data</a></li>
-<li class="chapter" data-level="3.8.4" data-path="interpretability.html"><a href="interpretability.html#methodology-14"><i class="fa fa-check"></i><b>3.8.4</b> Methodology</a></li>
+<li class="chapter" data-level="3.8.3" data-path="interpretability.html"><a href="interpretability.html#data-4"><i class="fa fa-check"></i><b>3.8.3</b> Data</a></li>
+<li class="chapter" data-level="3.8.4" data-path="interpretability.html"><a href="interpretability.html#methodology-15"><i class="fa fa-check"></i><b>3.8.4</b> Methodology</a></li>
 <li class="chapter" data-level="3.8.5" data-path="interpretability.html"><a href="interpretability.html#results-14"><i class="fa fa-check"></i><b>3.8.5</b> Results</a></li>
 <li class="chapter" data-level="3.8.6" data-path="interpretability.html"><a href="interpretability.html#conclusions-1"><i class="fa fa-check"></i><b>3.8.6</b> Conclusions</a></li>
 </ul></li>
@@ -828,12 +831,158 @@ Trust and transparency are also demanded.</p>
 <p>There are many methods that can help us create an interpretable model
 ‘’The easiest way to achieve interpretability is to use only a subset of algorithms that create interpretable models. Linear regression, logistic regression and the decision tree are commonly used interpretable models.’’ <span class="citation">(Molnar <a href="#ref-christophmonlar" role="doc-biblioref">2019</a>)</span></p>
 <p>Another way may be to use blackboxes to create an interpretable model.
-They can help us during transformation of the original data set or, for example, in selecting variables.
-In this article, we will discuss the process of creating an interpretable model whose target effectiveness will be comparable to blackbox models. We will present the whole
-workflow, during which we will get acquainted with the dataset with which we will work, we will use advanced feature engineering methods and compare the results obtained during all phases of process. An additional problem we will face during work will be unbalanced data and creating a model that will take them into account during prediction.</p>
-<p>We will use machine learning tools and frameworks available in R and Python. The subject of our analysis will be the “Adult” data set - (<a href="https://www.openml.org/d/179?fbclid=IwAR3W2OO_QNLM9cLmThzwmtJjOZ-GteprmynSTumIcTyT93BVeTX4gbGbZtM" class="uri">https://www.openml.org/d/179?fbclid=IwAR3W2OO_QNLM9cLmThzwmtJjOZ-GteprmynSTumIcTyT93BVeTX4gbGbZtM</a>). The goal is to predict whether income exceeds 50 000 $
-annually based on census data.</p>
+They can help us during transformation of the original data set or, for example, in selecting variables.</p>
+<p>In this article, we will discuss the process of creating an interpretable model whose target effectiveness will be comparable to blackbox models. We will present the whole workflow, during which we will get acquainted with the dataset with which we will work, we will use advanced feature engineering methods and compare the results obtained during all phases of process. An additional problem we will face during work will be unbalanced data and creating a model that will take them into account during prediction.</p>
+<p>We will use machine learning tools and frameworks available in R and Python.</p>
+</div>
+<div id="data-2" class="section level3" number="3.6.3">
+<h3><span class="header-section-number">3.6.3</span> Data</h3>
+<p>The dataset used is the adult dataset from OpenML. The original data comes from UCI and was extracted by Barry Becker from the 1994 Census database. The task is to predict whether a given adult makes more than $50,000 a year based attributes such as:
+* age,
+* race,
+* sex,
+* education,
+* native country,
+* work class,
+* weekly work hours,
+* capital gain,
+* capital loss,
+* proximation for the demographic backgroud of people,
+* relationship,
+* marital status,
+* occupation.</p>
+<p>In the above mentioned dataset we can observe a problem with target class distribution which is vastly unbalanced. The ratio of positive and negative values is around one to four. The dataset has overall of more than fourty eight thousand observations and fifteen features, some of which are scarce.</p>
+</div>
+<div id="related-work-10" class="section level3" number="3.6.4">
+<h3><span class="header-section-number">3.6.4</span> Related work</h3>
+<p>Many works concerning Explainable Artificial Intelligence have arose during the last few years as the topic got more and more popular. <a href="https://arxiv.org/abs/1910.10045?fbclid=IwAR1PriUQDAOqBYKCbQqB2JgNj2d0b7cg_CNx_CQLzsw1d-NcIYDLLUgK8g4">Explainable Artificial Intelligence (XAI): Concepts, Taxonomies, Opportunities and Challenges toward Responsible AI</a> is a paper about XAI in general and many challenges concerning the topic. The article addresses all kinds of easily explainable models which set our focus on enhancing kNN and decision tree based models. <a href="https://arxiv.org/pdf/1902.11035.pdf">SAFE ML: Surrogate Assisted Feature Extraction For Model Learing</a> on the hand focuses on using Black Box models as surrogate models for improving explainable models.</p>
+</div>
+<div id="methodology-13" class="section level3" number="3.6.5">
+<h3><span class="header-section-number">3.6.5</span> Methodology</h3>
+<p>As mentionted before we are going to work on an unbalanced dataset. In order to handle this issue and achieve the best possible results during our future work we are going to use two measures: AUPRC and AUC. The former one is designed to take the lack of balance into account. The dataset will be divided into two partitions using stratication in order to handle scarce factor levels. The training part of the dataset is going to be used to compare the effects of many processes used to enhance the results. We are going to use five fold crossvalidation. The final results are going to be presented using the test dataset.</p>
+<p>Our workflow can be divided into the following steps:</p>
+<div id="eda" class="section level4" number="3.6.5.1">
+<h4><span class="header-section-number">3.6.5.1</span> EDA</h4>
+<p>In this part we have gotten accustomed with the dataset. We started with feature distribution and definition analysis and studied the dependency of other variables on the target class. The column correlation was also taken into account.</p>
+<div id="distribution-of-numeric-variables" class="section level5" number="3.6.5.1.1">
+<h5><span class="header-section-number">3.6.5.1.1</span> Distribution of numeric variables</h5>
+<div class="figure">
+<img src="1.png" alt="" />
+<p class="caption">Data distribution</p>
+</div>
+<p>On this plot we can see the distribution of numeric variables. Most of them are normally distributed but there are also highly skewed variables such as capital-gain and capital-loss.</p>
+</div>
+<div id="correlation-plot-of-numeric-variables" class="section level5" number="3.6.5.1.2">
+<h5><span class="header-section-number">3.6.5.1.2</span> Correlation plot of numeric variables</h5>
+<div class="figure">
+<img src="2.png" alt="" />
+<p class="caption">Correlation</p>
+</div>
+<p>On this plot we can observe that the numeric variables have weak correlations with each other.</p>
+</div>
+<div id="density-of-observations-by-age-and-education" class="section level5" number="3.6.5.1.3">
+<h5><span class="header-section-number">3.6.5.1.3</span> Density of observations by age and education</h5>
+<div class="figure">
+<img src="3.png" alt="" />
+<p class="caption">Density</p>
+</div>
+<p>We can see the density of observations divided by age and education-num features. Education-num is a numeric variable that depicts the education level in an ordered way.</p>
+</div>
+<div id="level-of-education-by-target-class" class="section level5" number="3.6.5.1.4">
+<h5><span class="header-section-number">3.6.5.1.4</span> Level of education by target class</h5>
+<div class="figure">
+<img src="4.png" alt="" />
+<p class="caption">Education</p>
+</div>
+<p>We can observe that the highest rate of positive target class is for PHD and professors which does not surprise.</p>
+</div>
+<div id="work-class-by-target-class" class="section level5" number="3.6.5.1.5">
+<h5><span class="header-section-number">3.6.5.1.5</span> Work class by target class</h5>
+<div class="figure">
+<img src="5.png" alt="" />
+<p class="caption">Work class</p>
+</div>
+<p>The highest rate when divided by work class can be observed for self employeed people.</p>
+</div>
+<div id="age-by-target-class" class="section level5" number="3.6.5.1.6">
+<h5><span class="header-section-number">3.6.5.1.6</span> Age by target class</h5>
+<div class="figure">
+<img src="6.png" alt="" />
+<p class="caption">Age</p>
+</div>
+<p>The density of people earning more than $50000 is skewed toward the elderly.</p>
+</div>
+</div>
+<div id="initial-data-preparation-1" class="section level4" number="3.6.5.2">
+<h4><span class="header-section-number">3.6.5.2</span> Initial Data Preparation</h4>
+<p>The main focus of this part is to analyze and input the missing data. The side tasks are handling outliers and transformation of skewed variables using logistic functions. A few most popular inputation methods will be compared. We are not only going to use basic aggregation functions like mean and mode but also other machine learning models and advance inputation methods like <span class="citation">(Stef van Buuren <a href="#ref-MICE" role="doc-biblioref">2011</a>)</span>. The results are going to be compared using a model that is robust to missing data which is a basic decision tree.</p>
+<div id="missing-data-by-feature" class="section level5" number="3.6.5.2.1">
+<h5><span class="header-section-number">3.6.5.2.1</span> Missing Data by Feature</h5>
+<div class="figure">
+<img src="7.png" alt="" />
+<p class="caption">Missing Data</p>
+</div>
+<p>Missing data can be observed in three columns. They account up to eight percent of data.</p>
+</div>
+<div id="missing-data-pattern" class="section level5" number="3.6.5.2.2">
+<h5><span class="header-section-number">3.6.5.2.2</span> Missing Data Pattern</h5>
+<div class="figure">
+<img src="8.png" alt="" />
+<p class="caption">Missing Data Pattern</p>
+</div>
+<p>It can be observed that data is missing at random.</p>
+</div>
+<div id="inputation-results" class="section level5" number="3.6.5.2.3">
+<h5><span class="header-section-number">3.6.5.2.3</span> Inputation Results</h5>
+<ul>
+<li>Data with missing values,<br />
+<code>PR AUC:  0.6457237  ROC AUC:  0.8357408</code></li>
+<li>Mean and mode basic inputation,<br />
+<code>PR AUC:  0.6472785  ROC AUC:  0.8362379</code></li>
+<li>KNN inputation,<br />
+<code>PR AUC:  0.6547221  ROC AUC:  0.838437</code></li>
+<li>MICE inputation,<br />
+<code>PR AUC:  0.6452505  ROC AUC:  0.834577</code></li>
+<li>Missing data removal.<br />
+<code>PR AUC:  0.6515376  ROC AUC:  0.8355305</code></li>
+</ul>
+<p>We can observe that the best results were achieved using KNN inputation so from now on this will be the used method.</p>
+</div>
+<div id="outliers" class="section level5" number="3.6.5.2.4">
+<h5><span class="header-section-number">3.6.5.2.4</span> Outliers</h5>
+<div class="figure">
+<img src="9.png" alt="" />
+<p class="caption">Missing Data</p>
+</div>
+<p>Some outliers can be observed in fnlwgt columns which is described as proximation for the demographic backgroud of people. The data was cropped to 300000 value.</p>
+</div>
+<div id="skewness" class="section level5" number="3.6.5.2.5">
+<h5><span class="header-section-number">3.6.5.2.5</span> Skewness</h5>
+<div class="figure">
+<img src="10.png" alt="" />
+<p class="caption">Skewness of fnlwgt</p>
+</div>
+<p>The previously mentioned feature was also skewed. The solution for this problem was a basic logistic transformation.</p>
+<div class="figure">
+<img src="11.png" alt="" />
+<p class="caption">Transformation of fnlwgt</p>
+</div>
+<p>The transformation was succesful and the new feature has an apprioprate distribution.</p>
+</div>
+</div>
+<div id="feature-engineering" class="section level4" number="3.6.5.3">
+<h4><span class="header-section-number">3.6.5.3</span> Feature Engineering</h4>
+<p>Firstly we are going to compare a few most popular Machine Learning models on our initially prepared dataset. We picked three popular explainable models: KNN, Decision Tree and Logistic Regression.</p>
+<div id="first-comparison-of-models" class="section level5" number="3.6.5.3.1">
+<h5><span class="header-section-number">3.6.5.3.1</span> First comparison of models</h5>
+<div class="figure">
+<img src="12.png" alt="" />
+<p class="caption">First results</p>
+</div>
+<p>The best result was achieved by logistic regression which was surprising and shows how capable explainable models can be even on complex data. The next best explainable model ranked by AUPRC was KNN. That is the reason why we are going to focus on this model and try to achieve similar results to Black Box models using it. During the Feature Engineering we will utilize strategies such as transformating and extracting features using the SAFE algorithm mentioned in the article above. Amongst other strategies we will use variable selection and <span class="citation">(Bernd Bischl <a href="#ref-BO" role="doc-biblioref">2018</a>)</span>. We are also going to do our best to explain the results and way of computing of the KNN model.</p>
 
+</div>
+</div>
 </div>
 </div>
 <div id="which-neighbours-affected-house-prices-in-the-90s" class="section level2" number="3.7">
@@ -849,14 +998,14 @@ annually based on census data.</p>
 <p>In this paper, we perform a case study on the actual US. Census data from 1990 and deliver an interpretable white-box model that estimates the median house price by the region. We present multiple approaches to this problem and choose the best model, which achieves similar performance to complex black-boxes. Finally, using its interpretable nature, we answer various questions that give a new life to this historical data.</p>
 <p><strong>TODO</strong> add citations</p>
 </div>
-<div id="related-work-10" class="section level3" number="3.7.2">
+<div id="related-work-11" class="section level3" number="3.7.2">
 <h3><span class="header-section-number">3.7.2</span> Related Work</h3>
 <p><strong>TODO</strong></p>
 <p><a href="https://arxiv.org/abs/1901.01774" class="uri">https://arxiv.org/abs/1901.01774</a></p>
 <p><a href="https://arxiv.org/abs/1808.02547" class="uri">https://arxiv.org/abs/1808.02547</a></p>
 <p><a href="https://arxiv.org/abs/1909.00704" class="uri">https://arxiv.org/abs/1909.00704</a></p>
 </div>
-<div id="data-2" class="section level3" number="3.7.3">
+<div id="data-3" class="section level3" number="3.7.3">
 <h3><span class="header-section-number">3.7.3</span> Data</h3>
 <!-- http://www.cs.toronto.edu/~delve/data/census-house/censusDetail.html -->
 <p>For this case study we use the <em>house_8L</em> dataset crafted from data collected in US. in 1990 by the US. Census Bureau.
@@ -875,10 +1024,10 @@ More correlated variables of a higher variance make it significantly harder to e
 Such validation will allow us to evaluate our model on a more demanding task.
 The comprehensive description of used data can be found in &lt;&gt;.</p>
 </div>
-<div id="methodology-13" class="section level3" number="3.7.4">
+<div id="methodology-14" class="section level3" number="3.7.4">
 <h3><span class="header-section-number">3.7.4</span> Methodology</h3>
 <p>In this section, we are going to focus on developing the best white-box model, which provides interpretability of features. Throughout this case study, we use the Mean Absolute Error (MAE) measure to evaluate the model performance, because we later focus on the residuals while the mean of absolute values of residuals is the easiest to interpret.</p>
-<div id="eda" class="section level4" number="3.7.4.1">
+<div id="eda-1" class="section level4" number="3.7.4.1">
 <h4><span class="header-section-number">3.7.4.1</span> EDA</h4>
 <p><strong>TODO</strong> introduction</p>
 <p>The main conclusions from the Exploratory Data Analysis (EDA) are as follows:</p>
@@ -954,12 +1103,23 @@ The algorithm is:</p>
 <h3><span class="header-section-number">3.8.2</span> Introduction</h3>
 <p>Computer vision is widely known use case for neural networks. However neural networks are infamous for their complexity and lack of interpretability. On the other hand simple classifiers like KNN have really poor results for complex tasks like image recognition. In this article we will prove that it is possible to get best of both worlds using emmbeddings.</p>
 </div>
-<div id="data-3" class="section level3" number="3.8.3">
+<div id="data-4" class="section level3" number="3.8.3">
 <h3><span class="header-section-number">3.8.3</span> Data</h3>
 <p>We are going to use dataset <a href="https://www.openml.org/d/40996">Fashion-Mnist</a>. Fashion-MNIST is a dataset of Zalando’s article images, consisting of a training set of 60,000 examples and a test set of 10,000 examples. Each example is a 28x28 grayscale image, associated with a label from 10 classes. Classes are following: T-shirt/top, Trouser, Pullover, Dress, Coat, Sandal, Shirt, Sneaker, Bag, Ankle boot.</p>
 </div>
-<div id="methodology-14" class="section level3" number="3.8.4">
+<div id="methodology-15" class="section level3" number="3.8.4">
 <h3><span class="header-section-number">3.8.4</span> Methodology</h3>
+<p>The simplest and one of the most robust classifiers is KNN. It doesn’t generalize information, instead it saves training dataset and during prediction it finds the most similar historical observations and predicts label of a new observation based on their labels.</p>
+<p>However, it not only doesn’t have the capacity to distinguish important features from not important ones, but also to find more complex interactions between variables.</p>
+<p>One way to improve KNN’s performance is to preced closest neighbour computation with transformation of the space of observations, so that the derivative variables are more meaningful. Such beneficial transformation is called embedding. It can be done in various ways.</p>
+<p>The question is, whether or not the new classifier is interpretable. We argue, that it is. The main reason is that even if we can’t interpret the embedding part, we can at least provide historical data that our model used to make prediction. Someone could argue, that it can be done with every classifier, just by finding training data that obtains the most similar prediction. However, with our classifier we can say for sure, that prediction were purely made based on the most similar cases in our dataset, which is fundamentally not true about different classifiers.</p>
+<p>An embedding can be done made in various ways. In this article we will explore different embedding techniques, including:</p>
+<ul>
+<li><p>SVD embedding</p></li>
+<li><p>Logistic Regression Autoencoder</p></li>
+<li><p>Self Organizing Maps</p></li>
+<li><p>Convolutional Autoencoder</p></li>
+</ul>
 </div>
 <div id="results-14" class="section level3" number="3.8.5">
 <h3><span class="header-section-number">3.8.5</span> Results</h3>
@@ -974,6 +1134,9 @@ The algorithm is:</p>
 <div id="refs" class="references">
 <div id="ref-UME">
 <p>accenture. 2018. “UNDERSTANDING Machines: EXPLAINABLE Ai,” 19. <a href="https://www.accenture.com/_acnmedia/pdf-85/accenture-understanding-machines-explainable-ai.pdf?fbclid=IwAR0ZtyDNzHR8dMUJHPwa0CkuQXgOOE68UQV4JCcBxXudO3dlm14LjqX-B8g">https://www.accenture.com/_acnmedia/pdf-85/accenture-understanding-machines-explainable-ai.pdf?fbclid=IwAR0ZtyDNzHR8dMUJHPwa0CkuQXgOOE68UQV4JCcBxXudO3dlm14LjqX-B8g</a>.</p>
+</div>
+<div id="ref-BO">
+<p>Bernd Bischl, Jakob Bossek, Jakob Richter. 2018. “MlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions,” 23. <a href="https://arxiv.org/abs/1703.03373">https://arxiv.org/abs/1703.03373</a>.</p>
 </div>
 <div id="ref-DALEX">
 <p>Biecek, Przemyslaw. 2018. “DALEX: Explainers for Complex Predictive Models in R.” <em>Journal of Machine Learning Research</em> 19 (84): 1–5. <a href="http://jmlr.org/papers/v19/18-416.html">http://jmlr.org/papers/v19/18-416.html</a>.</p>
@@ -1010,6 +1173,9 @@ The algorithm is:</p>
 </div>
 <div id="ref-Sayyad-Shirabad+Menzies:2005">
 <p>Sayyad Shirabad, J., and T. J. Menzies. 2005. “The PROMISE Repository of Software Engineering Databases.” School of Information Technology and Engineering, University of Ottawa, Canada. <a href="http://promise.site.uottawa.ca/SERepository">http://promise.site.uottawa.ca/SERepository</a>.</p>
+</div>
+<div id="ref-MICE">
+<p>Stef van Buuren, Karin Groothuis-Oudshoorn. 2011. “Mice: Multivariate Imputation by Chained Equations in R.” <a href="https://www.jstatsoft.org/article/view/v045i03">https://www.jstatsoft.org/article/view/v045i03</a>.</p>
 </div>
 <div id="ref-OpenML2013">
 <p>Vanschoren, Joaquin, Jan N. van Rijn, Bernd Bischl, and Luis Torgo. 2013. “OpenML: Networked Science in Machine Learning.” <em>SIGKDD Explorations</em> 15 (2): 49–60. <a href="https://doi.org/10.1145/2641190.2641198">https://doi.org/10.1145/2641190.2641198</a>.</p>
