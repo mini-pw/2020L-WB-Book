@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-05-11" />
+<meta name="date" content="2020-05-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -261,7 +261,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.5.4" data-path="interpretability.html"><a href="interpretability.html#methodology-12"><i class="fa fa-check"></i><b>3.5.4</b> Methodology</a></li>
 <li class="chapter" data-level="3.5.5" data-path="interpretability.html"><a href="interpretability.html#results-12"><i class="fa fa-check"></i><b>3.5.5</b> Results</a></li>
 </ul></li>
-<li class="chapter" data-level="3.6" data-path="interpretability.html"><a href="interpretability.html#surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one."><i class="fa fa-check"></i><b>3.6</b> Surpassing black box model’s performance on unbalanced data with an interpretable one.</a>
+<li class="chapter" data-level="3.6" data-path="interpretability.html"><a href="interpretability.html#surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering"><i class="fa fa-check"></i><b>3.6</b> Surpassing black box model’s performance on unbalanced data with an interpretable one using advanced feature engineering</a>
 <ul>
 <li class="chapter" data-level="3.6.1" data-path="interpretability.html"><a href="interpretability.html#abstract-13"><i class="fa fa-check"></i><b>3.6.1</b> Abstract</a></li>
 <li class="chapter" data-level="3.6.2" data-path="interpretability.html"><a href="interpretability.html#introduction-and-motivation-11"><i class="fa fa-check"></i><b>3.6.2</b> Introduction and Motivation</a></li>
@@ -813,49 +813,52 @@ Many black box regression models use various kinds of feature engineering during
 
 </div>
 </div>
-<div id="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one." class="section level2" number="3.6">
-<h2><span class="header-section-number">3.6</span> Surpassing black box model’s performance on unbalanced data with an interpretable one.</h2>
+<div id="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering" class="section level2" number="3.6">
+<h2><span class="header-section-number">3.6</span> Surpassing black box model’s performance on unbalanced data with an interpretable one using advanced feature engineering</h2>
 <p><em>Authors: Witold Merkel, Adam Rydelek, Michał Stawikowski (Warsaw University of Technology)</em></p>
 <div id="abstract-13" class="section level3" number="3.6.1">
 <h3><span class="header-section-number">3.6.1</span> Abstract</h3>
+<p>Explainability is the most talked about topic of modern predictive models. The article touches on the topic of such models and their benefits. The main focus is to prove that even on complicated data, explainable models can achieve comparable performance to the best black-box models. Not only are there described strategies allowing better results but also greater explainability. The dataset used in experiments is the adult dataset from OpenML which is from Census database. During the experiments there are multiple processing techniques used, SAFE and different imputation methods among others. Every tool used is explained and the results gained from each part are shown and explained. Thanks to the fact that adult dataset is vastly unbalanced there is a perfect opportunity to present techniques which can be used to handle such tasks. All those methods combined allow for a presentation of a clear workflow enhancing explainable models performance with emphasis on decision tree models.</p>
 </div>
 <div id="introduction-and-motivation-11" class="section level3" number="3.6.2">
 <h3><span class="header-section-number">3.6.2</span> Introduction and Motivation</h3>
-<p>Recently, an increase in demand of interpretable models can be seen. Machine learning models have gained in popularity in recent years among many fields of business science, industry and also more and more often in medicine.
-“Interpretability is a quickly growing field in machine learning, and there have been multiple works examining various aspects of interpretations (sometimes under the heading explainable AI).” <span class="citation">(Murdoch <a href="#ref-IMLDEA" role="doc-biblioref">2018</a>)</span>
-The problem, however, turned out to be blackbox models, which did not provide sufficient information about the motivation in making specific decisions by the models.
-‘’Machine Learning models have been branded as ‘Black Boxes’ by many. This means that though we can get accurate predictions from them, we cannot clearly explain or identify the logic behind these predictions.” <span class="citation">(Pandey <a href="#ref-IML" role="doc-biblioref">2019</a>)</span></p>
-<p>Interpretability of models is a desirable feature among specialists in fields other than machine learning, it helps them make better decisions, justify their choices, and combine expert knowledge with the model’s indications.
-‘’ Machines and humans work differently in how they sense, understand and learn. Machines are better at recognizing low-level patterns in huge amounts of data, while people excel at connecting the dots among high-level patterns. To make better decisions, we need both working together. ‘’ <span class="citation">(accenture <a href="#ref-UME" role="doc-biblioref">2018</a>)</span>
-Trust and transparency are also demanded.</p>
-<p>There are many methods that can help us create an interpretable model
-‘’The easiest way to achieve interpretability is to use only a subset of algorithms that create interpretable models. Linear regression, logistic regression and the decision tree are commonly used interpretable models.’’ <span class="citation">(Molnar <a href="#ref-christophmonlar" role="doc-biblioref">2019</a>)</span></p>
-<p>Another way may be to use blackboxes to create an interpretable model.
-They can help us during transformation of the original data set or, for example, in selecting variables.</p>
+<p>Recently, an increase in demand of interpretable models can be seen. Machine learning models have gained in popularity in recent years among many fields of business science, industry and also more and more often in medicine.</p>
+<p>“Interpretability is a quickly growing field in machine learning, and there have been multiple works examining various aspects of interpretations (sometimes under the heading explainable AI).” <span class="citation">(Murdoch <a href="#ref-IMLDEA" role="doc-biblioref">2018</a>)</span></p>
+<p>The problem, however, turned out to be blackbox models, which did not provide sufficient information about the motivation in making specific decisions by the models.</p>
+<p>‘’Machine Learning models have been branded as ‘Black Boxes’ by many. This means that though we can get accurate predictions from them, we cannot clearly explain or identify the logic behind these predictions.” <span class="citation">(Pandey <a href="#ref-IML" role="doc-biblioref">2019</a>)</span></p>
+<p>Interpretability of models is a desirable feature among specialists in fields other than machine learning, it helps them make better decisions, justify their choices, and combine expert knowledge with the model’s indications.</p>
+<p>‘’ Machines and humans work differently in how they sense, understand and learn. Machines are better at recognizing low-level patterns in huge amounts of data, while people excel at connecting the dots among high-level patterns. To make better decisions, we need both working together. ‘’ <span class="citation">(accenture <a href="#ref-UME" role="doc-biblioref">2018</a>)</span></p>
+<p>Trust and transparency are also demanded.</p>
+<p>There are many methods that can help us create an interpretable model</p>
+<p>‘’The easiest way to achieve interpretability is to use only a subset of algorithms that create interpretable models. Linear regression, logistic regression and the decision tree are commonly used interpretable models.’’ <span class="citation">(Molnar <a href="#ref-christophmonlar" role="doc-biblioref">2019</a>)</span></p>
+<p>Another way may be to use blackboxes to create an interpretable model.</p>
+<p>They can help us during transformation of the original data set or, for example, in selecting variables.</p>
 <p>In this article, we will discuss the process of creating an interpretable model whose target effectiveness will be comparable to blackbox models. We will present the whole workflow, during which we will get acquainted with the dataset with which we will work, we will use advanced feature engineering methods and compare the results obtained during all phases of process. An additional problem we will face during work will be unbalanced data and creating a model that will take them into account during prediction.</p>
 <p>We will use machine learning tools and frameworks available in R and Python.</p>
 </div>
 <div id="data-2" class="section level3" number="3.6.3">
 <h3><span class="header-section-number">3.6.3</span> Data</h3>
-<p>The dataset used is the adult dataset from OpenML. The original data comes from UCI and was extracted by Barry Becker from the 1994 Census database. The task is to predict whether a given adult makes more than $50,000 a year based attributes such as:
-* age,
-* race,
-* sex,
-* education,
-* native country,
-* work class,
-* weekly work hours,
-* capital gain,
-* capital loss,
-* proximation for the demographic backgroud of people,
-* relationship,
-* marital status,
-* occupation.</p>
+<p>The dataset used is the adult dataset from OpenML. The original data comes from UCI and was extracted by Barry Becker from the 1994 Census database. The task is to predict whether a given adult makes more than $50,000 a year based attributes such as:</p>
+<ul>
+<li><p>age,</p></li>
+<li><p>race,</p></li>
+<li><p>sex,</p></li>
+<li><p>education,</p></li>
+<li><p>native country,</p></li>
+<li><p>work class,</p></li>
+<li><p>weekly work hours,</p></li>
+<li><p>capital gain,</p></li>
+<li><p>capital loss,</p></li>
+<li><p>proximation for the demographic backgroud of people,</p></li>
+<li><p>relationship,</p></li>
+<li><p>marital status,</p></li>
+<li><p>occupation.</p></li>
+</ul>
 <p>In the above mentioned dataset we can observe a problem with target class distribution which is vastly unbalanced. The ratio of positive and negative values is around one to four. The dataset has overall of more than fourty eight thousand observations and fifteen features, some of which are scarce.</p>
 </div>
 <div id="related-work-10" class="section level3" number="3.6.4">
 <h3><span class="header-section-number">3.6.4</span> Related work</h3>
-<p>Many works concerning Explainable Artificial Intelligence have arose during the last few years as the topic got more and more popular. <a href="https://arxiv.org/abs/1910.10045?fbclid=IwAR1PriUQDAOqBYKCbQqB2JgNj2d0b7cg_CNx_CQLzsw1d-NcIYDLLUgK8g4">Explainable Artificial Intelligence (XAI): Concepts, Taxonomies, Opportunities and Challenges toward Responsible AI</a> is a paper about XAI in general and many challenges concerning the topic. The article addresses all kinds of easily explainable models which set our focus on enhancing kNN and decision tree based models. <a href="https://arxiv.org/pdf/1902.11035.pdf">SAFE ML: Surrogate Assisted Feature Extraction For Model Learing</a> on the hand focuses on using Black Box models as surrogate models for improving explainable models.</p>
+<p>Many works concerning Explainable Artificial Intelligence have arose during the last few years as the topic got more and more popular. [Explainable Artificial Intelligence (XAI): Concepts, Taxonomies, Opportunities and Challenges toward Responsible AI] <span class="citation">(Alejandro Barredo Arrieta <a href="#ref-EAICTOC" role="doc-biblioref">2019</a>)</span> is a paper about XAI in general and many challenges concerning the topic. The article addresses all kinds of easily explainable models which set our focus on enhancing kNN and decision tree based models. [SAFE ML: Surrogate Assisted Feature Extraction For Model Learing] <span class="citation">(Gosiewska et al. <a href="#ref-gosiewska2019safe" role="doc-biblioref">2019</a>)</span> on the hand focuses on using Black Box models as surrogate models for improving explainable models.</p>
 </div>
 <div id="methodology-13" class="section level3" number="3.6.5">
 <h3><span class="header-section-number">3.6.5</span> Methodology</h3>
@@ -867,7 +870,7 @@ They can help us during transformation of the original data set or, for example,
 <div id="distribution-of-numeric-variables" class="section level5" number="3.6.5.1.1">
 <h5><span class="header-section-number">3.6.5.1.1</span> Distribution of numeric variables</h5>
 <div class="figure">
-<img src="1.png" alt="" />
+<img src="images/3-6-1.png" alt="" />
 <p class="caption">Data distribution</p>
 </div>
 <p>On this plot we can see the distribution of numeric variables. Most of them are normally distributed but there are also highly skewed variables such as capital-gain and capital-loss.</p>
@@ -875,7 +878,7 @@ They can help us during transformation of the original data set or, for example,
 <div id="correlation-plot-of-numeric-variables" class="section level5" number="3.6.5.1.2">
 <h5><span class="header-section-number">3.6.5.1.2</span> Correlation plot of numeric variables</h5>
 <div class="figure">
-<img src="2.png" alt="" />
+<img src="images/3-6-2.png" alt="" />
 <p class="caption">Correlation</p>
 </div>
 <p>On this plot we can observe that the numeric variables have weak correlations with each other.</p>
@@ -883,7 +886,7 @@ They can help us during transformation of the original data set or, for example,
 <div id="density-of-observations-by-age-and-education" class="section level5" number="3.6.5.1.3">
 <h5><span class="header-section-number">3.6.5.1.3</span> Density of observations by age and education</h5>
 <div class="figure">
-<img src="3.png" alt="" />
+<img src="images/3-6-3.png" alt="" />
 <p class="caption">Density</p>
 </div>
 <p>We can see the density of observations divided by age and education-num features. Education-num is a numeric variable that depicts the education level in an ordered way.</p>
@@ -891,7 +894,7 @@ They can help us during transformation of the original data set or, for example,
 <div id="level-of-education-by-target-class" class="section level5" number="3.6.5.1.4">
 <h5><span class="header-section-number">3.6.5.1.4</span> Level of education by target class</h5>
 <div class="figure">
-<img src="4.png" alt="" />
+<img src="images/3-6-4.png" alt="" />
 <p class="caption">Education</p>
 </div>
 <p>We can observe that the highest rate of positive target class is for PHD and professors which does not surprise.</p>
@@ -899,7 +902,7 @@ They can help us during transformation of the original data set or, for example,
 <div id="work-class-by-target-class" class="section level5" number="3.6.5.1.5">
 <h5><span class="header-section-number">3.6.5.1.5</span> Work class by target class</h5>
 <div class="figure">
-<img src="5.png" alt="" />
+<img src="images/3-6-5.png" alt="" />
 <p class="caption">Work class</p>
 </div>
 <p>The highest rate when divided by work class can be observed for self employeed people.</p>
@@ -907,7 +910,7 @@ They can help us during transformation of the original data set or, for example,
 <div id="age-by-target-class" class="section level5" number="3.6.5.1.6">
 <h5><span class="header-section-number">3.6.5.1.6</span> Age by target class</h5>
 <div class="figure">
-<img src="6.png" alt="" />
+<img src="images/3-6-6.png" alt="" />
 <p class="caption">Age</p>
 </div>
 <p>The density of people earning more than $50000 is skewed toward the elderly.</p>
@@ -919,7 +922,7 @@ They can help us during transformation of the original data set or, for example,
 <div id="missing-data-by-feature" class="section level5" number="3.6.5.2.1">
 <h5><span class="header-section-number">3.6.5.2.1</span> Missing Data by Feature</h5>
 <div class="figure">
-<img src="7.png" alt="" />
+<img src="images/3-6-7.png" alt="" />
 <p class="caption">Missing Data</p>
 </div>
 <p>Missing data can be observed in three columns. They account up to eight percent of data.</p>
@@ -927,7 +930,7 @@ They can help us during transformation of the original data set or, for example,
 <div id="missing-data-pattern" class="section level5" number="3.6.5.2.2">
 <h5><span class="header-section-number">3.6.5.2.2</span> Missing Data Pattern</h5>
 <div class="figure">
-<img src="8.png" alt="" />
+<img src="images/3-6-8.png" alt="" />
 <p class="caption">Missing Data Pattern</p>
 </div>
 <p>It can be observed that data is missing at random.</p>
@@ -935,53 +938,130 @@ They can help us during transformation of the original data set or, for example,
 <div id="inputation-results" class="section level5" number="3.6.5.2.3">
 <h5><span class="header-section-number">3.6.5.2.3</span> Inputation Results</h5>
 <ul>
-<li>Data with missing values,<br />
-<code>PR AUC:  0.6457237  ROC AUC:  0.8357408</code></li>
-<li>Mean and mode basic inputation,<br />
-<code>PR AUC:  0.6472785  ROC AUC:  0.8362379</code></li>
-<li>KNN inputation,<br />
-<code>PR AUC:  0.6547221  ROC AUC:  0.838437</code></li>
-<li>MICE inputation,<br />
-<code>PR AUC:  0.6452505  ROC AUC:  0.834577</code></li>
-<li>Missing data removal.<br />
-<code>PR AUC:  0.6515376  ROC AUC:  0.8355305</code></li>
+<li>Data with missing values,</li>
 </ul>
+<p><code>PR AUC: 0.6457237 ROC AUC: 0.8357408</code></p>
+<ul>
+<li>Mean and mode basic inputation,</li>
+</ul>
+<p><code>PR AUC: 0.6472785 ROC AUC: 0.8362379</code></p>
+<ul>
+<li>KNN inputation,</li>
+</ul>
+<p><code>PR AUC: 0.6547221 ROC AUC: 0.838437</code></p>
+<ul>
+<li>MICE inputation,</li>
+</ul>
+<p><code>PR AUC: 0.6452505 ROC AUC: 0.834577</code></p>
+<ul>
+<li>Missing data removal.</li>
+</ul>
+<p><code>PR AUC: 0.6515376 ROC AUC: 0.8355305</code></p>
 <p>We can observe that the best results were achieved using KNN inputation so from now on this will be the used method.</p>
 </div>
 <div id="outliers" class="section level5" number="3.6.5.2.4">
 <h5><span class="header-section-number">3.6.5.2.4</span> Outliers</h5>
 <div class="figure">
-<img src="9.png" alt="" />
+<img src="images/3-6-9.png" alt="" />
 <p class="caption">Missing Data</p>
 </div>
-<p>Some outliers can be observed in fnlwgt columns which is described as proximation for the demographic backgroud of people. The data was cropped to 300000 value.</p>
+<p>Some outliers can be observed in fnlwgt columns which is described as proximation for the demographic background of people. The data was cropped to 300000 value.</p>
 </div>
 <div id="skewness" class="section level5" number="3.6.5.2.5">
 <h5><span class="header-section-number">3.6.5.2.5</span> Skewness</h5>
 <div class="figure">
-<img src="10.png" alt="" />
+<img src="images/3-6-10.png" alt="" />
 <p class="caption">Skewness of fnlwgt</p>
 </div>
 <p>The previously mentioned feature was also skewed. The solution for this problem was a basic logistic transformation.</p>
 <div class="figure">
-<img src="11.png" alt="" />
+<img src="images/3-6-11.png" alt="" />
 <p class="caption">Transformation of fnlwgt</p>
 </div>
 <p>The transformation was succesful and the new feature has an apprioprate distribution.</p>
 </div>
 </div>
-<div id="feature-engineering" class="section level4" number="3.6.5.3">
-<h4><span class="header-section-number">3.6.5.3</span> Feature Engineering</h4>
-<p>Firstly we are going to compare a few most popular Machine Learning models on our initially prepared dataset. We picked three popular explainable models: KNN, Decision Tree and Logistic Regression.</p>
+<div id="feature-engineering-and-tuning" class="section level4" number="3.6.5.3">
+<h4><span class="header-section-number">3.6.5.3</span> Feature Engineering and Tuning</h4>
+<p>Firstly we are going to compare a few most popular Machine Learning models on our initially prepared dataset. We picked three popular explainable models: <strong>KNN</strong>, <strong>Decision Tree</strong> and <strong>Logistic Regression</strong>.</p>
 <div id="first-comparison-of-models" class="section level5" number="3.6.5.3.1">
 <h5><span class="header-section-number">3.6.5.3.1</span> First comparison of models</h5>
 <div class="figure">
-<img src="12.png" alt="" />
+<img src="images/3-6-12.png" alt="" />
 <p class="caption">First results</p>
 </div>
-<p>The best result was achieved by logistic regression which was surprising and shows how capable explainable models can be even on complex data. The next best explainable model ranked by AUPRC was KNN. That is the reason why we are going to focus on this model and try to achieve similar results to Black Box models using it. During the Feature Engineering we will utilize strategies such as transformating and extracting features using the SAFE algorithm mentioned in the article above. Amongst other strategies we will use variable selection and <span class="citation">(Bernd Bischl <a href="#ref-BO" role="doc-biblioref">2018</a>)</span>. We are also going to do our best to explain the results and way of computing of the KNN model.</p>
-
+<p>The best result was achieved by logistic regression which was surprising and shows how capable explainable models can be even on complex data. The next best explainable model ranked by AUPRC was <strong>KNN</strong> and <strong>Decision Tree</strong>. Due to the fact that logistic regression obtained a better result than black boxes at the very start, and the <strong>KNN</strong> model is not globally interpretable, we will focus on the decision tree, which is a popular and easily interpretable model. That is the reason why we are going to work mainly with this model and initialy with KNN for comparison in our goal to achieve similar results to Black Box models using it, but our final model will be a decision tree. The best Black boxes were <strong>Random Forest</strong> and <strong>Adaboost</strong>, because of that in the later phase of our project we will depend on them to make our results better. During the Feature Engineering we will utilize strategies such as transformating and extracting features using the SAFE algorithm mentioned in the article above. Amongst other strategies we will use variable selection based on random forest feature importance and tuning models with Bayesian optimization - mlrMBO <span class="citation">(Bernd Bischl <a href="#ref-BO" role="doc-biblioref">2018</a>)</span> based on custom measure: AUPRC and not the typical AUC. Another interesting aspect that we are going to look into is changing the type of target to numeric and by doing so changing our task from classification to regression, surprisingly it improves our results.</p>
 </div>
+<div id="rsafe" class="section level5" number="3.6.5.3.2">
+<h5><span class="header-section-number">3.6.5.3.2</span> rSAFE</h5>
+<blockquote>
+<p>The SAFE ML algorithm uses a complex model as a surrogate. New binary
+features are created on the basis of surrogate predictions. These new
+features are used to train a simple refined model. (…) method
+that uses elastic black-boxes as surrogate models to create a simpler,
+less opaque, yet still accurate and interpretable glass-box models.
+New models are created on newly engineered features extracted/learned
+with the help of a surrogate model.</p>
+</blockquote>
+<p><span class="citation">(Gosiewska et al. <a href="#ref-gosiewska2019safe" role="doc-biblioref">2019</a>)</span></p>
+<p>To extract new variables we will use rSAFE, which will depend on two different Black Box models: Random Forest and Adaboost. Those models were tuned to increase the final result. Based on the initial variables and the new ones created by the rSafe algorithm, we will choose the combination that will be the best for this problem. We will achieve this by analyzing various values ​​of the “regularization penalty” parameter in the data extraction algorithm in the rSafe package and choosing the one that gives us the best result.</p>
+<ul>
+<li>decision tree,</li>
+</ul>
+<p>from: <code>PR AUC: 0.6552104 ROC AUC: 0.8421331</code>
+to: <code>PR AUC: 0.6743798 ROC AUC: 0.8512746</code></p>
+<ul>
+<li>knn,</li>
+</ul>
+<p>from: <code>PR AUC: 0.6981 ROC AUC: 0.8592132</code>
+to: <code>PR AUC: 0.7063880 ROC AUC: 0.8679561</code></p>
+<p>From the above table it can be observed that this method gave us a significant improvement in terms of AUC and AUPRC. New variables that were extracted and chosen with penalty regularization are:</p>
+<ul>
+<li>“age_new” - new levels: (-Inf, 32] and (32, Inf),</li>
+<li>“fnlwgt_new” - new levels: (-Inf, 11.70863] and (11.70863, Inf),</li>
+<li>"hours.per.week_new - new levels: (-Inf, 40] and (40, Inf),</li>
+<li>“race_new” - new levels: White_Asian-Pac-Islander and Amer-Indian-Eskimo_Other_Black.</li>
+</ul>
+</div>
+<div id="change-to-regression" class="section level5" number="3.6.5.3.3">
+<h5><span class="header-section-number">3.6.5.3.3</span> Change to regression</h5>
+<p>The next approach we chose based on our previous experience with unbalanced datasets is changing our task from classification to regression and by doing so we improved our prediction.</p>
+<ul>
+<li>decision tree,</li>
+</ul>
+<p>from: <code>PR AUC: 0.6743798 ROC AUC: 0.8512746</code>
+to: <code>PR AUC: 0.7166287 ROC AUC: 0.8654641</code></p>
+<p>In case of KNN there was no visible improvement.</p>
+</div>
+<div id="variable-selection" class="section level5" number="3.6.5.3.4">
+<h5><span class="header-section-number">3.6.5.3.4</span> Variable selection</h5>
+<p>Additionally we carried out a variable selection on those that are currently used. It was based on feature importance from a random forest model, we use ten most important variables from fifteen that were being used before.</p>
+<ul>
+<li>decision tree,</li>
+</ul>
+<p>from: <code>PR AUC: 0.7166287 ROC AUC: 0.8654641</code>
+to: <code>PR AUC: 0.7197062 ROC AUC: 0.8714894</code></p>
+<p>The improvement is slight, but because of this operation we are using a less complicated model, so we decided to use it.</p>
+</div>
+<div id="tuning" class="section level5" number="3.6.5.3.5">
+<h5><span class="header-section-number">3.6.5.3.5</span> Tuning</h5>
+<p>Last phase was tuning our decision tree model. We based it on mlrMBO, but our method is adjusted to the task. The optimized measure is AUPRC, this proces is slightly different from optimizing AUC. Before using MBO we select the optimal range of parameters like: “minsplit” and “minbucket”. After selecting ten optimal values of the first one we select ten optimal for the second. For each of those hundred pairs we use MBO to find the optimal “cp” parameter. The best set of parameters we found is: “minsplit” = 4, “minbucket” = 11, “cp” = 0.0001863419. The result we achieved:</p>
+<ul>
+<li>decision tree,</li>
+</ul>
+<p>from: <code>PR AUC: 0.7197062 ROC AUC: 0.8714894</code>
+to: <code>PR AUC: 0.7939883 ROC AUC: 0.9122904</code></p>
+<p>Results achieved in this phase are really high, we managed to top those from black boxes and the logistic regression one.</p>
+</div>
+</div>
+<div id="results-and-conclusion" class="section level4" number="3.6.5.4">
+<h4><span class="header-section-number">3.6.5.4</span> Results and conclusion</h4>
+<div class="figure">
+<img src="images/3-6-13.png" alt="" />
+<p class="caption">Differences between each stage</p>
+</div>
+<p>From the above chart, we can see that thanks to our actions the performance of a fully interpretable model surpassed all basic black boxes and logistic regression, which from the start had really high results. It proves that it is possible to achieve comparable or even better results with interpretable models than black boxes even on unbalanced datasets, such as “adult”. It requires some work, but there are a lot of methods that make it possible to improve our performance. Some of them may be based on very well-functioning black box models. Probably in comparison with tuned black box model, we would achieve lesser results, but interpretable models have an advantage, people can understand why some choices were made and can be safely use when transparency and ease of understanding are needed. Using models such as logistic regression or decision trees make it possible. In this paper we showed that models built using these algorithms after some modifications are able to get similar results to such powerful models as random forest or adaboost, and even artificial deep neural networks.</p>
+
 </div>
 </div>
 </div>
@@ -1045,7 +1125,7 @@ The comprehensive description of used data can be found in &lt;&gt;.</p>
 <li>We can reliably split the data into train and test using 2:1 ratio.</li>
 </ol>
 </div>
-<div id="rsafe" class="section level4" number="3.7.4.2">
+<div id="rsafe-1" class="section level4" number="3.7.4.2">
 <h4><span class="header-section-number">3.7.4.2</span> rSAFE</h4>
 <p>The first approach was using the SAFE <span class="citation">(<span class="citeproc-not-found" data-reference-id="safe"><strong>???</strong></span>)</span> technique to engineer new features and produce a linear regression model. We took a well-performing black-box <code>ranger</code> <span class="citation">(Wright and Ziegler <a href="#ref-ranger" role="doc-biblioref">2017</a>)</span> model and extracted new interpretable features using its Partial Dependence Profiles. Then we used these features to craft a new linear model which indeed was better than the baseline linear model by about 10%. It is worth noting that both of these linear models had a hard time succeeding because of target skewness.</p>
 </div>
@@ -1134,6 +1214,9 @@ The algorithm is:</p>
 <div id="refs" class="references">
 <div id="ref-UME">
 <p>accenture. 2018. “UNDERSTANDING Machines: EXPLAINABLE Ai,” 19. <a href="https://www.accenture.com/_acnmedia/pdf-85/accenture-understanding-machines-explainable-ai.pdf?fbclid=IwAR0ZtyDNzHR8dMUJHPwa0CkuQXgOOE68UQV4JCcBxXudO3dlm14LjqX-B8g">https://www.accenture.com/_acnmedia/pdf-85/accenture-understanding-machines-explainable-ai.pdf?fbclid=IwAR0ZtyDNzHR8dMUJHPwa0CkuQXgOOE68UQV4JCcBxXudO3dlm14LjqX-B8g</a>.</p>
+</div>
+<div id="ref-EAICTOC">
+<p>Alejandro Barredo Arrieta, Javier Del Ser, Natalia Díaz-Rodríguez. 2019. “Explainable Artificial Intelligence (Xai): Concepts, Taxonomies, Opportunities and Challenges Toward Responsible Ai,” 67. <a href="https://arxiv.org/abs/1910.10045">https://arxiv.org/abs/1910.10045</a>.</p>
 </div>
 <div id="ref-BO">
 <p>Bernd Bischl, Jakob Bossek, Jakob Richter. 2018. “MlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions,” 23. <a href="https://arxiv.org/abs/1703.03373">https://arxiv.org/abs/1703.03373</a>.</p>
