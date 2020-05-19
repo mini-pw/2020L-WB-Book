@@ -38,6 +38,7 @@ jobs:
           R -e 'install.packages("renv")'
           R -e 'install.packages("bookdown")'
           R -e 'install.packages("ggplot2")'
+          R -e 'install.packages("svglite")'         
           R -e 'renv::restore()'
       
       - name: Build site
