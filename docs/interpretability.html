@@ -53,69 +53,6 @@
 <script src="libs/pagedtable/js/pagedtable.js"></script>
 
 
-<style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
 
 </head>
 
@@ -249,7 +186,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4.5" data-path="interpretability.html"><a href="interpretability.html#results-11"><i class="fa fa-check"></i><b>3.4.5</b> Results</a></li>
 <li class="chapter" data-level="3.4.6" data-path="interpretability.html"><a href="interpretability.html#summary-and-conclusions-10"><i class="fa fa-check"></i><b>3.4.6</b> Summary and conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="3.5" data-path="interpretability.html"><a href="interpretability.html#optimizing-features-transformations-for-linear-regression"><i class="fa fa-check"></i><b>3.5</b> Optimizing features’ transformations for linear regression</a>
+<li class="chapter" data-level="3.5" data-path="interpretability.html"><a href="interpretability.html#interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models---exploration-on-concrete-compressive-strength-dataset-with-new-feature-importance-metric."><i class="fa fa-check"></i><b>3.5</b> Interpretable, non-linear feature engineering techniques for linear regression models - exploration on Concrete compressive strength dataset with new feature importance metric.</a>
 <ul>
 <li class="chapter" data-level="3.5.1" data-path="interpretability.html"><a href="interpretability.html#abstract-12"><i class="fa fa-check"></i><b>3.5.1</b> Abstract</a></li>
 <li class="chapter" data-level="3.5.2" data-path="interpretability.html"><a href="interpretability.html#introduction-and-motivation-10"><i class="fa fa-check"></i><b>3.5.2</b> Introduction and Motivation</a></li>
@@ -762,11 +699,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </div>
 </div>
-<div id="optimizing-features-transformations-for-linear-regression" class="section level2" number="3.5">
-<h2><span class="header-section-number">3.5</span> Optimizing features’ transformations for linear regression</h2>
+<div id="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models---exploration-on-concrete-compressive-strength-dataset-with-new-feature-importance-metric." class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> Interpretable, non-linear feature engineering techniques for linear regression models - exploration on Concrete compressive strength dataset with new feature importance metric.</h2>
 <p><em>Authors: Łukasz Brzozowski, Wojciech Kretowicz, Kacper Siemaszko (Warsaw University of Technology)</em></p>
 <div id="abstract-12" class="section level3" number="3.5.1">
 <h3><span class="header-section-number">3.5.1</span> Abstract</h3>
+<p>In this article, we compare few interpretable, non-linear feature engineering techniques used to improve linear regression models performance on Cocrete compressive strength dataset. To assert their interpretability, we introduce a new metric for measuring feature importance, which uses derivatives of feature transformations to trace back original features’ impact. As a result, we obtain a thorough comparison of transformation techniques on 2 black-box models - <code>ranger</code> and <code>svm</code> and 3 glass-box models - <code>rpart</code>, <code>glmnet</code> and <code>lm</code>.</p>
 </div>
 <div id="introduction-and-motivation-10" class="section level3" number="3.5.2">
 <h3><span class="header-section-number">3.5.2</span> Introduction and Motivation</h3>
@@ -779,7 +717,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">3.5.3</span> Related Work</h3>
 <p>There exist many papers related to feature engineering. We will shortly present few of them.</p>
 <p>One of these papers is “Enhancing Regression Models for Complex Systems Using Evolutionary Techniques for Feature Engineering” Patricia Arroba, José L. Risco-Martín, Marina Zapater, José M. Moya &amp; José L. Ayala <span class="citation">(Patricia Arroba <a href="#ref-ETFFE" role="doc-biblioref">2015</a>)</span>. This paper describes, how feature transformations in linear regression can be chosen based on the genetic algorithms.</p>
-<p>Another one is “Automatic feature engineering for regression models with machine learning: An evolutionary computation and statistics hybrid” Vinícius Veloso de Melo, Wolfgang Banzhaf <span class="citation">(<span class="citeproc-not-found" data-reference-id="VELOSODEMELO"><strong>???</strong></span>)</span>. Similarly to the previous one, this paper tries to automate feature engineering using evolutionar computation to make a hybrid model - final model is simple linear regression while its features are found by more complex algorithm.</p>
+<p>Another one is “Automatic feature engineering for regression models with machine learning: An evolutionary computation and statistics hybrid” Vinícius Veloso de Melo, Wolfgang Banzhaf <span class="citation">(Melo] and Banzhaf <a href="#ref-VELOSODEMELO" role="doc-biblioref">2018</a>)</span>. Similarly to the previous one, this paper tries to automate feature engineering using evolutionar computation to make a hybrid model - final model is simple linear regression while its features are found by more complex algorithm.</p>
 </div>
 <div id="methodology-12" class="section level3" number="3.5.4">
 <h3><span class="header-section-number">3.5.4</span> Methodology</h3>
@@ -791,14 +729,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Bayesian Optimization method <span class="citation">(Bernd Bischl <a href="#ref-BO" role="doc-biblioref">2018</a>)</span> - we wish to treat the task of finding optimal data transformation as an optimization problem. Once we restrict the transformations e.g. by choosing maximal degree of a polynomial transformation of each variable, we may then search the possible models’ space with the use of Bayesian Optimization in order to maximize their performance. This way we may also restrain the model from generating a lrage number of variables, while also hopefully yielding good results.</p></li>
 <li><p>One of our ideas is to use GP (Genetic Programming) to find best feature transformations. We will create a set of simple operations such as adding, multiplying, taking a specific power, for example 2, taking logarithm and so on. Our goal is to minimize mean squared error of linear regression (ridge) after transformations. We will use one of the variations of the genetic algorithms to create an operation tree minimizing our goal. This method should find much better solutions without extending dimensionality too much or making too complex transformations. We will get linear regression with much better performance without loss of the interpretability. This method will teach linear regression many times, because in each generation each individual requires its own training. However, linear regressions are very fast even for datasets with many rows and many columns, thus computation complexity should not be a problem. Whole conception tries to automate feature enginnering done traditionally by hand. Another advantage is control of model complexity. We can stimulate how the operation trees are made, and reduce or increase complexity at will. Modification of this idea is to add regularization term decreasing survival probability with increasing complexity. At the end model could also make a feature selection in the same way - then one of possible operations in the set would be dropping.</p></li>
 </ol>
-<p>The research is conducted on <em>Concrete_Data</em> dataset from the OpenML database <a href="https://www.openml.org/d/4353">link</a>. The data describes the amount of ingredients in the samples - cement, blast furnace slag, fly ash, water, coarse aggregate and fine aggregate - in kilograms per cubic meter; it also contains the drying time of the samples in days, referred to as age. The target variable of the dataset is the compressive strength of each sample in megapascals (MPa), therefore rendering the task to be regressive. The dataset contains 1030 instances with no missing values. There are also no symbolic features, as we aim to investigate continuous transformations of the data.</p>
+<p>The research is conducted on <em>Concrete_Data</em> dataset from the OpenML database [<a href="https://www.openml.org/d/4353">link</a>]. The data describes the amount of ingredients in the samples - cement, blast furnace slag, fly ash, water, coarse aggregate and fine aggregate - in kilograms per cubic meter; it also contains the drying time of the samples in days, referred to as age. The target variable of the dataset is the compressive strength of each sample in megapascals (MPa), therefore rendering the task to be regressive. The dataset contains 1030 instances with no missing values. There are also no symbolic features, as we aim to investigate continuous transformations of the data.</p>
 <p>We use standard and verified methods to compare results of the models. As the target variable is continuous, we may calculate Mean Square Error (MSE), Mean Absolute Error (MAE), and R-squared measures for each model, which provides us with proper and measurable way to compare the models’ performances. The same measures may be applied to black box models. The feature importance measure used in the after-evaluation comparison is based on the permutation feature importance, easily applied to any predictive machine learning model and therefore not constraining us to choose from a restricted set. In order provide unbiased results, we calculate the measures’ values during cross-validation process for each model, using various number of fold to present comparative results.</p>
 </div>
 <div id="results-12" class="section level3" number="3.5.5">
 <h3><span class="header-section-number">3.5.5</span> Results</h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="interpretability.html#cb1-1"></a><span class="kw">require</span>(rmarkdown, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb1-2"><a href="interpretability.html#cb1-2"></a>res &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/interpretability_3_5_results.csv&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;;&quot;</span>)</span>
-<span id="cb1-3"><a href="interpretability.html#cb1-3"></a><span class="kw">paged_table</span>(res )</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["X"],"name":[1],"type":["int"],"align":["right"]},{"label":["task.id"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["learner.id"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["mse.test.mean"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["mae.test.mean"],"name":[5],"type":["fctr"],"align":["left"]},{"label":["rsq.test.mean"],"name":[6],"type":["fctr"],"align":["left"]}],"data":[{"1":"1","2":"Brute force","3":"regr.lm","4":"29,1823649121806","5":"4,30062066144669","6":"0,88908642630914"},{"1":"2","2":"Brute force","3":"regr.glmnet","4":"31,2899812517843","5":"4,48711486459731","6":"0,881550065031613"},{"1":"3","2":"Brute force","3":"regr.glmnet.optimized","4":"29,8529487104456","5":"4,3625274339313","6":"0,886700934771772"},{"1":"4","2":"Brute force","3":"regr.rpart","4":"73,7611405604666","5":"6,73059359471656","6":"0,721959456465732"},{"1":"5","2":"Brute force","3":"regr.ranger","4":"21,5603429939546","5":"3,45364954856109","6":"0,918540756546873"},{"1":"6","2":"Brute force","3":"regr.svm","4":"19,8700231403269","5":"3,30123389562929","6":"0,924787232983105"},{"1":"7","2":"By hand","3":"regr.lm","4":"31,5560094478273","5":"4,45428704336918","6":"0,882099736001743"},{"1":"8","2":"By hand","3":"regr.glmnet","4":"32,1327883695607","5":"4,44175209276462","6":"0,879988058038762"},{"1":"9","2":"By hand","3":"regr.glmnet.optimized","4":"31,576019816282","5":"4,44680237091941","6":"0,882037058657926"},{"1":"10","2":"By hand","3":"regr.rpart","4":"70,0570281540328","5":"6,56489243396003","6":"0,738742636976469"},{"1":"11","2":"By hand","3":"regr.ranger","4":"25,0022178142404","5":"3,83240399462384","6":"0,90686415842268"},{"1":"12","2":"By hand","3":"regr.svm","4":"18,7326622429411","5":"3,19409070485136","6":"0,930038749484442"},{"1":"13","2":"Plain concrete data","3":"regr.lm","4":"110,311063794207","5":"8,31823205678952","6":"0,599772252225149"},{"1":"14","2":"Plain concrete data","3":"regr.glmnet","4":"110,295634486819","5":"8,32705977913484","6":"0,599788997786959"},{"1":"15","2":"Plain concrete data","3":"regr.glmnet.optimized","4":"110,303629001595","5":"8,32017797907583","6":"0,599787720855053"},{"1":"16","2":"Plain concrete data","3":"regr.rpart","4":"86,0613643066016","5":"7,25201571037859","6":"0,687099976219574"},{"1":"17","2":"Plain concrete data","3":"regr.ranger","4":"30,390004563917","5":"4,03384292786329","6":"0,890396910335718"},{"1":"18","2":"Plain concrete data","3":"regr.svm","4":"45,9079829646728","5":"4,91270625507088","6":"0,834285530024648"},{"1":"19","2":"W/O outliers/influential","3":"regr.lm","4":"60,8040921784569","5":"6,23986341109415","6":"0,772154166985926"},{"1":"20","2":"W/O outliers/influential","3":"regr.glmnet","4":"60,8251956705515","5":"6,24694780170259","6":"0,772062913668611"},{"1":"21","2":"W/O outliers/influential","3":"regr.glmnet.optimized","4":"60,805757554579","5":"6,2411071066787","6":"0,772145291938215"},{"1":"22","2":"W/O outliers/influential","3":"regr.rpart","4":"71,0344803533818","5":"6,63196762722823","6":"0,732956393966613"},{"1":"23","2":"W/O outliers/influential","3":"regr.ranger","4":"25,1538542089238","5":"3,86933402166129","6":"0,90513151339428"},{"1":"24","2":"W/O outliers/influential","3":"regr.svm","4":"26,9005278691465","5":"3,90686958272295","6":"0,898529683542402"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -1240,6 +1175,9 @@ The algorithm is:</p>
 </div>
 <div id="ref-mccabe76">
 <p>McCabe, T. J. 1976. “A Complexity Measure.” <em>IEEE Transactions on Software Engineering</em> 2 (4): 308–20.</p>
+</div>
+<div id="ref-VELOSODEMELO">
+<p>Melo], Vinícius [Veloso de, and Wolfgang Banzhaf. 2018. “Automatic Feature Engineering for Regression Models with Machine Learning: An Evolutionary Computation and Statistics Hybrid.” <em>Information Sciences</em> 430-431: 287–313. <a href="https://doi.org/https://doi.org/10.1016/j.ins.2017.11.041">https://doi.org/https://doi.org/10.1016/j.ins.2017.11.041</a>.</p>
 </div>
 <div id="ref-christophmonlar">
 <p>Molnar, Christoph. 2019. <em>Interpretable Machine Learning: A Guide for Making Black Box Models Explainable</em>. <a href="https://christophm.github.io/interpretable-ml-book/simple.html">https://christophm.github.io/interpretable-ml-book/simple.html</a>.</p>
