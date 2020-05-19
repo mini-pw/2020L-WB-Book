@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Interpretability | ML Case Studies</title>
   <meta name="description" content="Case studies for reproducibility, imputation, and interpretability" />
-  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Interpretability | ML Case Studies" />
   <meta property="og:type" content="book" />
@@ -32,7 +32,6 @@
   
 <link rel="prev" href="imputation.html"/>
 <link rel="next" href="acknowledgements.html"/>
-<script src="libs/header-attrs/header-attrs.js"></script>
 <script src="libs/jquery/jquery.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
@@ -118,7 +117,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
 
 <body>
@@ -131,9 +129,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./"><h3>ML Case Studies</h3></a></li>
-
-<li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#technical-setup"><i class="fa fa-check"></i>Technical Setup</a></li>
@@ -295,9 +290,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>4</b> Acknowledgements</a></li>
 <li class="chapter" data-level="" data-path="references-1.html"><a href="references-1.html"><i class="fa fa-check"></i>References</a></li>
-<li class="divider"></li>
-<li><a href="https://bookdown.org" target="_blank">Published with bookdown</a></li>
-
 </ul>
 
       </nav>
@@ -778,14 +770,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="introduction-and-motivation-10" class="section level3" number="3.5.2">
 <h3><span class="header-section-number">3.5.2</span> Introduction and Motivation</h3>
-<p>Linear regression is one of the simplest and the easiest to interpret of the predictive models. While it has already been thorougly analysed over the years (ref), there remain some unsolved questions. One such question is how to transform the data features in order to maximize the model’s effectiveness in predicting the new data. An example of a known and widely used approach is the Box-Cox transformation of the target variable, which allows one to improve the model’s performance with minimal increase in computational complexity. However, choice of the predictive features’ transformations is often left to intuition and trial-and-error approach. In the article, we wish to compare various methods of features’ transformations and compare the resulting models’ performances while also comparing their computational complexities and differences in feature importance.
-Many black box regression models use various kinds of feature engineering during the training process. Unfortunately, even though the models perform better than the interpretable ones, they don’t provide information about the transformations used and non-linear dependencies between variables and the target. The goal we want to achieve is extracting features and non-linearities with understandable transformations of the training dataset. To measure the improvement of used methods, we’ll compare their performance metrics with black box models’ as a ground truth. This will allow us to effectively measure which method brought the simple linear model closer to the black box. Also, we’ll take under consideration the improvement of black box model performance. Thanks to this, our article will not only present the methods for creating highly performant interpretable models, but also improvement of the results of black box model.</p>
+<p>Linear regression is one of the simplest and the easiest to interpret of the predictive models. While it has already been thorougly analysed over the years (ref), there remain some unsolved questions. One such question is how to transform the data features in order to maximize the model’s effectiveness in predicting the new data.</p>
+<p>An example of a known and widely used approach is the Box-Cox transformation of the target variable, which allows one to improve the model’s performance with minimal increase in computational complexity <span class="citation">(Sakia <a href="#ref-boxcox" role="doc-biblioref">1992</a>)</span>. However, choice of the predictive features’ transformations is often left to intuition and trial-and-error approach. In the article, we wish to compare various methods of features’ transformations and compare the resulting models’ performances while also comparing their computational complexities and differences in feature importance.</p>
+<p>Many black box regression models use various kinds of feature engineering during the training process. Unfortunately, even though the models perform better than the interpretable ones, they don’t provide information about the transformations used and non-linear dependencies between variables and the target. The goal we want to achieve is extracting features and non-linearities with understandable transformations of the training dataset.</p>
+<p>To measure the improvement of used methods, we’ll compare their performance metrics with black box models’ as a ground truth. This will allow us to effectively measure which method brought the simple linear model closer to the black box. Also, we’ll take under consideration the improvement of black box model performance. Thanks to this, our article will not only present the methods for creating highly performant interpretable models, but also improvement of the results of black box model.</p>
 <p>//cytowania</p>
 </div>
 <div id="related-work-9" class="section level3" number="3.5.3">
 <h3><span class="header-section-number">3.5.3</span> Related Work</h3>
 <p>There exist many papers related to feature engineering. We will shortly present few of them.</p>
-<p>One of these papers is “Enhancing Regression Models for Complex Systems Using Evolutionary Techniques for Feature Engineering” Patricia Arroba, José L. Risco-Martín, Marina Zapater, José M. Moya &amp; José L. Ayala. This paper describes, how feature transformations in linear regression can be chosen based on the genetic algorithms.</p>
+<p>One of these papers is “Enhancing Regression Models for Complex Systems Using Evolutionary Techniques for Feature Engineering” Patricia Arroba, José L. Risco-Martín, Marina Zapater, José M. Moya &amp; José L. Ayala. <span class="citation">(Patricia Arroba <a href="#ref-ETFFE" role="doc-biblioref">2015</a>)</span> This paper describes, how feature transformations in linear regression can be chosen based on the genetic algorithms.</p>
 <p>Another one is “Automatic feature engineering for regression models with machine learning: An evolutionary computation and statistics hybrid” Vinícius Veloso de Melo, Wolfgang Banzhaf. Similarly to the previous one, this paper tries to automate feature engineering using evolutionar computation to make a hybrid model - final model is simple linear regression while its features are found by more complex algorithm.</p>
 <p>//cytowania</p>
 </div>
@@ -810,7 +804,7 @@ Many black box regression models use various kinds of feature engineering during
 <span id="cb1-3"><a href="interpretability.html#cb1-3"></a><span class="kw">paged_table</span>(res )</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["X"],"name":[1],"type":["int"],"align":["right"]},{"label":["task.id"],"name":[2],"type":["chr"],"align":["left"]},{"label":["learner.id"],"name":[3],"type":["chr"],"align":["left"]},{"label":["mse.test.mean"],"name":[4],"type":["chr"],"align":["left"]},{"label":["mae.test.mean"],"name":[5],"type":["chr"],"align":["left"]},{"label":["rsq.test.mean"],"name":[6],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"Brute force","3":"regr.lm","4":"29,1823649121806","5":"4,30062066144669","6":"0,88908642630914"},{"1":"2","2":"Brute force","3":"regr.glmnet","4":"31,2899812517843","5":"4,48711486459731","6":"0,881550065031613"},{"1":"3","2":"Brute force","3":"regr.glmnet.optimized","4":"29,8529487104456","5":"4,3625274339313","6":"0,886700934771772"},{"1":"4","2":"Brute force","3":"regr.rpart","4":"73,7611405604666","5":"6,73059359471656","6":"0,721959456465732"},{"1":"5","2":"Brute force","3":"regr.ranger","4":"21,5603429939546","5":"3,45364954856109","6":"0,918540756546873"},{"1":"6","2":"Brute force","3":"regr.svm","4":"19,8700231403269","5":"3,30123389562929","6":"0,924787232983105"},{"1":"7","2":"By hand","3":"regr.lm","4":"31,5560094478273","5":"4,45428704336918","6":"0,882099736001743"},{"1":"8","2":"By hand","3":"regr.glmnet","4":"32,1327883695607","5":"4,44175209276462","6":"0,879988058038762"},{"1":"9","2":"By hand","3":"regr.glmnet.optimized","4":"31,576019816282","5":"4,44680237091941","6":"0,882037058657926"},{"1":"10","2":"By hand","3":"regr.rpart","4":"70,0570281540328","5":"6,56489243396003","6":"0,738742636976469"},{"1":"11","2":"By hand","3":"regr.ranger","4":"25,0022178142404","5":"3,83240399462384","6":"0,90686415842268"},{"1":"12","2":"By hand","3":"regr.svm","4":"18,7326622429411","5":"3,19409070485136","6":"0,930038749484442"},{"1":"13","2":"Plain concrete data","3":"regr.lm","4":"110,311063794207","5":"8,31823205678952","6":"0,599772252225149"},{"1":"14","2":"Plain concrete data","3":"regr.glmnet","4":"110,295634486819","5":"8,32705977913484","6":"0,599788997786959"},{"1":"15","2":"Plain concrete data","3":"regr.glmnet.optimized","4":"110,303629001595","5":"8,32017797907583","6":"0,599787720855053"},{"1":"16","2":"Plain concrete data","3":"regr.rpart","4":"86,0613643066016","5":"7,25201571037859","6":"0,687099976219574"},{"1":"17","2":"Plain concrete data","3":"regr.ranger","4":"30,390004563917","5":"4,03384292786329","6":"0,890396910335718"},{"1":"18","2":"Plain concrete data","3":"regr.svm","4":"45,9079829646728","5":"4,91270625507088","6":"0,834285530024648"},{"1":"19","2":"W/O outliers/influential","3":"regr.lm","4":"60,8040921784569","5":"6,23986341109415","6":"0,772154166985926"},{"1":"20","2":"W/O outliers/influential","3":"regr.glmnet","4":"60,8251956705515","5":"6,24694780170259","6":"0,772062913668611"},{"1":"21","2":"W/O outliers/influential","3":"regr.glmnet.optimized","4":"60,805757554579","5":"6,2411071066787","6":"0,772145291938215"},{"1":"22","2":"W/O outliers/influential","3":"regr.rpart","4":"71,0344803533818","5":"6,63196762722823","6":"0,732956393966613"},{"1":"23","2":"W/O outliers/influential","3":"regr.ranger","4":"25,1538542089238","5":"3,86933402166129","6":"0,90513151339428"},{"1":"24","2":"W/O outliers/influential","3":"regr.svm","4":"26,9005278691465","5":"3,90686958272295","6":"0,898529683542402"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["X"],"name":[1],"type":["int"],"align":["right"]},{"label":["task.id"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["learner.id"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["mse.test.mean"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["mae.test.mean"],"name":[5],"type":["fctr"],"align":["left"]},{"label":["rsq.test.mean"],"name":[6],"type":["fctr"],"align":["left"]}],"data":[{"1":"1","2":"Brute force","3":"regr.lm","4":"29,1823649121806","5":"4,30062066144669","6":"0,88908642630914"},{"1":"2","2":"Brute force","3":"regr.glmnet","4":"31,2899812517843","5":"4,48711486459731","6":"0,881550065031613"},{"1":"3","2":"Brute force","3":"regr.glmnet.optimized","4":"29,8529487104456","5":"4,3625274339313","6":"0,886700934771772"},{"1":"4","2":"Brute force","3":"regr.rpart","4":"73,7611405604666","5":"6,73059359471656","6":"0,721959456465732"},{"1":"5","2":"Brute force","3":"regr.ranger","4":"21,5603429939546","5":"3,45364954856109","6":"0,918540756546873"},{"1":"6","2":"Brute force","3":"regr.svm","4":"19,8700231403269","5":"3,30123389562929","6":"0,924787232983105"},{"1":"7","2":"By hand","3":"regr.lm","4":"31,5560094478273","5":"4,45428704336918","6":"0,882099736001743"},{"1":"8","2":"By hand","3":"regr.glmnet","4":"32,1327883695607","5":"4,44175209276462","6":"0,879988058038762"},{"1":"9","2":"By hand","3":"regr.glmnet.optimized","4":"31,576019816282","5":"4,44680237091941","6":"0,882037058657926"},{"1":"10","2":"By hand","3":"regr.rpart","4":"70,0570281540328","5":"6,56489243396003","6":"0,738742636976469"},{"1":"11","2":"By hand","3":"regr.ranger","4":"25,0022178142404","5":"3,83240399462384","6":"0,90686415842268"},{"1":"12","2":"By hand","3":"regr.svm","4":"18,7326622429411","5":"3,19409070485136","6":"0,930038749484442"},{"1":"13","2":"Plain concrete data","3":"regr.lm","4":"110,311063794207","5":"8,31823205678952","6":"0,599772252225149"},{"1":"14","2":"Plain concrete data","3":"regr.glmnet","4":"110,295634486819","5":"8,32705977913484","6":"0,599788997786959"},{"1":"15","2":"Plain concrete data","3":"regr.glmnet.optimized","4":"110,303629001595","5":"8,32017797907583","6":"0,599787720855053"},{"1":"16","2":"Plain concrete data","3":"regr.rpart","4":"86,0613643066016","5":"7,25201571037859","6":"0,687099976219574"},{"1":"17","2":"Plain concrete data","3":"regr.ranger","4":"30,390004563917","5":"4,03384292786329","6":"0,890396910335718"},{"1":"18","2":"Plain concrete data","3":"regr.svm","4":"45,9079829646728","5":"4,91270625507088","6":"0,834285530024648"},{"1":"19","2":"W/O outliers/influential","3":"regr.lm","4":"60,8040921784569","5":"6,23986341109415","6":"0,772154166985926"},{"1":"20","2":"W/O outliers/influential","3":"regr.glmnet","4":"60,8251956705515","5":"6,24694780170259","6":"0,772062913668611"},{"1":"21","2":"W/O outliers/influential","3":"regr.glmnet.optimized","4":"60,805757554579","5":"6,2411071066787","6":"0,772145291938215"},{"1":"22","2":"W/O outliers/influential","3":"regr.rpart","4":"71,0344803533818","5":"6,63196762722823","6":"0,732956393966613"},{"1":"23","2":"W/O outliers/influential","3":"regr.ranger","4":"25,1538542089238","5":"3,86933402166129","6":"0,90513151339428"},{"1":"24","2":"W/O outliers/influential","3":"regr.svm","4":"26,9005278691465","5":"3,90686958272295","6":"0,898529683542402"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>As the results presented above show, brute force method has already surpassed all the black box models trained on the plain data, while by hand method yielded slightly worse results.
@@ -1259,6 +1253,12 @@ The algorithm is:</p>
 <div id="ref-IML">
 <p>Pandey. 2019. “Interpretable Machine Learning: Extracting Human Understandable Insights from Any Machine Learning Model,” April. <a href="https://towardsdatascience.com/interpretable-machine-learning-1dec0f2f3e6b">https://towardsdatascience.com/interpretable-machine-learning-1dec0f2f3e6b</a>.</p>
 </div>
+<div id="ref-ETFFE">
+<p>Patricia Arroba, Marina Zapater, José L. Risco-Martín. 2015. “Enhancing Regression Models for Complex Systems Using Evolutionary Techniques for Feature Engineering.” <em>Journal of Grid Computing</em> 13: 409–23. <a href="https://doi.org/10.1007/s10723-014-9313-8">https://doi.org/10.1007/s10723-014-9313-8</a>.</p>
+</div>
+<div id="ref-boxcox">
+<p>Sakia, R. M. 1992. “The Box-Cox Transformation Technique: A Review.” <em>Journal of the Royal Statistical Society. Series D (the Statistician)</em> 41 (2): 169–78. <a href="http://www.jstor.org/stable/2348250">http://www.jstor.org/stable/2348250</a>.</p>
+</div>
 <div id="ref-Sayyad-Shirabad+Menzies:2005">
 <p>Sayyad Shirabad, J., and T. J. Menzies. 2005. “The PROMISE Repository of Software Engineering Databases.” School of Information Technology and Engineering, University of Ottawa, Canada. <a href="http://promise.site.uottawa.ca/SERepository">http://promise.site.uottawa.ca/SERepository</a>.</p>
 </div>
@@ -1294,8 +1294,8 @@ The algorithm is:</p>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": true,
-"facebook": false,
+"github": false,
+"facebook": true,
 "twitter": true,
 "linkedin": false,
 "weibo": false,
@@ -1309,8 +1309,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/3-0-interpretability.Rmd",
-"text": "Edit"
+"link": null,
+"text": null
 },
 "history": {
 "link": null,
@@ -1320,9 +1320,9 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["book.pdf", "book.epub"],
+"download": null,
 "toc": {
-"collapse": "section"
+"collapse": "subsection"
 }
 });
 });

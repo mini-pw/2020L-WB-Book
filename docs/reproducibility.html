@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 1 Reproducibility of scientific papers | ML Case Studies</title>
   <meta name="description" content="Case studies for reproducibility, imputation, and interpretability" />
-  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 1 Reproducibility of scientific papers | ML Case Studies" />
   <meta property="og:type" content="book" />
@@ -32,7 +32,6 @@
   
 <link rel="prev" href="index.html"/>
 <link rel="next" href="imputation.html"/>
-<script src="libs/header-attrs/header-attrs.js"></script>
 <script src="libs/jquery/jquery.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
@@ -118,7 +117,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
 
 <body>
@@ -131,9 +129,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./"><h3>ML Case Studies</h3></a></li>
-
-<li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
 <ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#technical-setup"><i class="fa fa-check"></i>Technical Setup</a></li>
@@ -295,9 +290,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>4</b> Acknowledgements</a></li>
 <li class="chapter" data-level="" data-path="references-1.html"><a href="references-1.html"><i class="fa fa-check"></i>References</a></li>
-<li class="divider"></li>
-<li><a href="https://bookdown.org" target="_blank">Published with bookdown</a></li>
-
 </ul>
 
       </nav>
@@ -514,7 +506,7 @@ what also means that they were not reproducible in 100%.</li>
  
 </p>
 <div class="figure"><span id="fig:unnamed-chunk-1"></span>
-<img src="book_files/figure-html/unnamed-chunk-1-1.svg" alt="Number of papers by publication year" width="672" />
+<img src="book_files/figure-html/unnamed-chunk-1-1.png" alt="Number of papers by publication year" width="672" />
 <p class="caption">
 FIGURE 1.1: Number of papers by publication year
 </p>
@@ -527,7 +519,7 @@ FIGURE 1.1: Number of papers by publication year
  
 </p>
 <div class="figure"><span id="fig:unnamed-chunk-2"></span>
-<img src="book_files/figure-html/unnamed-chunk-2-1.svg" alt="Number of papers by class and publication year" width="672" />
+<img src="book_files/figure-html/unnamed-chunk-2-1.png" alt="Number of papers by class and publication year" width="672" />
 <p class="caption">
 FIGURE 1.2: Number of papers by class and publication year
 </p>
@@ -540,7 +532,7 @@ FIGURE 1.2: Number of papers by class and publication year
  
 </p>
 <div class="figure"><span id="fig:unnamed-chunk-3"></span>
-<img src="book_files/figure-html/unnamed-chunk-3-1.svg" alt="Ratio of each class throughout years" width="672" />
+<img src="book_files/figure-html/unnamed-chunk-3-1.png" alt="Ratio of each class throughout years" width="672" />
 <p class="caption">
 FIGURE 1.3: Ratio of each class throughout years
 </p>
@@ -553,7 +545,7 @@ FIGURE 1.3: Ratio of each class throughout years
  
 </p>
 <div class="figure"><span id="fig:unnamed-chunk-4"></span>
-<img src="book_files/figure-html/unnamed-chunk-4-1.svg" alt="Summarized results throughout years" width="672" />
+<img src="book_files/figure-html/unnamed-chunk-4-1.png" alt="Summarized results throughout years" width="672" />
 <p class="caption">
 FIGURE 1.4: Summarized results throughout years
 </p>
@@ -843,8 +835,8 @@ There are no publications related to the reproducibility topic which compare dif
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": true,
-"facebook": false,
+"github": false,
+"facebook": true,
 "twitter": true,
 "linkedin": false,
 "weibo": false,
@@ -858,8 +850,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/1-0-reproducibility.Rmd",
-"text": "Edit"
+"link": null,
+"text": null
 },
 "history": {
 "link": null,
@@ -869,9 +861,9 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["book.pdf", "book.epub"],
+"download": null,
 "toc": {
-"collapse": "section"
+"collapse": "subsection"
 }
 });
 });
