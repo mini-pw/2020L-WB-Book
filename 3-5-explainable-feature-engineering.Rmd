@@ -1,9 +1,9 @@
-## Interpretable, non-linear feature engineering techniques for linear regression models - exploration on Concrete compressive strength dataset with new feature importance metric.
+## Interpretable, non-linear feature engineering techniques for linear regression models - exploration on concrete compressive strength dataset with a new feature importance metric.
 
 *Authors: Łukasz Brzozowski, Wojciech Kretowicz, Kacper Siemaszko (Warsaw University of Technology)*
 
 ### Abstract
-In this article, we compare few interpretable, non-linear feature engineering techniques used to improve linear regression models performance on Cocrete compressive strength dataset. To assert their interpretability, we introduce a new metric for measuring feature importance, which uses derivatives of feature transformations to trace back original features' impact. As a result, we obtain a thorough comparison of transformation techniques on 2 black-box models - `ranger` and `svm` and 3 glass-box models - `rpart`, `glmnet` and `lm`.
+In this article, we compare few interpretable, non-linear feature engineering techniques used to improve linear regression models performance on Cocrete compressive strength dataset. To assert their interpretability, we introduce a new metric for measuring feature importance, which uses derivatives of feature transformations to trace back original features' impact. As a result, we obtain a thorough comparison of transformation techniques on 2 black-box models - random forest and SVM and 3 glass-box models - decision tree, elastic net, and linear regression.
 
 ### Introduction and Motivation
 
