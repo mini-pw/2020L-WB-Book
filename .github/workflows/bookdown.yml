@@ -40,7 +40,8 @@ jobs:
           R -e 'install.packages("ggplot2")'
           R -e 'install.packages("svglite")'    
           R -e 'install.packages("dplyr")'  
-          R -e 'install.packages("kableExtra")'       
+          R -e 'install.packages("kableExtra")'    
+          R -e 'install.packages("corrplot")'   
           R -e 'renv::restore()'
       
       - name: Build site
