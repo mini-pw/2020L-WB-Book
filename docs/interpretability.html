@@ -181,15 +181,16 @@
 <li class="chapter" data-level="3.5.3" data-path="interpretability.html"><a href="interpretability.html#related-work-7"><i class="fa fa-check"></i><b>3.5.3</b> Related Work</a></li>
 <li class="chapter" data-level="3.5.4" data-path="interpretability.html"><a href="interpretability.html#methodology-12"><i class="fa fa-check"></i><b>3.5.4</b> Methodology</a></li>
 <li class="chapter" data-level="3.5.5" data-path="interpretability.html"><a href="interpretability.html#results-12"><i class="fa fa-check"></i><b>3.5.5</b> Results</a></li>
-<li class="chapter" data-level="3.5.6" data-path="interpretability.html"><a href="interpretability.html#abstract-13"><i class="fa fa-check"></i><b>3.5.6</b> Abstract</a></li>
-<li class="chapter" data-level="3.5.7" data-path="interpretability.html"><a href="interpretability.html#introduction-and-motivation-11"><i class="fa fa-check"></i><b>3.5.7</b> Introduction and Motivation</a></li>
-<li class="chapter" data-level="3.5.8" data-path="interpretability.html"><a href="interpretability.html#data-2"><i class="fa fa-check"></i><b>3.5.8</b> Data</a></li>
-<li class="chapter" data-level="3.5.9" data-path="interpretability.html"><a href="interpretability.html#related-work-8"><i class="fa fa-check"></i><b>3.5.9</b> Related work</a></li>
-<li class="chapter" data-level="3.5.10" data-path="interpretability.html"><a href="interpretability.html#methodology-13"><i class="fa fa-check"></i><b>3.5.10</b> Methodology</a></li>
-<li class="chapter" data-level="3.5.11" data-path="interpretability.html"><a href="interpretability.html#eda"><i class="fa fa-check"></i><b>3.5.11</b> EDA</a></li>
-<li class="chapter" data-level="3.5.12" data-path="interpretability.html"><a href="interpretability.html#initial-data-preparation-1"><i class="fa fa-check"></i><b>3.5.12</b> Initial Data Preparation</a></li>
-<li class="chapter" data-level="3.5.13" data-path="interpretability.html"><a href="interpretability.html#feature-engineering-and-tuning"><i class="fa fa-check"></i><b>3.5.13</b> Feature Engineering and Tuning</a></li>
-<li class="chapter" data-level="3.5.14" data-path="interpretability.html"><a href="interpretability.html#results-and-conclusion"><i class="fa fa-check"></i><b>3.5.14</b> Results and conclusion</a></li>
+<li class="chapter" data-level="3.5.6" data-path="interpretability.html"><a href="interpretability.html#summary-and-conclusions-11"><i class="fa fa-check"></i><b>3.5.6</b> Summary and conclusions</a></li>
+<li class="chapter" data-level="3.5.7" data-path="interpretability.html"><a href="interpretability.html#abstract-13"><i class="fa fa-check"></i><b>3.5.7</b> Abstract</a></li>
+<li class="chapter" data-level="3.5.8" data-path="interpretability.html"><a href="interpretability.html#introduction-and-motivation-11"><i class="fa fa-check"></i><b>3.5.8</b> Introduction and Motivation</a></li>
+<li class="chapter" data-level="3.5.9" data-path="interpretability.html"><a href="interpretability.html#data-2"><i class="fa fa-check"></i><b>3.5.9</b> Data</a></li>
+<li class="chapter" data-level="3.5.10" data-path="interpretability.html"><a href="interpretability.html#related-work-8"><i class="fa fa-check"></i><b>3.5.10</b> Related work</a></li>
+<li class="chapter" data-level="3.5.11" data-path="interpretability.html"><a href="interpretability.html#methodology-13"><i class="fa fa-check"></i><b>3.5.11</b> Methodology</a></li>
+<li class="chapter" data-level="3.5.12" data-path="interpretability.html"><a href="interpretability.html#eda"><i class="fa fa-check"></i><b>3.5.12</b> EDA</a></li>
+<li class="chapter" data-level="3.5.13" data-path="interpretability.html"><a href="interpretability.html#initial-data-preparation-1"><i class="fa fa-check"></i><b>3.5.13</b> Initial Data Preparation</a></li>
+<li class="chapter" data-level="3.5.14" data-path="interpretability.html"><a href="interpretability.html#feature-engineering-and-tuning"><i class="fa fa-check"></i><b>3.5.14</b> Feature Engineering and Tuning</a></li>
+<li class="chapter" data-level="3.5.15" data-path="interpretability.html"><a href="interpretability.html#results-and-conclusion"><i class="fa fa-check"></i><b>3.5.15</b> Results and conclusion</a></li>
 </ul></li>
 <li class="chapter" data-level="3.6" data-path="interpretability.html"><a href="interpretability.html#which-neighbours-affected-house-prices-in-the-90s"><i class="fa fa-check"></i><b>3.6</b> Which Neighbours Affected House Prices in the ’90s?</a><ul>
 <li class="chapter" data-level="3.6.1" data-path="interpretability.html"><a href="interpretability.html#introduction-2"><i class="fa fa-check"></i><b>3.6.1</b> Introduction</a></li>
@@ -744,24 +745,24 @@ no
 <p><em>Authors: Łukasz Brzozowski, Wojciech Kretowicz, Kacper Siemaszko (Warsaw University of Technology)</em></p>
 <div id="abstract-12" class="section level3">
 <h3><span class="header-section-number">3.5.1</span> Abstract</h3>
-<p>In this article, we compare few interpretable, non-linear feature engineering techniques used to improve linear regression models performance on Cocrete compressive strength dataset. To assert their interpretability, we introduce a new metric for measuring feature importance, which uses derivatives of feature transformations to trace back original features’ impact. As a result, we obtain a thorough comparison of transformation techniques on 2 black-box models - random forest and SVM and 3 glass-box models - decision tree, elastic net, and linear regression.</p>
+<p>In this article we present and compare a number of interpretable, non-linear feature engineering techniques used to improve linear regression models performance on Cocrete compressive strength dataset. To assert their interpretability, we introduce a new metric for measuring feature importance, which uses derivatives of feature transformations to trace back original features’ impact. As a result, we obtain a thorough comparison of transformation techniques on two black-box models - Random Forest and Support Vector Machine - and three glass-box models - Decision Tree, Elastic Net, and linear regression - with the focus on the linear regression.</p>
 </div>
 <div id="introduction-and-motivation-10" class="section level3">
 <h3><span class="header-section-number">3.5.2</span> Introduction and Motivation</h3>
-<p>Linear regression is one of the simplest and the easiest to interpret of the predictive models. While it has already been thorougly analysed over the years (ref), there remain some unsolved questions. One such question is how to transform the data features in order to maximize the model’s effectiveness in predicting the new data.</p>
-<p>An example of a known and widely used approach is the Box-Cox transformation of the target variable, which allows one to improve the model’s performance with minimal increase in computational complexity <span class="citation">(Sakia <a href="#ref-boxcox">1992</a>)</span>. However, choice of the predictive features’ transformations is often left to intuition and trial-and-error approach. In the article, we wish to compare various methods of features’ transformations and compare the resulting models’ performances while also comparing their computational complexities and differences in feature importance.</p>
-<p>Many black box regression models use various kinds of feature engineering during the training process. Unfortunately, even though the models perform better than the interpretable ones, they don’t provide information about the transformations used and non-linear dependencies between variables and the target. The goal we want to achieve is extracting features and non-linearities with understandable transformations of the training dataset.</p>
-<p>To measure the improvement of used methods, we’ll compare their performance metrics with black box models’ as a ground truth. This will allow us to effectively measure which method brought the simple linear model closer to the black box. Also, we’ll take under consideration the improvement of black box model performance. Thanks to this, our article will not only present the methods for creating highly performant interpretable models, but also improvement of the results of black box model.</p>
+<p>Linear regression is one of the simplest and easiest to interpret of the predictive models. While it has already been thorougly analysed over the years, there remain some unsolved questions. One such question is how to transform the data features in order to maximize the model’s effectiveness in predicting the new data.</p>
+<p>An example of a known and widely used approach is the Box-Cox transformation of the target variable, which allows one to improve the model’s performance with minimal increase in computational complexity <span class="citation">(Sakia <a href="#ref-boxcox">1992</a>)</span>. However, the choice of the predictive features’ transformations is often left to intuition and trial-and-error approach. In the article, we wish to compare various methods of features’ transformations and compare the resulting models’ performances while also comparing their computational complexities and differences in feature importance.</p>
+<p>Many black box regression models use various kinds of feature engineering during the training process. Unfortunately, even though the models perform better than the interpretable ones, they do not provide information about the transformations used and non-linear dependencies between variables and the target. The goal we want to achieve is extracting features and non-linearities with understandable transformations of the training dataset.</p>
+<p>To measure the improvement of used methods we will compare their performance metrics with black box models’ as a ground truth. This will allow us to effectively measure which method brought the simple linear model closer to the black box. Moreover, we will take under consideration the improvement of black box model performance. Thanks to this, our article will not only present the methods for creating highly performant interpretable models, but also improvement of the results of black box model.</p>
 </div>
 <div id="related-work-7" class="section level3">
 <h3><span class="header-section-number">3.5.3</span> Related Work</h3>
-<p>There exist many papers related to feature engineering. We will shortly present few of them.</p>
+<p>There exist many papers related to feature engineering. We will shortly present two of them.</p>
 <p>One of these papers is “Enhancing Regression Models for Complex Systems Using Evolutionary Techniques for Feature Engineering” Patricia Arroba, José L. Risco-Martín, Marina Zapater, José M. Moya &amp; José L. Ayala <span class="citation">(Patricia Arroba <a href="#ref-ETFFE">2015</a>)</span>. This paper describes, how feature transformations in linear regression can be chosen based on the genetic algorithms.</p>
 <p>Another one is “Automatic feature engineering for regression models with machine learning: An evolutionary computation and statistics hybrid” Vinícius Veloso de Melo, Wolfgang Banzhaf <span class="citation">(Melo] and Banzhaf <a href="#ref-VELOSODEMELO">2018</a>)</span>. Similarly to the previous one, this paper tries to automate feature engineering using evolutionar computation to make a hybrid model - final model is simple linear regression while its features are found by more complex algorithm.</p>
 </div>
 <div id="methodology-12" class="section level3">
 <h3><span class="header-section-number">3.5.4</span> Methodology</h3>
-<p>The main goal of our research is to compare various methods of transforming the data in order to improve the linear regression’s performance. While we do not aim to derive an explicitly best solution to the problem, we wish to compare some known approaches and propose new ones, simultaneously verifying legitimacy of their usage. The second goal of the research is to compare the achieved models’ performances with black box models to generally compare their effectiveness, having in mind that the linear regression remains highly interpretable. We also wish to compare the models feature importance to check for notable differences.</p>
+<p>The main goal of our research is to compare various methods of transforming the data in order to improve the linear regression’s performance. While we do not aim to derive an explicitly best solution to the problem, we wish to compare some known approaches and propose new ones, simultaneously verifying legitimacy of their usage. The second goal of the research is to compare the achieved models’ performances with black box models to generally compare their effectiveness. An important observation about the linear regression model is that once we transform features in order to improve the model’s performance, it stronly affects its interpretability. We therefore propose a new feature importance measure for linear regression and compare it with the usual methodes where possible.</p>
 <p>The main methods of feature transformation compared in the article include:</p>
 <ol style="list-style-type: decimal">
 <li><p>By-hand-transformations - we will use our expertise to derive possibly the best transformations of the dataset, but in this scenario we do not automate the process. Based on various visualizations, including, but not limited to residual plots, Feature Importance plots, Partial Dependency plots and Accumulated Dependency plots, we aim to maximize the model’s performance by hand.</p></li>
@@ -770,7 +771,7 @@ no
 <li><p>One of our ideas is to use GP (Genetic Programming) to find best feature transformations. We will create a set of simple operations such as adding, multiplying, taking a specific power, for example 2, taking logarithm and so on. Our goal is to minimize mean squared error of linear regression (ridge) after transformations. We will use one of the variations of the genetic algorithms to create an operation tree minimizing our goal. This method should find much better solutions without extending dimensionality too much or making too complex transformations. We will get linear regression with much better performance without loss of the interpretability. This method will teach linear regression many times, because in each generation each individual requires its own training. However, linear regressions are very fast even for datasets with many rows and many columns, thus computation complexity should not be a problem. Whole conception tries to automate feature enginnering done traditionally by hand. Another advantage is control of model complexity. We can stimulate how the operation trees are made, and reduce or increase complexity at will. Modification of this idea is to add regularization term decreasing survival probability with increasing complexity. At the end model could also make a feature selection in the same way - then one of possible operations in the set would be dropping.</p></li>
 </ol>
 <p>The research is conducted on <em>Concrete_Data</em> dataset from the OpenML database [<a href="https://www.openml.org/d/4353">link</a>]. The data describes the amount of ingredients in the samples - cement, blast furnace slag, fly ash, water, coarse aggregate and fine aggregate - in kilograms per cubic meter; it also contains the drying time of the samples in days, referred to as age. The target variable of the dataset is the compressive strength of each sample in megapascals (MPa), therefore rendering the task to be regressive. The dataset contains 1030 instances with no missing values. There are also no symbolic features, as we aim to investigate continuous transformations of the data.</p>
-<p>We use standard and verified methods to compare results of the models. As the target variable is continuous, we may calculate Mean Square Error (MSE), Mean Absolute Error (MAE), and R-squared measures for each model, which provides us with proper and measurable way to compare the models’ performances. The same measures may be applied to black box models. The feature importance measure used in the after-evaluation comparison is based on the permutation feature importance, easily applied to any predictive machine learning model and therefore not constraining us to choose from a restricted set. In order provide unbiased results, we calculate the measures’ values during cross-validation process for each model, using various number of fold to present comparative results.</p>
+<p>We use standard and verified methods to compare results of the models. As the target variable is continuous, we may calculate Mean Square Error (MSE), Mean Absolute Error (MAE), and R-squared measures for each model, which provide us with proper and measurable way to compare the models’ performances. The same measures may be applied to black box models. The most natural measure of feature importance for linear regression are the coefficients’ absolute values after training the model - however, such easily interpretable measures are not available for black-box models. We therefore measure their feature importance with permutational feature importance measure and caluclating drop-out loss, easily applicable to any predictive model and therefore not constraining us to choose from a restricted set. In order to provide unbiased results, we calculate the measures’ values during cross-validation process for each model, using various number of fold to present comparative results.</p>
 </div>
 <div id="results-12" class="section level3">
 <h3><span class="header-section-number">3.5.5</span> Results</h3>
@@ -779,18 +780,20 @@ no
 {"columns":[{"label":["X"],"name":[1],"type":["int"],"align":["right"]},{"label":["task.id"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["learner.id"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["mse.test.mean"],"name":[4],"type":["fctr"],"align":["left"]},{"label":["mae.test.mean"],"name":[5],"type":["fctr"],"align":["left"]},{"label":["rsq.test.mean"],"name":[6],"type":["fctr"],"align":["left"]}],"data":[{"1":"1","2":"Brute force","3":"regr.lm","4":"29,1823649121806","5":"4,30062066144669","6":"0,88908642630914"},{"1":"2","2":"Brute force","3":"regr.glmnet","4":"31,2899812517843","5":"4,48711486459731","6":"0,881550065031613"},{"1":"3","2":"Brute force","3":"regr.glmnet.optimized","4":"29,8529487104456","5":"4,3625274339313","6":"0,886700934771772"},{"1":"4","2":"Brute force","3":"regr.rpart","4":"73,7611405604666","5":"6,73059359471656","6":"0,721959456465732"},{"1":"5","2":"Brute force","3":"regr.ranger","4":"21,5603429939546","5":"3,45364954856109","6":"0,918540756546873"},{"1":"6","2":"Brute force","3":"regr.svm","4":"19,8700231403269","5":"3,30123389562929","6":"0,924787232983105"},{"1":"7","2":"By hand","3":"regr.lm","4":"31,5560094478273","5":"4,45428704336918","6":"0,882099736001743"},{"1":"8","2":"By hand","3":"regr.glmnet","4":"32,1327883695607","5":"4,44175209276462","6":"0,879988058038762"},{"1":"9","2":"By hand","3":"regr.glmnet.optimized","4":"31,576019816282","5":"4,44680237091941","6":"0,882037058657926"},{"1":"10","2":"By hand","3":"regr.rpart","4":"70,0570281540328","5":"6,56489243396003","6":"0,738742636976469"},{"1":"11","2":"By hand","3":"regr.ranger","4":"25,0022178142404","5":"3,83240399462384","6":"0,90686415842268"},{"1":"12","2":"By hand","3":"regr.svm","4":"18,7326622429411","5":"3,19409070485136","6":"0,930038749484442"},{"1":"13","2":"Plain concrete data","3":"regr.lm","4":"110,311063794207","5":"8,31823205678952","6":"0,599772252225149"},{"1":"14","2":"Plain concrete data","3":"regr.glmnet","4":"110,295634486819","5":"8,32705977913484","6":"0,599788997786959"},{"1":"15","2":"Plain concrete data","3":"regr.glmnet.optimized","4":"110,303629001595","5":"8,32017797907583","6":"0,599787720855053"},{"1":"16","2":"Plain concrete data","3":"regr.rpart","4":"86,0613643066016","5":"7,25201571037859","6":"0,687099976219574"},{"1":"17","2":"Plain concrete data","3":"regr.ranger","4":"30,390004563917","5":"4,03384292786329","6":"0,890396910335718"},{"1":"18","2":"Plain concrete data","3":"regr.svm","4":"45,9079829646728","5":"4,91270625507088","6":"0,834285530024648"},{"1":"19","2":"W/O outliers/influential","3":"regr.lm","4":"60,8040921784569","5":"6,23986341109415","6":"0,772154166985926"},{"1":"20","2":"W/O outliers/influential","3":"regr.glmnet","4":"60,8251956705515","5":"6,24694780170259","6":"0,772062913668611"},{"1":"21","2":"W/O outliers/influential","3":"regr.glmnet.optimized","4":"60,805757554579","5":"6,2411071066787","6":"0,772145291938215"},{"1":"22","2":"W/O outliers/influential","3":"regr.rpart","4":"71,0344803533818","5":"6,63196762722823","6":"0,732956393966613"},{"1":"23","2":"W/O outliers/influential","3":"regr.ranger","4":"25,1538542089238","5":"3,86933402166129","6":"0,90513151339428"},{"1":"24","2":"W/O outliers/influential","3":"regr.svm","4":"26,9005278691465","5":"3,90686958272295","6":"0,898529683542402"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<p>As the results presented above show, brute force method has already surpassed all the black box models trained on the plain data, while by hand method yielded slightly worse results.
-### Summary and conclusions</p>
+<p>As the results presented above show, brute force method has already surpassed all the black box models trained on the plain data, while by hand method yielded slightly worse results.</p>
+</div>
+<div id="summary-and-conclusions-11" class="section level3">
+<h3><span class="header-section-number">3.5.6</span> Summary and conclusions</h3>
 
 <p>﻿## Surpassing black box model’s performance on unbalanced data with an interpretable one using advanced feature engineering</p>
 <p><em>Authors: Witold Merkel, Adam Rydelek, Michał Stawikowski (Warsaw University of Technology)</em></p>
 </div>
 <div id="abstract-13" class="section level3">
-<h3><span class="header-section-number">3.5.6</span> Abstract</h3>
+<h3><span class="header-section-number">3.5.7</span> Abstract</h3>
 <p>Explainability is the most talked about topic of modern predictive models. The article touches on the topic of such models and their benefits. The main focus is to prove that even on complicated data, explainable models can achieve comparable performance to the best black-box models. Not only are there described strategies allowing better results but also greater explainability. The dataset used in experiments is the adult dataset from OpenML which is from Census database. During the experiments there are multiple processing techniques used, SAFE and different imputation methods among others. Every tool used is explained and the results gained from each part are shown and explained. Thanks to the fact that adult dataset is vastly unbalanced there is a perfect opportunity to present techniques which can be used to handle such tasks. All those methods combined allow for a presentation of a clear workflow enhancing explainable models performance with emphasis on decision tree models.</p>
 </div>
 <div id="introduction-and-motivation-11" class="section level3">
-<h3><span class="header-section-number">3.5.7</span> Introduction and Motivation</h3>
+<h3><span class="header-section-number">3.5.8</span> Introduction and Motivation</h3>
 <p>Recently, an increase in demand of interpretable models can be seen. Machine learning models have gained in popularity in recent years among many fields of business science, industry and also more and more often in medicine.</p>
 <p>“Interpretability is a quickly growing field in machine learning, and there have been multiple works examining various aspects of interpretations (sometimes under the heading explainable AI).” <span class="citation">(Murdoch <a href="#ref-IMLDEA">2018</a>)</span></p>
 <p>The problem, however, turned out to be blackbox models, which did not provide sufficient information about the motivation in making specific decisions by the models.</p>
@@ -806,7 +809,7 @@ no
 <p>We will use machine learning tools and frameworks available in R and Python.</p>
 </div>
 <div id="data-2" class="section level3">
-<h3><span class="header-section-number">3.5.8</span> Data</h3>
+<h3><span class="header-section-number">3.5.9</span> Data</h3>
 <p>The dataset used is the adult dataset from OpenML. The original data comes from UCI and was extracted by Barry Becker from the 1994 Census database. The task is to predict whether a given adult makes more than $50,000 a year based attributes such as:</p>
 <ul>
 <li><p>age,</p></li>
@@ -826,19 +829,19 @@ no
 <p>In the above mentioned dataset we can observe a problem with target class distribution which is vastly unbalanced. The ratio of positive and negative values is around one to four. The dataset has overall of more than fourty eight thousand observations and fifteen features, some of which are scarce.</p>
 </div>
 <div id="related-work-8" class="section level3">
-<h3><span class="header-section-number">3.5.9</span> Related work</h3>
+<h3><span class="header-section-number">3.5.10</span> Related work</h3>
 <p>Many works concerning Explainable Artificial Intelligence have arose during the last few years as the topic got more and more popular. [Explainable Artificial Intelligence (XAI): Concepts, Taxonomies, Opportunities and Challenges toward Responsible AI] <span class="citation">(Alejandro Barredo Arrieta <a href="#ref-EAICTOC">2019</a>)</span> is a paper about XAI in general and many challenges concerning the topic. The article addresses all kinds of easily explainable models which set our focus on enhancing kNN and decision tree based models. [SAFE ML: Surrogate Assisted Feature Extraction For Model Learing] <span class="citation">(Gosiewska et al. <a href="#ref-gosiewska2019safe">2019</a>)</span> on the hand focuses on using Black Box models as surrogate models for improving explainable models.</p>
 </div>
 <div id="methodology-13" class="section level3">
-<h3><span class="header-section-number">3.5.10</span> Methodology</h3>
+<h3><span class="header-section-number">3.5.11</span> Methodology</h3>
 <p>As mentionted before we are going to work on an unbalanced dataset. In order to handle this issue and achieve the best possible results during our future work we are going to use two measures: AUPRC and AUC. The former one is designed to take the lack of balance into account. The dataset will be divided into two partitions using stratication in order to handle scarce factor levels. The training part of the dataset is going to be used to compare the effects of many processes used to enhance the results. We are going to use five fold crossvalidation. The final results are going to be presented using the test dataset.</p>
 <p>Our workflow can be divided into the following steps:</p>
 </div>
 <div id="eda" class="section level3">
-<h3><span class="header-section-number">3.5.11</span> EDA</h3>
+<h3><span class="header-section-number">3.5.12</span> EDA</h3>
 <p>In this part we have gotten accustomed with the dataset. We started with feature distribution and definition analysis and studied the dependency of other variables on the target class. The column correlation was also taken into account.</p>
 <div id="distribution-of-numeric-variables" class="section level4">
-<h4><span class="header-section-number">3.5.11.1</span> Distribution of numeric variables</h4>
+<h4><span class="header-section-number">3.5.12.1</span> Distribution of numeric variables</h4>
 <div class="figure">
 <img src="images/3-6-1.png" alt="Data distribution" />
 <p class="caption">Data distribution</p>
@@ -846,7 +849,7 @@ no
 <p>On this plot we can see the distribution of numeric variables. Most of them are normally distributed but there are also highly skewed variables such as capital-gain and capital-loss.</p>
 </div>
 <div id="correlation-plot-of-numeric-variables" class="section level4">
-<h4><span class="header-section-number">3.5.11.2</span> Correlation plot of numeric variables</h4>
+<h4><span class="header-section-number">3.5.12.2</span> Correlation plot of numeric variables</h4>
 <div class="figure">
 <img src="images/3-6-2.png" alt="Correlation" />
 <p class="caption">Correlation</p>
@@ -854,7 +857,7 @@ no
 <p>On this plot we can observe that the numeric variables have weak correlations with each other.</p>
 </div>
 <div id="density-of-observations-by-age-and-education" class="section level4">
-<h4><span class="header-section-number">3.5.11.3</span> Density of observations by age and education</h4>
+<h4><span class="header-section-number">3.5.12.3</span> Density of observations by age and education</h4>
 <div class="figure">
 <img src="images/3-6-3.png" alt="Density" />
 <p class="caption">Density</p>
@@ -862,7 +865,7 @@ no
 <p>We can see the density of observations divided by age and education-num features. Education-num is a numeric variable that depicts the education level in an ordered way.</p>
 </div>
 <div id="level-of-education-by-target-class" class="section level4">
-<h4><span class="header-section-number">3.5.11.4</span> Level of education by target class</h4>
+<h4><span class="header-section-number">3.5.12.4</span> Level of education by target class</h4>
 <div class="figure">
 <img src="images/3-6-4.png" alt="Education" />
 <p class="caption">Education</p>
@@ -870,7 +873,7 @@ no
 <p>We can observe that the highest rate of positive target class is for PHD and professors which does not surprise.</p>
 </div>
 <div id="work-class-by-target-class" class="section level4">
-<h4><span class="header-section-number">3.5.11.5</span> Work class by target class</h4>
+<h4><span class="header-section-number">3.5.12.5</span> Work class by target class</h4>
 <div class="figure">
 <img src="images/3-6-5.png" alt="Work class" />
 <p class="caption">Work class</p>
@@ -878,7 +881,7 @@ no
 <p>The highest rate when divided by work class can be observed for self employeed people.</p>
 </div>
 <div id="age-by-target-class" class="section level4">
-<h4><span class="header-section-number">3.5.11.6</span> Age by target class</h4>
+<h4><span class="header-section-number">3.5.12.6</span> Age by target class</h4>
 <div class="figure">
 <img src="images/3-6-6.png" alt="Age" />
 <p class="caption">Age</p>
@@ -887,10 +890,10 @@ no
 </div>
 </div>
 <div id="initial-data-preparation-1" class="section level3">
-<h3><span class="header-section-number">3.5.12</span> Initial Data Preparation</h3>
+<h3><span class="header-section-number">3.5.13</span> Initial Data Preparation</h3>
 <p>The main focus of this part is to analyze and input the missing data. The side tasks are handling outliers and transformation of skewed variables using logistic functions. A few most popular inputation methods will be compared. We are not only going to use basic aggregation functions like mean and mode but also other machine learning models and advance inputation methods like <span class="citation">(Stef van Buuren <a href="#ref-MICE">2011</a>)</span>. The results are going to be compared using a model that is robust to missing data which is a basic decision tree.</p>
 <div id="missing-data-by-feature" class="section level4">
-<h4><span class="header-section-number">3.5.12.1</span> Missing Data by Feature</h4>
+<h4><span class="header-section-number">3.5.13.1</span> Missing Data by Feature</h4>
 <div class="figure">
 <img src="images/3-6-7.png" alt="Missing Data" />
 <p class="caption">Missing Data</p>
@@ -898,7 +901,7 @@ no
 <p>Missing data can be observed in three columns. They account up to eight percent of data.</p>
 </div>
 <div id="missing-data-pattern" class="section level4">
-<h4><span class="header-section-number">3.5.12.2</span> Missing Data Pattern</h4>
+<h4><span class="header-section-number">3.5.13.2</span> Missing Data Pattern</h4>
 <div class="figure">
 <img src="images/3-6-8.png" alt="Missing Data Pattern" />
 <p class="caption">Missing Data Pattern</p>
@@ -906,7 +909,7 @@ no
 <p>It can be observed that data is missing at random.</p>
 </div>
 <div id="inputation-results" class="section level4">
-<h4><span class="header-section-number">3.5.12.3</span> Inputation Results</h4>
+<h4><span class="header-section-number">3.5.13.3</span> Inputation Results</h4>
 <ul>
 <li>Data with missing values,</li>
 </ul>
@@ -930,7 +933,7 @@ no
 <p>We can observe that the best results were achieved using KNN inputation so from now on this will be the used method.</p>
 </div>
 <div id="outliers" class="section level4">
-<h4><span class="header-section-number">3.5.12.4</span> Outliers</h4>
+<h4><span class="header-section-number">3.5.13.4</span> Outliers</h4>
 <div class="figure">
 <img src="images/3-6-9.png" alt="Missing Data" />
 <p class="caption">Missing Data</p>
@@ -938,7 +941,7 @@ no
 <p>Some outliers can be observed in fnlwgt columns which is described as proximation for the demographic background of people. The data was cropped to 300000 value.</p>
 </div>
 <div id="skewness" class="section level4">
-<h4><span class="header-section-number">3.5.12.5</span> Skewness</h4>
+<h4><span class="header-section-number">3.5.13.5</span> Skewness</h4>
 <div class="figure">
 <img src="images/3-6-10.png" alt="Skewness of fnlwgt" />
 <p class="caption">Skewness of fnlwgt</p>
@@ -952,10 +955,10 @@ no
 </div>
 </div>
 <div id="feature-engineering-and-tuning" class="section level3">
-<h3><span class="header-section-number">3.5.13</span> Feature Engineering and Tuning</h3>
+<h3><span class="header-section-number">3.5.14</span> Feature Engineering and Tuning</h3>
 <p>Firstly we are going to compare a few most popular Machine Learning models on our initially prepared dataset. We picked three popular explainable models: <strong>KNN</strong>, <strong>Decision Tree</strong> and <strong>Logistic Regression</strong>.</p>
 <div id="first-comparison-of-models" class="section level4">
-<h4><span class="header-section-number">3.5.13.1</span> First comparison of models</h4>
+<h4><span class="header-section-number">3.5.14.1</span> First comparison of models</h4>
 <div class="figure">
 <img src="images/3-6-12.png" alt="First results" />
 <p class="caption">First results</p>
@@ -963,7 +966,7 @@ no
 <p>The best result was achieved by logistic regression which was surprising and shows how capable explainable models can be even on complex data. The next best explainable model ranked by AUPRC was <strong>KNN</strong> and <strong>Decision Tree</strong>. Due to the fact that logistic regression obtained a better result than black boxes at the very start, and the <strong>KNN</strong> model is not globally interpretable, we will focus on the decision tree, which is a popular and easily interpretable model. That is the reason why we are going to work mainly with this model and initialy with KNN for comparison in our goal to achieve similar results to Black Box models using it, but our final model will be a decision tree. The best Black boxes were <strong>Random Forest</strong> and <strong>Adaboost</strong>, because of that in the later phase of our project we will depend on them to make our results better. During the Feature Engineering we will utilize strategies such as transformating and extracting features using the SAFE algorithm mentioned in the article above. Amongst other strategies we will use variable selection based on random forest feature importance and tuning models with Bayesian optimization - mlrMBO <span class="citation">(Bernd Bischl <a href="#ref-BO">2018</a>)</span> based on custom measure: AUPRC and not the typical AUC. Another interesting aspect that we are going to look into is changing the type of target to numeric and by doing so changing our task from classification to regression, surprisingly it improves our results.</p>
 </div>
 <div id="rsafe" class="section level4">
-<h4><span class="header-section-number">3.5.13.2</span> rSAFE</h4>
+<h4><span class="header-section-number">3.5.14.2</span> rSAFE</h4>
 <blockquote>
 <p>The SAFE ML algorithm uses a complex model as a surrogate. New binary
 features are created on the basis of surrogate predictions. These new
@@ -994,7 +997,7 @@ to: <code>PR AUC: 0.7063880 ROC AUC: 0.8679561</code></p>
 </ul>
 </div>
 <div id="change-to-regression" class="section level4">
-<h4><span class="header-section-number">3.5.13.3</span> Change to regression</h4>
+<h4><span class="header-section-number">3.5.14.3</span> Change to regression</h4>
 <p>The next approach we chose based on our previous experience with unbalanced datasets is changing our task from classification to regression and by doing so we improved our prediction.</p>
 <ul>
 <li>decision tree,</li>
@@ -1004,7 +1007,7 @@ to: <code>PR AUC: 0.7166287 ROC AUC: 0.8654641</code></p>
 <p>In case of KNN there was no visible improvement.</p>
 </div>
 <div id="variable-selection" class="section level4">
-<h4><span class="header-section-number">3.5.13.4</span> Variable selection</h4>
+<h4><span class="header-section-number">3.5.14.4</span> Variable selection</h4>
 <p>Additionally we carried out a variable selection on those that are currently used. It was based on feature importance from a random forest model, we use ten most important variables from fifteen that were being used before.</p>
 <ul>
 <li>decision tree,</li>
@@ -1014,7 +1017,7 @@ to: <code>PR AUC: 0.7197062 ROC AUC: 0.8714894</code></p>
 <p>The improvement is slight, but because of this operation we are using a less complicated model, so we decided to use it.</p>
 </div>
 <div id="tuning" class="section level4">
-<h4><span class="header-section-number">3.5.13.5</span> Tuning</h4>
+<h4><span class="header-section-number">3.5.14.5</span> Tuning</h4>
 <p>Last phase was tuning our decision tree model. We based it on mlrMBO, but our method is adjusted to the task. The optimized measure is AUPRC, this proces is slightly different from optimizing AUC. Before using MBO we select the optimal range of parameters like: “minsplit” and “minbucket”. After selecting ten optimal values of the first one we select ten optimal for the second. For each of those hundred pairs we use MBO to find the optimal “cp” parameter. The best set of parameters we found is: “minsplit” = 4, “minbucket” = 11, “cp” = 0.0001863419. The result we achieved:</p>
 <ul>
 <li>decision tree,</li>
@@ -1025,7 +1028,7 @@ to: <code>PR AUC: 0.7939883 ROC AUC: 0.9122904</code></p>
 </div>
 </div>
 <div id="results-and-conclusion" class="section level3">
-<h3><span class="header-section-number">3.5.14</span> Results and conclusion</h3>
+<h3><span class="header-section-number">3.5.15</span> Results and conclusion</h3>
 <div class="figure">
 <img src="images/3-6-13.png" alt="Differences between each stage" />
 <p class="caption">Differences between each stage</p>
