@@ -1,0 +1,39 @@
+## Explainable Computer Vision with embeddings and KNN classifier.
+
+*Authors: Olaf Werner, Bogdan Jastrzębski (Warsaw University of Technology)*
+
+### Abstract
+
+
+### Introduction
+Computer vision is widely known use case for neural networks. However neural networks are infamous for their complexity and lack of interpretability. On the other hand simple classifiers like KNN have really poor results for complex tasks like image recognition. In this article we will prove that it is possible to get best of both worlds using emmbeddings. 
+
+### Data
+We are going to use dataset [Fashion-Mnist](https://www.openml.org/d/40996). Fashion-MNIST is a dataset of Zalando's article images, consisting of a training set of 60,000 examples and a test set of 10,000 examples. Each example is a 28x28 grayscale image, associated with a label from 10 classes. Classes are following: T-shirt/top, Trouser, Pullover, Dress, Coat, Sandal, Shirt, Sneaker, Bag, Ankle boot.
+
+### Methodology
+
+The simplest and one of the most robust classifiers is KNN. It doesn't generalize information, instead it saves training dataset and during prediction it finds the most similar historical observations and predicts label of a new observation based on their labels.
+
+However, it not only doesn't have the capacity to distinguish important features from not important ones, but also to find more complex interactions between variables. 
+
+One way to improve KNN's performance is to preced closest neighbour computation with transformation of the space of observations, so that the derivative variables are more meaningful. Such beneficial transformation is called embedding. It can be done in various ways. 
+
+The question is, whether or not the new classifier is interpretable. We argue, that it is. The main reason is that even if we can't interpret the embedding part, we can at least provide historical data that our model used to make prediction. Someone could argue, that it can be done with every classifier, just by finding training data that obtains the most similar prediction. However, with our classifier we can say for sure, that prediction were purely made based on the most similar cases in our dataset, which is fundamentally not true about different classifiers.
+
+An embedding can be done made in various ways. In this article we will explore different embedding techniques, including:
+
+* SVD embedding
+
+* Logistic Regression Autoencoder
+
+* Self Organizing Maps
+
+* Convolutional Autoencoder
+
+
+
+### Results
+
+
+### Conclusions

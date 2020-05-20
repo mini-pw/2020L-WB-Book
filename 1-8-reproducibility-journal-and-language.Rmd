@@ -14,7 +14,7 @@ Due to the growing number of research publications and open-source solutions, th
 
 Reproducibility is crucial since it is what an researcher can guarantee about a research. This not only ensures that the results are correct, but rather ensures transparency and gives scientists confidence in understanding exactly what was done [@Eisner2018]. It allows science to progress by building on previous work. What is more, it is necessary to prevent scientific misconduct. The increasing number of cases is causing a crisis of confidence in science [@Drummond2012].
 
-In psychology the problem has already been addressed. From 2011 to 2015 over two hundred scientists cooperated to reproduce results of one hundred psychological studies [@Ezcuj]. In computer science (and data science) scientists notice the need for creating tools and guidelines, which help to guarantee reproducibility of solutions [@Archivist][@Stodden1240]. There exist already developed solutions which are tested to be applied [@Elmenreich2018].
+In psychology the problem has already been addressed. From 2011 to 2015 over two hundred scientists cooperated to reproduce results of one hundred psychological studies [@Ezcuj]. In computer science (and data science) scientists notice the need for creating tools and guidelines, which help to guarantee reproducibility of solutions [@Archivist, @Stodden1240]. There exist already developed solutions which are tested to be applied [@Elmenreich2018].
 
 Reproducibility can focus on different aspects of the publication, including code, results of analysis and data collection methods. This work will focus mainly on the code - results produced by evaluation of different functions and chunks of code from analysed publications.
 
