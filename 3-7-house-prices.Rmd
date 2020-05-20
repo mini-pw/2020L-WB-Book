@@ -2,9 +2,6 @@
 
 *Authors: Hubert Baniecki, Mateusz Polakowski (Warsaw University of Technology)*
 
-<!-- Which Neighbours Affected the Price Of a House in the '90s? -->
-<!-- What Affects The Price Of A House? US Census Data Revisited After 30 Years.-->
-
 ### Introduction
   
 Real estate value varies over numerous factors. These may be obvious like location or interior design, but also less apparent like the ethnicity and age of neighbours. Therefore, property price estimation is a demanding job that often requires a lot of experience and market knowledge. Is or was, because nowadays, Artificial Intelligence (AI) surpasses humans in this task. Interested parties more often use tools like supervised Machine Learning (ML) models to precisely evaluate the property value and gain a competitive advantage.
@@ -30,84 +27,115 @@ https://arxiv.org/abs/1909.00704
 
 ### Data
 
-<!-- http://www.cs.toronto.edu/~delve/data/census-house/censusDetail.html -->
+For this case study we use the *house_8L* dataset crafted from the data collected in 1990 by the US. Census Bureau.
+Each record stands for a distinct US. state while the target value is a median house price in a given region.
+The variables are presented in Table \@ref(tab:3-7-dataset).
 
-For this case study we use the *house_8L* dataset crafted from data collected in US. in 1990 by the US. Census Bureau.
-Each record stands for a distinct state while the target value is a median house price in a given region.
-The variables are:
-`house_n` - total number of households,
-`avg_room_n` - average number of rooms in an owner-occupied Housing Units,
-`forsale_h_pct` - percentage of vacant Housing Units which are for sale only,
-`forsale_6mplus_h_pct` - percentage of vacant-for-sale Housing Units vacant more then 6 months,
-`age_25_64_pct` - percentage of people between 25-64 years of age,
-`family_2plus_h_pct` - percentage of households with 2 or more persons which are family households,
-`black_h_pct` - percentage of households with black Householder,
-`asian_p_pct` - percentage of people which are of Asian or Pacific Islander race.
+```{r 3-7-dataset, echo = FALSE}
+library(kableExtra)
+text_tbl <- data.frame(
+  "Original name" = c("price", "P3", "H15.1", "H5.2", "H40.4", "P11.3", "P16.2", "P19.2", "P6.4"),
+  "New name" = c("price", "house_n", "avg_room_n", "forsale_h_pct", "forsale_6mplus_h_pct",
+                 "age_25_64_pct", "family_2plus_h_pct", "black_h_pct", "asian_p_pct"),
+  "Description" = c(
+    "median price of the house in the region",
+    "total number of households",
+    "average number of rooms in an owner-occupied Housing Units", 
+    "percentage of vacant Housing Units which are for sale only",
+    "percentage of vacant-for-sale Housing Units vacant more then 6 months",
+    "percentage of people between 25-64 years of age",
+    "percentage of households with 2 or more persons which are family households",
+    "percentage of households with black Householder",
+    "percentage of people which are of Asian or Pacific Islander race"
+  )
+)
+colnames(text_tbl) <- c("Original name", "New name", "Description")
+kable(text_tbl, align=c('c', 'c', 'c'), caption="Description of variables present in the house_8L dataset.") %>%
+  kable_styling("bordered", full_width = F) %>%
+  column_spec(1, width = "10em", bold = F) %>%
+  column_spec(2, width = "10em", bold = T) %>%
+  column_spec(3, width = "40em", background = "white") 
+```
 
-Furthermore, we will apply our Metodology (Section 4) on a corresponding *house_16H* dataset, which has the same target but different set of variables.
+Furthermore, we will apply our Metodology (Section 4) on a corresponding *house_16H* dataset, which has the same target but a different set of variables.
 More correlated variables of a higher variance make it significantly harder to estimate the median house price in a given region.
 Such validation will allow us to evaluate our model on a more demanding task.
-The comprehensive description of used data can be found in <>.
+The comprehensive description of used data can be found in [@housepricesdata].
 
 
 ### Methodology
 
-In this section, we are going to focus on developing the best white-box model, which provides interpretability of features. Throughout this case study, we use the Mean Absolute Error (MAE) measure to evaluate the model performance, because we later focus on the residuals while the mean of absolute values of residuals is the easiest to interpret.
+In this section, we are going to focus on developing the best white-box model, which provides interpretability of features. Throughout this case study, we use the Mean Absolute Error (MAE) measure to evaluate the model performance, because we focus on the residuals while the mean of absolute values of residuals is the easiest to interpret.
 
 #### EDA
 
-**TODO** introduction
+The main conclusions from the Exploratory Data Analysis are as follows:
 
-The main conclusions from the Exploratory Data Analysis (EDA) are as follows:
+1. The target value is very skewed (See Figure \@ref(fig:3-7-eda)).
+2. There are 6 percentage and 2 count variables.
+3. The dataset has over 22k data points.
+4. There are 46 data points with unnaturally looking target value. 
+5. There are no missing values.
 
-1. There are no missing values.
-2. The target value is very skewed.
-3. There are six percentage and two count variables.
-4. The dataset has over 22k data points.
+```{r 3-7-eda, cache=FALSE, out.width="800", fig.align="center", echo=FALSE, eval = is.html, fig.cap="(L) Histogram of the target values. (R) Examplary variable correlation with the target."}
+knitr::include_graphics('images/3-7-eda.png')
+```
 
 Therefore we decided that:
 
-1. There is no need to impute missing values.
-2. We will not transform the skewed target because this might provide less interpretability.
-3. There are not many possibilities for feature engineering.
-4. We can reliably split the data into train and test using 2:1 ratio.
+1. We will not transform the skewed target because this might provide less interpretability.
+2. There are not many possibilities for feature engineering.
+3. We can reliably split the data into train and test using 2:1 ratio.
+4. We suspect that the target value of *500001* is artificially made, so we remove these outliers.
 
-#### rSAFE 
+Throughout this case study, we use the Mean Absolute Error (MAE) measure to evaluate the model performance, because we later focus on the residuals while the mean of absolute values of residuals is the easiest to interpret.
 
-The first approach was using the SAFE [@safe] technique to engineer new features and produce a linear regression model. We took a well-performing black-box `ranger` [@ranger] model and extracted new interpretable features using its Partial Dependence Profiles. Then we used these features to craft a new linear model which indeed was better than the baseline linear model by about 10%. It is worth noting that both of these linear models had a hard time succeeding because of target skewness.
+#### SAFE 
+
+The first approach was using the SAFE [@gosiewska2019safe] technique to engineer new features and produce a linear regression model. We trained a well-performing black-box `ranger` [@ranger] model and extracted new interpretable features using its Partial Dependence Profiles [@pdp]. Then we used these features to craft a new linear model which indeed was better than the baseline linear model by about 10%. It is worth noting that both of these linear models had a hard time succeeding because of target skewness.
 
 #### Divide-and-conquer
 
 In this section, we present the main contribution of this paper.
-The divide-and-conquer idea has many computer science applications, so we decided to make use of its core principles in delivering the best white-box model that estimates the median house price.
-The algorithm is:
+The divide-and-conquer idea has many computer science applications, e.g. in sorting algorithms, natural language processing, or parallel computing.
+We decided to make use of its core principles in constructing the method for fitting the enhanced white-box model.
+The final result is multiple tree models combined which decisions are easily interpretable.
+
+The proposed algorithm presented in the Figure \@ref(fig:3-7-algorithm) is:
 
 1. Divide the target variable with `k` middle points into `k+1` groups.
 2. Fit a black-box classifier on train data which predicts the belonging to the `i-th` group.
-3. Use this model to divide the train and test data into `k+1` train and test subsets.
-4. For each `i-th` subset fit a white-box estimator on the `i-th` train data and predict the outcome on the `i-th` test data.
+3. Use this classifier to divide the train and test data into `k+1` train and test subsets.
+4. For every `i-th` subset fit a white-box estimator of target variable on the `i-th` train data.
+5. Use the `i-th` estimator to predict the outcome of the `i-th` test data.
 
-For this simple task, we chose `k = 1`, and the middle point was arbitrary chosen as 100k, which divides the data in about a 10:1 ratio. We used the `ranger` random forest model as a black-box classifier and the `rpart` [@rpart] tree as a white-box estimator. Such a solution allows us to achieve competitive performance with interpretable features.
+```{r 3-7-algorithm, cache=FALSE, out.width="800", fig.align="center", echo=FALSE, eval = is.html, fig.cap="The divide-and-conquer algorithm used to construct an enhanced white-box model."}
+knitr::include_graphics('images/3-7-algorithm.png')
+```
+
+**pytanie: czy dodawać wypunktowanie w caption schematu? W paper tak, a w książce lepiej wygląda bez (?)**
+
+The final product is a stacked model with one classifier and `k+1` estimators. For the house price task, we chose `k = 1`, and the middle point was arbitrary chosen as `100k`, which divides the data into two groups in about a 10:1 ratio. We used the `ranger` random forest model as a black-box classifier and the `rpart` [@rpart] decision tree model as a white-box estimator. Such a solution allows us to achieve competitive performance with interpretable features. 
 
 ### Results
 
 #### Final model
 
-**TODO** describe plots
+**TODO** add info about the parameters. describe the plot
 
 ```{r cache=FALSE, out.width="800", fig.align="center", echo=FALSE, eval = is.html}
-knitr::include_graphics('images/3-7-tree_cheap.svg')
+knitr::include_graphics('images/3-7-tree-cheap.svg')
 ```
 
 ```{r cache=FALSE, out.width="800", fig.align="center", echo=FALSE, eval = is.html}
-knitr::include_graphics('images/3-7-tree_rich.svg')
+knitr::include_graphics('images/3-7-tree-rich.svg')
 ```
 
 #### Comparison
 
-Finally, we will compare our model with the black-box `ranger` and the white-box `rpart`.
+We next compare our stacked model with baseline `ranger` and `rpart` models, respectively referred to as black-box and white-box.
 
-**TODO** describe the plots + add the table with all scores
+**TODO** describe the plots
 
 ```{r cache=FALSE, out.width="800", fig.align="center", echo=FALSE, eval = is.html}
 knitr::include_graphics('images/3-7-density.png')
@@ -117,19 +145,29 @@ knitr::include_graphics('images/3-7-density.png')
 knitr::include_graphics('images/3-7-boxplot.png')
 ```
 
-#### Harder task ???
+```{r 3-7-table-results, echo = FALSE}
+library(kableExtra)
+text_tbl <- data.frame(
+  'Model' = c('ranger', "xgboost", 'linear model', "SAFE on ranger", 'rpart', "stacked model"),
+  'house_8L' = c(14829, 16035, 23057, 21408, 19195, 14605),
+  'house_16H' = c(15602, 16499, 24051, 22601, 22145, 15273)
+)
+text_tbl <- text_tbl[c(3,4,5,2,1,6),]
+text_tbl$house_8L <- paste0(signif(text_tbl$house_8L, 3)/1000, "k")
+text_tbl$house_16H <- paste0(signif(text_tbl$house_16H, 3)/1000, "k")
+rownames(text_tbl) <- NULL
+kable(text_tbl, align=c('c', 'c', 'c'), caption="Comparison of the MAE score for all of the used models on test datasets.") %>%
+  kable_styling("bordered", full_width = F) %>%
+  column_spec(1, width = "20em", bold = T) %>%
+  column_spec(2, width = "10em", bold = F) %>%
+  column_spec(3, width = "10em", bold = F) %>%
+  row_spec(c(4,5), background = "#f05a71", color = "black") %>%
+  row_spec(c(1,2,3, 6), background = "#8bdcbe", color = "black") %>%
+  add_header_above(c(" " = 1, "Dataset (test)" = 2)) 
+  #row_spec(c(6), background = "#4378bf", color = "white")
+```
 
 
 ### Conclusions
 
-**TODO**
-
-add citations to bib
-
-https://arxiv.org/abs/1902.11035
-
-https://www.jstatsoft.org/article/view/v077i01
-
-https://github.com/bethatkinson/rpart
-
-https://journal.r-project.org/archive/2019/RJ-2019-036/index.html
+**TODO** 
