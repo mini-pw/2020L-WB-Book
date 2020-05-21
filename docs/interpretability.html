@@ -1192,8 +1192,6 @@ with the help of a surrogate model.</p>
 <div id="which-neighbours-affected-house-prices-in-the-90s" class="section level2" number="3.7">
 <h2><span class="header-section-number">3.7</span> Which Neighbours Affected House Prices in the ’90s?</h2>
 <p><em>Authors: Hubert Baniecki, Mateusz Polakowski (Warsaw University of Technology)</em></p>
-<!-- Which Neighbours Affected the Price Of a House in the '90s? -->
-<!-- What Affects The Price Of A House? US Census Data Revisited After 30 Years.-->
 <div id="introduction-2" class="section level3" number="3.7.1">
 <h3><span class="header-section-number">3.7.1</span> Introduction</h3>
 <p>Real estate value varies over numerous factors. These may be obvious like location or interior design, but also less apparent like the ethnicity and age of neighbours. Therefore, property price estimation is a demanding job that often requires a lot of experience and market knowledge. Is or was, because nowadays, Artificial Intelligence (AI) surpasses humans in this task. Interested parties more often use tools like supervised Machine Learning (ML) models to precisely evaluate the property value and gain a competitive advantage.</p>
@@ -1211,89 +1209,303 @@ with the help of a surrogate model.</p>
 </div>
 <div id="data-3" class="section level3" number="3.7.3">
 <h3><span class="header-section-number">3.7.3</span> Data</h3>
-<!-- http://www.cs.toronto.edu/~delve/data/census-house/censusDetail.html -->
-<p>For this case study we use the <em>house_8L</em> dataset crafted from data collected in US. in 1990 by the US. Census Bureau.
-Each record stands for a distinct state while the target value is a median house price in a given region.
-The variables are:
-<code>house_n</code> - total number of households,
-<code>avg_room_n</code> - average number of rooms in an owner-occupied Housing Units,
-<code>forsale_h_pct</code> - percentage of vacant Housing Units which are for sale only,
-<code>forsale_6mplus_h_pct</code> - percentage of vacant-for-sale Housing Units vacant more then 6 months,
-<code>age_25_64_pct</code> - percentage of people between 25-64 years of age,
-<code>family_2plus_h_pct</code> - percentage of households with 2 or more persons which are family households,
-<code>black_h_pct</code> - percentage of households with black Householder,
-<code>asian_p_pct</code> - percentage of people which are of Asian or Pacific Islander race.</p>
-<p>Furthermore, we will apply our Metodology (Section 4) on a corresponding <em>house_16H</em> dataset, which has the same target but different set of variables.
+<p>For this case study we use the <em>house_8L</em> dataset crafted from the data collected in 1990 by the US. Census Bureau.
+Each record stands for a distinct US. state while the target value is a median house price in a given region.
+The variables are presented in Table <a href="interpretability.html#tab:3-7-dataset">3.2</a>.</p>
+<table class="table table-bordered" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:3-7-dataset">TABLE 3.2: </span>Description of variables present in the house_8L dataset.
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+Original name
+</th>
+<th style="text-align:center;">
+New name
+</th>
+<th style="text-align:center;">
+Description
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;width: 10em; ">
+price
+</td>
+<td style="text-align:center;width: 10em; font-weight: bold;">
+price
+</td>
+<td style="text-align:center;width: 40em; background-color: white !important;">
+median price of the house in the region
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+P3
+</td>
+<td style="text-align:center;width: 10em; font-weight: bold;">
+house_n
+</td>
+<td style="text-align:center;width: 40em; background-color: white !important;">
+total number of households
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+H15.1
+</td>
+<td style="text-align:center;width: 10em; font-weight: bold;">
+avg_room_n
+</td>
+<td style="text-align:center;width: 40em; background-color: white !important;">
+average number of rooms in an owner-occupied Housing Units
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+H5.2
+</td>
+<td style="text-align:center;width: 10em; font-weight: bold;">
+forsale_h_pct
+</td>
+<td style="text-align:center;width: 40em; background-color: white !important;">
+percentage of vacant Housing Units which are for sale only
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+H40.4
+</td>
+<td style="text-align:center;width: 10em; font-weight: bold;">
+forsale_6mplus_h_pct
+</td>
+<td style="text-align:center;width: 40em; background-color: white !important;">
+percentage of vacant-for-sale Housing Units vacant more then 6 months
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+P11.3
+</td>
+<td style="text-align:center;width: 10em; font-weight: bold;">
+age_25_64_pct
+</td>
+<td style="text-align:center;width: 40em; background-color: white !important;">
+percentage of people between 25-64 years of age
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+P16.2
+</td>
+<td style="text-align:center;width: 10em; font-weight: bold;">
+family_2plus_h_pct
+</td>
+<td style="text-align:center;width: 40em; background-color: white !important;">
+percentage of households with 2 or more persons which are family households
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+P19.2
+</td>
+<td style="text-align:center;width: 10em; font-weight: bold;">
+black_h_pct
+</td>
+<td style="text-align:center;width: 40em; background-color: white !important;">
+percentage of households with black Householder
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 10em; ">
+P6.4
+</td>
+<td style="text-align:center;width: 10em; font-weight: bold;">
+asian_p_pct
+</td>
+<td style="text-align:center;width: 40em; background-color: white !important;">
+percentage of people which are of Asian or Pacific Islander race
+</td>
+</tr>
+</tbody>
+</table>
+<p>Furthermore, we will apply our Metodology (Section 4) on a corresponding <em>house_16H</em> dataset, which has the same target but a different set of variables.
 More correlated variables of a higher variance make it significantly harder to estimate the median house price in a given region.
 Such validation will allow us to evaluate our model on a more demanding task.
-The comprehensive description of used data can be found in &lt;&gt;.</p>
+The comprehensive description of used data can be found in <span class="citation">(“Census dataset” <a href="#ref-housepricesdata" role="doc-biblioref">1996</a>)</span>.</p>
 </div>
 <div id="methodology-14" class="section level3" number="3.7.4">
 <h3><span class="header-section-number">3.7.4</span> Methodology</h3>
-<p>In this section, we are going to focus on developing the best white-box model, which provides interpretability of features. Throughout this case study, we use the Mean Absolute Error (MAE) measure to evaluate the model performance, because we later focus on the residuals while the mean of absolute values of residuals is the easiest to interpret.</p>
+<p>In this section, we are going to focus on developing the best white-box model, which provides interpretability of features. Throughout this case study, we use the Mean Absolute Error (MAE) measure to evaluate the model performance, because we focus on the residuals while the mean of absolute values of residuals is the easiest to interpret.</p>
 <div id="eda-1" class="section level4" number="3.7.4.1">
 <h4><span class="header-section-number">3.7.4.1</span> EDA</h4>
-<p><strong>TODO</strong> introduction</p>
-<p>The main conclusions from the Exploratory Data Analysis (EDA) are as follows:</p>
+<p>The main conclusions from the Exploratory Data Analysis are as follows:</p>
 <ol style="list-style-type: decimal">
-<li>There are no missing values.</li>
-<li>The target value is very skewed.</li>
-<li>There are six percentage and two count variables.</li>
+<li>The target value is very skewed (See Figure <a href="interpretability.html#fig:3-7-eda">3.1</a>).</li>
+<li>There are 6 percentage and 2 count variables.</li>
 <li>The dataset has over 22k data points.</li>
+<li>There are 46 data points with unnaturally looking target value.</li>
+<li>There are no missing values.</li>
 </ol>
+<div class="figure" style="text-align: center"><span id="fig:3-7-eda"></span>
+<img src="images/3-7-eda.png" alt="(L) Histogram of the target values. (R) Examplary variable correlation with the target." width="800" />
+<p class="caption">
+FIGURE 3.1: (L) Histogram of the target values. (R) Examplary variable correlation with the target.
+</p>
+</div>
 <p>Therefore we decided that:</p>
 <ol style="list-style-type: decimal">
-<li>There is no need to impute missing values.</li>
 <li>We will not transform the skewed target because this might provide less interpretability.</li>
 <li>There are not many possibilities for feature engineering.</li>
 <li>We can reliably split the data into train and test using 2:1 ratio.</li>
+<li>We suspect that the target value of <em>500001</em> is artificially made, so we remove these outliers.</li>
 </ol>
+<p>Throughout this case study, we use the Mean Absolute Error (MAE) measure to evaluate the model performance, because we later focus on the residuals while the mean of absolute values of residuals is the easiest to interpret.</p>
 </div>
-<div id="rsafe-1" class="section level4" number="3.7.4.2">
-<h4><span class="header-section-number">3.7.4.2</span> rSAFE</h4>
-<p>The first approach was using the SAFE <span class="citation">(<span class="citeproc-not-found" data-reference-id="safe"><strong>???</strong></span>)</span> technique to engineer new features and produce a linear regression model. We took a well-performing black-box <code>ranger</code> <span class="citation">(Wright and Ziegler <a href="#ref-ranger" role="doc-biblioref">2017</a>)</span> model and extracted new interpretable features using its Partial Dependence Profiles. Then we used these features to craft a new linear model which indeed was better than the baseline linear model by about 10%. It is worth noting that both of these linear models had a hard time succeeding because of target skewness.</p>
+<div id="safe" class="section level4" number="3.7.4.2">
+<h4><span class="header-section-number">3.7.4.2</span> SAFE</h4>
+<p>The first approach was using the SAFE <span class="citation">(Gosiewska et al. <a href="#ref-gosiewska2019safe" role="doc-biblioref">2019</a>)</span> technique to engineer new features and produce a linear regression model. We trained a well-performing black-box <code>ranger</code> <span class="citation">(Wright and Ziegler <a href="#ref-ranger" role="doc-biblioref">2017</a>)</span> model and extracted new interpretable features using its Partial Dependence Profiles <span class="citation">(Friedman <a href="#ref-pdp" role="doc-biblioref">2000</a>)</span>. Then we used these features to craft a new linear model which indeed was better than the baseline linear model by about 10%. It is worth noting that both of these linear models had a hard time succeeding because of target skewness.</p>
 </div>
 <div id="divide-and-conquer" class="section level4" number="3.7.4.3">
 <h4><span class="header-section-number">3.7.4.3</span> Divide-and-conquer</h4>
 <p>In this section, we present the main contribution of this paper.
-The divide-and-conquer idea has many computer science applications, so we decided to make use of its core principles in delivering the best white-box model that estimates the median house price.
-The algorithm is:</p>
+The divide-and-conquer idea has many computer science applications, e.g. in sorting algorithms, natural language processing, or parallel computing.
+We decided to make use of its core principles in constructing the method for fitting the enhanced white-box model.
+The final result is multiple tree models combined which decisions are easily interpretable.</p>
+<p>The proposed algorithm presented in the Figure <a href="interpretability.html#fig:3-7-algorithm">3.2</a> is:</p>
 <ol style="list-style-type: decimal">
 <li>Divide the target variable with <code>k</code> middle points into <code>k+1</code> groups.</li>
 <li>Fit a black-box classifier on train data which predicts the belonging to the <code>i-th</code> group.</li>
-<li>Use this model to divide the train and test data into <code>k+1</code> train and test subsets.</li>
-<li>For each <code>i-th</code> subset fit a white-box estimator on the <code>i-th</code> train data and predict the outcome on the <code>i-th</code> test data.</li>
+<li>Use this classifier to divide the train and test data into <code>k+1</code> train and test subsets.</li>
+<li>For every <code>i-th</code> subset fit a white-box estimator of target variable on the <code>i-th</code> train data.</li>
+<li>Use the <code>i-th</code> estimator to predict the outcome of the <code>i-th</code> test data.</li>
 </ol>
-<p>For this simple task, we chose <code>k = 1</code>, and the middle point was arbitrary chosen as 100k, which divides the data in about a 10:1 ratio. We used the <code>ranger</code> random forest model as a black-box classifier and the <code>rpart</code> <span class="citation">(<span class="citeproc-not-found" data-reference-id="rpart"><strong>???</strong></span>)</span> tree as a white-box estimator. Such a solution allows us to achieve competitive performance with interpretable features.</p>
+<div class="figure" style="text-align: center"><span id="fig:3-7-algorithm"></span>
+<img src="images/3-7-algorithm.png" alt="The divide-and-conquer algorithm used to construct an enhanced white-box model." width="800" />
+<p class="caption">
+FIGURE 3.2: The divide-and-conquer algorithm used to construct an enhanced white-box model.
+</p>
+</div>
+<p><strong>pytanie: czy dodawać wypunktowanie w caption schematu? W paper tak, a w książce lepiej wygląda bez (?)</strong></p>
+<p>The final product is a stacked model with one classifier and <code>k+1</code> estimators. For the house price task, we chose <code>k = 1</code>, and the middle point was arbitrary chosen as <code>100k</code>, which divides the data into two groups in about a 10:1 ratio. We used the <code>ranger</code> random forest model as a black-box classifier and the <code>rpart</code> <span class="citation">(Therneau and Atkinson <a href="#ref-rpart" role="doc-biblioref">2019</a>)</span> decision tree model as a white-box estimator. Such a solution allows us to achieve competitive performance with interpretable features.</p>
 </div>
 </div>
 <div id="results-13" class="section level3" number="3.7.5">
 <h3><span class="header-section-number">3.7.5</span> Results</h3>
 <div id="final-model" class="section level4" number="3.7.5.1">
 <h4><span class="header-section-number">3.7.5.1</span> Final model</h4>
-<p><strong>TODO</strong> describe plots</p>
-<p><img src="images/3-7-tree_cheap.svg" width="800" style="display: block; margin: auto;" /></p>
-<p><img src="images/3-7-tree_rich.svg" width="800" style="display: block; margin: auto;" /></p>
+<p><strong>TODO</strong> add info about the parameters. describe the plot</p>
+<p><img src="images/3-7-tree-cheap.svg" width="800" style="display: block; margin: auto;" /></p>
+<p><img src="images/3-7-tree-rich.svg" width="800" style="display: block; margin: auto;" /></p>
 </div>
 <div id="comparison" class="section level4" number="3.7.5.2">
 <h4><span class="header-section-number">3.7.5.2</span> Comparison</h4>
-<p>Finally, we will compare our model with the black-box <code>ranger</code> and the white-box <code>rpart</code>.</p>
-<p><strong>TODO</strong> describe the plots + add the table with all scores</p>
+<p>We next compare our stacked model with baseline <code>ranger</code> and <code>rpart</code> models, respectively referred to as black-box and white-box.</p>
+<p><strong>TODO</strong> describe the plots</p>
 <p><img src="images/3-7-density.png" width="800" style="display: block; margin: auto;" /></p>
 <p><img src="images/3-7-boxplot.png" width="800" style="display: block; margin: auto;" /></p>
+<table class="table table-bordered" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:3-7-table-results">TABLE 3.3: </span>Comparison of the MAE score for all of the used models on test datasets.
+</caption>
+<thead>
+<tr>
+<th style="border-bottom:hidden" colspan="1">
+</th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Dataset (test)
 </div>
-<div id="harder-task" class="section level4" number="3.7.5.3">
-<h4><span class="header-section-number">3.7.5.3</span> Harder task ???</h4>
+</th>
+</tr>
+<tr>
+<th style="text-align:center;">
+Model
+</th>
+<th style="text-align:center;">
+house_8L
+</th>
+<th style="text-align:center;">
+house_16H
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;width: 20em; font-weight: bold;color: black !important;background-color: #8bdcbe !important;">
+linear model
+</td>
+<td style="text-align:center;width: 10em; color: black !important;background-color: #8bdcbe !important;">
+23.1k
+</td>
+<td style="text-align:center;width: 10em; color: black !important;background-color: #8bdcbe !important;">
+24.1k
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 20em; font-weight: bold;color: black !important;background-color: #8bdcbe !important;">
+SAFE on ranger
+</td>
+<td style="text-align:center;width: 10em; color: black !important;background-color: #8bdcbe !important;">
+21.4k
+</td>
+<td style="text-align:center;width: 10em; color: black !important;background-color: #8bdcbe !important;">
+22.6k
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 20em; font-weight: bold;color: black !important;background-color: #8bdcbe !important;">
+rpart
+</td>
+<td style="text-align:center;width: 10em; color: black !important;background-color: #8bdcbe !important;">
+19.2k
+</td>
+<td style="text-align:center;width: 10em; color: black !important;background-color: #8bdcbe !important;">
+22.1k
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 20em; font-weight: bold;color: black !important;background-color: #f05a71 !important;">
+xgboost
+</td>
+<td style="text-align:center;width: 10em; color: black !important;background-color: #f05a71 !important;">
+16k
+</td>
+<td style="text-align:center;width: 10em; color: black !important;background-color: #f05a71 !important;">
+16.5k
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 20em; font-weight: bold;color: black !important;background-color: #f05a71 !important;">
+ranger
+</td>
+<td style="text-align:center;width: 10em; color: black !important;background-color: #f05a71 !important;">
+14.8k
+</td>
+<td style="text-align:center;width: 10em; color: black !important;background-color: #f05a71 !important;">
+15.6k
+</td>
+</tr>
+<tr>
+<td style="text-align:center;width: 20em; font-weight: bold;color: black !important;background-color: #8bdcbe !important;">
+stacked model
+</td>
+<td style="text-align:center;width: 10em; color: black !important;background-color: #8bdcbe !important;">
+14.6k
+</td>
+<td style="text-align:center;width: 10em; color: black !important;background-color: #8bdcbe !important;">
+15.3k
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="conclusions-1" class="section level3" number="3.7.6">
 <h3><span class="header-section-number">3.7.6</span> Conclusions</h3>
 <p><strong>TODO</strong></p>
-<p>add citations to bib</p>
-<p><a href="https://arxiv.org/abs/1902.11035" class="uri">https://arxiv.org/abs/1902.11035</a></p>
-<p><a href="https://www.jstatsoft.org/article/view/v077i01" class="uri">https://www.jstatsoft.org/article/view/v077i01</a></p>
-<p><a href="https://github.com/bethatkinson/rpart" class="uri">https://github.com/bethatkinson/rpart</a></p>
-<p><a href="https://journal.r-project.org/archive/2019/RJ-2019-036/index.html" class="uri">https://journal.r-project.org/archive/2019/RJ-2019-036/index.html</a></p>
 
 </div>
 </div>
@@ -1644,11 +1856,17 @@ Our implementation of convolutional neural networks consist of the following lay
 <div id="ref-mlrmbo">
 <p>Bischl, Bernd, Jakob Richter, Jakob Bossek, Daniel Horn, Janek Thomas, and Michel Lang. 2017. “MlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions.” <em>arXiv Preprint arXiv:1703.03373</em>.</p>
 </div>
+<div id="ref-housepricesdata">
+<p>“Census dataset.” 1996. <a href="http://www.cs.toronto.edu/~delve/data/census-house/censusDetail.html">http://www.cs.toronto.edu/~delve/data/census-house/censusDetail.html</a>.</p>
+</div>
 <div id="ref-fenton97">
 <p>Fenton, N. E., and S. L. Pfleeger. 1997. <em>Software Metrics: A Rigorous &amp; Practical Approach</em>. International Thompson Press.</p>
 </div>
 <div id="ref-auc">
 <p>Flach, Peter, Jose Hernandez-Orallo, and Cèsar Ferri. 2011. “A Coherent Interpretation of Auc as a Measure of Aggregated Classification Performance.” In <em>Proceedings of the 28th International Conference on Machine Learning, ICML 2011</em>, 657–64.</p>
+</div>
+<div id="ref-pdp">
+<p>Friedman, Jerome. 2000. “Greedy Function Approximation: A Gradient Boosting Machine.” <em>The Annals of Statistics</em> 29 (November). <a href="https://doi.org/10.1214/aos/1013203451">https://doi.org/10.1214/aos/1013203451</a>.</p>
 </div>
 <div id="ref-gosiewska2019safe">
 <p>Gosiewska, Alicja, Aleksandra Gacek, Piotr Lubon, and Przemyslaw Biecek. 2019. “SAFE Ml: Surrogate Assisted Feature Extraction for Model Learning.” <a href="http://arxiv.org/abs/1902.11035">http://arxiv.org/abs/1902.11035</a>.</p>
@@ -1673,6 +1891,9 @@ Our implementation of convolutional neural networks consist of the following lay
 </div>
 <div id="ref-MICE">
 <p>Stef van Buuren, Karin Groothuis-Oudshoorn. 2011. “Mice: Multivariate Imputation by Chained Equations in R.” <a href="https://www.jstatsoft.org/article/view/v045i03">https://www.jstatsoft.org/article/view/v045i03</a>.</p>
+</div>
+<div id="ref-rpart">
+<p>Therneau, Terry, and Beth Atkinson. 2019. <em>Rpart: Recursive Partitioning and Regression Trees</em>. <a href="https://CRAN.R-project.org/package=rpart">https://CRAN.R-project.org/package=rpart</a>.</p>
 </div>
 <div id="ref-OpenML2013">
 <p>Vanschoren, Joaquin, Jan N. van Rijn, Bernd Bischl, and Luis Torgo. 2013. “OpenML: Networked Science in Machine Learning.” <em>SIGKDD Explorations</em> 15 (2): 49–60. <a href="https://doi.org/10.1145/2641190.2641198">https://doi.org/10.1145/2641190.2641198</a>.</p>
