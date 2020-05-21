@@ -1,9 +1,9 @@
 on:
-  push:
-    paths-ignore:
-      - 'docs/**'
+  pull_request:
+    branches:
+      - master
 
-name: bookdown
+name: check PR
 
 jobs:
   build:
@@ -47,8 +47,3 @@ jobs:
       - name: Build site
         run: Rscript -e 'bookdown::render_book("index.Rmd", quiet = TRUE)'
       
-      - name: Commit results
-        run: |
-          git add .
-          git commit  -m 'Render book' || echo "No changes to commit"
-          git push origin || echo "No changes to commit"
