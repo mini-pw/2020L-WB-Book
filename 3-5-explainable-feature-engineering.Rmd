@@ -63,6 +63,8 @@ We use standard and verified methods to compare results of the models. As the ta
 
 ### Results
 
+Note, that all of this transformations used in results section are only examples of these methods and diffrent realisations may result in different final measures. Considerably the `by hand` method may strongly vary on a technique used. This non-automatic method should be treated as something that can be achieved after long time of tries.
+
  <center>
  ```{r mae3-5, echo=FALSE, fig.cap="MAE of the models after transformations", out.width = '70%'}
 knitr::include_graphics("images/3-5-1.png")
@@ -73,7 +75,11 @@ knitr::include_graphics("images/3-5-2.png")
 
 </center>
 
-The plots presented above show the values of MAE and MSE achieved by each model on the datasets after the mentioned transformation. We may observe, that linear models have significantly reduced their error values after the transformations, while the brute force method yielded best results. However, the Bayesian optimization, trial-and-error method and genetic modifications also provided much improvement in comparison with the models' performance on the plain dataset. The linear models were finally able to achieve results comparable to SVM performance on the unchanged data.
+The plots presented above show the values of MAE and MSE achieved by each model on the datasets after the mentioned transformations. We may observe, that linear models have significantly reduced their error values after the transformations, while the brute force method yielded best results. However, brute force method creates much higher dimension of space, there much more variables than at the beginning, thus it can be very time consuming trying to understand each of the new features or even barely interpretable.
+
+Three other methods, that are the Bayesian optimization, trial-and-error method and genetic modifications also provided much improvement in comparison with the models' performance on the plain dataset. In this case final space has much lower dimension. Bayesian results in 16 features, trial-and-error in 14 and genetic in 8, comparing to 69 in brute force. All of these methods have very similar quality of predictions, both considering MAE and MSE.
+
+Another white box, decision tree, is not strongly affected by this transformations. In comparison, both black boxes: random forest and svm with gaussian kernel, are strongly influeced, though is hard to say when black box's prediction quality increases and when decreases.
 
 ### Summary and conclusions 
 
