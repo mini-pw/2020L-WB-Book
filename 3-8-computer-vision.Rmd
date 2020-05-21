@@ -1,21 +1,47 @@
-## Explainable Computer Vision with embeddings and KNN classifier.
+## Explainable Computer Vision with embeddings and KNN classifier
 
 *Authors: Olaf Werner, Bogdan Jastrzębski (Warsaw University of Technology)*
 
 ### Abstract
 
 
-### Introduction
+---
+
+### 3.8.1 Introduction
+
 Computer vision is widely known use case for neural networks. However neural networks are infamous for their complexity and lack of interpretability. On the other hand simple classifiers like KNN have really poor results for complex tasks like image recognition. In this article we will prove that it is possible to get best of both worlds using emmbeddings. 
 
-### Data
-We are going to use dataset [Fashion-Mnist](https://www.openml.org/d/40996). Fashion-MNIST is a dataset of Zalando's article images, consisting of a training set of 60,000 examples and a test set of 10,000 examples. Each example is a 28x28 grayscale image, associated with a label from 10 classes. Classes are following: T-shirt/top, Trouser, Pullover, Dress, Coat, Sandal, Shirt, Sneaker, Bag, Ankle boot.
+---
 
-### Methodology
+### 3.8.2  Data
 
-The simplest and one of the most robust classifiers is KNN. It doesn't generalize information, instead it saves training dataset and during prediction it finds the most similar historical observations and predicts label of a new observation based on their labels.
+We are going to use dataset [Fashion-Mnist](https://www.openml.org/d/40996). Fashion-MNIST is a dataset of Zalando's article images, consisting of a training set of 60,000 examples and a test set of 10,000 examples. Each example is a 28x28 grayscale image, associated with a label from 10 classes. Classes are following:
 
-However, it not only doesn't have the capacity to distinguish important features from not important ones, but also to find more complex interactions between variables. 
+- T-shirt/top
+
+- Trouser
+
+- Pullover
+
+- Dress
+
+- Coat 
+
+- Sandal
+
+- Shirt
+
+- Sneaker
+
+- Bag
+
+- Ankle boot.
+
+---
+
+### 3.8.3 Methodology
+
+The simplest and one of the most robust classifiers is KNN. It doesn't generalize information, instead it saves training dataset and during prediction it finds the most similar historical observations and predicts label of a new observation based on their labels. However, it not only doesn't have the capacity to distinguish important features from not important ones, but also to find more complex interactions between variables. 
 
 One way to improve KNN's performance is to preced closest neighbour computation with transformation of the space of observations, so that the derivative variables are more meaningful. Such beneficial transformation is called embedding. It can be done in various ways. 
 
@@ -25,15 +51,241 @@ An embedding can be done made in various ways. In this article we will explore d
 
 * SVD embedding
 
-* Logistic Regression Autoencoder
-
-* Self Organizing Maps
-
 * Convolutional Autoencoder
 
+* K-means embedding
 
+---
+
+### 3.8.4 Standard Intepretable Models
+
+In this section we will explore use of standard interpretable models and we will try to answer the question, why they are not useful when it comes to computer vision.
+
+---
+
+#### 3.8.4.1 Logistic Regression
+
+Logistic regression is basic classification model. We get probablity of belonging to given class by:
+
+$${\displaystyle p={\frac {e^{\beta _{0}+\beta _{1}x_{1}+...+\beta _{n}x_{n}}}{e^{\beta _{0}+\beta _{1}x_{1}+...+\beta _{n}x_{n}}+1}}}$$
+
+where $\beta _{0},\beta _{1},...,\beta _{n}$ are coefficients of logistic regression. We obtain coefficients using gradient descent. Because we have multiple labels so we train 10 diffrent logistic regression models and use softmax function to normalize probablities of belonging to any particular class. 
+We then visualize coeficients as images with bright spots indicating that they are importent.
+Unfortunately the results look like this:
+
+![fig. 1: An example of logistic regression weights](./plots/LOGREG.png)
+
+We get this because logistic regression works more like a sieve.
+
+---
+
+#### 3.8.4.2 Decision Trees
+Decision trees are very useful interpretable classifiers, however they are suitable when we have very few meaningful dimensions. A tree that does splits based on particular pixels is not a good classifier and it's explanation provides little knowledge about, why those particular pixels has been chosen. That's why we will not explore the use of this class of classifiers.
+
+---
+
+### 3.8.5 Our Approach
+In this section we will show alternative to logistic regression and decision trees, that is more interpretable and in the same time has a capacity to obtain significantly better results.
+
+---
+
+#### 3.8.5.1 The KNN Classifier
+KNN (k nearest neighbours) is a classifier, that doesn't generalize data. Instead, we keep the training dataset and every time we make a prediction, we calculate distance (for instance euclidean distance) between our new observation and all observations in the training dataset to find k nearest. Prediction is based on their labels. 
+KNN is a robust classifier, that copes with highly non linear data. It's also interpretable, because we can always show k nearest neighbours, which are an explanation by themselves. It, however, is not flawless. It for instance poorly scales with the size of the training dataset, while in the same time it need, at least in some domains, very big training dataset, as it doesn't generalize any information. 
+We can significantly improve it's performance by introducing complex similarity functions. If similarity function is interpretable, we obtain highly interpretable classifier. If not, we get semi interpretable classifier, where we cannot tell, why obsevations are similar according to the model, however we can at least show similar training set examples, based on which prediction has been made.
+This complex distance functions can be made in many different ways. In this paper we explore functions of a form:
+$$distance(Img1, Img2) = d_e(Embedder(Img1), Embedder(Img2))$$
+where $d_e$ is euclidean distance, so we simply compute euclidean distance between embeddings of images. Here's a scheme of KNN classifier:
+![fig. n: The KNN Classifier Architecture](./plots/KNNMODEL_1.png)
+As we can see on fig. n, new image firstly gets embedded and then a standard classification with KNN is made. This type of architecture allowes us to create robust and interpretable classifier.
+
+---
+
+#### 3.8.5.2 Embedding techniques
+In this section we will explore different embedding techniques.
+
+---
+
+##### 3.8.5.2.1 K-means
+Our problem is supervised one, but we can still use unsupervised aproach to get better results. 
+We use K-means algorithm (also known as Lloyd's algorithm) to find subclasses in every class. 
+Algorithm:
+
+1. Initiate number of random centroids
+
+2. For every observation find nearest centroid
+
+3. Calculate average of observations in every group found in point 2
+
+4. This averages becomes new centroids
+
+5. Repeat points 2 to 4 until all new centroids are at the distance less then $\epsilon$ from old centroids
+
+We use euclidean distance. Prediction for every new observation is simply class of nearest centroid. Algorithm is interpretable, because we can visualise centroids as images. Thanks to using K-means to find subclasses our images are not blurry.
+Also because number of all subclasses is much lower than number of records in data set using KNN only on centroids is much faster. Consider the following dataset:
+
+![fig : An example of centroid image](plots/KMEANS_1.png)
+
+In fact, a good subset of the training data set is enough to create a very good classifier. For instance we can choose:
+
+![fig : An example of centroid image](plots/KMEANS_2.png)
+
+Chosen points approximate sufficiently training data distribution. Notice, that we in fact don't have to choose particular observations. We can instead chose points in observation space that are similar to observations. This is what k-means algorithm do and so, we can obtain good training data approximation using k-means. Here's an example of a centroid image:
+
+![fig : An example of a centroid image](plots/KLAPEK.png)
+
+---
+
+##### 3.8.5.2.2 SVD
+SVD is a standard method of dimensionality reduction. It is rewriting $m\times n$ matrix 
+$M$ as $U\Sigma V^T$ where $U$ is $m\times m$ orthonormal matrix, $V^T$ is $n\times n$ orthonormal matrix 
+and $\Sigma$ is $m\times n$ rectangular diagonal matrix with non-negative real numbers on the diagonal.
+We assume that singular values of $\Sigma$ are in descending order. Now by taking first columns of $V^T$ we 
+get vectors which are the most relevent. Let $V_n$ be matrix, whoose columns are $V$ columns with n greatest eigenvalues. Such matrix is linear transformation matrix, that turns observations into their embeddings. It can be shown, that $V_n$ is the best transformation in L2 norm sense.
+![fig. : SVD autoencoder diagram](./plots/SVDAUTOENC_1.png)
+We can then visualise this vectors and see which parts of the picture are the most importent. 
+Also we can reduce number of dimensions for KNN.
+
+![Most importenet vector](./plots/HIDDEN.png)
+
+![Image from Dataset](./plots/KURTKA.png)
+
+![Image after using vector as filter](./plots/KURTKA_HIDDEN.png)
+
+---
+
+##### 3.8.5.2.3 Convolutional Autoencoder
+We can create semi interpretable model by training a convolutional autoencoder and then creating KNN classifier on pretrained embeddings. As mentioned previously, it has several advantages over KNN, because it uses euclidean distance in more meaningful space. Embedder is not interpretable, but our classifier can at least show us historical observations, that had an impact on prediction, which sometimes is good enough, especially when it can be easily seen why two images are similar and we only want a computer to do humans work. For instance, if we provide 5 images of coala that caused that our image of coala has been interpreted as coala, we maybe don't know, why those images are similar according to our classifier, however we can see, that they are similar, so further explanation of a model is not required. This model, again, is not fully interpretable.
+Our implementation of convolutional autoencoder consist of the following layers:
+
+- Conv2d:
+    - Input Channels:  1
+    - Output Channels: 50
+    - filter size: 5
+
+- Conv2d:
+    - Input Channels: 50
+    - Output Channels: 50
+    - filter size: 5
+
+- Conv2d:
+    - Input Channels: 50
+    - Output Channels: 10
+    - filter size: 5
+
+- Conv2d:
+    - Input Channels: 10
+    - Output Channels: 10
+    - filter size: 5
+
+- Conv2d:
+    - Input Channels: 10
+    - Output Channels:  1
+    - filter size: 5
+
+- Conv2d: 
+    - Input Channels:  1
+    - Output Channels: 10
+    - filter size: 5
+
+- Conv2d: 
+    - Input Channels: 10
+    - Output Channels: 10
+    - filter size: 5
+
+- Conv2d: 
+    - Input Channels: 10
+    - Output Channels: 50
+    - filter size: 5
+
+- Conv2d: 
+    - Input Channels: 50
+    - Output Channels: 50
+    - filter size: 5
+
+- Conv2d: 
+    - Input Channels: 50
+    - Output Channels:  1
+    - filter size: 5
+
+along with pooling and unpooling beetween.
+
+![fig. : Architecture of the convolutional autoencoder](./plots/CONVAUTOENC_1.png)
+
+---
+
+### 3.8.6 Black-Box Convolutional Neural Networks
+
+Classical approach in computer vision is to use convolutional neural networks.
+A standard artificial neural network sees all variables as being independent 
+from each other. It doesn't capture the same patterns across image space, nor
+it recognises, that two pixels next to each other are somehow related. Shifted 
+image is something completly different to a standard neural network from it's original.
+Therefore, training a standard neural network is tricky, it requires very big dataset
+and takes a lot of time. There is, however, a smarter approach that has a capacity
+to cope with those problems. Namely, convolutional neural networks.
+
+A convolutional neural network is an artificial neural network, that tries to capture spacial dependencies between variables, for instance dimensions of pixels that are close to each other.
+It does that via introducing convolution. The easiest interpretation of convolutional neural network is that instead of training training big network that uses all variables (in our case all pixels), we train smaller transformation with smaller number of variables (smaller subset of pixels close to each other), that we use in many different places on the image. In some sense we train filters. Every filter produces a corresponding so called "channel". After first layer we can continue filtering channels using convolutional layers. We place a danse layer (or a number of them) at the end and it's result is our prediction. For further reading, please see ... .
+
+Having a very good performance, they are impossible to explain. There are some techniques of visualising filters, however more complex networks are generally uninterpretable. Along with standard artificial neural network, we will use it as an instance of robust classifier for comparing results. 
+Our implementation of convolutional neural networks consist of the following layers:
+
+- Conv 2d:
+    - Input Channels: 1
+    - Output Channels: 50
+    - filter size: 5
+    
+- Max Pool:
+    - Size: 2
+    
+- Conv 2d:
+    - Input Channels: 50
+    - Output Channels: 70
+    - filter size: 5
+    
+- Max Pool:
+    - Size: 2
+    
+- Conv 2d:
+    - Input Channels: 70
+    - Output Channels: 100
+    - filter size: 5
+
+- Max Pool:
+    - Size: 2
+
+- Conv 2d:
+    - Input Channels: 100
+    - Output Channels: 150
+    - filter size: 5
+
+- Linear: 
+    - Input_size: 1350
+    - Output_size: 500
+
+- Linear: 
+    - Input_size: 200
+    - Output_size: 10
+
+Here's architecture's visualisation:
+![fig. : The architecture of the Convolutional classifier](./plots/BlackBoxCONV_1.png)
+
+---
 
 ### Results
 
+| Model  | ACC |
+|-------|-----|
+| Black-Box Convolutional | 0.941 | 
+| Logistic regression | 0.847 | 
+| KNN base | 0.8606    | 
+| KNN SVD | 0.8001 |
+| KNN K-means | 0.8512 |
+| KNN Convolutional | 0.902 |
 
 ### Conclusions
+
+
+### Bibliography
+
