@@ -1,7 +1,10 @@
 on:
   push:
     paths-ignore:
-    - 'docs/**'
+      - 'docs/**'
+  pull_request:
+    branches:
+      - master
 
 name: bookdown
 
