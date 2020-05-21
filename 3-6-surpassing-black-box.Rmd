@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 
-=======
-﻿
->>>>>>> c833cbf008eb051b0ebe0c99687da0f571807fe5
 ##  Surpassing black box model's performance on unbalanced data with an interpretable one using advanced feature engineering
 
 *Authors: Witold Merkel, Adam Rydelek, Michał Stawikowski (Warsaw University of Technology)*
