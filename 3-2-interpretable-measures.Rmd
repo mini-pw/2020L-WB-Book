@@ -75,11 +75,14 @@ We are trying the following methods:
 * **Logarithmic and exponential transformations of individual variables** -- So that linear relationships can be better captured and to reduce the influence of outliers, we transform variables using exponential and polynomial functions.
 * **Discretization of continuous features** -- Some variables do not have a linear effect on the response variable, even if they are transformed by simple functions like exponential function, sometimes there are clear thresholds -- so we can replace the variable with indexes of individual segments. The SAFE algorithm helps with this [@gosiewska2019safe].
 * **Generating new columns as functions of other columns** -- There may be interactions between variables that cannot be captured by linear models. In order to take them into account, we generate new columns, applying to the rest of them various transformations -- we take their inverses, products, quotients, elevations to power, and so on. As a result of these operations, a lot of new predictors are created, which we later evaluate. We also analyze their interpretability, i.e. to what extent they are translatable into an intuitive understanding of such a measure. At this point we also consider Halstead and McCabe's measurements. 
+<!-- We also have to search for significant measures since creating model with thousands of features do not make it interpretable. We done it training models -- rpart or ranger -- with additional 1000 features and using DALEX variable importance we choose around 10 most important features. We done it twice so at the and we had around 10 the most important features.  -->
 * **Oversampling and undersampling** -- On the basis of the data set, we generate more observations from the minority class using the SMOTE algorithm [@smote] and remove some of the observations from the majority class so that the model more emphasizes the differences in characteristics of individual classes.
+<!-- It was done on 5 cross validation and when the model was trained on 4 folds with new observations made by smote it was tested on the last fold without any new observations. -->
 * **Reducing outliers** -- For each variable a two-value vector that indicates the thresholds for which the values are considered as outliers is generated. Then all outliers are changed to the nearest value of obtained earlier vector.
 
 
 Our goal is to beat black-box model. In our case we chose random forest model from package ranger. As a white-box model we used logistic regression. Results were tested on dataset with different transformations.
+<!-- remove? -->
 ```{r echo=FALSE, results='asis'}
 library(knitr)
 kable(data.frame(red=c('no','yes','yes','no'),disc=c('no','no','no','yes'),log=c('no','no','yes','no'),ranger=c(0.7907, 0.7897,0.7782, 0.7593),logreg=c(0.7354,0.7431,0.7435,0.7305)),col.names=c("Outliers reduction","Discretization","Logarithm","Ranger","Logistic regression"), caption="White-box and black-box comparison")
@@ -91,5 +94,42 @@ kable(data.frame(red=c('no','yes','yes','no'),disc=c('no','no','no','yes'),log=c
 At the end of the process, we select the model that has the highest AUC score for crossvlidation on our dataset.
 
 ### Results
+
+The results are shown in the table.
+
+| Number | Operation  | logreg | kknn | rpart | improve |
+|----|-------|---|---|---|--|
+| 0a | Base | 0.7347 | 0.7275 | 0.5000 | no |
+| 0b | Rpart tuning | 0.7347 | 0.7275 | 0.7369 | yes |
+| 1a | Normalization | 0.7347 | 0.7272 | 0.7369 | no |
+| 1b | Outlier reduction | 0.7433 | 0.7315 | 0.7394 | yes |
+| 1c | Logarithm | 0.7435 | 0.7175 | 0.7254 | no? |
+| 2a | Outlier reduction and normalization | 0.7433 | 0.7320 | 0.7394 | yes |
+| 2b | Logarithm and outlier reduction | 0.7435 | 0.7168833 | 0.7246 | no |
+| 3a | Gain-ratio discretization | 0.7433 | 0.7317 | 0.7394 | no |
+| 3b | RSafe | 0.7437 | 0.7176 | 0.7338 | no |
+| 4a | New features selected by ranger | 0.7472 | 0.7288 | 0.7334 | yes |
+| 4b | New features selected by rpart | 0.7453 | 0.7311 | 0.7392 | yes |
+| 4c | Halstead measures | 0.7448 | 0.7311 | 0.7376 | no |
+| 5a | Smote with new features by ranger | 0.749 | 0.737 | 0.800 | yes |
+| 5b | Smote with new features by rpart | 0.747 | 0.736 | 0.793 | no |
+| 5c | Smote without new features | 0.745 | 0.736 | 0.804 | yes |
+
+Table: AUC in white-box models
+
+Since at the begining rpart has the 0.5 AUC first we tuned the rpart hiperparameters and there was significant improve in result. 
+
+Then as step 1a-1c we tried 3 basic transformations of data as normalization of all columns, outlier reduction and logarithm of nearly all columns (without one hot encoded source). As we can see the best improve gave otliers reduction so in step 2a we tried to add normalization to that and in step 2b we tried to reduce outliers after applying logarithm. Only outliers reduction and normalization was good enough to use it in following experiments.
+
+Next we use discretization of some columns. Since all columns were continous numbers it could be potencially usable. Unfortunately, any of gain-ratio method from funModeling (3a) and RSafe (3b) make statistically important better result. Using partial dependency plot on the black-box model do not show that there is variable which can be discretized.
+<!-- referencja na wykres pdp + wykres, czy nie warto? -->
+
+Then we tried to create new measures based on basic Halstead measures. We selected best measures by DALEX variable importance in one of two learners: ranger or rpart. Then on the best 10 measures + basic measures we run the models but the results in the table shows only a little better performance of logistic regression and knn. The most promising result was the improvement of logistic regression in 4a.
+
+Since the classes are unbalanced - there are 20\% of defects so we tried the smote oversampling of defects class. There is a huge improvement especially in decision tree and the best result is in dataset with only outliers reduction and normalization without any new features. So this is our final model and this model beats ranger AUC.
+
+![](3-2-graphs/rpart_result.png)
+
+On the plot there is the final rpart model with proportions of each improvement. Zero from scale means the base rpart model at the beging and 100 is equivalent of black-box model -- ranger. The most important was hiperparameters tuning, then oversampling with smote and the rest give only a little improvement.
 
 ### Summary and conclusions
