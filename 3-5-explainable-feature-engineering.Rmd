@@ -91,4 +91,10 @@ The remaining non-linear white-box model, namely the Decision Tree Regressor, se
 
 ### Summary and conclusions 
 
+All four presented methods lead to significant improvemnt in Linear Regression. All of the are based on completely diffrent view and for some cases some of them may be better than others. Note that our test dataset contained only continuous (or semi continuous) data. Depending on the method you can trasform your initial data, to a dataset not so different but much more informative for this simple white box.
+
+Black boxes in this case were unsurpassed, though we achieved results comparable with them. The greatest advatange of white box usage is that every one can understand their mechanics and predictions. If you want to have an easily understandable and interpretable model without meaningful loss of a prediction quality, you should consider using one of the presented methods.
+
+New metric: $DFI$, can be used to compare simple (diffretable) feature transformations in linear regression. Due to analytical eduction this metric should be more accurate than metrics used for machine learning models in general, for instance Permutation Feature Importance.
+
 In the end, obtained results are satisfying and should encourage to put more effort into research about new transformation methods and interpretability metrics. The next thing to do is putting more effort into researching the new $DFI$ metric, to improve interpretability of extended regression models. We hope that our article will inspire some of you to get interested in this area of research.
