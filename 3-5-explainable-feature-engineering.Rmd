@@ -33,7 +33,7 @@ The four methods of feature transformation compared in the article include:
 
 1. By-hand-transformations - through a trial-and-error approach we derive feature transformations that allow the linear regression models to yield better results. We use our expertise and experience with previous datasets to get possibly best transformations which are available though such process. They include taking the features to up to third power, taking logarithm, sinus, cosinus or square root of the features.
 
-2. Brute Force method - this method of data transformation generates huge amount of additional features being transformations of the existing features. We allow taking each feature up to the third power, taking sinus and cosinus of each feature and additionaly a product of each pair of features. The resulting dataset has $69$ variables including the target (in comparison with $9$ variables in the beginning).
+2. Brute Force method - this method of data transformation generates huge amount of additional features being transformations of the existing features. We allow taking each feature up to the third power, taking sinus and cosinus of each feature and additionaly a product of each pair of features. The resulting dataset has 69 variables including the target (in comparison with 9 variables in the beginning).
 
 3. Bayesian Optimization method [@BO] - we treat the task of finding optimal data transformation as an optimization problem. We restrict the number of transformations and their type - we create one additional feature for each feature present in the dataset being its $x$-th power, where $x$ is calculated through the process of Bayesian optimization. It allows us to keep the dimension of the dataset relatively small while improving the model's performance. We allowed the exponents to be chosen from interval $(1, 4]$.
 
@@ -63,7 +63,10 @@ We use standard and verified methods to compare results of the models. As the ta
 
 ### Results
 
-Note, that all of this transformations used in results section are only examples of these methods and diffrent realisations may result in different final measures. Considerably the `by hand` method may strongly vary on a technique used. This non-automatic method should be treated as something that can be achieved after long time of tries.
+
+Note, that the transformations used in results section are only examples of the presented methods and various realisations may result in various final measures' values. Considerably, the trial-and-error approach may is quite individual and the results may differ depending on the experimentator. This non-automatic method should be treated as something that can be achieved after long time of tries.
+
+#### Models' performance
 
  <center>
  ```{r mae3-5, echo=FALSE, fig.cap="MAE of the models after transformations", out.width = '70%'}
@@ -75,11 +78,17 @@ knitr::include_graphics("images/3-5-2.png")
 
 </center>
 
-The plots presented above show the values of MAE and MSE achieved by each model on the datasets after the mentioned transformations. We may observe, that linear models have significantly reduced their error values after the transformations, while the brute force method yielded best results. However, brute force method creates much higher dimension of space, there much more variables than at the beginning, thus it can be very time consuming trying to understand each of the new features or even barely interpretable.
+The plots presented above show the values of MAE and MSE achieved by each model on the datasets after the mentioned transformations. We may observe that the linear models have significantly reduced their error values after the transformations, while the brute force method yielded best results. However, brute force method generates much more features increasing the resulting dimension of the dataset, thus increasing the time complexity and reducing the interpretability.
 
-Three other methods, that are the Bayesian optimization, trial-and-error method and genetic modifications also provided much improvement in comparison with the models' performance on the plain dataset. In this case final space has much lower dimension. Bayesian results in 16 features, trial-and-error in 14 and genetic in 8, comparing to 69 in brute force. All of these methods have very similar quality of predictions, both considering MAE and MSE.
+The three remaining methods, that is: the Bayesian optimization, the trial-and-error method and the genetic modifications - provided much improvement in comparison with the models' performance on the plain dataset as well. In this case the final space has much lower dimension. Bayesian optimization results in 16 features, the trial-and-error in 14 features and the genetic modifications result in 8 features, in comparison to 69 features after brute force transformations. All of these methods have very similar quality of predictions, considering both MAE and MSE.
 
-Another white box, decision tree, is not strongly affected by this transformations. In comparison, both black boxes: random forest and svm with gaussian kernel, are strongly influeced, though is hard to say when black box's prediction quality increases and when decreases.
+The remaining non-linear white-box model, namely the Decision Tree Regressor, seems to be rather unaffected by any transformations of the dataset. In comparison, both black the boxes: Random Forest and SVM with gaussian kernel, are strongly influenced, though is hard to say when black box's prediction quality increases and when decreases.
+
+#### Feature Importance
+
+
+#### Time comparison 
 
 ### Summary and conclusions 
 
+In the end, obtained results are satisfying and should encourage to put more effort into research about new transformation methods and interpretability metrics. The next thing to do is putting more effort into researching the new $DFI$ metric, to improve interpretability of extended regression models. We hope that our article will inspire some of you to get interested in this area of research.
