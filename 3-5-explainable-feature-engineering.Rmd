@@ -41,9 +41,15 @@ The research is conducted on *Concrete_Data* dataset from the OpenML database [[
 We use standard and verified methods to compare results of the models. As the target variable is continuous, we may calculate Mean Square Error (MSE), Mean Absolute Error (MAE), and R-squared measures for each model, which provide us with proper and measurable way to compare the models' performances. The same measures may be applied to black box models. The most natural measure of feature importance for linear regression are the coefficients' absolute values after training the model - however, such easily interpretable measures are not available for black-box models. We therefore measure their feature importance  with permutational feature importance measure and caluclating drop-out loss, easily applicable to any predictive model and therefore not constraining us to choose from a restricted set. In order to provide unbiased results, we calculate the measures' values during cross-validation process for each model, using various number of fold to present comparative results. 
 
 ### Results
+
  <center>
-![](images/3-5-1.png){ width=70% } 
-![](images/3-5-2.png){ width=70% }
+ ```{r mae3-5, echo=FALSE, fig.cap="MAE of the models after transformations", out.width = '70%'}
+knitr::include_graphics("images/3-5-1.png")
+```
+ ```{r mse3-5, echo=FALSE, fig.cap="MSE of the models after transformations", out.width = '70%'}
+knitr::include_graphics("images/3-5-2.png")
+```
+
 </center>
 
 The plots presented above show the values of MAE and MSE achieved by each model on the datasets after the mentioned transformation. We may observe, that linear models have significantly reduced their error values after the transformations, while the brute force method yielded best results. However, the Bayesian optimization, trial-and-error method and genetic modifications also provided much improvement in comparison with the models' performance on the plain dataset. The linear models were finally able to achieve results comparable to SVM performance on the unchanged data.
