@@ -914,7 +914,7 @@ no
 <div id="introduction-and-motivation-10" class="section level3" number="3.5.2">
 <h3><span class="header-section-number">3.5.2</span> Introduction and Motivation</h3>
 <p>Linear regression is one of the simplest and easiest to interpret of the predictive models. While it has already been thorougly analysed over the years, there remain some unsolved questions. One such question is how to transform the data features in order to maximize the model’s effectiveness in predicting the new data.</p>
-<p>An example of a known and widely used approach is the Box-Cox transformation of the target variable, which allows one to improve the model’s performance with minimal increase in computational complexity <span class="citation">(Sakia <a href="#ref-boxcox" role="doc-biblioref">1992</a>)</span>. However, the choice of the predictive features’ transformations is often left to intuition and trial-and-error approach. In the article, we wish to compare various methods of features’ transformations and compare the resulting models’ performances while also comparing their computational complexities and differences in feature importance.</p>
+<p>An example of a known and widely used approach is the Box-Cox transformation of the target variable, which allows one to improve the model’s performance with minimal increase in computational complexity <span class="citation">(Sakia <a href="#ref-boxcox" role="doc-biblioref">1992</a>)</span>. However, the choice of the predictive features’ transformations is often left to intuition and trial-and-error approach. In the article, we wish to compare various methods of features’ transformations and compare the resulting models’ performances while also their differences in feature importance.</p>
 <p>Many black box regression models use various kinds of feature engineering during the training process. Unfortunately, even though the models perform better than the interpretable ones, they do not provide information about the transformations used and non-linear dependencies between variables and the target. The goal we want to achieve is extracting features and non-linearities with understandable transformations of the training dataset.</p>
 <p>To measure the improvement of used methods we will compare their performance metrics with black box models’ as a ground truth. This will allow us to effectively measure which method brought the simple linear model closer to the black box. Moreover, we will take under consideration the improvement of black box model performance. Thanks to this, our article will not only present the methods for creating highly performant interpretable models, but also improvement of the results of black box model.</p>
 </div>
@@ -927,26 +927,92 @@ no
 <div id="methodology-12" class="section level3" number="3.5.4">
 <h3><span class="header-section-number">3.5.4</span> Methodology</h3>
 <p>The main goal of our research is to compare various methods of transforming the data in order to improve the linear regression’s performance. While we do not aim to derive an explicitly best solution to the problem, we wish to compare some known approaches and propose new ones, simultaneously verifying legitimacy of their usage. The second goal of the research is to compare the achieved models’ performances with black box models to generally compare their effectiveness. An important observation about the linear regression model is that once we transform features in order to improve the model’s performance, it strongly affects its interpretability. We therefore propose a new feature importance measure for linear regression and compare it with the usual methodes where possible.</p>
+<div id="transformation-methods" class="section level4" number="3.5.4.1">
+<h4><span class="header-section-number">3.5.4.1</span> Transformation methods</h4>
 <p>The four methods of feature transformation compared in the article include:</p>
 <ol style="list-style-type: decimal">
 <li><p>By-hand-transformations - through a trial-and-error approach we derive feature transformations that allow the linear regression models to yield better results. We use our expertise and experience with previous datasets to get possibly best transformations which are available though such process. They include taking the features to up to third power, taking logarithm, sinus, cosinus or square root of the features.</p></li>
-<li><p>Brute Force method - this method of data transformation generates huge amount of additional features being transformations of the existing features. We allow taking each feature up to the third power, taking sinus and cosinus of each feature and additionaly a product of each pair of features. The resulting dataset has <span class="math inline">\(69\)</span> variables including the target (in comparison with <span class="math inline">\(9\)</span> variables in the beginning).</p></li>
+<li><p>Brute Force method - this method of data transformation generates huge amount of additional features being transformations of the existing features. We allow taking each feature up to the third power, taking sinus and cosinus of each feature and additionaly a product of each pair of features. The resulting dataset has 69 variables including the target (in comparison with 9 variables in the beginning).</p></li>
 <li><p>Bayesian Optimization method <span class="citation">(Bernd Bischl <a href="#ref-BO" role="doc-biblioref">2018</a>)</span> - we treat the task of finding optimal data transformation as an optimization problem. We restrict the number of transformations and their type - we create one additional feature for each feature present in the dataset being its <span class="math inline">\(x\)</span>-th power, where <span class="math inline">\(x\)</span> is calculated through the process of Bayesian optimization. It allows us to keep the dimension of the dataset relatively small while improving the model’s performance. We allowed the exponents to be chosen from interval <span class="math inline">\((1, 4]\)</span>.</p></li>
-<li><p>One of our ideas is to use GP (Genetic Programming) to find best feature transformations. Our goal is to find simple feature transformations (not necessarily with arity 1) that will significantly boost oridnary linear regression. We will create a set of simple operations such as adding, multiplying, taking a specific power, for example 2, taking logarithm and so on. Each transformation is based only on these operations and specified input variables. Each genetic program tries to minimize MSE of predicting target, thus trying to save as much information as possible in a single output variable. We will use one of the variations of the genetic algorithms to create an operation tree minimizing our goal. Final model, ordinary linear regression, is calculated on the transformed and selected variables at the very end. Summarizing, each operation tree calculates one variable for the final model. To avoid strong corelation we decided to use similar trick to one used in random forest. Each GP is trained only on some subset of all variables. Using boostrap is also a good idea, though we did not test it. If data has got low dimensionality, then you can consider using all possible subsets of variables of fixed size. Otherwise, you can randomly choose them. This process results in a many output variables, so we choose final transformed features using LASSO regression. This method should find much better solutions without extending dimensionality too much or making too complex transformations. We will get linear regression with much better performance without loss of the interpretability. Whole conception tries to automate feature enginnering done traditionally by hand. Another advantage is control of model complexity. We can stimulate how the operation trees are made, and reduce or increase complexity at will. Modification of this idea is to add regularization term decreasing survival probability with increasing complexity. At the end model could also make a feature selection in the same way - then one of possible operations in the set would be dropping.</p></li>
+<li><p>One of our ideas is to use Genetic Programming (GP) to find the best feature transformations. Our goal is to find a set of simple feature transformations (not necessarily unary) that will significantly boost the ordinary linear regression model performance. We will create a set of simple operations such as adding, multiplying, taking a second power, taking logarithm and so on. Each transformation is based only on these operations and specified input variables. Each genetic program tries to minimize MSE of predicting the target, thus trying to save as much information as possible in a single output variable constructed on a subset of all the input features. We will use a variation of the genetic algorithms to create an operation tree minimizing our goal. Before we fit the final model, that is the ordinary linear regression, first we select the variables to transform. The resulting linear regression is calculated on the transformed and selected variables at the very end. To summarize, each operation tree calculates one variable, but this variable may not be included at the end. To avoid strong correlation we decided to use similar trick to the one used in random forest models. Each GP is trained only on some subset of all variables. Bootstraping seems also to be an effective idea, however, we did not implement it. In the case of small number of features in the data, such as in our case, one can consider using all possible subsets of variables of fixed size. Otherwise, they can be chosen on random. This process results in a number of output variables, so we choose the final transformed features using LASSO regression or BIC. This method should find much better solutions without extending dimensionality too much nor generating too complex transformations. The general idea is to automate feature enginnering done traditionally by hand. Another advantage is control of the model’s complexity. We can stimulate how the operation trees are made, e.g. how the operations set looks like. There is also a possibilty of reducing or increasing complexity at will. Modification of this idea is to add a regularization term decreasing survival probability with increasing complexity. At the end, the model could also make a feature selection in the same way - then one of possible operations in the set would be dropping.</p></li>
 </ol>
+</div>
+<div id="feature-importance-metric" class="section level4" number="3.5.4.2">
+<h4><span class="header-section-number">3.5.4.2</span> Feature importance metric</h4>
+<p>The most natural feature importance metric for linear models such as linear regression and GLM are the absolute values of coefficients. Let <span class="math inline">\(x_1, \dots, x_n\)</span> denote the features (column vectors) and <span class="math inline">\(\hat{y}\)</span> denote the prediction. In linear models we have:
+<span class="math display">\[c + \sum_{i=1}^n a_i \cdot x_i = \hat{y}\]</span>
+where <span class="math inline">\(c\)</span> is a constant (intercept) and <span class="math inline">\(a_i\)</span> are the coefficients of regression. Formally, the Feature Importance mesaure value of the <span class="math inline">\(i-\)</span>th feature (<span class="math inline">\(FI_i\)</span>) measure is given as:
+<span class="math display">\[FI_i = |a_i|\]</span>
+We may also notice that:
+<span class="math display">\[FI_i = \Big|\frac{\partial \hat{y_i}}{\partial x_i}\Big|\]</span>
+We wish to generalize the above equation. Transforming the data in the dataset to improve the model’s performance may be expressed as generating a new dataset, where each column is a function of all the features present in the original dataset. If the newdataset has <span class="math inline">\(m\)</span> features and the new prediction vector is given as <span class="math inline">\(\dot{y}\)</span>, we then have:
+<span class="math display">\[d + \sum_{i=1}^m b_i \cdot f_i (x_1, \dots, x_n) = \dot{y}\]</span>
+where <span class="math inline">\(d\)</span> is the new intercept constant and <span class="math inline">\(b_i\)</span> are the coefficients of regression. We therefore may use the formula above to derive a new Feature Importance Measure (Derivative Feature Importance, <span class="math inline">\(DFI\)</span>) as:
+<span class="math display">\[DFI_{i, j} = \Big|\frac{\partial \dot{y_i}}{\partial x_{i, j}}\Big| = \Big|b_i \cdot \sum_{k=1}^m \frac{\partial f_k}{\partial x_{i, j}}\Big|\]</span>
+The above measure is calculated separately for each observation <span class="math inline">\(j\)</span> in the dataset. However, due to the additive properties of derivatives, we may calculated Derivative Feature Importance of the <span class="math inline">\(i\)</span>-th feature as:
+<span class="math display">\[DFI_i = \frac{1}{n}\sum_{j=1}^n DFI_{i, j}\]</span>
+which is then a global measure of Feature Importance of the <span class="math inline">\(i\)</span>-th feature.</p>
+</div>
+<div id="dataset-and-model-performance-evaluation" class="section level4" number="3.5.4.3">
+<h4><span class="header-section-number">3.5.4.3</span> Dataset and model performance evaluation</h4>
 <p>The research is conducted on <em>Concrete_Data</em> dataset from the OpenML database [<a href="https://www.openml.org/d/4353">link</a>]. The data describes the amount of ingredients in the samples - cement, blast furnace slag, fly ash, water, coarse aggregate and fine aggregate - in kilograms per cubic meter; it also contains the drying time of the samples in days, referred to as age. The target variable of the dataset is the compressive strength of each sample in megapascals (MPa), therefore rendering the task to be regressive. The dataset contains 1030 instances with no missing values. There are also no symbolic features, as we aim to investigate continuous transformations of the data. Due to the fact, that we focus on the linear regression model, the data is reduced prior to training. We remove the outliers and influential observarions based on Cook’s distances and standardized residuals.</p>
 <p>We use standard and verified methods to compare results of the models. As the target variable is continuous, we may calculate Mean Square Error (MSE), Mean Absolute Error (MAE), and R-squared measures for each model, which provide us with proper and measurable way to compare the models’ performances. The same measures may be applied to black box models. The most natural measure of feature importance for linear regression are the coefficients’ absolute values after training the model - however, such easily interpretable measures are not available for black-box models. We therefore measure their feature importance with permutational feature importance measure and caluclating drop-out loss, easily applicable to any predictive model and therefore not constraining us to choose from a restricted set. In order to provide unbiased results, we calculate the measures’ values during cross-validation process for each model, using various number of fold to present comparative results.</p>
 </div>
+</div>
 <div id="results-12" class="section level3" number="3.5.5">
 <h3><span class="header-section-number">3.5.5</span> Results</h3>
+<p>Note, that the transformations used in results section are only examples of the presented methods and various realisations may result in various final measures’ values. Considerably, the trial-and-error approach may is quite individual and the results may differ depending on the experimentator. This non-automatic method should be treated as something that can be achieved after long time of tries.</p>
+<div id="models-performance" class="section level4" number="3.5.5.1">
+<h4><span class="header-section-number">3.5.5.1</span> Models’ performance</h4>
 <center>
-<img src="images/3-5-1.png" style="width:70.0%" />
-<img src="images/3-5-2.png" style="width:70.0%" />
+<div class="figure"><span id="fig:mae3-5"></span>
+<img src="images/3-5-1.png" alt="MAE of the models after transformations" width="70%" />
+<p class="caption">
+FIGURE 3.1: MAE of the models after transformations
+</p>
+</div>
+<div class="figure"><span id="fig:mse3-5"></span>
+<img src="images/3-5-2.png" alt="MSE of the models after transformations" width="70%" />
+<p class="caption">
+FIGURE 3.2: MSE of the models after transformations
+</p>
+</div>
 </center>
-<p>The plots presented above show the values of MAE and MSE achieved by each model on the datasets after the mentioned transformation. We may observe, that linear models have significantly reduced their error values after the transformations, while the brute force method yielded best results. However, the Bayesian optimization, trial-and-error method and genetic modifications also provided much improvement in comparison with the models’ performance on the plain dataset. The linear models were finally able to achieve results comparable to SVM performance on the unchanged data.</p>
+<p>The plots presented above show the values of MAE and MSE achieved by each model on the datasets after the mentioned transformations. We may observe that the linear models have significantly reduced their error values after the transformations, while the brute force method yielded best results. However, brute force method generates much more features increasing the resulting dimension of the dataset, thus increasing the time complexity and reducing the interpretability.</p>
+<p>The three remaining methods, that is: the Bayesian optimization, the trial-and-error method and the genetic modifications - provided much improvement in comparison with the models’ performance on the plain dataset as well. In this case the final space has much lower dimension. Bayesian optimization results in 16 features, the trial-and-error in 14 features and the genetic modifications result in 8 features, in comparison to 69 features after brute force transformations. All of these methods have very similar quality of predictions, considering both MAE and MSE.</p>
+<p>The remaining non-linear white-box model, namely the Decision Tree Regressor, seems to be rather unaffected by any transformations of the dataset. In comparison, both black the boxes: Random Forest and SVM with gaussian kernel, are strongly influenced, though is hard to say when black box’s prediction quality increases and when decreases.</p>
+</div>
+<div id="feature-importance-comparison" class="section level4" number="3.5.5.2">
+<h4><span class="header-section-number">3.5.5.2</span> Feature Importance comparison</h4>
+<p>The comparison of Feature Imprortance values will be between permutational Feature Importance calculated on the black-box models - Random Forest and SVM and local and global Derivative Feature Importance calculated on the datasets after brute force transformations and after the Bayesian optimization.</p>
+<div class="figure"><span id="fig:fi3-5"></span>
+<img src="images/3-5-3.png" alt="Feature Importance of RFR and SVM" width="49%" height="49%" /><img src="images/3-5-4.png" alt="Feature Importance of RFR and SVM" width="49%" height="49%" />
+<p class="caption">
+FIGURE 3.3: Feature Importance of RFR and SVM
+</p>
+</div>
+<div class="figure"><span id="fig:fi3-5bf"></span>
+<img src="images/3-5-bfl.png" alt="Local and global DFI on the dataset after brute force transformations" width="49%" height="49%" /><img src="images/3-5-bfg.png" alt="Local and global DFI on the dataset after brute force transformations" width="49%" height="49%" />
+<p class="caption">
+FIGURE 3.4: Local and global DFI on the dataset after brute force transformations
+</p>
+</div>
+<div class="figure"><span id="fig:fi3-5by"></span>
+<img src="images/3-5-byl.png" alt="Local and global DFI on the dataset after Bayesian transformations" width="49%" height="49%" /><img src="images/3-5-byg.png" alt="Local and global DFI on the dataset after Bayesian transformations" width="49%" height="49%" />
+<p class="caption">
+FIGURE 3.5: Local and global DFI on the dataset after Bayesian transformations
+</p>
+</div>
+<p>The figure 3.4 present permutational Feature Importance of the black-box models, and the figures 3.5 and 3.6 present <span class="math inline">\(DFI\)</span> values - for one observation and calculated globally, respectively. The local <span class="math inline">\(DFI\)</span> were calculated on the observations nr <span class="math inline">\(573\)</span> and <span class="math inline">\(458\)</span>. We may notice high resemblance of the black-box Feature Importance to the local <span class="math inline">\(DFI\)</span> after Brute Force trtansformations, as well as similarities between all the Feature Importance calculations overall. The order of features in <span class="math inline">\(DFI\)</span> is not precisely equal to the order of feature after permutational Feature Importance of the black-boxes; however, the order still makes sense as far as we can say based on our little knowledge of materials. Moreover, the deviations of Feature Importance measures between various models is quite common in such research.</p>
+<p>To summarize, although the deviations between black-box and glass-box models’ Feature Importance are present, we conclude that <span class="math inline">\(DFI\)</span> may provide a new way of calculating Feature Importance for linear models. Its efficiency shall be further investigated in another research. When it comes the presented comparison, the majority of important variables were detected by the <span class="math inline">\(DFI\)</span> method.</p>
+</div>
 </div>
 <div id="summary-and-conclusions-11" class="section level3" number="3.5.6">
 <h3><span class="header-section-number">3.5.6</span> Summary and conclusions</h3>
+<p>Each of the four methods leads to significant improvement in Linear Regression. All of them are based on completely different ideas and their effectivenes may vary for different tasks. It needs noting that the presented research is conducted on a dataset containing only numerical variables, so similar research for transformations of categorical variables remains to be yet conducted. However, we have presented numerous ways to transform the dataset improving the linear models while at least partially maintaining its interpretability.</p>
+<p>The black box models in this case were unsurpassed, though we achieved highly comparable results. The greatest advatange of white box usage is that every person can understand their mechanics and predictions. Therefore, the presented methods may serve as an efficient solution, when one needs to retain simplicity while also offering an improvement to predictions.</p>
+<p>Our new metric - <span class="math inline">\(DFI\)</span> - can be used to compare simple (differentiable) feature transformations in linear regression. The analytical deduction suggests, that its performance is accurate, but it shall be investigated further before being applied in general.</p>
+<p>In the end, the obtained results are satisfying and should encourage to put more effort into research about new transformation methods and interpretability metrics. The next thing to do is putting more effort into researching the new <span class="math inline">\(DFI\)</span> metric, to improve interpretability of the extended regression models. We hope that our article will inspire a number of interested readers to conduct such research.</p>
 
 </div>
 </div>
@@ -1424,7 +1490,7 @@ The comprehensive description of used data can be found in <span class="citation
 <h4><span class="header-section-number">3.7.4.1</span> EDA</h4>
 <p>The main conclusions from the Exploratory Data Analysis are as follows:</p>
 <ol style="list-style-type: decimal">
-<li>The target value is very skewed (See Figure <a href="interpretability.html#fig:3-7-eda">3.1</a>).</li>
+<li>The target value is very skewed (See Figure <a href="interpretability.html#fig:3-7-eda">3.6</a>).</li>
 <li>There are 6 percentage and 2 count variables.</li>
 <li>The dataset has over 22k data points.</li>
 <li>There are 46 data points with unnaturally looking target value.</li>
@@ -1433,7 +1499,7 @@ The comprehensive description of used data can be found in <span class="citation
 <div class="figure" style="text-align: center"><span id="fig:3-7-eda"></span>
 <img src="images/3-7-eda.png" alt="(L) Histogram of the target values. (R) Examplary variable correlation with the target." width="800" />
 <p class="caption">
-FIGURE 3.1: (L) Histogram of the target values. (R) Examplary variable correlation with the target.
+FIGURE 3.6: (L) Histogram of the target values. (R) Examplary variable correlation with the target.
 </p>
 </div>
 <p>Therefore we decided that:</p>
@@ -1455,7 +1521,7 @@ FIGURE 3.1: (L) Histogram of the target values. (R) Examplary variable correlati
 The divide-and-conquer idea has many computer science applications, e.g. in sorting algorithms, natural language processing, or parallel computing.
 We decided to make use of its core principles in constructing the method for fitting the enhanced white-box model.
 The final result is multiple tree models combined which decisions are easily interpretable.</p>
-<p>The proposed algorithm presented in the Figure <a href="interpretability.html#fig:3-7-algorithm">3.2</a> is:</p>
+<p>The proposed algorithm presented in the Figure <a href="interpretability.html#fig:3-7-algorithm">3.7</a> is:</p>
 <ol style="list-style-type: decimal">
 <li>Divide the target variable with <code>k</code> middle points into <code>k+1</code> groups.</li>
 <li>Fit a black-box classifier on train data which predicts the belonging to the <code>i-th</code> group.</li>
@@ -1466,7 +1532,7 @@ The final result is multiple tree models combined which decisions are easily int
 <div class="figure" style="text-align: center"><span id="fig:3-7-algorithm"></span>
 <img src="images/3-7-algorithm.png" alt="The divide-and-conquer algorithm used to construct an enhanced white-box model." width="800" />
 <p class="caption">
-FIGURE 3.2: The divide-and-conquer algorithm used to construct an enhanced white-box model.
+FIGURE 3.7: The divide-and-conquer algorithm used to construct an enhanced white-box model.
 </p>
 </div>
 <p><strong>pytanie: czy dodawać wypunktowanie w caption schematu? W paper tak, a w książce lepiej wygląda bez (?)</strong></p>
