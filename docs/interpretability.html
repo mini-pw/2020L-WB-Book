@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Interpretability | ML Case Studies</title>
   <meta name="description" content="Case studies for reproducibility, imputation, and interpretability" />
-  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Interpretability | ML Case Studies" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-05-12" />
+<meta name="date" content="2020-05-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -588,11 +588,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><strong>Tuning hyperparameters of models</strong> – Default hyperparameters for models are generally good, but in specific cases using specific hyperparameters may yield in better results, so we use model-based optimization for tuning those parameters <span class="citation">(Bischl et al. <a href="#ref-mlrmbo" role="doc-biblioref">2017</a>)</span>.</li>
 <li><strong>Logarithmic and exponential transformations of individual variables</strong> – So that linear relationships can be better captured and to reduce the influence of outliers, we transform variables using exponential and polynomial functions.</li>
 <li><strong>Discretization of continuous features</strong> – Some variables do not have a linear effect on the response variable, even if they are transformed by simple functions like exponential function, sometimes there are clear thresholds – so we can replace the variable with indexes of individual segments. The SAFE algorithm helps with this <span class="citation">(Gosiewska et al. <a href="#ref-gosiewska2019safe" role="doc-biblioref">2019</a>)</span>.</li>
-<li><strong>Generating new columns as functions of other columns</strong> – There may be interactions between variables that cannot be captured by linear models. In order to take them into account, we generate new columns, applying to the rest of them various transformations – we take their inverses, products, quotients, elevations to power, and so on. As a result of these operations, a lot of new predictors are created, which we later evaluate. We also analyze their interpretability, i.e. to what extent they are translatable into an intuitive understanding of such a measure. At this point we also consider Halstead and McCabe’s measurements.</li>
-<li><strong>Oversampling and undersampling</strong> – On the basis of the data set, we generate more observations from the minority class using the SMOTE algorithm <span class="citation">(Hu and Li <a href="#ref-smote" role="doc-biblioref">2013</a>)</span> and remove some of the observations from the majority class so that the model more emphasizes the differences in characteristics of individual classes.</li>
+<li><strong>Generating new columns as functions of other columns</strong> – There may be interactions between variables that cannot be captured by linear models. In order to take them into account, we generate new columns, applying to the rest of them various transformations – we take their inverses, products, quotients, elevations to power, and so on. As a result of these operations, a lot of new predictors are created, which we later evaluate. We also analyze their interpretability, i.e. to what extent they are translatable into an intuitive understanding of such a measure. At this point we also consider Halstead and McCabe’s measurements.
+<!-- We also have to search for significant measures since creating model with thousands of features do not make it interpretable. We done it training models -- rpart or ranger -- with additional 1000 features and using DALEX variable importance we choose around 10 most important features. We done it twice so at the and we had around 10 the most important features.  --></li>
+<li><strong>Oversampling and undersampling</strong> – On the basis of the data set, we generate more observations from the minority class using the SMOTE algorithm <span class="citation">(Hu and Li <a href="#ref-smote" role="doc-biblioref">2013</a>)</span> and remove some of the observations from the majority class so that the model more emphasizes the differences in characteristics of individual classes.
+<!-- It was done on 5 cross validation and when the model was trained on 4 folds with new observations made by smote it was tested on the last fold without any new observations. --></li>
 <li><strong>Reducing outliers</strong> – For each variable a two-value vector that indicates the thresholds for which the values are considered as outliers is generated. Then all outliers are changed to the nearest value of obtained earlier vector.</li>
 </ul>
-<p>Our goal is to beat black-box model. In our case we chose random forest model from package ranger. As a white-box model we used logistic regression. Results were tested on dataset with different transformations.</p>
+<p>Our goal is to beat black-box model. In our case we chose random forest model from package ranger. As a white-box model we used logistic regression. Results were tested on dataset with different transformations.
+<!-- remove? --></p>
 <table>
 <caption><span id="tab:unnamed-chunk-1">TABLE 3.1: </span>White-box and black-box comparison</caption>
 <thead>
@@ -643,6 +646,150 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="results-9" class="section level3" number="3.2.5">
 <h3><span class="header-section-number">3.2.5</span> Results</h3>
+<p>The results are shown in the table.</p>
+<table>
+<caption>AUC in white-box models</caption>
+<thead>
+<tr class="header">
+<th>Number</th>
+<th>Operation</th>
+<th>logreg</th>
+<th>kknn</th>
+<th>rpart</th>
+<th>improve</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0a</td>
+<td>Base</td>
+<td>0.7347</td>
+<td>0.7275</td>
+<td>0.5000</td>
+<td>no</td>
+</tr>
+<tr class="even">
+<td>0b</td>
+<td>Rpart tuning</td>
+<td>0.7347</td>
+<td>0.7275</td>
+<td>0.7369</td>
+<td>yes</td>
+</tr>
+<tr class="odd">
+<td>1a</td>
+<td>Normalization</td>
+<td>0.7347</td>
+<td>0.7272</td>
+<td>0.7369</td>
+<td>no</td>
+</tr>
+<tr class="even">
+<td>1b</td>
+<td>Outlier reduction</td>
+<td>0.7433</td>
+<td>0.7315</td>
+<td>0.7394</td>
+<td>yes</td>
+</tr>
+<tr class="odd">
+<td>1c</td>
+<td>Logarithm</td>
+<td>0.7435</td>
+<td>0.7175</td>
+<td>0.7254</td>
+<td>no?</td>
+</tr>
+<tr class="even">
+<td>2a</td>
+<td>Outlier reduction and normalization</td>
+<td>0.7433</td>
+<td>0.7320</td>
+<td>0.7394</td>
+<td>yes</td>
+</tr>
+<tr class="odd">
+<td>2b</td>
+<td>Logarithm and outlier reduction</td>
+<td>0.7435</td>
+<td>0.7168833</td>
+<td>0.7246</td>
+<td>no</td>
+</tr>
+<tr class="even">
+<td>3a</td>
+<td>Gain-ratio discretization</td>
+<td>0.7433</td>
+<td>0.7317</td>
+<td>0.7394</td>
+<td>no</td>
+</tr>
+<tr class="odd">
+<td>3b</td>
+<td>RSafe</td>
+<td>0.7437</td>
+<td>0.7176</td>
+<td>0.7338</td>
+<td>no</td>
+</tr>
+<tr class="even">
+<td>4a</td>
+<td>New features selected by ranger</td>
+<td>0.7472</td>
+<td>0.7288</td>
+<td>0.7334</td>
+<td>yes</td>
+</tr>
+<tr class="odd">
+<td>4b</td>
+<td>New features selected by rpart</td>
+<td>0.7453</td>
+<td>0.7311</td>
+<td>0.7392</td>
+<td>yes</td>
+</tr>
+<tr class="even">
+<td>4c</td>
+<td>Halstead measures</td>
+<td>0.7448</td>
+<td>0.7311</td>
+<td>0.7376</td>
+<td>no</td>
+</tr>
+<tr class="odd">
+<td>5a</td>
+<td>Smote with new features by ranger</td>
+<td>0.749</td>
+<td>0.737</td>
+<td>0.800</td>
+<td>yes</td>
+</tr>
+<tr class="even">
+<td>5b</td>
+<td>Smote with new features by rpart</td>
+<td>0.747</td>
+<td>0.736</td>
+<td>0.793</td>
+<td>no</td>
+</tr>
+<tr class="odd">
+<td>5c</td>
+<td>Smote without new features</td>
+<td>0.745</td>
+<td>0.736</td>
+<td>0.804</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
+<p>Since at the begining rpart has the 0.5 AUC first we tuned the rpart hiperparameters and there was significant improve in result.</p>
+<p>Then as step 1a-1c we tried 3 basic transformations of data as normalization of all columns, outlier reduction and logarithm of nearly all columns (without one hot encoded source). As we can see the best improve gave otliers reduction so in step 2a we tried to add normalization to that and in step 2b we tried to reduce outliers after applying logarithm. Only outliers reduction and normalization was good enough to use it in following experiments.</p>
+<p>Next we use discretization of some columns. Since all columns were continous numbers it could be potencially usable. Unfortunately, any of gain-ratio method from funModeling (3a) and RSafe (3b) make statistically important better result. Using partial dependency plot on the black-box model do not show that there is variable which can be discretized.
+<!-- referencja na wykres pdp + wykres, czy nie warto? --></p>
+<p>Then we tried to create new measures based on basic Halstead measures. We selected best measures by DALEX variable importance in one of two learners: ranger or rpart. Then on the best 10 measures + basic measures we run the models but the results in the table shows only a little better performance of logistic regression and knn. The most promising result was the improvement of logistic regression in 4a.</p>
+<p>Since the classes are unbalanced - there are 20% of defects so we tried the smote oversampling of defects class. There is a huge improvement especially in decision tree and the best result is in dataset with only outliers reduction and normalization without any new features. So this is our final model and this model beats ranger AUC.</p>
+<p><img src="3-2-graphs/rpart_result.png" /></p>
+<p>On the plot there is the final rpart model with proportions of each improvement. Zero from scale means the base rpart model at the beging and 100 is equivalent of black-box model – ranger. The most important was hiperparameters tuning, then oversampling with smote and the rest give only a little improvement.</p>
 </div>
 <div id="summary-and-conclusions-9" class="section level3" number="3.2.6">
 <h3><span class="header-section-number">3.2.6</span> Summary and conclusions</h3>
