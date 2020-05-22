@@ -73,7 +73,7 @@ where $\beta _{0},\beta _{1},...,\beta _{n}$ are coefficients of logistic regres
 We then visualize coeficients as images with bright spots indicating that they are importent.
 Unfortunately the results look like this:
 
-![fig. 1: An example of logistic regression weights](./plots/LOGREG.png)
+![fig. 1: An example of logistic regression weights](./images/3-8-LOGREG.png)
 
 We get this because logistic regression works more like a sieve.
 
@@ -96,7 +96,7 @@ We can significantly improve it's performance by introducing complex similarity 
 This complex distance functions can be made in many different ways. In this paper we explore functions of a form:
 $$distance(Img1, Img2) = d_e(Embedder(Img1), Embedder(Img2))$$
 where $d_e$ is euclidean distance, so we simply compute euclidean distance between embeddings of images. Here's a scheme of KNN classifier:
-![fig. n: The KNN Classifier Architecture](./plots/KNNMODEL_1.png)
+![fig. n: The KNN Classifier Architecture](./images/3-8-KNNMODEL_1.png)
 As we can see on fig. n, new image firstly gets embedded and then a standard classification with KNN is made. This type of architecture allowes us to create robust and interpretable classifier.
 
 ---
@@ -124,15 +124,15 @@ Algorithm:
 We use euclidean distance. Prediction for every new observation is simply class of nearest centroid. Algorithm is interpretable, because we can visualise centroids as images. Thanks to using K-means to find subclasses our images are not blurry.
 Also because number of all subclasses is much lower than number of records in data set using KNN only on centroids is much faster. Consider the following dataset:
 
-![fig : An example of centroid image](plots/KMEANS_1.png)
+![fig : An example of centroid image](images/3-8-KMEANS_1.png)
 
 In fact, a good subset of the training data set is enough to create a very good classifier. For instance we can choose:
 
-![fig : An example of centroid image](plots/KMEANS_2.png)
+![fig : An example of centroid image](images/3-8-KMEANS_2.png)
 
 Chosen points approximate sufficiently training data distribution. Notice, that we in fact don't have to choose particular observations. We can instead chose points in observation space that are similar to observations. This is what k-means algorithm do and so, we can obtain good training data approximation using k-means. Here's an example of a centroid image:
 
-![fig : An example of a centroid image](plots/KLAPEK.png)
+![fig : An example of a centroid image](images/3-8-KLAPEK.png)
 
 ---
 
@@ -142,15 +142,15 @@ $M$ as $U\Sigma V^T$ where $U$ is $m\times m$ orthonormal matrix, $V^T$ is $n\ti
 and $\Sigma$ is $m\times n$ rectangular diagonal matrix with non-negative real numbers on the diagonal.
 We assume that singular values of $\Sigma$ are in descending order. Now by taking first columns of $V^T$ we 
 get vectors which are the most relevent. Let $V_n$ be matrix, whoose columns are $V$ columns with n greatest eigenvalues. Such matrix is linear transformation matrix, that turns observations into their embeddings. It can be shown, that $V_n$ is the best transformation in L2 norm sense.
-![fig. : SVD autoencoder diagram](./plots/SVDAUTOENC_1.png)
+![fig. : SVD autoencoder diagram](./images/3-8-SVDAUTOENC_1.png)
 We can then visualise this vectors and see which parts of the picture are the most importent. 
 Also we can reduce number of dimensions for KNN.
 
-![Most importenet vector](./plots/HIDDEN.png)
+![Most importenet vector](./images/3-8-HIDDEN.png)
 
-![Image from Dataset](./plots/KURTKA.png)
+![Image from Dataset](./images/3-8-KURTKA.png)
 
-![Image after using vector as filter](./plots/KURTKA_HIDDEN.png)
+![Image after using vector as filter](./images/3-8-KURTKA_HIDDEN.png)
 
 ---
 
@@ -210,7 +210,7 @@ Our implementation of convolutional autoencoder consist of the following layers:
 
 along with pooling and unpooling beetween.
 
-![fig. : Architecture of the convolutional autoencoder](./plots/CONVAUTOENC_1.png)
+![fig. : Architecture of the convolutional autoencoder](./images/3-8-CONVAUTOENC_1.png)
 
 ---
 
@@ -269,7 +269,7 @@ Our implementation of convolutional neural networks consist of the following lay
     - Output_size: 10
 
 Here's architecture's visualisation:
-![fig. : The architecture of the Convolutional classifier](./plots/BlackBoxCONV_1.png)
+![fig. : The architecture of the Convolutional classifier](./images/3-8-BlackBoxCONV_1.png)
 
 ---
 
