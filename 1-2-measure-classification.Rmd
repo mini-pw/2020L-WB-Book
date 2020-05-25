@@ -5,17 +5,90 @@
 ### Abstract
 
 
-### Introduction and Motivation
+### Introduction
 
-Reproducibility of scientific papers is one of the most important...
+The idea of reproducibility of scientific researches is crucial especially in the area of data science. It has become more important along with the development of methods and algorithms used in machine learning as they are more and more complex and complicated. This issue concerns users of all types: students, scientists, developers. Moreover, attaching code used in a paper, helps readers to focus on the real content rather than sophisticated explanations and descriptions included in the article. It is also valuable because the users can use the code as examples of using the package. <br>
+
+However problem of the reproducibility is much more complex, because there is no explicit way of measuring it. It means that most of its definitions divide articles into 2 groups - reproducible and irreproducible. Thus, finding an appropriate reproducibility metrics, which would have wider set of values would result in changing the way reproducability is perceived. As a result such a metric would provide much more information for a person who would be interested in reproducing an article.
+
+#### Definition
+Reproducibility as a problem has been addressed by scientists of various fields of studies. The exact definition also differs among areas of studies. For instance, Patrick Vandewall in 2009 suggested a definition of a reproducible research work: "A research work is called reproducible if all information relevant to the work, including, but not limited to, text, data and code, is made available, such that an independent researcher can reproduce the results" [@vandewalle2009reproducible]. On the other hand, Association for Computing Machinery [@ACMBadging2018] divides the problem into three tasks as follows:<br>
+* **Repeatability** (Same team, same experimental setup):<br>
+The measurement can be obtained with stated precision by the same team using the same measurement procedure, the same measuring system, under the same operating conditions, in the same location on multiple trials. For computational experiments, this means that a researcher can reliably repeat her own computation.
+
+* **Replicability** (Different team, same experimental setup):<br>
+The measurement can be obtained with stated precision by a different team using the same measurement procedure, the same measuring system, under the same operating conditions, in the same or a different location on multiple trials. For computational experiments, this means that an independent group can obtain the same result using the author’s own artifacts.
+
+* **Reproducibility** (Different team, different experimental setup):<br>
+The measurement can be obtained with stated precision by a different team, a different measuring system, in a different location on multiple trials. For computational experiments, this means that an independent group can obtain the same result using artifacts which they develop completely independently.
+<br>
+
+For the needs of this chapter we will use the Vandewalle's definition and treat papers as fully reproducible only when they meet the conditions listed there.
+
 
 ### Related Work
+Reproducibility is a hot topic. "Open Science in Software Engineering" [@Fernndez2019OpenSI] describes the essence of *open source*, *open data*, *open access* and other *openness*. The article mentions that ability to reproduce work is important for the value of research. *Open Science* has many positive effects: increases access and citation counts, supports cooperation through open repositories. "Reproducibility Guide" [@repro-guide] contains a lot of informations and tips on how to make research easier to reproduce. The guide also contains the list of tools that can make our research more reproducible (for example version control and automation. And the most important for us: it includes the checklist of questions that help verify the ability to reproduce. Edward Raff emphasizes the word *independent* in his article [@RaffTheGradient2020]. *Independent reproducibility* means that we can obtain similar results independently of the author and his code.
+
+These articles highlight various aspects of reproducibility. We want to verify how the authors care about reproducibility, what are their biggest reproduction issues and what type of problems can we encounter reproducing articles.
 
 
 ### Methodology
 
+We considered plenty of papers from many issues of [The R Journal](https://journal.r-project.org/) - one of the  most popular magazines concerning scientific researches, including new R packages. The journal stands out from the magazines because the researches usually upload supplementary material with their articles so it is very easy to check if the code can be reproduced in right way. The articles we checked during our research were published in various years - the newest comes from December 2019 while the oldest is from 2010. We have to admit that the majority of articles could be reproduced without any problems. For the needs of this article we mention only papers where any problems occured. <br>
+As we faced the problem of measuring reproducibility we discussed many ways of grading its level. One of the ideas was to create a unified measure of value that would calculate the ratio of functions that managed to execute. We quickly noticed that this approach is not appropriate as sometimes it is not fair to dock the mark by the same value in various examples. For instance we could meet a minor problem that interefered with executing an additional feature and, on the other hand, a vast problem that was a reason that we could not produce an important plot at all. Moreover, sometimes the success of executing the function, was not only defined by completing the work without errors but by the quality of output. Sometimes the plots were produced without any number values what made them absolutely useless or without one minor annotation which still allowed to make similar conclusions as authors.<br>
+These were the reasons why we did not decide to create a simple numeric measure of reproducibility, which probably would be very convenient for data scientists, especially statisticians. When we were checking the articles in terms of reproducibility we noticed that the problems we are facing can be group into a few categories of similar ones. It was on impulse to propose six major categories that can be faced during try of reproducing the results presented in a scientific paper:
+* **No access to external resources**<br>
+Some parts of code require access to external resources, for example third-party API or data downloaded from web. If the data was removed from the website, we may have a problem (or it can be impossible!) reproducing the results.
+* **No compatibility with current versions of used packages**<br>
+Some packages are deprecated or only available in the older version of R. It can cause problems and is unacceptable.
+* **Code vulnerable to user settings (especially graphic issues)**<br>
+The output often depends on the environment settings. For example the scale of the graphics can make it illegible and useless. There were cases that the code attached to article produced completely different figure than the presented one.
+* **Additional configuration required**<br>
+Some packages require a non-standard installation. To use some features it can be required to install system packages. Sometimes it is also required to take additional steps (configure access to API e.t.c.).
+* **Randomness problems**<br>
+Some functionalities are based on randomness. Sometimes changing the seed may change the results and make it difficult to draw correct conslusions.
+* **No access to source codes** <br>
+Some results shown in an article could not be reproduced because the codes had not been attached to or included in the article.
+
+We developed a 5-point scale (1 - completely irreproducible, 5 - fully reproducible) evaluating in what degree these problems belong to each category. Points are assigned subjectively depending on our feeling of the severity of the problem. When a category did not appear in the article it was signed as N/A - not applicable. To minimilize the affect of the personal feels, every article was checked independently by at least two persons.
+
+#### Mark examples
+
+Most of the articles were reproducible to some extent. None of them were fully irreproducible. However there were few examples, where inability of compiling the first chunks of code resulted in very low marks for the article and thus giving it up with no further research being carried through. Perfect example of such behaviour can be found in an article "MCMC for Generalized Linear Mixed Models with glmmBUGS", where all of the following code chunks depended on first ones, which couldn't be compiled. The reason was that the function, which was resposible for making crucial calculations couldn't find a registry address. It ended up with displaying both the error and warning message. 
+Second thing which led to lowering the mark was difficulty with code availibility. There were articles, for instance "RealVAMS: An R Package for Fitting a Multivariate Value-added Model (VAM)", where there were no source codes for all of the figures, which were used in article. Moreover the figures were the main part of the article, thus we decided to lower the mark for access to the source code. Fortunately our team of scientists managed to reproduce the results, despite lack of source code. This article was also an example of having attached obsolete data. It resulted in poor similarity of graphs and plots between the figures we made ourselves and those, which were used in article. Majority of articles were given very satsfying marks, beacuse there were only a few things we could complain about. Fortunately they didin't have such an impact on reproducibility itself, but rather were annoying for someone who wanted to achieve the same results. The perfect example of such an article is "tmvtnorm: A Package for the Truncated Multivariate Normal Distribution". The code had to be manually copied from the article and then reformatted before pasting in into the R console. It's not a major obstacle, but it may lead to some syntax mistakes and enlengthen the time needed to reproduce the results.
+
 
 ### Results
+
+During the research, our team of scientists examined 16 scientific articles published in The R Journal in terms of reproducibility. As stated before, we decided to divide a mark into six categories and check the level of correctness with the results described in the paper. Every category was graded in five-point scale provided always that a category might not apply in a paper. However, we did not measure the effectivity or functionality of the code as it was not in the scope of this research. To avoid the effect of subjectivity, all articles were graded by at least two of us. Later we calculated the average of the marks. When any category was marked as “not applicable” by at least one marker, it was not taken into consideration in the final summary. 
+
+
+| Title | Year of Release | Authors | Source |
+|----------------|-------------|---------|----------------------------------|
+| GrpString: An R Package for Analysis of Groups of Strings [1] | 2017 | H. Tang, E. Day, M. Atkinson, N. Pienta | The R Journal |
+| mmpf: Monte-Carlo Methods for Prediction Functions [2]| 2017 | Z. Jones | The R Journal |
+| RealVAMS: An R Package for Fitting aMultivariate Value-added Model (VAM) | 2017 | J. Broatch, J.Green, A. Karl | The R Journal |
+| shadow: Geometric Shadow Calculations | 2018 | M. Dorman, E. Erell, A. Vulkan, I. Kloog | The R Journal |
+| Mapping and Measuring Country Shapes | 2010 | Nils B. Weidmann and Kristian Skrede Gleditsch | The R Journal |
+| tmvtnorm: A Package for the Truncated Multivariate Normal Distribution | 2010 | Stefan Wilhelm and B. G. Manjunath | The R Journal |
+| MCMC for Generalized Linear Mixed Models with glmmBUGS | 2010 | Patrick Brown and Lutong Zhou | The R Journal | 
+| Drawing Diagrams with R | 2009 | Paul Murrell | The R Journal |
+| Geospatial Point Density | 2018 | Paul F. Evangelista and David Beskow | The R Journal |
+| rainbow: An R Package for VisualizingFunctional Time Series | 2011 | Han Lin Shang | The R Journal |
+| stplanr: A Package for Transport Planning | 2018 | Robin Lovelace, Richard Ellison | The R Journal |
+| BINCOR: An R package for Estimatingthe Correlation between Two UnevenlySpaced Time Series | 2019 | Josue M. Polanco-Martinez, Martin A. Medina-Elizalde, Maria Fernanda Sanchez Goni, ManfredMudelsee | The R Journal |
+| RSSampling: A Pioneering Package forRanked Set Sampling | 2019 | Busra Sevinc, Bekir Cetintav, Melek Esemen and Selma Gurler | The R Journal |
+| Fixed Point Acceleration in R | 2018 | Stuart Baumann and Margaryta Klymak | The R Journal |
+| Nowcasting: An R Package for PredictingEconomic Variables Using DynamicFactor Models | 2018 | Serge de Valk, Daiane de Mattos and Pedro Ferreira | The R Journal |
+| Raster Images in R Graphics | 2011 | Paul Murrell | The R Journal |
+
+
+The summary of our marks is presented in the boxplot.
+
+
+![alt text](https://raw.githubusercontent.com/niladrem/R-reprodukowalnosc/master/Summary_of_marking_the_articles.png)
+
+As we can see in the plot, packages dependent on external resources are in a minority. Despite that, when we examined one, there was often a problem with dependencies. It could be caused by many reasons, e.g. external data sources or other packages. On the other hand, availability of the source code and graphical aspects of articles turned out to be the most reproducible categories. Resistance to randomness was one of the most interesting categories in our opinion and it turned out to be a category with high variation of grades. Many authors coped with the problem by setting random seeds but sometimes the differences were unavoidable.
 
 
 ### Summary and conclusions 
