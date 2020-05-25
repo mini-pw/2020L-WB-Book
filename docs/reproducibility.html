@@ -698,209 +698,48 @@ We were unable to find scientific articles on this exact issue. There are articl
 <p>We have checked 13 articles with 16 R packages from at least 10 years ago to ensure that the code chunks match these categories:</p>
 <ul>
 <li>ade4: Implementing the Duality Diagram for Ecologists <span class="citation">(Dray and Dufour <a href="#ref-ade4" role="doc-biblioref">2007</a>)</span></li>
-<li>untb: an R Package For Simulating Ecological Drift Under the Unified Neutral Theory of Biodiversity <span class="citation">(Hankin <a href="#ref-untb" role="doc-biblioref">2007</a>)</span></li>
-<li>bio.infer: Maximum Likelihood Method for Predicting Environmental Conditions from Assemblage Composition <span class="citation">(Yuan <a href="#ref-bio" role="doc-biblioref">2007</a>)</span></li>
-<li>pls: principal Component and Partial Least Squares Regression in R <span class="citation">(Mevik and Wehrens <a href="#ref-pls" role="doc-biblioref">2007</a>)</span></li>
-<li>EMD: Empirical Mode Decomposition and Hilbert Spectrum <span class="citation">(Kim and Oh <a href="#ref-EMD" role="doc-biblioref">2009</a>)</span></li>
 <li>AdMit: Adaptive Mixtures of Student-t Distributions <span class="citation">(Ardia, Hoogerheide, and Dijk <a href="#ref-admit" role="doc-biblioref">2009</a>)</span></li>
 <li>asympTest: A Simple R Package for Classical Parametric Statistical Tests and Confidence Intervals in Large Samples <span class="citation">(Coeurjolly et al. <a href="#ref-asymptest" role="doc-biblioref">2009</a>)</span></li>
-<li>PMML: An Open Standard for Sharing Models <span class="citation">(Guazzelli et al. <a href="#ref-PMML" role="doc-biblioref">2009</a>)</span></li>
-<li>neuralnet: Training of Neural Networks <span class="citation">(Günther and Fritsch <a href="#ref-neuralnet" role="doc-biblioref">2010</a>)</span></li>
-<li>mvtnorm: New Numerical Algorithm for Multivariate Normal Probabilities <span class="citation">(Mi, Miwa, and Hothorn <a href="#ref-mvtnorm" role="doc-biblioref">2009</a>)</span></li>
-<li>tmvtnorm: A Package for the TruncatedMultivariate Normal Distribution <span class="citation">(Wilhelm and Manjunath <a href="#ref-tmvtnorm" role="doc-biblioref">2010</a>)</span></li>
-<li>party: A New, Conditional Variable-Importance Measure for Random Forests Available in the party Package <span class="citation">(Strobl, Hothorn, and Zeileis <a href="#ref-party" role="doc-biblioref">2009</a>)</span></li>
+<li>bio.infer: Maximum Likelihood Method for Predicting Environmental Conditions from Assemblage Composition <span class="citation">(Yuan <a href="#ref-bio" role="doc-biblioref">2007</a>)</span></li>
 <li>deSolve, bvpSolve, ReacTran and RootSolve: R packages introducing methods of solving differential equations in R <span class="citation">(Soetaert, Petzoldt, and Setzer <a href="#ref-solve" role="doc-biblioref">2010</a>)</span></li>
+<li>EMD: Empirical Mode Decomposition and Hilbert Spectrum <span class="citation">(Kim and Oh <a href="#ref-EMD" role="doc-biblioref">2009</a>)</span></li>
+<li>mvtnorm: New Numerical Algorithm for Multivariate Normal Probabilities <span class="citation">(Mi, Miwa, and Hothorn <a href="#ref-mvtnorm" role="doc-biblioref">2009</a>)</span></li>
+<li>neuralnet: Training of Neural Networks <span class="citation">(Günther and Fritsch <a href="#ref-neuralnet" role="doc-biblioref">2010</a>)</span></li>
+<li>party: A New, Conditional Variable-Importance Measure for Random Forests Available in the party Package <span class="citation">(Strobl, Hothorn, and Zeileis <a href="#ref-party" role="doc-biblioref">2009</a>)</span></li>
+<li>pls: principal Component and Partial Least Squares Regression in R <span class="citation">(Mevik and Wehrens <a href="#ref-pls" role="doc-biblioref">2007</a>)</span></li>
+<li>PMML: An Open Standard for Sharing Models <span class="citation">(Guazzelli et al. <a href="#ref-PMML" role="doc-biblioref">2009</a>)</span></li>
+<li>tmvtnorm: A Package for the TruncatedMultivariate Normal Distribution <span class="citation">(Wilhelm and Manjunath <a href="#ref-tmvtnorm" role="doc-biblioref">2010</a>)</span></li>
+<li>untb: an R Package For Simulating Ecological Drift Under the Unified Neutral Theory of Biodiversity <span class="citation">(Hankin <a href="#ref-untb" role="doc-biblioref">2007</a>)</span></li>
 </ul>
+<p>All articles come from the R Journal and Journal of Statistical Software.</p>
 <p>In our research on the subject we have decided to divide the code from the articles into chunks, according to the principle that each chunk has its own output, to which we give an evaluation according to the criteria we have set. In the process of testing and reproducing various articles, we have identified five categories, and marked them as follows:</p>
 <ul>
-<li>NO REP (no reproducibility, either due to changes through time or problems with the article that had already been there, regardless of differences in R across years),</li>
-<li>HAD TO CHANGE STH (when we had to modify the code to produce correct results that will work in our current R version and can be neatly displayed in a document generated by markdown),</li>
-<li>MOSTLY REP (when the results were not ideally identical to the original, but in our opinion the chunks were working according to their purpose in the context of their article),</li>
-<li>HAD TO CHANGE &amp; STILL SOMEWHAT DIFFERENT (the code had to be changed and the results were not perfect, but they were correct in the terms of the aforementioned category “MOSTLY REP”, but we could consider them as satisfactory),</li>
-<li>FULLY REP (no reproductive problems - the results were identical to original results shown in the article).</li>
+<li><strong>NO REP</strong> (no reproducibility, either due to changes through time or problems with the article that had already been there, regardless of differences in R across years),</li>
+<li><strong>HAD TO CHANGE STH</strong> (when we had to modify the code to produce correct results that will work in our current R version and can be neatly displayed in a document generated by markdown),</li>
+<li><strong>MOSTLY REP</strong> (when the results were not ideally identical to the original, but in our opinion the chunks were working according to their purpose in the context of their article),</li>
+<li><strong>HAD TO CHANGE &amp; STILL SOMEWHAT DIFFERENT</strong> (the code had to be changed and the results were not perfect, but they were correct in the terms of the aforementioned category <strong>MOSTLY REP</strong>, but we could consider them as satisfactory),</li>
+<li><strong>FULLY REP</strong> (no reproductive problems - the results were identical to original results shown in the article).</li>
 </ul>
 <p>These criteria can be considered not subjective, but setting such boundaries does not cause confusion in categorisation, thus we decided to use them in order to research and describe the introduced number of articles about R packages from at least 10 years ago.</p>
-</div>
-<div id="results-4" class="section level3" number="1.5.5">
-<h3><span class="header-section-number">1.5.5</span> Results</h3>
-<p><a href="1-5-files/raport.html">Here</a> can be seen the in-depth report. Below are the summarised results of our research.</p>
-<table>
-<caption><span id="tab:unnamed-chunk-5">TABLE 1.1: </span>Chunk classifications</caption>
-<thead>
-<tr class="header">
-<th align="left">NAZWA</th>
-<th align="right">NOREP</th>
-<th align="right">CHANGE</th>
-<th align="right">MOSTLY</th>
-<th align="right">CH.SD</th>
-<th align="right">FULLY</th>
-<th align="right">SUM</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">ade4</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">2</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">7</td>
-</tr>
-<tr class="even">
-<td align="left">untb</td>
-<td align="right">7</td>
-<td align="right">0</td>
-<td align="right">2</td>
-<td align="right">0</td>
-<td align="right">12</td>
-<td align="right">21</td>
-</tr>
-<tr class="odd">
-<td align="left">bio.infer</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">5</td>
-<td align="right">0</td>
-<td align="right">6</td>
-<td align="right">14</td>
-</tr>
-<tr class="even">
-<td align="left">pls</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">11</td>
-<td align="right">0</td>
-<td align="right">21</td>
-<td align="right">32</td>
-</tr>
-<tr class="odd">
-<td align="left">EMD</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">15</td>
-<td align="right">16</td>
-</tr>
-<tr class="even">
-<td align="left">AdMit</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">3</td>
-<td align="right">0</td>
-<td align="right">2</td>
-<td align="right">6</td>
-</tr>
-<tr class="odd">
-<td align="left">asympTest</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">0</td>
-<td align="right">2</td>
-<td align="right">5</td>
-</tr>
-<tr class="even">
-<td align="left">PMML</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">4</td>
-</tr>
-<tr class="odd">
-<td align="left">neuralnet</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">8</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">9</td>
-</tr>
-<tr class="even">
-<td align="left">mvtnorm</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">tmvtnorm</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">6</td>
-<td align="right">6</td>
-</tr>
-<tr class="even">
-<td align="left">party</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">2</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">2</td>
-</tr>
-<tr class="odd">
-<td align="left">deSolve</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">3</td>
-</tr>
-<tr class="even">
-<td align="left">bvpSolve</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">3</td>
-</tr>
-<tr class="odd">
-<td align="left">ReacTran</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="left">RootSolve</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">5</td>
-<td align="right">6</td>
-</tr>
-<tr class="odd">
-<td align="left">SUM</td>
-<td align="right">9</td>
-<td align="right">6</td>
-<td align="right">39</td>
-<td align="right">1</td>
-<td align="right">82</td>
-<td align="right">137</td>
-</tr>
-</tbody>
-</table>
-<p>As it can be seen, the vast majority of chunks are fully reproducible. Even if the chunk is not executed identically to the original one, in most cases it differs only slightly, and the package itself serves its purpose. 88.3% (121/137) of the chunks are executed perfectly or correctly (within our subjective category of being acceptably incorrect), while 93.4% (128/137) of the chunks are working well enough not to throw errors. In practice, only 6.6% (9/137) of chunks were completely irreproducible, which would seem surprising for more-than-a-decade-old articles.</p>
-<p>However, given that we have focused particularly on packages that are still being developed, this is quite a feasible result. This can be seen quite clearly by the percentage of the chunks that required minor changes or slightly differed from the results shown in the article - there were 33.6% (46/137), which is clearly a result of the updates or changes that occured in the ever evolving R environment. Of course during our research we stumbled upon numerous packages that have not been updated since years or that have even been deleted from CRAN repository, so they were not within our field of interest. Nonetheless, we would like to emphasize that the results should not suggest that one-decade-old articles are reproducible.</p>
 <p>In some of the articles we found specific types of problems:</p>
 <ul>
 <li>There was no access to data or objects referred to in later calculations,</li>
 <li>The results were similar to the original, but the differences were most often due to the random generation of objects. This error was usually reduced later, when the package created some kind of data summary - then the result had a very small relative error with the original result.</li>
 <li>The names of individual variables or some of their attributes changed (e.g. column names in the data frame).</li>
 </ul>
+<p>When data or objects were unaccessible and there could not be found any alternative or history of the dataset, we classified this chunk as <strong>NO REP</strong>. What is more, in most cases chunks dependent on such objects automatically became <strong>NO REP</strong> too. However, if the code was only partially dependent on the lost dataset, it was classified as <strong>MOSTLY REP</strong>.</p>
+<p>When we stumbled upon problems with randomly generated objects, where the values were obviously different, but after aggregating the data summaries were close to original, such chunks were marked as <strong>MOSTLY REP</strong>. As we were reproducing various articles, this has become quite significant problem that a large number of publications were struggling with.</p>
+<p>If data could be somehow fixed - for example by changing column names, it was given <strong>HAD TO CHANGE STH</strong> mark, and the dependent chunks’ marks were not influenced by this change, which theoretically was allowing them to be marked even as <strong>FULLY REP</strong>.</p>
+</div>
+<div id="results-4" class="section level3" number="1.5.5">
+<h3><span class="header-section-number">1.5.5</span> Results</h3>
+<p><a href="1-5-files/raport.html">Here</a> can be seen the in-depth report. Below are the summarised results of our research.</p>
+<center>
+<p><img src="1-5-files/plot1.png" /></p>
+<p><img src="1-5-files/plot2.png" /></p>
+</center>
+<p>As it can be seen, the vast majority of chunks are fully reproducible. Even if the chunk is not executed identically to the original one, in most cases it differs only slightly, and the package itself serves its purpose. 88.3% (121/137) of the chunks are executed perfectly or correctly (within our subjective category of being acceptably incorrect), while 93.4% (128/137) of the chunks are working well enough not to throw errors. In practice, only 6.6% (9/137) of chunks were completely irreproducible, which would seem surprising for more-than-a-decade-old articles.</p>
+<p>However, given that we have focused particularly on packages that are still being developed, this is quite a feasible result. This can be seen quite clearly by the percentage of the chunks that required minor changes or slightly differed from the results shown in the article - there were 33.6% (46/137), which is clearly a result of the updates or changes that occured in the ever evolving R environment. Of course during our research we stumbled upon numerous packages that have not been updated since years or that have even been deleted from CRAN repository, so they were not within our field of interest. Nonetheless, we would like to emphasize that the results should not suggest that one-decade-old articles are reproducible.</p>
 </div>
 <div id="summary-and-conclusions-3" class="section level3" number="1.5.6">
 <h3><span class="header-section-number">1.5.6</span> Summary and conclusions</h3>
@@ -1116,7 +955,7 @@ To measure how a package is developed, we used several auxiliary variables from 
 <div style="border: 0px;overflow-x: scroll; width:100%; ">
 <table class="table" style="font-size: 10px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-<span id="tab:unnamed-chunk-7">TABLE 1.2: </span>Tested packages with measured reproducibility
+<span id="tab:unnamed-chunk-6">TABLE 1.1: </span>Tested packages with measured reproducibility
 </caption>
 <thead>
 <tr>
@@ -1807,10 +1646,10 @@ n
 </tbody>
 </table>
 <p><strong>Issues count</strong></p>
-<p><img src="book_files/figure-html/unnamed-chunk-9-1.svg" width="672" /></p>
+<p><img src="book_files/figure-html/unnamed-chunk-8-1.svg" width="672" /></p>
 <p>We compared if new versions of packages have more or less issues of each type than the old ones. Only for few articles these counts differ, but this data suggests negative impact of active development on reproducibility.</p>
 <p><strong>Correlations with auxiliary variables</strong><br />
-<img src="book_files/figure-html/unnamed-chunk-10-1.svg" width="672" /></p>
+<img src="book_files/figure-html/unnamed-chunk-9-1.svg" width="672" /></p>
 <p>This heatmap shows the correlation between reproducibility scale and issue count increase (new-old) with auxiliary variables. The reproducibility scale does not seem to be correlated with any of them. But there is a strong correlation between name issues count and number of lines added and removed since the publication date. Variables associated with popularity could impact on API changes. There are correlations with results, but results should not be analyzed alone, because when API issue occurs, then we cannot check results.</p>
 </div>
 <div id="summary-and-conclusions-5" class="section level3" number="1.7.5">
