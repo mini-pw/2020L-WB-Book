@@ -14,24 +14,164 @@ Due to the growing number of research publications and open-source solutions, th
 
 Reproducibility is crucial since it is what an researcher can guarantee about a research. This not only ensures that the results are correct, but rather ensures transparency and gives scientists confidence in understanding exactly what was done [@Eisner2018]. It allows science to progress by building on previous work. What is more, it is necessary to prevent scientific misconduct. The increasing number of cases is causing a crisis of confidence in science [@Drummond2012].
 
-In psychology the problem has already been addressed. From 2011 to 2015 over two hundred scientists cooperated to reproduce results of one hundred psychological studies [@Ezcuj]. In computer science (and data science) scientists notice the need for creating tools and guidelines, which help to guarantee reproducibility of solutions [@Archivist][@Stodden1240]. There exist already developed solutions which are tested to be applied [@Elmenreich2018].
+In psychology the problem has already been addressed. From 2011 to 2015 over two hundred scientists cooperated to reproduce results of one hundred psychological studies [@Ezcuj]. In computer science (and data science) scientists notice the need for creating tools and guidelines, which help to guarantee reproducibility of solutions [@Archivist, @Stodden1240]. There exist already developed solutions which are tested to be applied [@Elmenreich2018].
 
 Reproducibility can focus on different aspects of the publication, including code, results of analysis and data collection methods. This work will focus mainly on the code - results produced by evaluation of different functions and chunks of code from analysed publications.
 
 In this paper we want to compare journals on the reproducibility of their articles. Moreover, we will present the reproducibility differences between R and Python - two of the most popular programming languages in data science publications.There is discussion between proponents of these two languages, which one is more convenient to use in data science. Different journals also compete between each other. There are already many metrics devised to assess which journal is better regarding this metric [@JournalMetrics].
 There are no publications related to the reproducibility topic which compare different journals and languages. Although there are some exploring reproducibility within one specific journal [@Stodden2584]. What is more, journals notice the importance of this subject [@McNutt679]. Also according to scientists journals should take some responsibility for this subject [@Eisner2018].
 
-
-
-
-### Related Work
-
-
 ### Methodology
+
+We decided to focus on three journals: 
+
+* The Journal of Statistical Software    
+* The Journal of Machine Learning Research    
+* The Journal of Open Source Software    
+
+The Journal of Statistical Software and The Journal of Machine Learning Research are well known among scientists in the field of data science. The Journal of Open Source Software is relatively new, was established in 2016. 
+
+We choose articles randomly from the time frame 2015-present. From every journal we choose 10 articles, of which 5 are articles introducing an R package and 5 are introducing a Python library. We choose only articles having tests on their github repositories. For our metrics we test the following:
+
+* Tests on github provided by authors - for R packages `test_that` tests, for Python libraries `pytest` and `unittest` tests.    
+* Examples from the article - we test whether chunks of code included in the article produce the same results. Number of examples in an article varies a lot, in particular all the articles from Journal of Open Source Software do not have any examples.   
+* Examples provided by the authors on github repository in the catalog `examples`.     
+
+
+#### How to compare articles?
+##### Insight to the problem 
+Before anything can be said about the differences in journals and languages, first there has to be a measure in which they can be compared. Journals in general prefer articles of the same structure. What it means is that articles from different journals can vary substantially. This includes not only topics but number of pages, style of writing and most importantly for the topic of this article the way they present code. Thus it comes as no surprise that there are many means how the code can be reproduced. Every so often when an article is presenting a package there can be no examples and only unit tests. Naturally, the opposite can occur. Obvious conclusion is that the proposed measure must not be in favor of any way of presenting code in the given article. The problem of defining the right measure of article reproducibility deserves a separate article itself and It should be stated that metrics used by us are for sure not without a flaw. We do not assume that they are unbiased but that they are true enough that we can draw conclusions from them.  
+
+##### Proposed metrics
+First of all, we did all tests provided by the author in the article or located on an online repository. But if there was an example but there was no direct connection to if from the article it was not included in our reproduction process, because in our opinion it's not a part of the article and therefore journal. Because of what has been said in the previous paragraph we decided to look at articles from two perspectives. One is more bias, second is true to the sheer number of reproducible examples and positive tests. 
+
+##### Student’s Mark
+Analysis of the problem has led to the decision that numerical assessment of article reproducibility has too many flaws and does not represent well the problems that occur while recreating the results of an article. What we propose is a 4-degree mark ranging from 2 to 5. The highest mark, 5 is given if the author provided all results to the code shown in the article and repository and if the results can be fully reproduced.  The article is scored 4 when there are some minor problems in the reproducibility of the code.  For example, an article may lack the outputs to some part of the code shown or there are some errors in tests. The major rule is that code should still do what it was meant to do. If some errors happen, but they are not affecting the results, they are negligible. The article is scored 3 in a few cases. If an article lacks all or the vast majority of code outputs, but when reproduced it still produces reasonable results. When in some tests or examples we can observe non-negligible differences, but this cannot happen to a key element of the article. For example, the method proposed in the article describing training machine learning model works and the model is trained well, but there are errors in the part of the code where the model is used by some different library. If we would have to score the article based only on this example we would give it a 3. The article is scored 2 if there are visible differences in reproducing results of key elements of the article. Or If the code from the article didn’t work even though we had all dependencies.  
+
+
+##### Reproducibility value
+Second metric we used to analyse articles is simple and puts the same weight to the reproducibility problems of the tests and examples.
+
+$$ R_{val} = 1 - \frac{negative \ tests + negative \ examples}{all \ tests + all \ examples} $$
+
+So a score of 0 represents an article that failed in all tests and had only not working examples.  
 
 
 ### Results
 
+```{r echo=FALSE}
+library(dplyr)
+library(ggplot2)
+
+colors <- c('#c2e699', '#78c679', '#31a354', '#006837')
+
+data <- read.csv(file = 'data/1-8-reproducibility-journal-and-language/results.csv')
+
+res1 <- data %>%
+  group_by(Journal) %>%
+  summarise(StudentsMark = mean(StudentsMark), ReproducibilityValue = mean(ReproducibilityValue))
+
+res2 <- data %>%
+  group_by(Language) %>%
+  summarise(StudentsMark = mean(StudentsMark), ReproducibilityValue = mean(ReproducibilityValue))
+
+res3 <- data %>%
+  group_by(Journal, StudentsMark) %>%
+  summarise(Number = n()) %>%
+  group_by(Journal) %>%
+  mutate(Percent = Number / sum(Number))
+res3$StudentsMark <- factor(res3$StudentsMark)
+res3$StudentsMark <- factor(res3$StudentsMark, levels = rev(levels(res3$StudentsMark)))
+
+res4 <- data %>%
+  group_by(Language, StudentsMark) %>%
+  summarise(Number = n()) %>%
+  group_by(Language) %>%
+  mutate(Percent = Number / sum(Number))
+res4$StudentsMark <- factor(res4$StudentsMark)
+res4$StudentsMark <- factor(res4$StudentsMark, levels = rev(levels(res4$StudentsMark)))
+```
+
+Results of reproducing all chosen articles are presented in the following table:
+
+  | Title                                                                                           | Journal | Language | Student's Mark | Reproducibility Value |
+  |-------------------------------------------------------------------------------------------------|---------|----------|---------|---------|
+  | Autorank: A Python package for automated ranking of classifiers                                 | JOSS    | Python   | 4       | 0.95    |
+  | PyEscape: A narrow escape problem simulator packagefor Python                                   | JOSS    | Python   | 2       | 0.8     |
+  | Seglearn: A Python Package for Learning Sequences and Time Series                               | JMLR    | Python   | 4       | 0.88    |
+  | OpenEnsembles: A Python Resource for Ensemble Clustering                                        | JMLR    | Python   | 2       | 0.78    |
+  | py-pde: A Python package for solving partial differential equations                             | JOSS    | Python   | 2       | 0.86    |
+  | PypeR, A Python Package for Using R in Python                                                   | JSTAT   | Python   | 3       | 1       |
+  | iml: An R package for Interpretable Machine Learning                                            | JOSS    | R        | 5       | 1       |
+  | pyParticleEst: A Python Framework for Particle-Based Estimation Methods                         | JSTAT   | Python   | 3       | 0.67    |
+  | mimosa: A Modern Graphical User Interface for 2-level Mixed Models                              | JOSS    | R        | 3       | 0.67    |
+  | TensorLy: Tensor Learning in Python                                                             | JMLR    | Python   | 3       | 1       |
+  | The flare Package for High Dimensional Linear Regression and Precision Matrix Estimation in R   | JMLR    | R        | 3       | 1       |
+  | The huge Package for High-dimensional Undirected Graph Estimation in R                          | JMLR    | R        | 3       | 1       |
+  | mlr: Machine Learning in R                                                                      | JMLR    | R        | 4       | 0.98    |
+  | origami: A Generalized Framework for Cross-Validation in R                                      | JOSS    | R        | 5       | 1       |
+  | learningCurve: An implementation of Crawford's and Wright's learning curve production functions | JOSS    | R        | 5       | 1       |
+  | tacmagic: Positron emission tomography analysis in R                                            | JOSS    | R        | 5       | 1       |
+  | frailtyEM: An R Package for Estimating Semiparametric Shared Frailty Models                     | JSTAT   | R        | 4       | 0.79    |
+  | Beyond Tandem Analysis: Joint Dimension Reduction and Clustering in R                           | JSTAT   | R        | 5       | 1       |
+  | rmcfs: An R Package for Monte Carlo Feature Selection and Interdependency Discovery             | JSTAT   | R        | 2       | 0.57    |
+  | Pyglmnet: Python implementation of elastic-net regularized generalized linear models            | JOSS    | Python   | 5       | 0.98    |
+  | corr2D: Implementation of Two-Dimensional Correlation Analysis in R                             | JSTAT   | R        | 4       | 1       |
+  | RLPy: A Value-Function-Based Reinforcement Learning Framework for Education and Research        | JMLR    | Python   | 2       | 0.59    |
+  | Rclean: A Tool for Writing Cleaner, More Transparent Code                                       | JOSS    | R        | 5       | 1       |
+  | Graph Transliterator: A graph-based transliteration tool                                        | JOSS    | Python   | 4       | 0.93    |
+  | CoClust: A Python Package for Co-Clustering                                                     | JSTAT   | Python   | 2       | 0.3     |
+
+
+
+To better present obtained results plots below show distribution of marks within each journal and language:
+
+```{r plot_mark_journals_stacked, fig.cap="Distribution of 'Student's Mark' score of reproduced articles within each journal.", echo=FALSE}
+p <- ggplot(data = res3, aes(x = Journal, y = Percent, fill = StudentsMark)) + 
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = colors)
+p
+```
+
+```{r plot_mark_languages_stacked, fig.cap="Distribution of 'Student's Mark' score of reproduced articles within each language.", echo=FALSE}
+p <- ggplot(data = res4, aes(x = Language, y = Percent, fill = StudentsMark)) + 
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = colors)
+p
+```
+
+Following plots show means of 'Student's Mark' scores of articles within each journal and each language:
+
+```{r plot_mark_journal, fig.cap="Comparison of mean 'Student's Mark' score of reproduced articles between journals.", echo=FALSE}
+p <- ggplot(data = res1, aes(x = Journal, y = StudentsMark)) + 
+  geom_bar(stat = "identity", fill = colors[2])
+p
+```
+
+```{r plot_mark_language, fig.cap="Comparison of mean 'Student's Mark' score of reproduced articles between languages.", echo=FALSE}
+p <- ggplot(data = res2, aes(x = Language, y = StudentsMark)) + 
+  geom_bar(stat = "identity", fill = colors[2])
+p
+```
+
+Based on the plots we can see that R articles had a better mean score and Journal of Open Source Software had also the best mean score among the journals.
+
+
+Similar plots below show means of 'Reprodcibility Value' scores:
+
+```{r plot_value_journal, fig.cap="Comparison of mean 'Reproducibility Value' score of reproduced articles between journals.", echo=FALSE}
+p <- ggplot(data = res1, aes(x = Journal, y = ReproducibilityValue)) + 
+  geom_bar(stat = "identity", fill = colors[2])
+p
+```
+
+```{r plot_value_language, fig.cap="Comparison of mean 'Reproducibility Value' score of reproduced articles between languages.", echo=FALSE}
+p <- ggplot(data = res2, aes(x = Language, y = ReproducibilityValue)) + 
+  geom_bar(stat = "identity", fill = colors[2])
+p
+```
+
+Same as with 'Student's Mark' we can see that R articles had a better mean score and Journal of Open Source Software had the best mean score among the journals.
 
 ### Summary and conclusions 
 
