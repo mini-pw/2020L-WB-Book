@@ -14,7 +14,7 @@ Due to the growing number of research publications and open-source solutions, th
 
 Reproducibility is crucial since it is what an researcher can guarantee about a research. This not only ensures that the results are correct, but rather ensures transparency and gives scientists confidence in understanding exactly what was done [@Eisner2018]. It allows science to progress by building on previous work. What is more, it is necessary to prevent scientific misconduct. The increasing number of cases is causing a crisis of confidence in science [@Drummond2012].
 
-In psychology the problem has already been addressed. From 2011 to 2015 over two hundred scientists cooperated to reproduce results of one hundred psychological studies [@Ezcuj]. In computer science (and data science) scientists notice the need for creating tools and guidelines, which help to guarantee reproducibility of solutions [@Archivist, @Stodden1240]. There exist already developed solutions which are tested to be applied [@Elmenreich2018].
+In psychology the problem has already been addressed. From 2011 to 2015 over two hundred scientists cooperated to reproduce results of one hundred psychological studies [@Ezcuj]. In computer science (and data science) scientists notice the need for creating tools and guidelines, which help to guarantee reproducibility of solutions [@Archivist,@Stodden1240]. There exist already developed solutions which are tested to be applied [@Elmenreich2018].
 
 Reproducibility can focus on different aspects of the publication, including code, results of analysis and data collection methods. This work will focus mainly on the code - results produced by evaluation of different functions and chunks of code from analysed publications.
 
@@ -59,11 +59,11 @@ So a score of 0 represents an article that failed in all tests and had only not 
 
 ### Results
 
-```{r echo=FALSE}
+```{r echo=FALSE, warning=FALSE, message=FALSE}
 library(dplyr)
 library(ggplot2)
 
-colors <- c('#c2e699', '#78c679', '#31a354', '#006837')
+colors <- rev(c('#c2e699', '#78c679', '#31a354', '#006837'))
 
 data <- read.csv(file = 'data/1-8-reproducibility-journal-and-language/results.csv')
 
@@ -94,46 +94,46 @@ res4$StudentsMark <- factor(res4$StudentsMark, levels = rev(levels(res4$Students
 
 Results of reproducing all chosen articles are presented in the following table:
 
-  | Title                                                                                           | Journal | Language | Student's Mark | Reproducibility Value |
-  |-------------------------------------------------------------------------------------------------|---------|----------|---------|---------|
-  | Autorank: A Python package for automated ranking of classifiers                                 | JOSS    | Python   | 4       | 0.95    |
-  | PyEscape: A narrow escape problem simulator packagefor Python                                   | JOSS    | Python   | 2       | 0.8     |
-  | Seglearn: A Python Package for Learning Sequences and Time Series                               | JMLR    | Python   | 4       | 0.88    |
-  | OpenEnsembles: A Python Resource for Ensemble Clustering                                        | JMLR    | Python   | 2       | 0.78    |
-  | py-pde: A Python package for solving partial differential equations                             | JOSS    | Python   | 2       | 0.86    |
-  | PypeR, A Python Package for Using R in Python                                                   | JSTAT   | Python   | 3       | 1       |
-  | iml: An R package for Interpretable Machine Learning                                            | JOSS    | R        | 5       | 1       |
-  | pyParticleEst: A Python Framework for Particle-Based Estimation Methods                         | JSTAT   | Python   | 3       | 0.67    |
-  | mimosa: A Modern Graphical User Interface for 2-level Mixed Models                              | JOSS    | R        | 3       | 0.67    |
-  | TensorLy: Tensor Learning in Python                                                             | JMLR    | Python   | 3       | 1       |
-  | The flare Package for High Dimensional Linear Regression and Precision Matrix Estimation in R   | JMLR    | R        | 3       | 1       |
-  | The huge Package for High-dimensional Undirected Graph Estimation in R                          | JMLR    | R        | 3       | 1       |
-  | mlr: Machine Learning in R                                                                      | JMLR    | R        | 4       | 0.98    |
-  | origami: A Generalized Framework for Cross-Validation in R                                      | JOSS    | R        | 5       | 1       |
-  | learningCurve: An implementation of Crawford's and Wright's learning curve production functions | JOSS    | R        | 5       | 1       |
-  | tacmagic: Positron emission tomography analysis in R                                            | JOSS    | R        | 5       | 1       |
-  | frailtyEM: An R Package for Estimating Semiparametric Shared Frailty Models                     | JSTAT   | R        | 4       | 0.79    |
-  | Beyond Tandem Analysis: Joint Dimension Reduction and Clustering in R                           | JSTAT   | R        | 5       | 1       |
-  | rmcfs: An R Package for Monte Carlo Feature Selection and Interdependency Discovery             | JSTAT   | R        | 2       | 0.57    |
-  | Pyglmnet: Python implementation of elastic-net regularized generalized linear models            | JOSS    | Python   | 5       | 0.98    |
-  | corr2D: Implementation of Two-Dimensional Correlation Analysis in R                             | JSTAT   | R        | 4       | 1       |
-  | RLPy: A Value-Function-Based Reinforcement Learning Framework for Education and Research        | JMLR    | Python   | 2       | 0.59    |
-  | Rclean: A Tool for Writing Cleaner, More Transparent Code                                       | JOSS    | R        | 5       | 1       |
-  | Graph Transliterator: A graph-based transliteration tool                                        | JOSS    | Python   | 4       | 0.93    |
-  | CoClust: A Python Package for Co-Clustering                                                     | JSTAT   | Python   | 2       | 0.3     |
+| Title                                                                                           | Journal | Language | StudentsMark | ReproducibilityValue |
+|-------------------------------------------------------------------------------------------------|---------|----------|--------------|----------------------|
+| Autorank: A Python package for automated ranking of classifiers                                 | JOSS    | Python   | 4            | 0\.95                |
+| Beyond Tandem Analysis: Joint Dimension Reduction and Clustering in R                           | JSTAT   | R        | 5            | 1                    |
+| CoClust: A Python Package for Co\-Clustering                                                    | JSTAT   | Python   | 2            | 0\.3                 |
+| corr2D: Implementation of Two\-Dimensional Correlation Analysis in R                            | JSTAT   | R        | 4            | 1                    |
+| frailtyEM: An R Package for Estimating Semiparametric Shared Frailty Models                     | JSTAT   | R        | 4            | 0\.79                |
+| Graph Transliterator: A graph\-based transliteration tool                                       | JOSS    | Python   | 4            | 0\.93                |
+| iml: An R package for Interpretable Machine Learning                                            | JOSS    | R        | 5            | 1                    |
+| learningCurve: An implementation of Crawford's and Wright's learning curve production functions | JOSS    | R        | 5            | 1                    |
+| mimosa: A Modern Graphical User Interface for 2\-level Mixed Models                             | JOSS    | R        | 3            | 0\.67                |
+| mlr: Machine Learning in R                                                                      | JMLR    | R        | 4            | 0\.98                |
+| OpenEnsembles: A Python Resource for Ensemble Clustering                                        | JMLR    | Python   | 2            | 0\.78                |
+| origami: A Generalized Framework for Cross\-Validation in R                                     | JOSS    | R        | 5            | 1                    |
+| py\-pde: A Python package for solving partial differential equations                            | JOSS    | Python   | 2            | 0\.86                |
+| PyEscape: A narrow escape problem simulator packagefor Python                                   | JOSS    | Python   | 2            | 0\.8                 |
+| Pyglmnet: Python implementation of elastic\-net regularized generalized linear models           | JOSS    | Python   | 5            | 0\.98                |
+| pyParticleEst: A Python Framework for Particle\-Based Estimation Methods                        | JSTAT   | Python   | 3            | 0\.67                |
+| "PypeR, A Python Package for Using R in Python"                                                 | JSTAT   | Python   | 3            | 1                    |
+| "Rclean: A Tool for Writing Cleaner, More Transparent Code"                                     | JOSS    | R        | 5            | 1                    |
+| RLPy: A Value\-Function\-Based Reinforcement Learning Framework for Education and Research      | JMLR    | Python   | 2            | 0\.59                |
+| rmcfs: An R Package for Monte Carlo Feature Selection and Interdependency Discovery             | JSTAT   | R        | 2            | 0\.57                |
+| Seglearn: A Python Package for Learning Sequences and Time Series                               | JMLR    | Python   | 4            | 0\.88                |
+| tacmagic: Positron emission tomography analysis in R                                            | JOSS    | R        | 5            | 1                    |
+| TensorLy: Tensor Learning in Python                                                             | JMLR    | Python   | 3            | 1                    |
+| The flare Package for High Dimensional Linear Regression and Precision Matrix Estimation in R   | JMLR    | R        | 3            | 1                    |
+| The huge Package for High\-dimensional Undirected Graph Estimation in R                         | JMLR    | R        | 3            | 1                    |
 
 
 
 To better present obtained results plots below show distribution of marks within each journal and language:
 
-```{r plot_mark_journals_stacked, fig.cap="Distribution of 'Student's Mark' score of reproduced articles within each journal.", echo=FALSE}
+```{r plot-mark-journals-stacked, fig.cap="Distribution of 'Student's Mark' score of reproduced articles within each journal.", echo=FALSE}
 p <- ggplot(data = res3, aes(x = Journal, y = Percent, fill = StudentsMark)) + 
   geom_bar(stat = "identity") +
   scale_fill_manual(values = colors)
 p
 ```
 
-```{r plot_mark_languages_stacked, fig.cap="Distribution of 'Student's Mark' score of reproduced articles within each language.", echo=FALSE}
+```{r plot-mark-languages-stacked, fig.cap="Distribution of 'Student's Mark' score of reproduced articles within each language.", echo=FALSE}
 p <- ggplot(data = res4, aes(x = Language, y = Percent, fill = StudentsMark)) + 
   geom_bar(stat = "identity") +
   scale_fill_manual(values = colors)
@@ -142,15 +142,23 @@ p
 
 Following plots show means of 'Student's Mark' scores of articles within each journal and each language:
 
-```{r plot_mark_journal, fig.cap="Comparison of mean 'Student's Mark' score of reproduced articles between journals.", echo=FALSE}
-p <- ggplot(data = res1, aes(x = Journal, y = StudentsMark)) + 
-  geom_bar(stat = "identity", fill = colors[2])
+```{r plot-mark-journal, fig.cap="Comparison of mean 'Student's Mark' score of reproduced articles between journals.", echo=FALSE}
+p <- res1 %>% 
+  mutate(StudentsMark = StudentsMark - 2) %>% 
+  ggplot(aes(x = Journal, y = StudentsMark)) + 
+  geom_bar(stat = "identity", fill = colors[3]) +
+  coord_cartesian(ylim = c(0, 3)) +
+  scale_y_continuous(breaks = 0:3, labels = 2:5)
 p
 ```
 
-```{r plot_mark_language, fig.cap="Comparison of mean 'Student's Mark' score of reproduced articles between languages.", echo=FALSE}
-p <- ggplot(data = res2, aes(x = Language, y = StudentsMark)) + 
-  geom_bar(stat = "identity", fill = colors[2])
+```{r plot-mark-language, fig.cap="Comparison of mean 'Student's Mark' score of reproduced articles between languages.", echo=FALSE}
+p <- res2 %>% 
+  mutate(StudentsMark = StudentsMark - 2) %>% 
+  ggplot(aes(x = Language, y = StudentsMark)) + 
+  geom_bar(stat = "identity", fill = colors[3]) +
+  coord_cartesian(ylim = c(0, 3)) +
+  scale_y_continuous(breaks = 0:3, labels = 2:5)
 p
 ```
 
@@ -159,15 +167,17 @@ Based on the plots we can see that R articles had a better mean score and Journa
 
 Similar plots below show means of 'Reprodcibility Value' scores:
 
-```{r plot_value_journal, fig.cap="Comparison of mean 'Reproducibility Value' score of reproduced articles between journals.", echo=FALSE}
+```{r plot-value-journal, fig.cap="Comparison of mean 'Reproducibility Value' score of reproduced articles between journals.", echo=FALSE}
 p <- ggplot(data = res1, aes(x = Journal, y = ReproducibilityValue)) + 
-  geom_bar(stat = "identity", fill = colors[2])
+  geom_bar(stat = "identity", fill = colors[3]) +
+  ylim(0, 1)
 p
 ```
 
-```{r plot_value_language, fig.cap="Comparison of mean 'Reproducibility Value' score of reproduced articles between languages.", echo=FALSE}
+```{r plot-value-language, fig.cap="Comparison of mean 'Reproducibility Value' score of reproduced articles between languages.", echo=FALSE}
 p <- ggplot(data = res2, aes(x = Language, y = ReproducibilityValue)) + 
-  geom_bar(stat = "identity", fill = colors[2])
+  geom_bar(stat = "identity", fill = colors[3]) +
+  ylim(0, 1)
 p
 ```
 
