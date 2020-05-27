@@ -8,7 +8,7 @@ There are many suggestions how to deal with missing values in data sets problem.
 
 ### Introduction and Motivation
 
-#### Background an related work
+#### Background and related work
 
 Missing observations in data sets is a common and difficult problem. In the field of machine learning, one of the key objects is the data set. Real-world data are often incomplete, which prevents the usage of many algorithms. Most implementations of machine learning models, available in popular packages, are not prepared to deal with missing values. Before creating a machine learning model, it is essential to solve the problem of missing observations. This requires user pre-processing of data. Some researches examined similarity between original and imputed data, in terms of descriptive statistics [@2_4_musil2002impcomp]. Missing data are common in medical sciences and impact of different imputation methods on analysis was measured [@2_4_bono2007medical]. Some studies show that imputation can improve the results of machine learning models and that more advanced techniques of imputation outperform basic solutions [@2_4_gustavo2003impclasif] [@2_4_su2008impclasif].    
 
