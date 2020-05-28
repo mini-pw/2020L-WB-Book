@@ -287,6 +287,9 @@
 <p><em>Authors: Karol Saputa, Małgorzata Wachulec, Aleksandra Wichrowska (Warsaw University of Technology)</em></p>
 <div id="abstract-11" class="section level3" number="3.1.1">
 <h3><span class="header-section-number">3.1.1</span> Abstract</h3>
+<p>Achieving higher and higher metrics results by using bigger and more complex models is becoming popular.
+However, it is still possible to build accurate models that are less complex. Hence, possible to explain and interpret easily.
+For a specific task of ordinal classification and exemplary dataset of Eucalyptus trees, we provide a model (with AUC metric better than considered black box model) with an explanation of techniques applied.</p>
 </div>
 <div id="introduction-and-motivation-9" class="section level3" number="3.1.2">
 <h3><span class="header-section-number">3.1.2</span> Introduction and Motivation</h3>
@@ -300,14 +303,17 @@
 <h4><span class="header-section-number">3.1.3.1</span> An approach to ordinal classification</h4>
 <div id="ordinal-classification-as-a-regression-task" class="section level5" number="3.1.3.1.1">
 <h5><span class="header-section-number">3.1.3.1.1</span> Ordinal classification as a regression task</h5>
-<p>As described in [2], one of the most fundamental techniques is to cast target labels to a sequence of numbers. Then, a standard regression can be applied. There is an additional information about the classes in comparison to usual nominal classification. Also a metric used is different than in a classification task - mean square error used in a regression task takes into account similarities between two labels when conversion is applied.</p>
+<p>As described in [2], one of the most fundamental techniques is to cast target labels to a sequence of numbers. For example <span class="math inline">\(\{low, good, best\}\)</span> changes to <span class="math inline">\(\{0,1,2\}\)</span>. Then, standard regression can be applied. There is additional information about the classes in comparison to the usual nominal classification. Also, a metric used is different than in a classification task - mean square error used in a regression task takes into account similarities between two labels when a conversion is applied.</p>
 </div>
 <div id="transformation-to-multiple-binary-classification-problems" class="section level5" number="3.1.3.1.2">
 <h5><span class="header-section-number">3.1.3.1.2</span> Transformation to multiple binary classification problems</h5>
+<p>Ordinal classification taxonomy given in [2] specifies decompositions of classification task into binary problems as a separate technique to cope with ordinal classification. A more detailed algorithm and performance test are presented in [1] which suggests better scores obtained using binary decomposition than using a single model during a test on multiple datasets.</p>
+<p>Based on [1], as a binary decomposition we define a conversion of a target classes <span class="math inline">\(\{low, good, best\}\)</span> into pairs of binary classes (True/False) <span class="math inline">\(\{\{False, False\}, \{True, False\}, \{True, True\}\}\)</span> determining whether outcome is better than <span class="math inline">\(low\)</span> and better than <span class="math inline">\(good\)</span>. After classification is made, probabilites for original classes are calculated as explained in [1], [2].</p>
 </div>
 </div>
-<div id="comparing-black-box-to-linear-model" class="section level4" number="3.1.3.2">
-<h4><span class="header-section-number">3.1.3.2</span> Comparing black box to linear model</h4>
+<div id="comparing-black-boxes-and-white-boxes" class="section level4" number="3.1.3.2">
+<h4><span class="header-section-number">3.1.3.2</span> Comparing black boxes and white boxes</h4>
+<p>As presented in the Introduction and Motivation section, we aim to achieve good results in a machine learning task using an explainable and interpretable model (white box). A black box model is used as a baseline model. Detailed justification of that approach can be found in [4]. Herein our work further develops this issue by presenting a model with the possibility to extract, understand and reuse of its decision logic for a specific task of ordinal classification.</p>
 </div>
 </div>
 <div id="methodology-11" class="section level3" number="3.1.4">
@@ -326,29 +332,91 @@
 <div id="running-the-black-box-model" class="section level4" number="3.1.4.2">
 <h4><span class="header-section-number">3.1.4.2</span> Running the black box model</h4>
 <p>The black box model chosen for comparison is an extreme gradient boosting model. After the initial preprocessing the xgboost model was trained on the training set and used to predict results on the test set. As this model can only deal with numerical data, categorical (factor) variables were transformed using one hot encoding. The training proces and prediction were done using the mlr package in R, and the exact model specifications were the following:</p>
-<ul>
-<li>Learner classif.xgboost from package xgboost</li>
-<li>Type: classif</li>
-<li>Name: eXtreme Gradient Boosting; Short name: xgboost</li>
-<li>Class: classif.xgboost</li>
-<li>Properties: twoclass,multiclass,numerics,prob,weights,missings,featimp</li>
-<li>Predict-Type: response</li>
-<li>Hyperparameters: nrounds=200,verbose=0,objective=multi:softmax</li>
-</ul>
-<p>The quality of prediction was measured using the AUC (area under ROC curve) measure. This provides the base for this research, to which other models’ results will be compared to.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Learner</td>
+<td>classif.xgboost from package xgboost</td>
+</tr>
+<tr class="even">
+<td>Type</td>
+<td>classif</td>
+</tr>
+<tr class="odd">
+<td>Name</td>
+<td>eXtreme Gradient Boosting; Short name: xgboost</td>
+</tr>
+<tr class="even">
+<td>Class</td>
+<td>classif.xgboost</td>
+</tr>
+<tr class="odd">
+<td>Properties</td>
+<td>twoclass,multiclass,numerics,prob,weights,missings,featimp</td>
+</tr>
+<tr class="even">
+<td>Predict-Type</td>
+<td>response</td>
+</tr>
+<tr class="odd">
+<td>Hyperparameters</td>
+<td>nrounds=200,verbose=0,objective=multi:softmax</td>
+</tr>
+</tbody>
+</table>
+<p>The quality of prediction was measured using the AUC (area under ROC curve) measure. This provides the base for this research, to which other models’ results will be compared to. Results of other metrics suitable for ordinal classification task [3] were presented in table.</p>
 </div>
 <div id="running-the-basic-version-the-explainable-model" class="section level4" number="3.1.4.3">
 <h4><span class="header-section-number">3.1.4.3</span> Running the basic version the explainable model</h4>
 <p>We have chosen a tree model to be the considered explainable model, its exact specifications were the following:</p>
-<ul>
-<li>Learner classif.rpart from package rpart</li>
-<li>Type: classif</li>
-<li>Name: Decision Tree; Short name: rpart</li>
-<li>Class: classif.rpart</li>
-<li>Properties: twoclass,multiclass,missings,numerics,factors,ordered,prob,weights,featimp</li>
-<li>Predict-Type: response</li>
-<li>Hyperparameters: xval=0</li>
-</ul>
+<table>
+<colgroup>
+<col width="44%" />
+<col width="55%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Learner</td>
+<td>classif.rpart from package rpart</td>
+</tr>
+<tr class="even">
+<td>Type</td>
+<td>classif</td>
+</tr>
+<tr class="odd">
+<td>Name</td>
+<td>Decision Tree; Short name: rpart</td>
+</tr>
+<tr class="even">
+<td>Class</td>
+<td>classif.rpart</td>
+</tr>
+<tr class="odd">
+<td>Properties</td>
+<td>twoclass,multiclass,missings,numerics,factors,ordered,prob,weights,featimp</td>
+</tr>
+<tr class="even">
+<td>Predict-Type</td>
+<td>response</td>
+</tr>
+<tr class="odd">
+<td>Hyperparameters</td>
+<td>xval=0</td>
+</tr>
+</tbody>
+</table>
 <p>As this model cannot be run with missing data, they were deleted from the training set before training the model. Another step was deleting one from each of the one-hot-encoded variables (the default function transforms variable with n factor levels into n columns, but n-1 columns are sufficient as the n-th column is a linear combination of the remaining n-1 columns). This model performed worse than the black box model - the outcomes are presented in the Results section of this article.</p>
 </div>
 <div id="improving-the-explainable-model" class="section level4" number="3.1.4.4">
@@ -367,7 +435,10 @@
 </div>
 <div id="results-11" class="section level3" number="3.1.5">
 <h3><span class="header-section-number">3.1.5</span> Results</h3>
-<p><img src="3-1-graphs/CompareModels.png" /></p>
+<div class="figure">
+<img src="3-1-graphs/CompareModels.png" alt="" />
+<p class="caption">Results of different techniques in improving model performance in comparison to black box</p>
+</div>
 <p><strong>Explainable models</strong>:</p>
 <table>
 <colgroup>
@@ -391,51 +462,51 @@
 <tbody>
 <tr class="odd">
 <td>Basic rpart</td>
-<td>0.8259145</td>
-<td>0.5284076</td>
-<td>0.5835207</td>
-<td>0.9797400</td>
-<td>95,89%</td>
+<td>0.8259</td>
+<td>0.5284</td>
+<td>0.5835</td>
+<td>0.9797</td>
+<td>95.89%</td>
 </tr>
 <tr class="even">
 <td>Three binary rparts</td>
-<td>0.8430115</td>
-<td>0.5392606</td>
-<td>0.5816277</td>
-<td>0.9826626</td>
-<td>97,88%</td>
+<td>0.8430</td>
+<td>0.5393</td>
+<td>0.5816</td>
+<td>0.9827</td>
+<td>97.88%</td>
 </tr>
 <tr class="odd">
 <td>Regression rpart</td>
-<td>0.86115629</td>
-<td>0.4994688</td>
-<td>0.5814851</td>
-<td>0.93207583</td>
-<td>99,99%</td>
+<td>0.8611</td>
+<td>0.4995</td>
+<td>0.5815</td>
+<td>0.9321</td>
+<td>99.99%</td>
 </tr>
 <tr class="even">
 <td>Regression rpart with imputation</td>
-<td>0.8597930</td>
-<td>0.5038168</td>
-<td>0.5798347</td>
-<td>0.9306883</td>
-<td>99,83%</td>
+<td>0.8598</td>
+<td>0.5038</td>
+<td>0.5798</td>
+<td>0.9307</td>
+<td>99.83%</td>
 </tr>
 <tr class="odd">
 <td>Regression rpart with no location</td>
-<td>0.8612852</td>
-<td>0.4995913</td>
-<td>0.5815428</td>
-<td>0.9323226</td>
-<td>100,00%</td>
+<td>0.8613</td>
+<td>0.4996</td>
+<td>0.5815</td>
+<td>0.9323</td>
+<td>100.00%</td>
 </tr>
 <tr class="even">
 <td>Regression rpart with no location and numeric lattitide</td>
-<td>0.8612474</td>
-<td>0.4993377</td>
-<td>0.5816065</td>
-<td>0.9322628</td>
-<td>100,00%</td>
+<td>0.8612</td>
+<td>0.4993</td>
+<td>0.5816</td>
+<td>0.9323</td>
+<td>100.00%</td>
 </tr>
 </tbody>
 </table>
@@ -454,34 +525,43 @@
 <tbody>
 <tr class="odd">
 <td>Xgboost</td>
-<td>0.8589771</td>
-<td>0.4466546</td>
-<td>0.6247675</td>
-<td>0.9873244</td>
+<td>0.8590</td>
+<td>0.4467</td>
+<td>0.6248</td>
+<td>0.9873</td>
 <td>99.73%</td>
 </tr>
 <tr class="even">
 <td>Xgboost with nrounds=5</td>
-<td>0.8405102</td>
-<td>0.4997935</td>
-<td>0.6043936</td>
-<td>0.9830193</td>
-<td>97,59%</td>
+<td>0.8405</td>
+<td>0.4998</td>
+<td>0.6044</td>
+<td>0.9830</td>
+<td>97.59%</td>
 </tr>
 </tbody>
 </table>
 </div>
 <div id="model-explanantion" class="section level3" number="3.1.6">
 <h3><span class="header-section-number">3.1.6</span> Model explanantion</h3>
+<p>Based on our final model a graph of decisions was created which is presented below. The most important, first divisions are made based on Vigour and Crown variables. Decisions can be reused to support other models or as a support for decision making e.g. in building environment for Eucalyptuses.</p>
+<div class="figure">
+<img src="3-1-graphs/DecisionTree.jpg" alt="" />
+<p class="caption">Graph of a decision tree structure of our model</p>
+</div>
 </div>
 <div id="summary-and-conclusions-10" class="section level3" number="3.1.7">
 <h3><span class="header-section-number">3.1.7</span> Summary and conclusions</h3>
+<p>It is important to emphasize methods where domain knowledge and application of different machine learning techniques, as introduced in our work, can get good results as well as bring less computational cost and possibility to understand and explain decisions made to solve a problem.</p>
+<p>Different methods, as in [2] could also be applied in the future. In our findings, what is emphasized in the title of the article, achieving results similar to the black box was significant.</p>
 </div>
 <div id="references" class="section level3" number="3.1.8">
 <h3><span class="header-section-number">3.1.8</span> References</h3>
 <ol style="list-style-type: decimal">
 <li>Frank, Eibe &amp; Hall, Mark. (2001). A Simple Approach to Ordinal Classification. Lecture Notes in Computer Science. 2167. 145-156. 10.1007/3-540-44795-4_13</li>
 <li>P. A. Gutiérrez, M. Pérez-Ortiz, J. Sánchez-Monedero, F. Fernández-Navarro and C. Hervás-Martínez, “Ordinal Regression Methods: Survey and Experimental Study,” in IEEE Transactions on Knowledge and Data Engineering, vol. 28, no. 1, pp. 127-146, 1 Jan. 2016, doi: 10.1109/TKDE.2015.2457911.</li>
+<li>Gaudette L., Japkowicz N. (2009) Evaluation Methods for Ordinal Classification. In: Gao Y., Japkowicz N. (eds) Advances in Artificial Intelligence. Canadian AI 2009. Lecture Notes in Computer Science, vol 5549. Springer, Berlin, Heidelberg</li>
+<li>Rudin, C. Stop explaining black box machine learning models for high stakes decisions and use interpretable models instead. Nat Mach Intell</li>
 </ol>
 
 </div>
