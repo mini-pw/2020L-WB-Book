@@ -135,7 +135,7 @@ Figure \@ref(fig:3-7-tree1) depicts the tree that estimates cheaper houses, whil
 knitr::include_graphics('images/3-7-tree-cheap.svg')
 ```
 
-```{r 3-7-tree1, cache=FALSE, out.width="800", fig.align="center", echo=FALSE, eval = is.html, fig.cap="The tree that estimates more expensive houses. Part of the stacked model."}
+```{r 3-7-tree2, cache=FALSE, out.width="800", fig.align="center", echo=FALSE, eval = is.html, fig.cap="The tree that estimates more expensive houses. Part of the stacked model."}
 knitr::include_graphics('images/3-7-tree-rich.svg')
 ```
 
