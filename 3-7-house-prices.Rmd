@@ -6,6 +6,7 @@
 
 
 The house price estimation task has a long-lasting history in economics and statistics. Nowadays, both worlds unite to exploit the machine learning approach and achieve the best results. In the literature, there are myriad of works discussing the performance-interpretability tradeoff apparent in the modelling of real estate values. In this paper, we propose a solution to this problem, which is a highly interpretable stacked model that outperforms the black-box models. We use it to examine neighbourhood parameters affecting the median house price of the United States regions in 1990.
+
 ### Introduction
   
 Real estate value varies over numerous factors. These may be obvious like location or interior design, but also less apparent like the ethnicity and age of neighbours. Therefore, property price estimation is a demanding job that often requires a lot of experience and market knowledge. Is or was, because nowadays, Artificial Intelligence (AI) surpasses humans in this task [@realestate-ai]. Interested parties more often use tools like supervised Machine Learning (ML) models to precisely evaluate the property value and gain a competitive advantage [@realestate-ml1, @realestate-ml2, realestate-ml3].
@@ -130,11 +131,11 @@ The `ranger` model had default parameters with `mtry=3`. The parameters of `rpar
 
 Figure \@ref(fig:3-7-tree1) depicts the tree that estimates cheaper houses, while Figure \@ref(fig:3-7-tree2) presents the tree that estimates more expensive houses.
 
-```{r 3-7-tree1 cache=FALSE, out.width="800", fig.align="center", echo=FALSE, eval = is.html, fig.cap="The tree that estimates cheaper houses. Part of the stacked model."}
+```{r 3-7-tree1, cache=FALSE, out.width="800", fig.align="center", echo=FALSE, eval = is.html, fig.cap="The tree that estimates cheaper houses. Part of the stacked model."}
 knitr::include_graphics('images/3-7-tree-cheap.svg')
 ```
 
-```{r 3-7-tree1 cache=FALSE, out.width="800", fig.align="center", echo=FALSE, eval = is.html, fig.cap="The tree that estimates more expensive houses. Part of the stacked model."}
+```{r 3-7-tree1, cache=FALSE, out.width="800", fig.align="center", echo=FALSE, eval = is.html, fig.cap="The tree that estimates more expensive houses. Part of the stacked model."}
 knitr::include_graphics('images/3-7-tree-rich.svg')
 ```
 
