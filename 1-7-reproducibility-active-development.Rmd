@@ -16,13 +16,82 @@ There are papers about using version control systems to provide reproducible res
 
 The main goal of our work is to measure the impact of the active development of packages on the reproducibility of scientific papers. Multiple authors [@rosenberg2020the; @kitzes2017practice] suggest using the version control system as a key feature in creating reproducible research. The second paper also provides evidence, that this is widely known. Git and GitHub were used in over 80% of cases. However, there are two kinds of using a version control system. An author can push software into the repository, to make it easily accessible and does not update it anymore. The second option is to keep the repository up-to-date and resolve users' issues. We have not found any research on how these two approaches impact reproducibility.
 
-### Related Work
-
-
 ### Methodology
+ 
+**Articles**  
+In our analysis, of reproducibility, we focused on articles introducing packages, that are actively developed on GitHub. Then we measure the reproducibility of an article using two versions of the package: current and the first after publication date to get the answer on the question, what if a package was never updated. In some cases, when it seems appropriate we used the last before publication. We selected 18 articles that were posted on R journal, that are on cran, are developed on GitHub, have code included to reproducibility, and doesn’t have too much impact on R environment.
 
+**Measures of reproducibility**  
+We measured how many examples aren’t reproducible using these two versions. We categorized articles into 3 types of reproducibility:  
+**1.** The article is reproducible, minor differences can happen (e.g. different formating).  
+**2.** There are differences in function names, other packages that the article uses don’t work but at least half of it works.  
+**3.** Everything that doesn’t match 1 or 2. It means that the article is not reproducible.  
+
+We have counted the three most common issues in each article:  
+**1. Names** - function or variable name has to be changed  
+**2. API** - way of using a function or their arguments has changed  
+**3. Result** - output differs  
+Using these we can compare specific issues in the current and old versions of the package.
+
+**Auxiliary variables**  
+To measure how a package is developed, we used several auxiliary variables from GitHub and CRAN:
+
+- number of stars
+- number of subscribers 
+- number of contributors
+- number of issues
+- number of open issues
+- added and deleted lines since the publication date
+- commits number since the publication date
+- using Continuous Integration
+- versions on CRAN since the publication date
 
 ### Results
+**Tested packages**  
+```{r , echo=FALSE, warning = FALSE, message = FALSE}
+library(kableExtra)
+library(dplyr)
+read.csv("./1-7-data/repro.csv") %>% knitr::kable(caption = "Tested packages with measured reproducibility") %>% kable_styling(font_size=10) %>% scroll_box(width = "100%", box_css = "border: 0px;")
+```
+
+**Reproducibility scale**  
+As shown in table below, most packages have same reproducibility scale in each version. Some are less reproducible in current version than in the old.
+```{r, echo=FALSE, warning = FALSE, message = FALSE}
+library(kableExtra)
+library(dplyr)
+read.csv("./1-7-data/repro.csv") %>%
+  group_by(old.reproducibility, new.reproducibility) %>%
+  tally %>%
+  (knitr::kable) %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, font_size = 11)
+```
+
+**Issues count**  
+
+```{r, echo=FALSE, warning = FALSE, message = FALSE}
+library(ggplot2)
+library(dplyr)
+read.csv("./1-7-data/issuescompare.csv") %>%
+  ggplot(aes(x=name, y=n, fill=as.factor(value))) +
+    geom_col() +
+    scale_fill_discrete("Issues count\nin new version\ncompared to old\nversion", labels = c("less", "same", "more")) +
+    xlab("Issue type") +
+    ylab("Issues count") +
+    scale_y_continuous(n.breaks=10)
+```
+
+We compared if new versions of packages have more or less issues of each type than the old ones. Only for few articles these counts differ, but this data suggests negative impact of active development on reproducibility.
+
+**Correlations with auxiliary variables**  
+```{r, echo=FALSE, warning = FALSE, message = FALSE}
+cordf <- read.csv("./1-7-data/corr.csv")
+library(corrplot)
+corrplot(cor(cordf[,1:5], cordf[,-(1:5)]), tl.col="black", tl.srt=45, addCoef.col = "black")
+```
+
+This heatmap shows the correlation between reproducibility scale and issue count increase (new-old) with auxiliary variables. The reproducibility scale does not seem to be correlated with any of them. But there is a strong correlation between name issues count and number of lines added and removed since the publication date. Variables associated with popularity could impact on API changes. There are correlations with results, but results should not be analyzed alone, because when API issue occurs, then we cannot check results.
+
+
 
 
 ### Summary and conclusions 

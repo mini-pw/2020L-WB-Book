@@ -18,9 +18,151 @@ Although many articles focus on software or framework solutions for reproducibil
 
 ### Methodology
 
+The first issue that should be touched upon, while considering the methodology behind preparing this article, is the scale used to assess the reproducibility of the papers. In the Introduction it was already mentioned how the scale was created but a more detailed description is required. The authors decided that the scale should consist of 4 levels (from 0 up to 3):
+
+1.  The 0 grade was given in case when no chunk of code gave the anticipated results and no figure was reproduced successfully (in practice such situation occurred mainly when the package described in the article was no more available).
+2.  The 1 grade means that at least one example gave the results that the authors waited for, while it also includes situations when about half of the code in the chunks behaved as expected.
+3.  The 2 grade was awarded to the articles that were reproducible “in the majority” 
+what also means that they were not reproducible in 100%.
+4.  The 3 grade was received by the articles that were fully reproducible and no problems were encountered in the process. Such a result was highly anticipated by the authors but the criteria for this grade were rather strict.
+
+The second issue that also played a vital role in the authors’ work was the scope of the analysis. It was decided that in order to maintain “other thing equal” according to a well-known Latin phrase “ceteris paribus” only one online journal – The R Journal – was taken into account. Being equipped with a tool for faster reproduction of articles – the CodeExtractoR package – the authors agreed to examine about 20 articles that were published across a few years. Such a great number of papers meant that the approach taken could be described as holistic. It is also worth mentioning that usually 30 articles from each year were analyzed (at least whenever it was possible). Finally, it should be noted that in the case of the date when they were published the examined articles range from 2009 up to 2019. The third and final issue that should be considered in this part of the article focuses on the measures undertaken by the authors in order to tackle the problem of biased assessment. Although the scale that was proposed was not totally dependent on the person who was using it, it still left someplace for personal liking and disliking of the paper. As a way of marginalization of this trend the authors have taken part in many conversations when the facts that led to specific grading of the articles were shared. This enabled awarding the grades even more fairly. However, the final measure was much more simple and it was believed to be much more effective as well when compared to the previous one. The articles for each year were divided into 3 groups and assigned to one author each. Thus each author has examined the papers from the whole range of release dates that were taken into account.
+
 
 ### Results
 
+Specific results are presented in _Table 1.1_, which shows the number of examined articles from 2009 up to 2019, grouped by received grade. The column "Grade" represents the 0 - III scale of reproducibility. The rest of the columns shows a number of papers that achieved a particular grade in each year.
 
-### Summary and conclusions 
+<p>&nbsp;</p>
+
+
+| Grade   | 09' | 10' | 11' | 12' | 13' | 14' | 15' | 16' | 17' | 18' | 19' |
+|---------|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|
+| 0       | 3   | 2   | 6   | 4   | 6   | 8   | 5   | 9   | 5   | 9   | 9   |
+| I       | 4   | 2   | 0   | 2   | 3   | 6   | 6   | 10  | 3   | 2   | 2   |
+| II      | 3   | 7   | 8   | 4   | 13  | 6   | 10  | 7   | 14  | 6   | 6   |
+| III     | 6   | 7   | 6   | 5   | 8   | 10  | 9   | 4   | 8   | 13  | 13  |
+| SUM | 16  | 18  | 20  | 15  | 30  | 30  | 30  | 30  | 30  | 30  | 30  |
+<p>&nbsp;</p>
+
+To better illustrate obtained data, in _Figure 1.1_ we have split the results into two groups - the articles which have 0 or I class labeled as "Non-reproducible" and articles with grade II and III as "Reproducible". It is important to remember that from 2009 to 2012, the overall number of papers oscillated around 18 per year. After 2013, the number of researched articles was constant.
+
+<p>&nbsp;</p>
+
+```{r echo=FALSE, fig.cap="Number of papers by publication year", warning=FALSE}
+library(ggplot2)
+wyniki <- as.data.frame(matrix(ncol = 4, nrow = 44))
+wyniki$V2 <- as.factor(c(rep("09'", 4), rep("10'", 4), rep("11'", 4), rep("12'", 4), rep("13'", 4),
+               rep("14'", 4), rep("15'", 4), rep("16'", 4), rep("17'", 4), rep("18'", 4), rep("19'", 4)))
+
+wyniki$V3 <- rep(c("0", "I", "II", "III"), 11)
+wyniki[1:4, 1] <- c(3, 4, 3, 6)
+wyniki[5:8, 1] <- c(2, 2, 7, 7)
+wyniki[9:12, 1] <- c(6, 0, 8, 6)
+wyniki[13:16, 1] <- c(4, 2, 4, 5)
+wyniki[17:20, 1] <- c(6, 3, 13, 8)
+wyniki[21:24, 1] <- c(8, 6, 6, 10)
+wyniki[25:28, 1] <- c(5, 6, 10, 9)
+wyniki[29:32, 1] <- c(9, 10, 7, 4)
+wyniki[33:36, 1] <- c(5, 3, 14, 8)
+wyniki[37:40, 1] <- c(9, 2, 6, 13)
+wyniki[41:44, 1] <- c(9, 2, 6, 13)
+
+colnames(wyniki) <- c("Number", "Year", "Class", "Type")
+
+wyniki$Type <- ifelse(wyniki$Class== "0" | wyniki$Class== "I", "Non-reproducible", "Reproducible")
+
+
+colors <- rep("black", 11)
+colors[5] <- "red"
+
+p1 <- ggplot(wyniki, aes(x = Year, y = Number, fill = Type)) +
+  geom_bar(position = "dodge", stat = "identity") +
+  facet_wrap(~Type) +
+  theme_minimal(base_size = 16) +
+  scale_fill_manual(values = c("#e41a1c", "#377eb8")) +
+  theme(legend.position = "none",
+        #axis.text.x = element_text(colour = colors)
+        )# +
+  #ggtitle("Number of papers by publication year")
+
+
+
+p1
+
+```
+<p>&nbsp;</p>
+
+_Figure 1.2_ shows the results in the original 4-level scale. Although, the number of papers varies throughout the years in every reproducibility class, it is observable that intermediate ones - I and II, are less common in the oldest and newest papers. In addition, results in 2018 and 2019 are identical.
+
+<p>&nbsp;</p>
+```{r echo=FALSE, fig.cap= "Number of papers by class and publication year", warning=FALSE}
+
+p2 <- ggplot(wyniki, aes(x = Year, y = Number, fill = Class)) +
+  geom_bar(position = "dodge", stat = "identity") +
+  facet_wrap(~ Class)+
+  theme_minimal(base_size = 16) +
+  scale_fill_manual(values = c("#e41a1c","#fc9272", "#9ecae1", "#377eb8")) +
+  theme(legend.position = "bottom",
+        #axis.text.x = element_text(colour = colors)
+        ) #+
+  #ggtitle("Number of papers by class and years")
+
+
+p2
+
+```
+<p>&nbsp;</p>
+
+After calculating the percentage of each class in a specific year ( _Figure 1.3_, _Figure 1.4_), it is observed, that in the two oldest examined years - 2009 and 2010 - a ratio of completely unreproducible papers (with 0 or I class ) is surprisingly low. Furthermore, papers with III class of reproducibility are nearly 40% of all articles in these years.
+
+<p>&nbsp;</p>
+```{r, echo=FALSE, fig.cap= "Ratio of each class throughout years", warning=FALSE, message=FALSE }
+
+library(dplyr)
+
+wyniki_sum <- aggregate(wyniki$Number, by = list(Category = wyniki$Year), FUN = sum)
+
+wyniki_per <- left_join(wyniki, wyniki_sum, by = c("Year" = "Category"))
+
+wyniki_per$Ratio <- wyniki_per$Number / wyniki_per$x 
+
+p3 <- ggplot(wyniki_per, aes(x = Year, y = Ratio, fill = Class)) +
+  geom_bar(position = "dodge", stat = "identity") +
+  facet_wrap(~ Class)+
+  theme_minimal(base_size = 16) +
+  scale_fill_manual(values = c("#e41a1c","#fc9272", "#9ecae1", "#377eb8")) +
+  theme(legend.position = "bottom") #+
+  #ggtitle("Ratio of each class throughout years")
+
+
+p3
+
+```
+<p>&nbsp;</p>
+
+Except for 2019, 2018 and 2016, percentage of fully reproducible papers (III class) is stable. In the newest articles, this percentage is slightly higher. Year 2016 is the only one, where unreproducible papers were in the majority. Only in 3 cases, percentage of reproducible articles dropped below 60%.
+  
+<p>&nbsp;</p>
+```{r, echo=FALSE, fig.cap= "Summarized results throughout years", warning=FALSE, message=FALSE}
+
+p4 <- ggplot(wyniki_per, aes(x = Year, y = Ratio, fill = Class)) +
+  geom_bar(data = wyniki_per[wyniki_per$Type == "Non-reproducible", ], stat = "identity", aes(y= Ratio * (-1))) +
+  geom_bar(data = wyniki_per[wyniki_per$Type == "Reproducible", ], stat = "identity") +
+  theme_minimal(base_size = 16) +
+  scale_fill_manual(values = c("#e41a1c","#fc9272", "#9ecae1", "#377eb8")) +
+  theme(legend.position = "bottom") +
+  coord_flip() +
+  scale_y_continuous(labels = abs)  
+  #+  ggtitle("Articles reproducibility throughout years")
+
+p4
+
+```
+
+<p>&nbsp;</p>
+
+### Conclusions
+
+### Summary 
 
