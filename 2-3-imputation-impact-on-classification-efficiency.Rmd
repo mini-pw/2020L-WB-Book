@@ -1,0 +1,3 @@
+## Comparison of performance of data imputation methods in the context of their impact on the prediction efficiency of classification algorithms
+
+*Authors: Ada Gąssowska, Mateusz Grzyb, Elżbieta Jowik (Warsaw University of Technology)*
