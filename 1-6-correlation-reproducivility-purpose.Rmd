@@ -14,17 +14,122 @@ In the following chapters we will attempt to perform an analysis of reproducibil
 
 
 ### Related Work
-
-Although there are many research papers related to this article, the following three could be perceived as a "basis" for our study.\
-1. [Daniel Mendez, Daniel Graziotin, Stefan Wagner, and Heidi Seibold, 2019](https://arxiv.org/pdf/1904.06499.pdf) provides a definition of reproducibility this article uses, and distinguishes it from replicability. \
-2. [Steven N. Goodman*, Daniele Fanelli and John P. A. Ioannidis, 2016](https://stm.sciencemag.org/content/8/341/341ps12) defines multiple interpretations of reproducibility. It further divides and classifies reproducibility, and provides a basis on how one can do it.\
-3. [Victoria Stodden, Jennifer Seiler, and Zhaokun Mab, 2018](https://www.pnas.org/content/pnas/115/11/2584.full.pdf) is an example of how one conducts a study on reproducibility within articles of a specific journal. It also provides a frame of reference to compare results.\
+Although there are many research papers related to this article, the following three could be perceived as a "basis" for our study. \
+1. Daniel Mendez, Daniel Graziotin, Stefan Wagner, and Heidi Seibold provides a definition of reproducibility this article uses, and distinguishes it from replicability[@Mendez2019defRepr]. \
+2. Steven N. Goodman, Daniele Fanelli and John P. A. Ioannidis defines multiple interpretations of reproducibility. It further divides and classifies reproducibility, and provides a basis on how one can do it[@Goodman341ps12]. \
 
 In their search the authors have not encountered other research papers that study the aspect of reproducibility this article focuses on. If said papers do not actually exist, then this article could provide insights on previously unexamined aspects of reproducibility.\
 
 
 ### Methodology
 
+#### General approach
+The methodology presented in the following section is a direct consequence of how we approach scientific article as an experience devised by an author for the reader. Our focus is to determine, how author alter this experience by using code chunks instead of plain text. In other words, we ask a question "Why have the authors used the `R` code?"
+Assumption that execution of enclosed code is an integral part of said experience and by extension code chunks supposed to be reproducible for reader to percept the article as intended seems to be reasonable.
+However it may not be correct in every case. 
+Let us consider a situation, where generated output is essential to the thesis stated in the article. If the code is irreproducible, the reader cannot believe the authors. It devastates their credibility.
+But what if a goal of the code was to illustrate general tendency in data and output is reproducible only to some degree? Then it may still fulfill its purpose in the article and the lack of full reproducibility does not intefere with experience for a reader.
+Following this thought process inevitably leads to new questions, f.e. is it possible for executable code to serve its purpose in article while being completely unreproducible?
+
+To explore this topic we decided to focus on objectives of code in scientific papers.
+We have decided that the most accurate and reliable way of finding the purposes of code chunks in scientific articles is by examples. That is why we have analyzed over $30$ papers from `The R Journal` [https://journal.r-project.org]. \
+We have gathered the code chunks into groups and considered a three degree of purpose: the whole article, the group of chunks, and the single chunk of code. We have prepared a list of possible purposes for every level and assign them to our examples. The whole list of purposes is explained in the next chapter. \
+Then we have produced our measure of reproducibility, which is also detailed later. \
+
+
+#### Objectives 
+
+Since this article is centred around objectives, our understanding of them is of utmost importance. That is why we divided them into three categories, further divided into classes. We described them in detail in the sections below. To limit our individual biases in assessing what the intended objective is, we referred to relevant paragraphs in the original research paper. It has to be noted, that an object (let it be an article, a group of chunks or a chunk) can have more than one objective.
+
+##### Main Objectives
+Both code chunks by themselves and performed computations corresponding with them can provide wide variety of information. However we can identify and describe reasons why the programming language is present in general in a given paper. All code chunks serve together as a vital element supporting narration of the article and its objective usually can be identified with main objective of narration in article as a whole.
+
+We systematized main objectives and grouped them into the following general objectives:
+
+* package overview - presenting general structure of specific package, providing example of aplications implemented functions and discussing its performance
+* object construction - presenting process of constructing and developing virtual object
+* introduction to subject - using performing code as a complement to educational resource concerning given topic
+* method implementation - presenting in-depth process of developing solution and explaining it
+* addressing an issue - presenting solution to specific scientific/computational problem
+* error identification - recognising and presenting error in existing package, possibly submit alternative solution covering mentioned error 
+
+##### Intermediate Objectives
+
+Since code chunks in research papers seldom appear on their own, but rather are part of a larger group of chunks serving a certain purpose. For instance, let there be three chunks, named A, B, and C. Let A load data from an external source, B modifies the data and extract a subset of it, and let C generate a plot, based on the data obtained from the two previous chunks. While each chunk has its own distinct objective, together they have at least common one - in this example this is generating a plot. Plot generated by A, B and C can be used to compare between performance of various functions. These chunk group's objectives we define as intermediate objectives.
+
+We systematized intermediate objectives and grouped them into the following general objectives:
+
+* package usage - examples on how does an R package operate, how one can use functions provided by the package, in what manner output is generated etc.
+* practical use - underscoring of the practical usage of code used in code chunks in that group.
+* method comparison - comparison between functions and/or methods. For example, a microbenchmark between base R functions and functions from a presented package.
+* generating output - generating an output, for example plots, .csv files, images etc.
+* presenting specification - presentation on what package specification looks like.
+* data preparation - preparation of data that may be used later in the paper. This includes both loading the data and modifying it.
+* occurrence demonstration - demonstration of an occurrence described earlier in the article. 
+* introduction to analysis - introduction to analysing a certain topic and data related to it.
+* possible error - description of a possible error one can encounter and how one can solve it.
+
+##### Chunk Objectives
+
+Each chunk has a role - it serves one or more purposes, which we define as chunk objectives. 
+
+We systematized chunk objectives and grouped them into the following general objectives:
+
+* aesthethic example - an example showcasing how output generated by the code chunk looks like. 
+* functional example - an example of how functions showcased in the chunk work.
+* instruction - an instruction on how one achieves desired effect using R code.
+* instruction (package) - same as above, but using functions from the package introduced in the article containing the chunk.
+* data preparation - preparation of data for the following chunks.
+* data exploration - merging, subsetting, summarisation of data and other types of data manipulation used in order to explore data.
+* foreign error - turning attention to an error in work done by other author(s).
+* solving a problem - description of how one solves a given problem using R code.
+* data modification - modifying data in order to achieve desired effect.
+* presentation of results - presenting result of computation within the article. This can be done by specific summarising functions (e.g. summarise) or simply printing base R vectors.
+* plot - plotting graphs in the article.
+* generating files - generation of files, this includes graphical, text and other files.
+* results processing - processing of results in order to improve their aesthethic value or to make them more readable.
+* erroneous action - presenting code that does not run properly as an example of an action should be avoided.
+* uncallable code - code that, in principle, is impossible to run. This includes pseudocode.
+* comparison to foreign work - comparation of authors' work (functions, methods etc.) with work of others, that achieves the same effect. This includes benchmark performance comparisons.
+* empirical proof - validation of what is mathematically described in earlier sections.
+
+#### Reproducibility
+
+The sole purpose of this paper is to explore interactions between purposes of code chunks usage and reproducibility aberrations. That requires a system of classification of reproducibility.
+We provide simple categorization of forms of reproducibility into the 6 types. This classification system shall serve as a tool for initial phase of our analysis, thus it is not directly involving purpose of discussed code at this stage. 
+
+* 1. perfect reproducibility - code perform flawlessly and after initial configuration precise output is recreated
+* 2. margin of error - after initial configuration code provides output matching expectations within acceptable margin of error (f.e. difference in rounded decimals, default parameters of generated graphics)
+* 3. editorial correction - code requires minor corrections to be executable and viable due to editorial error or changes in naming conventions
+* 4. environment setup - code to execute properly requires major and time-consuming setup and environment changes or may be not able to provide expected results at all
+* 5. unreproducible - code undoubtedly cannot be reproduced (f.e. due to unavailable data, unavailable package, unsupported fatal error) 
+* -1. missing point of reference - article does not provide (or vaguely provides) expected performence and determining reproducilibity is impossible
+
+
+#### Tables description
+For analysis purposes, we have put our work into tables. The one can see the small part of them here: \
+
+```{r, eval=TRUE, cache=TRUE, include=FALSE}
+# tu bedzie wczytanie 
+
+print("")
+```
+
+##### 1.Table of articles
+Every row represents one article. Every article has a column of an individual number, a sum of lengths of chunks of code, and information about purposes of articles. \
+
+##### 2.Table of groups
+Every row represents one group of chunks. Every group has a column of an individual number, a sum of lengths of chunks of code, and information about purposes of the group. \
+
+##### 3.Table of chunks
+Every row represents one chunk. Every chunk has a column of an individual number, its length of code, its reproducibility, and information about purposes of code. \
+
+##### Length assessment
+To objectively determine a length of code we have decided to count it with such rules: \
+* skip all empty and commented lines \
+* skip assignments, unless it contains the execution of a function \
+* skip executions of functions `library` and `data` \
+* skip lines with only technical meaning, i.e. `}` \
 
 ### Results
 

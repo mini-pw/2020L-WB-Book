@@ -1,13 +1,12 @@
 ## Title of the article
 
-*Authors: Author 1 (University 1), Author 2 (University 2), Author 3 (University 3)*
+*Authors: Author 1, Author 2, Author 3 (University)*
 
 ### Abstract
 
 
 ### Introduction and Motivation
 
-Reproducibility of scientific papers is one of the most important...
 
 ### Related Work
 
