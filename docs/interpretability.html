@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-05-28" />
+<meta name="date" content="2020-05-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -178,16 +178,16 @@
 </ul></li>
 <li class="chapter" data-level="3" data-path="interpretability.html"><a href="interpretability.html"><i class="fa fa-check"></i><b>3</b> Interpretability</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="interpretability.html"><a href="interpretability.html#building-an-explainable-model-for-ordinal-classification.-meeting-black-box-model-performance-levels."><i class="fa fa-check"></i><b>3.1</b> Building an explainable model for ordinal classification. Meeting black box model performance levels.</a>
+<li class="chapter" data-level="3.1" data-path="interpretability.html"><a href="interpretability.html#building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset.-meeting-black-box-model-performance-levels."><i class="fa fa-check"></i><b>3.1</b> Building an explainable model for ordinal classification on Eucalyptus dataset. Meeting black box model performance levels.</a>
 <ul>
 <li class="chapter" data-level="3.1.1" data-path="interpretability.html"><a href="interpretability.html#abstract-11"><i class="fa fa-check"></i><b>3.1.1</b> Abstract</a></li>
-<li class="chapter" data-level="3.1.2" data-path="interpretability.html"><a href="interpretability.html#introduction-and-motivation-9"><i class="fa fa-check"></i><b>3.1.2</b> Introduction and Motivation</a></li>
-<li class="chapter" data-level="3.1.3" data-path="interpretability.html"><a href="interpretability.html#related-work-7"><i class="fa fa-check"></i><b>3.1.3</b> Related Work</a></li>
-<li class="chapter" data-level="3.1.4" data-path="interpretability.html"><a href="interpretability.html#methodology-11"><i class="fa fa-check"></i><b>3.1.4</b> Methodology</a></li>
-<li class="chapter" data-level="3.1.5" data-path="interpretability.html"><a href="interpretability.html#results-11"><i class="fa fa-check"></i><b>3.1.5</b> Results</a></li>
-<li class="chapter" data-level="3.1.6" data-path="interpretability.html"><a href="interpretability.html#model-explanantion"><i class="fa fa-check"></i><b>3.1.6</b> Model explanantion</a></li>
-<li class="chapter" data-level="3.1.7" data-path="interpretability.html"><a href="interpretability.html#summary-and-conclusions-10"><i class="fa fa-check"></i><b>3.1.7</b> Summary and conclusions</a></li>
-<li class="chapter" data-level="3.1.8" data-path="interpretability.html"><a href="interpretability.html#references"><i class="fa fa-check"></i><b>3.1.8</b> References</a></li>
+<li class="chapter" data-level="3.1.2" data-path="interpretability.html"><a href="interpretability.html#introduction-and-motivation-9"><i class="fa fa-check"></i><b>3.1.2</b> 1. Introduction and Motivation</a></li>
+<li class="chapter" data-level="3.1.3" data-path="interpretability.html"><a href="interpretability.html#related-work-7"><i class="fa fa-check"></i><b>3.1.3</b> 2. Related Work</a></li>
+<li class="chapter" data-level="3.1.4" data-path="interpretability.html"><a href="interpretability.html#methodology-11"><i class="fa fa-check"></i><b>3.1.4</b> 3. Methodology</a></li>
+<li class="chapter" data-level="3.1.5" data-path="interpretability.html"><a href="interpretability.html#results-11"><i class="fa fa-check"></i><b>3.1.5</b> 4. Results</a></li>
+<li class="chapter" data-level="3.1.6" data-path="interpretability.html"><a href="interpretability.html#model-explanantion"><i class="fa fa-check"></i><b>3.1.6</b> 5. Model explanantion</a></li>
+<li class="chapter" data-level="3.1.7" data-path="interpretability.html"><a href="interpretability.html#summary-and-conclusions-10"><i class="fa fa-check"></i><b>3.1.7</b> 6. Summary and conclusions</a></li>
+<li class="chapter" data-level="3.1.8" data-path="interpretability.html"><a href="interpretability.html#references"><i class="fa fa-check"></i><b>3.1.8</b> 7. References</a></li>
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="interpretability.html"><a href="interpretability.html#predicting-code-defects-using-interpretable-static-measures."><i class="fa fa-check"></i><b>3.2</b> Predicting code defects using interpretable static measures.</a>
 <ul>
@@ -282,45 +282,43 @@
 <h1><span class="header-section-number">Chapter 3</span> Interpretability</h1>
 <p>Interpretability</p>
 
-<div id="building-an-explainable-model-for-ordinal-classification.-meeting-black-box-model-performance-levels." class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Building an explainable model for ordinal classification. Meeting black box model performance levels.</h2>
+<div id="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset.-meeting-black-box-model-performance-levels." class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Building an explainable model for ordinal classification on Eucalyptus dataset. Meeting black box model performance levels.</h2>
 <p><em>Authors: Karol Saputa, Małgorzata Wachulec, Aleksandra Wichrowska (Warsaw University of Technology)</em></p>
 <div id="abstract-11" class="section level3" number="3.1.1">
 <h3><span class="header-section-number">3.1.1</span> Abstract</h3>
 <p>Achieving higher and higher metrics results by using bigger and more complex models is becoming popular.
 However, it is still possible to build accurate models that are less complex. Hence, possible to explain and interpret easily.
-For a specific task of ordinal classification and exemplary dataset of Eucalyptus trees, we provide a model (with AUC metric better than considered black box model) with an explanation of techniques applied.</p>
+For a specific task of ordinal classification and exemplary dataset of Eucalypti, we provide a model (with AUC metric better than considered black box model) with an explanation of techniques applied.</p>
 </div>
 <div id="introduction-and-motivation-9" class="section level3" number="3.1.2">
-<h3><span class="header-section-number">3.1.2</span> Introduction and Motivation</h3>
+<h3><span class="header-section-number">3.1.2</span> 1. Introduction and Motivation</h3>
 <p>In the classification problems, the main goal is to map inputs to a categorical target variable. Most machine learning algorithms assume that the class attribute is unordered. However, there are many problems where target variable is ranked, for example while predicting movie ratings. When applying standard methods to such problems, we lose some informaton, which could improve our model performance.</p>
 <p>This paper presents various methods to make an explainable machine learning model for ordinal classification problem. The aim is to achieve better results than ‘black box’ model does. We will test some existing approaches to ordinal classification and take advantage of analysis and imputation of missing data, feature transformation and selection, as well as knowledge from exploratory data analysis.</p>
 <p>Our experiments are based on ‘eucalyptus’ dataset from OpenML. The dataset’s objective is to find the best seedlot for soil conservation in seasonally dry hill country. Predictions are made depending on features such as height, diameter and survival of the plants. Target variable is ordered - it is represented by values ‘low’, ‘average’, ‘good’ and ‘best’.</p>
+<p>This article is structured as follows: Section 2 provides a brief description of avaliable ordinal classification methods and existing black box to explainable model comparisons. Section 3 explaines the methodology used throughout our experiment. Section 4 shows the results obtained for various models and section 5 containes an explanation of the best achieved explaianble model. Section 6 sums up our findings. At the end, in section 7 there is a list of references we used in our research.</p>
 </div>
 <div id="related-work-7" class="section level3" number="3.1.3">
-<h3><span class="header-section-number">3.1.3</span> Related Work</h3>
-<div id="an-approach-to-ordinal-classification" class="section level4" number="3.1.3.1">
-<h4><span class="header-section-number">3.1.3.1</span> An approach to ordinal classification</h4>
-<div id="ordinal-classification-as-a-regression-task" class="section level5" number="3.1.3.1.1">
-<h5><span class="header-section-number">3.1.3.1.1</span> Ordinal classification as a regression task</h5>
+<h3><span class="header-section-number">3.1.3</span> 2. Related Work</h3>
+<div id="ordinal-classification-as-a-regression-task" class="section level4" number="3.1.3.1">
+<h4><span class="header-section-number">3.1.3.1</span> 2.1. Ordinal classification as a regression task</h4>
 <p>As described in [2], one of the most fundamental techniques is to cast target labels to a sequence of numbers. For example <span class="math inline">\(\{low, good, best\}\)</span> changes to <span class="math inline">\(\{0,1,2\}\)</span>. Then, standard regression can be applied. There is additional information about the classes in comparison to the usual nominal classification. Also, a metric used is different than in a classification task - mean square error used in a regression task takes into account similarities between two labels when a conversion is applied.</p>
 </div>
-<div id="transformation-to-multiple-binary-classification-problems" class="section level5" number="3.1.3.1.2">
-<h5><span class="header-section-number">3.1.3.1.2</span> Transformation to multiple binary classification problems</h5>
+<div id="transformation-to-multiple-binary-classification-problems" class="section level4" number="3.1.3.2">
+<h4><span class="header-section-number">3.1.3.2</span> 2.2. Transformation to multiple binary classification problems</h4>
 <p>Ordinal classification taxonomy given in [2] specifies decompositions of classification task into binary problems as a separate technique to cope with ordinal classification. A more detailed algorithm and performance test are presented in [1] which suggests better scores obtained using binary decomposition than using a single model during a test on multiple datasets.</p>
 <p>Based on [1], as a binary decomposition we define a conversion of a target classes <span class="math inline">\(\{low, good, best\}\)</span> into pairs of binary classes (True/False) <span class="math inline">\(\{\{False, False\}, \{True, False\}, \{True, True\}\}\)</span> determining whether outcome is better than <span class="math inline">\(low\)</span> and better than <span class="math inline">\(good\)</span>. After classification is made, probabilites for original classes are calculated as explained in [1], [2].</p>
 </div>
-</div>
-<div id="comparing-black-boxes-and-white-boxes" class="section level4" number="3.1.3.2">
-<h4><span class="header-section-number">3.1.3.2</span> Comparing black boxes and white boxes</h4>
+<div id="comparing-black-boxes-and-white-boxes" class="section level4" number="3.1.3.3">
+<h4><span class="header-section-number">3.1.3.3</span> 2.3. Comparing black boxes and white boxes</h4>
 <p>As presented in the Introduction and Motivation section, we aim to achieve good results in a machine learning task using an explainable and interpretable model (white box). A black box model is used as a baseline model. Detailed justification of that approach can be found in [4]. Herein our work further develops this issue by presenting a model with the possibility to extract, understand and reuse of its decision logic for a specific task of ordinal classification.</p>
 </div>
 </div>
 <div id="methodology-11" class="section level3" number="3.1.4">
-<h3><span class="header-section-number">3.1.4</span> Methodology</h3>
+<h3><span class="header-section-number">3.1.4</span> 3. Methodology</h3>
+<p>The aim of this article is to build the best interpretable model for an ordinal classification problem and comparing it to a black box model. First undertaken step was dividing the data into training and test sets, consisting of 70% and 30% of all data, respectively. Since the considered dataset has a categorical target variable, the division was done using random sampling within each class of the target variable in an attempt to balance the class distributions within the splits. Since results obtained by the models were dependent on the random seed that was used when dividing the sets, the results compared thoughout this article are averaged out over 100 different random seeds, assuring a valid comparison could be done.</p>
 <div id="initial-preprocessing" class="section level4" number="3.1.4.1">
-<h4><span class="header-section-number">3.1.4.1</span> Initial preprocessing</h4>
-<p>The aim of this article was to build the best interpretable model for an ordinal classification problem and comparing it to a black box model. First undertaken step was dividing the data into training and test sets, consisting of 70% and 30% of all data, respectively. Since the considered dataset has a categorical target variable, the division was done using random sampling within each class of the target variable in an attempt to balance the class distributions within the splits. A seed was used to assure the same split in each tested model.</p>
+<h4><span class="header-section-number">3.1.4.1</span> 3.1. Initial preprocessing</h4>
 <p>In order to get a legitimate comparison, the data was initially preprocessed in such a way as to assure that both models’ performances are compared on the same test set. This initial preprocessing included:</p>
 <ol style="list-style-type: decimal">
 <li><p>deleting the observations with ‘none’ value in the target variable from both the training set and the test set;</p></li>
@@ -330,7 +328,7 @@ For a specific task of ordinal classification and exemplary dataset of Eucalyptu
 <p>The reason why the missing data is deleted from the test set is that many of the explainable models cannot be run with missing data present. This means that the missing values will have to either be deleted or imputed later on. This leads to a possibility that the explainable model will impute missing data differently than the black box model, resulting in two different tests sets. And, if - instead of imputing missing data - we decide to delete it in order to make running explainable model possible, then the obtained test sets will differ in number of rows, making it impossible to draw any meaningful conclusions. Hence the missing data were deleted from the test set.</p>
 </div>
 <div id="running-the-black-box-model" class="section level4" number="3.1.4.2">
-<h4><span class="header-section-number">3.1.4.2</span> Running the black box model</h4>
+<h4><span class="header-section-number">3.1.4.2</span> 3.2. Running the black box model</h4>
 <p>The black box model chosen for comparison is an extreme gradient boosting model. After the initial preprocessing the xgboost model was trained on the training set and used to predict results on the test set. As this model can only deal with numerical data, categorical (factor) variables were transformed using one hot encoding. The training proces and prediction were done using the mlr package in R, and the exact model specifications were the following:</p>
 <table>
 <thead>
@@ -370,10 +368,10 @@ For a specific task of ordinal classification and exemplary dataset of Eucalyptu
 </tr>
 </tbody>
 </table>
-<p>The quality of prediction was measured using the AUC (area under ROC curve) measure. This provides the base for this research, to which other models’ results will be compared to. Results of other metrics suitable for ordinal classification task [3] were presented in table.</p>
+<p>The quality of prediction was measured using the AUC (area under ROC curve) measure. We have also used other metrics suitable for ordinal classification task [3] and the results of all of the models are presented in table in the Results section of this article. However, AUC is the measure that we used to assess and compare each considered model. The AUC measure achieved by the black box is the one we tried to top using a simpler explainable model.</p>
 </div>
 <div id="running-the-basic-version-the-explainable-model" class="section level4" number="3.1.4.3">
-<h4><span class="header-section-number">3.1.4.3</span> Running the basic version the explainable model</h4>
+<h4><span class="header-section-number">3.1.4.3</span> 3.3. Running the basic version the explainable model</h4>
 <p>We have chosen a tree model to be the considered explainable model, its exact specifications were the following:</p>
 <table>
 <colgroup>
@@ -417,13 +415,13 @@ For a specific task of ordinal classification and exemplary dataset of Eucalyptu
 </tr>
 </tbody>
 </table>
-<p>As this model cannot be run with missing data, they were deleted from the training set before training the model. Another step was deleting one from each of the one-hot-encoded variables (the default function transforms variable with n factor levels into n columns, but n-1 columns are sufficient as the n-th column is a linear combination of the remaining n-1 columns). This model performed worse than the black box model - the outcomes are presented in the Results section of this article.</p>
+<p>As this model cannot be run with missing data, they were deleted from the training set before training the model. Another step was deleting one from each of the one-hot-encoded variables (the default function transforms variable with n factor levels into n columns, but n-1 columns are sufficient as the n-th column is a linear combination of the remaining n-1 columns). This model performed worse than the black box model - the outcomes are presented in the Results section of this article. The AUC measure achieved by this model provides the base for this research, to which other models’ results will be compared to.</p>
 </div>
 <div id="improving-the-explainable-model" class="section level4" number="3.1.4.4">
-<h4><span class="header-section-number">3.1.4.4</span> Improving the explainable model</h4>
+<h4><span class="header-section-number">3.1.4.4</span> 3.4. Improving the explainable model</h4>
 <p>As mentioned before, the explainable model was enhanced by applying existing approaches to ordinal classification, feature transformation and selection and missing data imputation. The refinement process consisted of, but was not limited to, the following:</p>
 <ol style="list-style-type: decimal">
-<li>Splitting a multiclass classification problem into 3 binary classification problems, like explained in the An approach to ordinal classification section of this article, and using the rpart model on each of the binary problems.</li>
+<li>Splitting a multiclass classification problem into 3 binary classification problems - binary decomposition with 3 rpart models (as described in section 2.2)</li>
 <li>Changing the levels of the target variable:“low”, “average”, “good”, “best” into numeric values: 1, 2, 3, 4, respectively and running a regression rpart model.</li>
 <li>Imputing missing data in the training set.</li>
 <li>Selecting variables: deleting the site names and specific location tags.</li>
@@ -434,20 +432,17 @@ For a specific task of ordinal classification and exemplary dataset of Eucalyptu
 </div>
 </div>
 <div id="results-11" class="section level3" number="3.1.5">
-<h3><span class="header-section-number">3.1.5</span> Results</h3>
-<div class="figure">
-<img src="3-1-graphs/CompareModels.png" alt="" />
-<p class="caption">Results of different techniques in improving model performance in comparison to black box</p>
-</div>
+<h3><span class="header-section-number">3.1.5</span> 4. Results</h3>
+<p>Results obtained for each model are shown in the tables below:</p>
 <p><strong>Explainable models</strong>:</p>
 <table>
 <colgroup>
-<col width="29%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="20%" />
+<col width="37%" />
+<col width="4%" />
+<col width="4%" />
+<col width="4%" />
+<col width="4%" />
+<col width="44%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -456,7 +451,7 @@ For a specific task of ordinal classification and exemplary dataset of Eucalyptu
 <th>MSE</th>
 <th>ACC</th>
 <th>ACC1</th>
-<th>Percent Best AUC</th>
+<th>Percent Basic Explainable Model’s AUC</th>
 </tr>
 </thead>
 <tbody>
@@ -466,7 +461,7 @@ For a specific task of ordinal classification and exemplary dataset of Eucalyptu
 <td>0.5284</td>
 <td>0.5835</td>
 <td>0.9797</td>
-<td>95.89%</td>
+<td>100.00%</td>
 </tr>
 <tr class="even">
 <td>Three binary rparts</td>
@@ -474,7 +469,7 @@ For a specific task of ordinal classification and exemplary dataset of Eucalyptu
 <td>0.5393</td>
 <td>0.5816</td>
 <td>0.9827</td>
-<td>97.88%</td>
+<td>102.07%</td>
 </tr>
 <tr class="odd">
 <td>Regression rpart</td>
@@ -482,7 +477,7 @@ For a specific task of ordinal classification and exemplary dataset of Eucalyptu
 <td>0.4995</td>
 <td>0.5815</td>
 <td>0.9321</td>
-<td>99.99%</td>
+<td>104.27%</td>
 </tr>
 <tr class="even">
 <td>Regression rpart with imputation</td>
@@ -490,7 +485,7 @@ For a specific task of ordinal classification and exemplary dataset of Eucalyptu
 <td>0.5038</td>
 <td>0.5798</td>
 <td>0.9307</td>
-<td>99.83%</td>
+<td>104.10%</td>
 </tr>
 <tr class="odd">
 <td>Regression rpart with no location</td>
@@ -498,7 +493,7 @@ For a specific task of ordinal classification and exemplary dataset of Eucalyptu
 <td>0.4996</td>
 <td>0.5815</td>
 <td>0.9323</td>
-<td>100.00%</td>
+<td>104.28%</td>
 </tr>
 <tr class="even">
 <td>Regression rpart with no location and numeric lattitide</td>
@@ -506,7 +501,7 @@ For a specific task of ordinal classification and exemplary dataset of Eucalyptu
 <td>0.4993</td>
 <td>0.5816</td>
 <td>0.9323</td>
-<td>100.00%</td>
+<td>104.28%</td>
 </tr>
 </tbody>
 </table>
@@ -519,44 +514,51 @@ For a specific task of ordinal classification and exemplary dataset of Eucalyptu
 <th>MSE</th>
 <th>ACC</th>
 <th>ACC1</th>
-<th>Percent Best AUC</th>
+<th>Percent Basic Explainable Model’s AUC</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Xgboost</td>
-<td>0.8590</td>
-<td>0.4467</td>
-<td>0.6248</td>
-<td>0.9873</td>
-<td>99.73%</td>
-</tr>
-<tr class="even">
 <td>Xgboost with nrounds=5</td>
 <td>0.8405</td>
 <td>0.4998</td>
 <td>0.6044</td>
 <td>0.9830</td>
-<td>97.59%</td>
+<td>101.77%</td>
+</tr>
+<tr class="even">
+<td>Xgboost</td>
+<td>0.8590</td>
+<td>0.4467</td>
+<td>0.6248</td>
+<td>0.9873</td>
+<td>104.00%</td>
 </tr>
 </tbody>
 </table>
+<p>We have visualised the AUC measure improvements, in comparison to the basic rpart (decision tree) model, on the graph below. As shown on the graph, after adding the improvements, the explainable model was able to outperform the black box model, which was the point of this study. The best model is a decision tree, which is defined for a regression task, and which includes variable selection (taking away specific location tags as explained in the methodology section).</p>
+<div class="figure">
+<img src="3-1-graphs/CompareModels_2.png" alt="" />
+<p class="caption">Results of different techniques in improving model performance in comparison to black box. The basic classification decision tree was used as a baseline.</p>
+</div>
 </div>
 <div id="model-explanantion" class="section level3" number="3.1.6">
-<h3><span class="header-section-number">3.1.6</span> Model explanantion</h3>
-<p>Based on our final model a graph of decisions was created which is presented below. The most important, first divisions are made based on Vigour and Crown variables. Decisions can be reused to support other models or as a support for decision making e.g. in building environment for Eucalyptuses.</p>
+<h3><span class="header-section-number">3.1.6</span> 5. Model explanantion</h3>
+<p>Based on our final model a graph of decisions was created which is presented below. The most important, first divisions are made based on Vigour and Crown variables. Decisions can be reused to support other models or as a support for decision making e.g. in building environment for Eucalypti.</p>
 <div class="figure">
 <img src="3-1-graphs/DecisionTree.jpg" alt="" />
 <p class="caption">Graph of a decision tree structure of our model</p>
 </div>
 </div>
 <div id="summary-and-conclusions-10" class="section level3" number="3.1.7">
-<h3><span class="header-section-number">3.1.7</span> Summary and conclusions</h3>
-<p>It is important to emphasize methods where domain knowledge and application of different machine learning techniques, as introduced in our work, can get good results as well as bring less computational cost and possibility to understand and explain decisions made to solve a problem.</p>
-<p>Different methods, as in [2] could also be applied in the future. In our findings, what is emphasized in the title of the article, achieving results similar to the black box was significant.</p>
+<h3><span class="header-section-number">3.1.7</span> 6. Summary and conclusions</h3>
+<p>As mentioned before, three approaches to ordered classification were considered. On the studied Eucalyptus dataset, the ordinal classification as a regression task approach has given the highest AUC value. This could be due to the fact that the classes in the target variable were not equally distributed, and so the regression has performed better than multiclass classification or a set of binary classification problems.</p>
+<p>The final explainable model is a fairly simple decision tree, defined for a regression task, which includes variable selection. The variables excluded were mainly specific location tags, and deleting them means this model could be used for judging Eucalypti in other regions, not only the ones coming from New Zealand, where all the data comes from.</p>
+<p>Our goal was to build an explainable model that achieves results similar to a black box model. In fact, the model constructed in this article uses domain knowledge and application of different preprocessing and machine learning techniques and, as a result, performs better than a black box model. This shows that our goal was achievable and that explainable models can give comparable and sometimes even better results than black box models, in addition to a smaller computational cost and possibility to understand and explain decisions made to solve a problem.</p>
+<p>Different methods, as in [2] could also be applied in the future, to further improve the model built in this article.</p>
 </div>
 <div id="references" class="section level3" number="3.1.8">
-<h3><span class="header-section-number">3.1.8</span> References</h3>
+<h3><span class="header-section-number">3.1.8</span> 7. References</h3>
 <ol style="list-style-type: decimal">
 <li>Frank, Eibe &amp; Hall, Mark. (2001). A Simple Approach to Ordinal Classification. Lecture Notes in Computer Science. 2167. 145-156. 10.1007/3-540-44795-4_13</li>
 <li>P. A. Gutiérrez, M. Pérez-Ortiz, J. Sánchez-Monedero, F. Fernández-Navarro and C. Hervás-Martínez, “Ordinal Regression Methods: Survey and Experimental Study,” in IEEE Transactions on Knowledge and Data Engineering, vol. 28, no. 1, pp. 127-146, 1 Jan. 2016, doi: 10.1109/TKDE.2015.2457911.</li>
