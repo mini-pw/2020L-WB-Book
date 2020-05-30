@@ -4181,13 +4181,50 @@ system.time(out &lt;- ode.1D(y = rep(1, Grid$N),times = times, func = pde1D,parm
 <p><strong>MOSTLY REP</strong>, colours a little bit brighter and more intensive.</p>
 </div>
 <div id="conclusions" class="section level1">
-<h1><span class="header-section-number">18</span> Conclusions:</h1>
+<h1><span class="header-section-number">18</span> Conclusions</h1>
 <ul>
 <li>There has been a change of seed, which hinders accurate reproduction;</li>
 <li>Sometimes the datasets are no longer available;</li>
 <li>There may have been name changes.</li>
 </ul>
 <p>Generally speaking, it is possible to reproduce with little effort and understanding of the code.</p>
+</div>
+<div id="session-info" class="section level1">
+<h1><span class="header-section-number">19</span> Session info</h1>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.6.3 (2020-02-29)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 10 x64 (build 18362)
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=Polish_Poland.1250  LC_CTYPE=Polish_Poland.1250   
+## [3] LC_MONETARY=Polish_Poland.1250 LC_NUMERIC=C                  
+## [5] LC_TIME=Polish_Poland.1250    
+## 
+## attached base packages:
+##  [1] stats4    grid      tcltk     stats     graphics  grDevices utils    
+##  [8] datasets  methods   base     
+## 
+## other attached packages:
+##  [1] ReacTran_1.4.3.1  shape_1.4.4       rootSolve_1.8.2.1 deSolve_1.28     
+##  [5] party_1.3-4       strucchange_1.5-2 zoo_1.8-8         modeltools_0.2-23
+##  [9] tmvtnorm_1.4-10   gmm_1.6-4         sandwich_2.5-1    Matrix_1.2-18    
+## [13] neuralnet_1.44.2  kernlab_0.9-29    rpart_4.1-15      pmml_2.3.1       
+## [17] XML_3.99-0.3      knitr_1.26        asympTest_0.1.4   coda_0.19-3      
+## [21] AdMit_2.1.5       mvtnorm_1.1-0     EMD_1.5.8         locfit_1.5-9.4   
+## [25] fields_10.3       maps_3.3.0        spam_2.5-1        dotCall64_1.0-0  
+## [29] pls_2.7-2         bio.infer_1.3-3   untb_1.7-4        ade4_1.7-15      
+## 
+## loaded via a namespace (and not attached):
+##  [1] Brobdingnag_1.2-6  xfun_0.11          coin_1.3-1         partitions_1.9-22 
+##  [5] splines_3.6.3      lattice_0.20-38    htmltools_0.4.0    yaml_2.2.0        
+##  [9] gmp_0.5-13.6       survival_3.1-8     rlang_0.4.6        matrixStats_0.56.0
+## [13] multcomp_1.4-13    stringr_1.4.0      codetools_0.2-16   evaluate_0.14     
+## [17] parallel_3.6.3     TH.data_1.0-10     Rcpp_1.0.3         polynom_1.4-0     
+## [21] digest_0.6.23      stringi_1.4.3      tools_3.6.3        magrittr_1.5      
+## [25] MASS_7.3-51.5      libcoin_1.0-5      rmarkdown_2.1      compiler_3.6.3</code></pre>
 </div>
 
 

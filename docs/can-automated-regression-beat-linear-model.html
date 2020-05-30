@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Acknowledgements | ML Case Studies</title>
+  <title>3.4 Can Automated Regression beat linear model? | ML Case Studies</title>
   <meta name="description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Acknowledgements | ML Case Studies" />
+  <meta property="og:title" content="3.4 Can Automated Regression beat linear model? | ML Case Studies" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="images/cover.png" />
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Acknowledgements | ML Case Studies" />
+  <meta name="twitter:title" content="3.4 Can Automated Regression beat linear model? | ML Case Studies" />
   
   <meta name="twitter:description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="twitter:image" content="images/cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="explainable-computer-vision-with-embeddings-and-knn-classifier.html"/>
-<link rel="next" href="references-1.html"/>
+<link rel="prev" href="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html"/>
+<link rel="next" href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"/>
 <script src="libs/header-attrs/header-attrs.js"></script>
 <script src="libs/jquery/jquery.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
@@ -278,19 +278,77 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="acknowledgements" class="section level1" number="4">
-<h1><span class="header-section-number">Chapter 4</span> Acknowledgements</h1>
-<p>This project is inspired by a fantastic book <a href="https://compstat-lmu.github.io/iml_methods_limitations/">Limitations of Interpretable Machine Learning Methods</a> created at the Department of Statistics, LMU Munich.
-We used the LIML project as cornerstone for this reopsitory.</p>
+<div id="can-automated-regression-beat-linear-model" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Can Automated Regression beat linear model?</h2>
+<p><em>Authors: Bartłomiej Granat, Szymon Maksymiuk, (Warsaw University of Technology)</em></p>
+<div id="abstract-14" class="section level3" number="3.4.1">
+<h3><span class="header-section-number">3.4.1</span> Abstract</h3>
+</div>
+<div id="introduction-and-motivation-12" class="section level3" number="3.4.2">
+<h3><span class="header-section-number">3.4.2</span> Introduction and Motivation</h3>
+<p>Health-related problems have been a topic of multiple papers throughout the years and machine learning brought some new methods to modern medicine. We care so much about our lives that every single algorithm and method eventually gets tested on some medical data.</p>
+<p>What is unique about health data is that black-box models are completely useless in this subject. Almost always doctors know whether a patient is sick or not. What is important to them is the reason <strong>why</strong> he is sick. That’s why explainable machine learning is the key to make all of us healthier. However, making a good explainable model for health data might be close to impossible. Medical problems of all kinds can be very unique, complex, or completely random. That’s why researchers spend numerous hours on improving their explainable models and that’s why <strong>we</strong> decided to test our approach on <code>liver disorders</code> dataset.</p>
+<p>The following dataset is well known in the field of machine learning and that’s exactly the reason why we chose it. It is described in the next chapter. Our goal was to find a relatively clean dataset with many models already done by other people. We don’t want to show that properly cleaned data gives better results but to achieve, an explainable model found after a complex analysis that we want to test.</p>
+<p>In this paper we do a case study on <code>liver disorders</code> dataset and want to prove that by using automated regression it is possible to build an easy to understand prediction that outperforms black-box models on the real dataset and at the same time achieve similar results to other researchers.</p>
+</div>
+<div id="data-1" class="section level3" number="3.4.3">
+<h3><span class="header-section-number">3.4.3</span> Data</h3>
+<p>The dataset we use to test our hypothesis is a well-known <code>liver-disorders</code> first created by ‘BUPA Medical Research Ltd.’ containing a single male patient as a row. The data consists of 5 features which are the results of blood tests a physician might use to inform diagnosis. There is no ground truth in the data set relating to the presence or absence of a disorder. The target feature is attribute drinks, which are numerical. Some of the researchers tend to split the patients into 2 groups: 0 - patients that drink less than 3 half-pint equivalents of alcoholic beverages per day and 1 - patients that drink more or equal to 3 and focus on a classification problem.</p>
+<p>All of the features are numerical. The data is available for 345 patients and contains 0 missing values.</p>
+<p>The dataset consists of 7 attributes:</p>
+<ol style="list-style-type: decimal">
+<li>mcv - mean corpuscular volume</li>
+<li>alkphos - alkaline phosphatase</li>
+<li>sgpt - alanine aminotransferase</li>
+<li>sgot - aspartate aminotransferase</li>
+<li>gammagt - gamma-glutamyl transpeptidase</li>
+<li>drinks - number of half-pint equivalents of alcoholic beverages drunk per day</li>
+<li>selector - field created by the BUPA researchers to split the data into train/test sets</li>
+</ol>
+<p>For further readings on the dataset and misunderstandings related to the selector column incorrectly treated as target refer to: “McDermott &amp; Forsyth 2016, Diagnosing a disorder in a classification benchmark, Pattern Recognition Letters, Volume 73.”</p>
+</div>
+<div id="methodology-14" class="section level3" number="3.4.4">
+<h3><span class="header-section-number">3.4.4</span> Methodology</h3>
+<p>AutoMl Model <span class="math inline">\(M_{aml}\)</span> and the dataset <span class="math inline">\(D\)</span> that consists of <span class="math inline">\(D_{X} = X\)</span> which is set of independent variables and <span class="math inline">\(D_{y} = y\)</span> - dependent variable (ie. target). We assume that <span class="math inline">\(M_{aml}\)</span> is an unknown function <span class="math inline">\(M_{aml}: \mathbb{R}^{p} \to \mathbb{R}\)</span>, where p is a snumber of features in the <span class="math inline">\(D\)</span> Dataset, that satisfies <span class="math inline">\(y = M_{aml}(X) + \epsilon\)</span> where <span class="math inline">\(\epsilon\)</span> is an error vector. Automated regression constructs known vector function <span class="math inline">\(G_{AR} : \mathbb{R}^{n \times p} \to \mathbb{R}^{n \times p}\)</span> where <span class="math inline">\(n\)</span> is a number of observations, that satisfies <span class="math inline">\(y = G_{AR}(X)\beta + \epsilon\)</span> thus it is linear regression model fitted for transformated data.</p>
+<p>To find <span class="math inline">\(G_{AR}\)</span> we have to put some constraints. First of all we want it to minimize loss function <span class="math inline">\(L: \mathbb{R}^{n} \to \mathbb{R}\)</span> given by following formula <span class="math inline">\(L : \frac{\sum_{i=1}^{n}(y_{i}-\hat{y_{i}})^{2}\sum_{i=1}^{n}(y_{i}-\bar{y_{i}})^{2}}{\sum_{i=1}^{n}(\hat{y_{i}}-\bar{y_{i}})^{2}}\)</span> which can be interpreted as Mean Square Error divided by the R-squred coefficient of determination and stands as a tradeoff between fit and results. Another constraint is a domain of valid transformations of particular variables. For given dataset, described in the previous paragraphs we decided to use:</p>
+<ul>
+<li>Feature selection
+<ul>
+<li>XAI feature Importance</li>
+<li>AIC/BIC</li>
+</ul></li>
+<li>Continuous transformation
+<ul>
+<li>Polynomial transformation</li>
+<li>Lograthmic transformation</li>
+</ul></li>
+<li>Discrete transformation
+<ul>
+<li>SAFE method</li>
+</ul></li>
+<li>Feature concatenation
+<ul>
+<li>Multiplication of pair of features.</li>
+</ul></li>
+</ul>
+<p>Obviously, XAI related methods are conducted using AutoML Model. We’ve decided to omit data imputation as an element of valid transformations dataset because liver-disorders dataset does not meet with the problem of missing values.</p>
+<p>The optimization process is conducted based on Bayesian Optimization and the backtracing idea. Each main element of the domain of valid transformations is one step in the process of creation <span class="math inline">\(G_{AR}\)</span> function. Within each step, Bayesian optimization will be used to find the best transformation for the given level. During further steps, if any of transformation did not improve model, ie. <span class="math inline">\(L\)</span> function was only growing, the algorithm takes second, the third, etc. solution from previous steps according to backtracking idea. If for no one of <span class="math inline">\(k\)</span> such iterations, where k is known parameter, a better solution is found, step is omitted.</p>
+</div>
+<div id="results-14" class="section level3" number="3.4.5">
+<h3><span class="header-section-number">3.4.5</span> Results</h3>
+</div>
+<div id="summary-and-conclusions-13" class="section level3" number="3.4.6">
+<h3><span class="header-section-number">3.4.6</span> Summary and conclusions</h3>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="explainable-computer-vision-with-embeddings-and-knn-classifier.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook/js/app.min.js"></script>
@@ -321,7 +379,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/8-0-acknowledgements.Rmd",
+"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/3-4-Can-automated-regression-beat-AutoML.Rmd",
 "text": "Edit"
 },
 "history": {

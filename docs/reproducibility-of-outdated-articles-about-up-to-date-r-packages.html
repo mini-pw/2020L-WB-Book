@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Acknowledgements | ML Case Studies</title>
+  <title>1.5 Reproducibility of outdated articles about up-to-date R packages | ML Case Studies</title>
   <meta name="description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Acknowledgements | ML Case Studies" />
+  <meta property="og:title" content="1.5 Reproducibility of outdated articles about up-to-date R packages | ML Case Studies" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="images/cover.png" />
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Acknowledgements | ML Case Studies" />
+  <meta name="twitter:title" content="1.5 Reproducibility of outdated articles about up-to-date R packages | ML Case Studies" />
   
   <meta name="twitter:description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="twitter:image" content="images/cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="explainable-computer-vision-with-embeddings-and-knn-classifier.html"/>
-<link rel="next" href="references-1.html"/>
+<link rel="prev" href="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html"/>
+<link rel="next" href="correlation-between-reproducibility-of-components-of-research-papers-and-their-purpose.html"/>
 <script src="libs/header-attrs/header-attrs.js"></script>
 <script src="libs/jquery/jquery.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
@@ -278,19 +278,146 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="acknowledgements" class="section level1" number="4">
-<h1><span class="header-section-number">Chapter 4</span> Acknowledgements</h1>
-<p>This project is inspired by a fantastic book <a href="https://compstat-lmu.github.io/iml_methods_limitations/">Limitations of Interpretable Machine Learning Methods</a> created at the Department of Statistics, LMU Munich.
-We used the LIML project as cornerstone for this reopsitory.</p>
+<div id="reproducibility-of-outdated-articles-about-up-to-date-r-packages" class="section level2" number="1.5">
+<h2><span class="header-section-number">1.5</span> Reproducibility of outdated articles about up-to-date R packages</h2>
+<p><em>Authors: Zuzanna Mróz, Aleksander Podsiad, Michał Wdowski (Warsaw University of Technology)</em></p>
+<div id="abstract-4" class="section level3" number="1.5.1">
+<h3><span class="header-section-number">1.5.1</span> Abstract</h3>
+</div>
+<div id="introduction-and-motivation-2" class="section level3" number="1.5.2">
+<h3><span class="header-section-number">1.5.2</span> Introduction and Motivation</h3>
+<p>The problem of the inability to reproduce the results of research presented in a scientific article may result from a number of reasons - at each stage of design, implementation, analysis and description of research results we must remember the problem of reproducibility - without sufficient attention paid to it, there is no chance to ensure the possibility of reproducing the results obtained by one team at a later time and by other people who often do not have full knowledge of the scope presented in the article. Reproducibility is a problem in both business and science. Science, because it allows credibility of research results <span class="citation">(McNutt <a href="#ref-McNutt679" role="doc-biblioref">2014</a>)</span>. Business, because we care about the correct operation of technology in any environment <span class="citation">(Anda, Sjøberg, and Mockus <a href="#ref-Anda407" role="doc-biblioref">2009</a>)</span>.
+As cited from “What does research reproducibility mean?” <span class="citation">(Goodman, Fanelli, and Ioannidis <a href="#ref-Goodman2016" role="doc-biblioref">2016</a><a href="#ref-Goodman2016" role="doc-biblioref">b</a>)</span>;
+“Although the importance of multiple studies corroborating a given result is acknowledged in virtually all of the sciences, the modern use of “reproducible research” was originally applied not to corroboration, but to transparency, with application in the computational sciences. Computer scientist Jon Claerbout coined the term and associated it with a software platform and set of procedures that permit the reader of a paper to see the entire processing trail from the raw data and code to figures and tables. This concept has been carried forward into many data-intensive domains, including epidemiology, computational biology, economics, and clinical trials. According to a U.S. National Science Foundation (NSF) subcommittee on replicability in science, “reproducibility refers to the ability of a researcher to duplicate the results of a prior study using the same materials as were used by the original investigator. That is, a second researcher might use the same raw data to build the same analysis files and implement the same statistical analysis in an attempt to yield the same results…. Reproducibility is a minimum necessary condition for a finding to be believable and informative.”</p>
+</div>
+<div id="related-work-3" class="section level3" number="1.5.3">
+<h3><span class="header-section-number">1.5.3</span> Related Work</h3>
+<p>Other notable articles about reproducibility include “Variability and Reproducibility in Software Engineering: A Study of Four Companies that Developed the Same System” <span class="citation">(Anda, Sjøberg, and Mockus <a href="#ref-Anda407" role="doc-biblioref">2009</a>)</span>, “Reproducible Research in Computational Science” <span class="citation">(Peng <a href="#ref-Peng1226" role="doc-biblioref">2011</a>)</span> and “A statistical definition for reproducibility and replicability” <span class="citation">(Patil, Peng, and Leek <a href="#ref-Patil066803" role="doc-biblioref">2016</a>)</span>.
+“Variability and Reproducibility in Software Engineering: A Study of Four Companies that Developed the Same System” focuses on the variability and reproducibility of the outcome of complete software development projects that were carried out by professional developers.
+“Reproducible Research in Computational Science” is about limitations in our ability to evaluate published findings and how reproducibility has the potential to serve as a minimum standard for judging scientific claims when full independent replication of a study is not possible.
+“A statistical definition for reproducibility and replicability” provides formal and informal definitions of scientific studies, reproducibility, and replicability that can be used to clarify discussions around these concepts in the scientific and popular press.
+In our article we focus on the reproduction of old scientific articles on R and packages, which are still being developed. We want to explore how the passage of time affects the ability to reproduce results using the currently available updated tools. We are therefore testing backward compatibility for different packages and checking what affects the reproducibility of the code.
+We were unable to find scientific articles on this exact issue. There are articles that give ways to measure reproducibility, as well as articles about packages that help with reproduction. But there are yet no articles that summarize the set of packages in terms of their reproducibility.</p>
+</div>
+<div id="methodology-4" class="section level3" number="1.5.4">
+<h3><span class="header-section-number">1.5.4</span> Methodology</h3>
+<p>We have checked 13 articles with 16 R packages from at least 10 years ago to ensure that the code chunks match these categories:</p>
+<ul>
+<li>ade4: Implementing the Duality Diagram for Ecologists <span class="citation">(Dray and Dufour <a href="#ref-ade4" role="doc-biblioref">2007</a>)</span></li>
+<li>AdMit: Adaptive Mixtures of Student-t Distributions <span class="citation">(Ardia, Hoogerheide, and Dijk <a href="#ref-admit" role="doc-biblioref">2009</a>)</span></li>
+<li>asympTest: A Simple R Package for Classical Parametric Statistical Tests and Confidence Intervals in Large Samples <span class="citation">(Coeurjolly et al. <a href="#ref-asymptest" role="doc-biblioref">2009</a>)</span></li>
+<li>bio.infer: Maximum Likelihood Method for Predicting Environmental Conditions from Assemblage Composition <span class="citation">(Yuan <a href="#ref-bio" role="doc-biblioref">2007</a>)</span></li>
+<li>deSolve, bvpSolve, ReacTran and RootSolve: R packages introducing methods of solving differential equations in R <span class="citation">(Soetaert, Petzoldt, and Setzer <a href="#ref-solve" role="doc-biblioref">2010</a>)</span></li>
+<li>EMD: Empirical Mode Decomposition and Hilbert Spectrum <span class="citation">(Kim and Oh <a href="#ref-EMD" role="doc-biblioref">2009</a>)</span></li>
+<li>mvtnorm: New Numerical Algorithm for Multivariate Normal Probabilities <span class="citation">(Mi, Miwa, and Hothorn <a href="#ref-mvtnorm" role="doc-biblioref">2009</a>)</span></li>
+<li>neuralnet: Training of Neural Networks <span class="citation">(Günther and Fritsch <a href="#ref-neuralnet" role="doc-biblioref">2010</a>)</span></li>
+<li>party: A New, Conditional Variable-Importance Measure for Random Forests Available in the party Package <span class="citation">(Strobl, Hothorn, and Zeileis <a href="#ref-party" role="doc-biblioref">2009</a>)</span></li>
+<li>pls: principal Component and Partial Least Squares Regression in R <span class="citation">(Mevik and Wehrens <a href="#ref-pls" role="doc-biblioref">2007</a>)</span></li>
+<li>PMML: An Open Standard for Sharing Models <span class="citation">(Guazzelli et al. <a href="#ref-PMML" role="doc-biblioref">2009</a>)</span></li>
+<li>tmvtnorm: A Package for the TruncatedMultivariate Normal Distribution <span class="citation">(Wilhelm and Manjunath <a href="#ref-tmvtnorm" role="doc-biblioref">2010</a>)</span></li>
+<li>untb: an R Package For Simulating Ecological Drift Under the Unified Neutral Theory of Biodiversity <span class="citation">(Hankin <a href="#ref-untb" role="doc-biblioref">2007</a>)</span></li>
+</ul>
+<p>All articles come from the R Journal and Journal of Statistical Software.</p>
+<p>In our research on the subject we have decided to divide the code from the articles into chunks, according to the principle that each chunk has its own output, to which we give an evaluation according to the criteria we have set. In the process of testing and reproducing various articles, we have identified five categories, and marked them as follows:</p>
+<ul>
+<li><strong>NO REP</strong> (no reproducibility, either due to changes through time or problems with the article that had already been there, regardless of differences in R across years),</li>
+<li><strong>HAD TO CHANGE STH</strong> (when we had to modify the code to produce correct results that will work in our current R version and can be neatly displayed in a document generated by markdown),</li>
+<li><strong>MOSTLY REP</strong> (when the results were not ideally identical to the original, but in our opinion the chunks were working according to their purpose in the context of their article),</li>
+<li><strong>HAD TO CHANGE &amp; STILL SOMEWHAT DIFFERENT</strong> (the code had to be changed and the results were not perfect, but they were correct in the terms of the aforementioned category <strong>MOSTLY REP</strong>, but we could consider them as satisfactory),</li>
+<li><strong>FULLY REP</strong> (no reproductive problems - the results were identical to original results shown in the article).</li>
+</ul>
+<p>These criteria can be considered not subjective, but setting such boundaries does not cause confusion in categorisation, thus we decided to use them in order to research and describe the introduced number of articles about R packages from at least 10 years ago.</p>
+<p>In some of the articles we found specific types of problems:</p>
+<ul>
+<li>There was no access to data or objects referred to in later calculations,</li>
+<li>The results were similar to the original, but the differences were most often due to the random generation of objects. This error was usually reduced later, when the package created some kind of data summary - then the result had a very small relative error with the original result.</li>
+<li>The names of individual variables or some of their attributes changed (e.g. column names in the data frame).</li>
+</ul>
+<p>When data or objects were unaccessible and there could not be found any alternative or history of the dataset, we classified this chunk as <strong>NO REP</strong>. What is more, in most cases chunks dependent on such objects automatically became <strong>NO REP</strong> too. However, if the code was only partially dependent on the lost dataset, it was classified as <strong>MOSTLY REP</strong>.</p>
+<p>When we stumbled upon problems with randomly generated objects, where the values were obviously different, but after aggregating the data summaries were close to original, such chunks were marked as <strong>MOSTLY REP</strong>. As we were reproducing various articles, this has become quite significant problem that a large number of publications were struggling with.</p>
+<p>If data could be somehow fixed - for example by changing column names, it was given <strong>HAD TO CHANGE STH</strong> mark, and the dependent chunks’ marks were not influenced by this change, which theoretically was allowing them to be marked even as <strong>FULLY REP</strong>.</p>
+</div>
+<div id="results-4" class="section level3" number="1.5.5">
+<h3><span class="header-section-number">1.5.5</span> Results</h3>
+<p><a href="1-5-files/raport.html">Here</a> can be seen the in-depth report. Below are the summarised results of our research.</p>
+<center>
+<p><img src="1-5-files/plot1.png" /></p>
+<p><img src="1-5-files/plot2.png" /></p>
+</center>
+<p>As it can be seen, the vast majority of chunks are fully reproducible. Even if the chunk is not executed identically to the original one, in most cases it differs only slightly, and the package itself serves its purpose. 88.3% (121/137) of the chunks are executed perfectly or correctly (within our subjective category of being acceptably incorrect), while 93.4% (128/137) of the chunks are working well enough not to throw errors. In practice, only 6.6% (9/137) of chunks were completely irreproducible, which would seem surprising for more-than-a-decade-old articles.</p>
+<p>However, given that we have focused particularly on packages that are still being developed, this is quite a feasible result. This can be seen quite clearly by the percentage of the chunks that required minor changes or slightly differed from the results shown in the article - there were 33.6% (46/137), which is clearly a result of the updates or changes that occured in the ever evolving R environment. Of course during our research we stumbled upon numerous packages that have not been updated since years or that have even been deleted from CRAN repository, so they were not within our field of interest. Nonetheless, we would like to emphasize that the results should not suggest that one-decade-old articles are reproducible.</p>
+</div>
+<div id="summary-and-conclusions-3" class="section level3" number="1.5.6">
+<h3><span class="header-section-number">1.5.6</span> Summary and conclusions</h3>
+<p>To sum up, in most cases the packages we examined performed their tasks correctly. The packages themselves have of course changed, but its idea remained the same. Usually new features or improvements were added, but the idea behind the package was the same as it used to be. As a result, most of the packages still managed to cope with the problems of the old ones, in reproduction usually suffering from missing external data or unavoidable changes in the R language itself. All in all, almost in all cases the package does the job in spirit, differing from its old good ways only in vague confusion caused by neverending winds of change.</p>
+<p>It can therefore be concluded that most packages that we’ve checked are fully backward compatible, which is good programming practice. In order to increase the reproducibility of articles, this should definitely be taken care of. Additionally, authors should include supplements to their articles, that always help you understand and copy the code.</p>
 
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Anda407">
+<p>Anda, Bente, Dag Sjøberg, and Audris Mockus. 2009. “Variability and Reproducibility in Software Engineering: A Study of Four Companies That Developed the Same System.” <em>Software Engineering, IEEE Transactions on</em> 35 (July): 407–29. <a href="https://doi.org/10.1109/TSE.2008.89">https://doi.org/10.1109/TSE.2008.89</a>.</p>
+</div>
+<div id="ref-admit">
+<p>Ardia, David, Lennart F. Hoogerheide, and Herman K. van Dijk. 2009. “AdMit.” <em>The R Journal</em> 1 (1): 25–30. <a href="https://doi.org/10.32614/RJ-2009-003">https://doi.org/10.32614/RJ-2009-003</a>.</p>
+</div>
+<div id="ref-asymptest">
+<p>Coeurjolly, J.-F., R. Drouilhet, P. Lafaye de Micheaux, and J.-F. Robineau. 2009. “asympTest: A Simple R Package for Classical Parametric Statistical Tests and Confidence Intervals in Large Samples.” <em>The R Journal</em> 1 (2): 26–30. <a href="https://doi.org/10.32614/RJ-2009-015">https://doi.org/10.32614/RJ-2009-015</a>.</p>
+</div>
+<div id="ref-ade4">
+<p>Dray, Stéphane, and Anne-Béatrice Dufour. 2007. “The Ade4 Package: Implementing the Duality Diagram for Ecologists.” <em>Journal of Statistical Software, Articles</em> 22 (4): 1–20. <a href="https://doi.org/10.18637/jss.v022.i04">https://doi.org/10.18637/jss.v022.i04</a>.</p>
+</div>
+<div id="ref-Goodman2016">
+<p>Goodman, Steven N., Daniele Fanelli, and John P. A. Ioannidis. 2016a. “What Does Research Reproducibility Mean?” <em>Science Translational Medicine</em> 8 (341). <a href="https://doi.org/10.1126/scitranslmed.aaf5027">https://doi.org/10.1126/scitranslmed.aaf5027</a>.</p> 2016b. “What Does Research Reproducibility Mean?” <em>Science Translational Medicine</em> 8 (341): 341ps12–341ps12. <a href="https://doi.org/10.1126/scitranslmed.aaf5027">https://doi.org/10.1126/scitranslmed.aaf5027</a>.</p>
+</div>
+<div id="ref-PMML">
+<p>Guazzelli, Alex, Michael Zeller, Wen-Ching Lin, and Graham Williams. 2009. “PMML: An Open Standard for Sharing Models.” <em>The R Journal</em> 1 (1): 60–65. <a href="https://doi.org/10.32614/RJ-2009-010">https://doi.org/10.32614/RJ-2009-010</a>.</p>
+</div>
+<div id="ref-neuralnet">
+<p>Günther, Frauke, and Stefan Fritsch. 2010. “neuralnet: Training of Neural Networks.” <em>The R Journal</em> 2 (1): 30–38. <a href="https://doi.org/10.32614/RJ-2010-006">https://doi.org/10.32614/RJ-2010-006</a>.</p>
+</div>
+<div id="ref-untb">
+<p>Hankin, Robin. 2007. “Introducing Untb, an R Package for Simulating Ecological Drift Under the Unified Neutral Theory of Biodiversity.” <em>Journal of Statistical Software, Articles</em> 22 (12): 1–15. <a href="https://doi.org/10.18637/jss.v022.i12">https://doi.org/10.18637/jss.v022.i12</a>.</p>
+</div>
+<div id="ref-EMD">
+<p>Kim, Donghoh, and Hee-Seok Oh. 2009. “EMD: A Package for Empirical Mode Decomposition and Hilbert Spectrum.” <em>The R Journal</em> 1 (1): 40–46. <a href="https://doi.org/10.32614/RJ-2009-002">https://doi.org/10.32614/RJ-2009-002</a>.</p>
+</div>
+<div id="ref-McNutt679">
+<p>McNutt, Marcia. 2014. “Journals Unite for Reproducibility.” <em>Science</em> 346 (6210): 679–79. <a href="https://doi.org/10.1126/science.aaa1724">https://doi.org/10.1126/science.aaa1724</a>.</p>
+</div>
+<div id="ref-pls">
+<p>Mevik, Björn-Helge, and Ron Wehrens. 2007. “The Pls Package: Principal Component and Partial Least Squares Regression in R.” <em>Journal of Statistical Software, Articles</em> 18 (2): 1–23. <a href="https://doi.org/10.18637/jss.v018.i02">https://doi.org/10.18637/jss.v018.i02</a>.</p>
+</div>
+<div id="ref-mvtnorm">
+<p>Mi, Xuefei, Tetsuhisa Miwa, and Torsten Hothorn. 2009. “New Numerical Algorithm for Multivariate Normal Probabilities in Package mvtnorm.” <em>The R Journal</em> 1 (1): 37–39. <a href="https://doi.org/10.32614/RJ-2009-001">https://doi.org/10.32614/RJ-2009-001</a>.</p>
+</div>
+<div id="ref-Patil066803">
+<p>Patil, Prasad, Roger D. Peng, and Jeffrey T. Leek. 2016. “A Statistical Definition for Reproducibility and Replicability.” <em>Science</em>. <a href="https://doi.org/10.1101/066803">https://doi.org/10.1101/066803</a>.</p>
+</div>
+<div id="ref-Peng1226">
+<p>Peng, Roger D. 2011. “Reproducible Research in Computational Science.” <em>Science</em> 334 (6060): 1226–7. <a href="https://doi.org/10.1126/science.1213847">https://doi.org/10.1126/science.1213847</a>.</p>
+</div>
+<div id="ref-solve">
+<p>Soetaert, Karline, Thomas Petzoldt, and R. Woodrow Setzer. 2010. “Solving Differential Equations in R.” <em>The R Journal</em> 2 (2): 5–15. <a href="https://doi.org/10.32614/RJ-2010-013">https://doi.org/10.32614/RJ-2010-013</a>.</p>
+</div>
+<div id="ref-party">
+<p>Strobl, Carolin, Torsten Hothorn, and Achim Zeileis. 2009. “Party on!” <em>The R Journal</em> 1 (2): 14–17. <a href="https://doi.org/10.32614/RJ-2009-013">https://doi.org/10.32614/RJ-2009-013</a>.</p>
+</div>
+<div id="ref-tmvtnorm">
+<p>Wilhelm, Stefan, and B. G. Manjunath. 2010. “tmvtnorm: A Package for the Truncated Multivariate Normal Distribution.” <em>The R Journal</em> 2 (1): 25–29. <a href="https://doi.org/10.32614/RJ-2010-005">https://doi.org/10.32614/RJ-2010-005</a>.</p>
+</div>
+<div id="ref-bio">
+<p>Yuan, Lester. 2007. “Maximum Likelihood Method for Predicting Environmental Conditions from Assemblage Composition: The R Package Bio.infer.” <em>Journal of Statistical Software, Articles</em> 22 (3): 1–20. <a href="https://doi.org/10.18637/jss.v022.i03">https://doi.org/10.18637/jss.v022.i03</a>.</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="explainable-computer-vision-with-embeddings-and-knn-classifier.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="correlation-between-reproducibility-of-components-of-research-papers-and-their-purpose.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook/js/app.min.js"></script>
@@ -321,7 +448,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/8-0-acknowledgements.Rmd",
+"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/1-5-reproducibility-of-outdated-articles-about-up-to-date-packages.Rmd",
 "text": "Edit"
 },
 "history": {

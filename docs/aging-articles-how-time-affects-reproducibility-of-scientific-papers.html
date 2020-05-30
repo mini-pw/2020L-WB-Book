@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Acknowledgements | ML Case Studies</title>
+  <title>1.3 Aging articles. How time affects reproducibility of scientific papers? | ML Case Studies</title>
   <meta name="description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Acknowledgements | ML Case Studies" />
+  <meta property="og:title" content="1.3 Aging articles. How time affects reproducibility of scientific papers? | ML Case Studies" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="images/cover.png" />
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Acknowledgements | ML Case Studies" />
+  <meta name="twitter:title" content="1.3 Aging articles. How time affects reproducibility of scientific papers? | ML Case Studies" />
   
   <meta name="twitter:description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="twitter:image" content="images/cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="explainable-computer-vision-with-embeddings-and-knn-classifier.html"/>
-<link rel="next" href="references-1.html"/>
+<link rel="prev" href="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html"/>
+<link rel="next" href="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html"/>
 <script src="libs/header-attrs/header-attrs.js"></script>
 <script src="libs/jquery/jquery.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
@@ -278,19 +278,219 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="acknowledgements" class="section level1" number="4">
-<h1><span class="header-section-number">Chapter 4</span> Acknowledgements</h1>
-<p>This project is inspired by a fantastic book <a href="https://compstat-lmu.github.io/iml_methods_limitations/">Limitations of Interpretable Machine Learning Methods</a> created at the Department of Statistics, LMU Munich.
-We used the LIML project as cornerstone for this reopsitory.</p>
+<div id="aging-articles.-how-time-affects-reproducibility-of-scientific-papers" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Aging articles. How time affects reproducibility of scientific papers?</h2>
+<p><em>Authors: Paweł Morgen, Piotr Sieńko, Konrad Welkier (Warsaw University of Technology)</em></p>
+<div id="abstract-2" class="section level3" number="1.3.1">
+<h3><span class="header-section-number">1.3.1</span> Abstract</h3>
+<p>Reproduction of a code presented in scientific papers tend to be a laborious yet important process since it enables readers a better understanding of the tools proposed by the authors. While recreating an article various difficulties are faced what can result in calling the paper irreproducible. Some reasons why such situations occur stem from the year when the article was published (for example usage of no more supported packages). The purpose of the following paper is to prove whether this is a general trend which means answering the question: is the year when the article was published related to the reproducibility of the paper. To do so a package CodeExtractorR was created that enables extracting code from PDF files. By using this tool a significant number of articles could be analyzed and therefore results received enabled us to give an objective answer to the stated question.</p>
+</div>
+<div id="introduction-1" class="section level3" number="1.3.2">
+<h3><span class="header-section-number">1.3.2</span> Introduction</h3>
+<p>Every article published in a scientific journal is aimed at improving our knowledge in a certain field. To prove their theories, authors should provide papers with detailed, working examples and extensive supplementary materials to reproduce results. Unfortunately, these conditions are not always fulfilled. In such a case, other researchers are not able to verify and accept the solutions presented by the author. Moreover, the article is not only useless for the scientific community but also for business recipients.</p>
+<p>Over the years, several different definitions of reproducibility have been proposed. According to <span class="citation">Gentleman and Temple Lang (<a href="#ref-gentleman2007statistical" role="doc-biblioref">2007</a>)</span>, reproducible research are papers with accompanying software tools that allow the reader to directly reproduce methods that are presented in the research paper. Other authors suggest that scientific paper is reproducible only if text, data and code are made available and allow an independent researcher to recreate the results <span class="citation">(Vandewalle, Kovacevic, and Vetterli <a href="#ref-vandewalle2009reproducible" role="doc-biblioref">2009</a>)</span>. Second definition emphasizes the importance of accessibility to data used in researches, therefore it seems to be more suitable and complete interpretation of reproducibility. In addition, in this article, we used scale based on the spectrum of reproducibility, proposed by <span class="citation">Peng (<a href="#ref-Peng1226" role="doc-biblioref">2011</a>)</span>. In his work, he also mentioned reproducibility as a minimal requirement for assessing the scientific value of the paper. In the past few years, computing has become an essential part of scientific workflow. Some best practices for writing and publishing reproducible scientific article were presented by <span class="citation">Stodden et al. (<a href="#ref-Stodden2013SettingTD" role="doc-biblioref">2013</a>)</span>. Furthermore, she made a brief overview of existing tools and software that facilitate this task. Similar issue was closely described by <span class="citation">Kitzes, Turek, and Deniz (<a href="#ref-kitzes2017practice" role="doc-biblioref">2017</a>)</span>. Tools created solely for reproducibility in R were proposed by <span class="citation">Marwick (<a href="#ref-marwickrrtools" role="doc-biblioref">n.d.</a>)</span> in package rrtools.</p>
+<p>Although many articles focus on software or framework solutions for reproducibility problems, analysis of scientific papers reproducibility in the context of release date has, to the best of the authors’ knowledge, not been described before. The intention of such research is to find correlations between age of article and its reproducibility. Authors believe that finding these dependencies will allow to calculate the estimated life span of data science article. Furthermore, as replicability helps with applying proposed methods and tools, its approximated level might be helpful in estimating usefulness of every scientific article.</p>
+</div>
+<div id="methodology-2" class="section level3" number="1.3.3">
+<h3><span class="header-section-number">1.3.3</span> Methodology</h3>
+<p>The first issue that should be touched upon, while considering the methodology behind preparing this article, is the scale used to assess the reproducibility of the papers. In the Introduction it was already mentioned how the scale was created but a more detailed description is required. The authors decided that the scale should consist of 4 levels (from 0 up to 3):</p>
+<ol style="list-style-type: decimal">
+<li>The 0 grade was given in case when no chunk of code gave the anticipated results and no figure was reproduced successfully (in practice such situation occurred mainly when the package described in the article was no more available).</li>
+<li>The 1 grade means that at least one example gave the results that the authors waited for, while it also includes situations when about half of the code in the chunks behaved as expected.</li>
+<li>The 2 grade was awarded to the articles that were reproducible “in the majority”
+what also means that they were not reproducible in 100%.</li>
+<li>The 3 grade was received by the articles that were fully reproducible and no problems were encountered in the process. Such a result was highly anticipated by the authors but the criteria for this grade were rather strict.</li>
+</ol>
+<p>The second issue that also played a vital role in the authors’ work was the scope of the analysis. It was decided that in order to maintain “other thing equal” according to a well-known Latin phrase “ceteris paribus” only one online journal – The R Journal – was taken into account. Being equipped with a tool for faster reproduction of articles – the CodeExtractoR package – the authors agreed to examine about 20 articles that were published across a few years. Such a great number of papers meant that the approach taken could be described as holistic. It is also worth mentioning that usually 30 articles from each year were analyzed (at least whenever it was possible). Finally, it should be noted that in the case of the date when they were published the examined articles range from 2009 up to 2019. The third and final issue that should be considered in this part of the article focuses on the measures undertaken by the authors in order to tackle the problem of biased assessment. Although the scale that was proposed was not totally dependent on the person who was using it, it still left someplace for personal liking and disliking of the paper. As a way of marginalization of this trend the authors have taken part in many conversations when the facts that led to specific grading of the articles were shared. This enabled awarding the grades even more fairly. However, the final measure was much more simple and it was believed to be much more effective as well when compared to the previous one. The articles for each year were divided into 3 groups and assigned to one author each. Thus each author has examined the papers from the whole range of release dates that were taken into account.</p>
+</div>
+<div id="results-2" class="section level3" number="1.3.4">
+<h3><span class="header-section-number">1.3.4</span> Results</h3>
+<p>Specific results are presented in <em>Table 1.1</em>, which shows the number of examined articles from 2009 up to 2019, grouped by received grade. The column “Grade” represents the 0 - III scale of reproducibility. The rest of the columns shows a number of papers that achieved a particular grade in each year.</p>
+<p>
+ 
+</p>
+<table>
+<thead>
+<tr class="header">
+<th>Grade</th>
+<th>09’</th>
+<th>10’</th>
+<th>11’</th>
+<th>12’</th>
+<th>13’</th>
+<th>14’</th>
+<th>15’</th>
+<th>16’</th>
+<th>17’</th>
+<th>18’</th>
+<th>19’</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>3</td>
+<td>2</td>
+<td>6</td>
+<td>4</td>
+<td>6</td>
+<td>8</td>
+<td>5</td>
+<td>9</td>
+<td>5</td>
+<td>9</td>
+<td>9</td>
+</tr>
+<tr class="even">
+<td>I</td>
+<td>4</td>
+<td>2</td>
+<td>0</td>
+<td>2</td>
+<td>3</td>
+<td>6</td>
+<td>6</td>
+<td>10</td>
+<td>3</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>II</td>
+<td>3</td>
+<td>7</td>
+<td>8</td>
+<td>4</td>
+<td>13</td>
+<td>6</td>
+<td>10</td>
+<td>7</td>
+<td>14</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td>III</td>
+<td>6</td>
+<td>7</td>
+<td>6</td>
+<td>5</td>
+<td>8</td>
+<td>10</td>
+<td>9</td>
+<td>4</td>
+<td>8</td>
+<td>13</td>
+<td>13</td>
+</tr>
+<tr class="odd">
+<td>SUM</td>
+<td>16</td>
+<td>18</td>
+<td>20</td>
+<td>15</td>
+<td>30</td>
+<td>30</td>
+<td>30</td>
+<td>30</td>
+<td>30</td>
+<td>30</td>
+<td>30</td>
+</tr>
+</tbody>
+</table>
+<p>
+ 
+</p>
+<p>To better illustrate obtained data, in <em>Figure 1.1</em> we have split the results into two groups - the articles which have 0 or I class labeled as “Non-reproducible” and articles with grade II and III as “Reproducible”. It is important to remember that from 2009 to 2012, the overall number of papers oscillated around 18 per year. After 2013, the number of researched articles was constant.</p>
+<p>
+ 
+</p>
+<div class="figure"><span id="fig:unnamed-chunk-1"></span>
+<img src="book_files/figure-html/unnamed-chunk-1-1.svg" alt="Number of papers by publication year" width="672" />
+<p class="caption">
+FIGURE 1.1: Number of papers by publication year
+</p>
+</div>
+<p>
+ 
+</p>
+<p><em>Figure 1.2</em> shows the results in the original 4-level scale. Although, the number of papers varies throughout the years in every reproducibility class, it is observable that intermediate ones - I and II, are less common in the oldest and newest papers. In addition, results in 2018 and 2019 are identical.</p>
+<p>
+ 
+</p>
+<div class="figure"><span id="fig:unnamed-chunk-2"></span>
+<img src="book_files/figure-html/unnamed-chunk-2-1.svg" alt="Number of papers by class and publication year" width="672" />
+<p class="caption">
+FIGURE 1.2: Number of papers by class and publication year
+</p>
+</div>
+<p>
+ 
+</p>
+<p>After calculating the percentage of each class in a specific year ( <em>Figure 1.3</em>, <em>Figure 1.4</em>), it is observed, that in the two oldest examined years - 2009 and 2010 - a ratio of completely unreproducible papers (with 0 or I class ) is surprisingly low. Furthermore, papers with III class of reproducibility are nearly 40% of all articles in these years.</p>
+<p>
+ 
+</p>
+<div class="figure"><span id="fig:unnamed-chunk-3"></span>
+<img src="book_files/figure-html/unnamed-chunk-3-1.svg" alt="Ratio of each class throughout years" width="672" />
+<p class="caption">
+FIGURE 1.3: Ratio of each class throughout years
+</p>
+</div>
+<p>
+ 
+</p>
+<p>Except for 2019, 2018 and 2016, percentage of fully reproducible papers (III class) is stable. In the newest articles, this percentage is slightly higher. Year 2016 is the only one, where unreproducible papers were in the majority. Only in 3 cases, percentage of reproducible articles dropped below 60%.</p>
+<p>
+ 
+</p>
+<div class="figure"><span id="fig:unnamed-chunk-4"></span>
+<img src="book_files/figure-html/unnamed-chunk-4-1.svg" alt="Summarized results throughout years" width="672" />
+<p class="caption">
+FIGURE 1.4: Summarized results throughout years
+</p>
+</div>
+<p>
+ 
+</p>
+</div>
+<div id="conclusions" class="section level3" number="1.3.5">
+<h3><span class="header-section-number">1.3.5</span> Conclusions</h3>
+</div>
+<div id="summary" class="section level3" number="1.3.6">
+<h3><span class="header-section-number">1.3.6</span> Summary</h3>
 
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-gentleman2007statistical">
+<p>Gentleman, Robert, and Duncan Temple Lang. 2007. “Statistical Analyses and Reproducible Research.” <em>Journal of Computational and Graphical Statistics</em> 16 (1): 1–23.</p>
+</div>
+<div id="ref-kitzes2017practice">
+<p>Kitzes, Justin, Daniel Turek, and Fatma Deniz. 2017. <em>The Practice of Reproducible Research: Case Studies and Lessons from the Data-Intensive Sciences</em>. Univ of California Press.</p>
+</div>
+<div id="ref-marwickrrtools">
+<p>Marwick, B. n.d. “Rrtools: Creates a Reproducible Research Compendium (2018).”</p>
+</div>
+<div id="ref-Peng1226">
+<p>Peng, Roger D. 2011. “Reproducible Research in Computational Science.” <em>Science</em> 334 (6060): 1226–7. <a href="https://doi.org/10.1126/science.1213847">https://doi.org/10.1126/science.1213847</a>.</p>
+</div>
+<div id="ref-Stodden2013SettingTD">
+<p>Stodden, Victoria, David H. Bailey, Jonathan M. Borwein, Randall J. LeVeque, William J. Rider, and William Stein. 2013. “Setting the Default to Reproducible Reproducibility in Computational and Experimental Mathematics.” In.</p>
+</div>
+<div id="ref-vandewalle2009reproducible">
+<p>Vandewalle, Patrick, Jelena Kovacevic, and Martin Vetterli. 2009. “Reproducible Research in Signal Processing.” <em>IEEE Signal Processing Magazine</em> 26 (3): 37–47.</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="explainable-computer-vision-with-embeddings-and-knn-classifier.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook/js/app.min.js"></script>
@@ -321,7 +521,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/8-0-acknowledgements.Rmd",
+"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/1-3-articles-aging.Rmd",
 "text": "Edit"
 },
 "history": {

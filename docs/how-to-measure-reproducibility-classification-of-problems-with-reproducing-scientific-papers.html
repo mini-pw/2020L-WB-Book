@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Acknowledgements | ML Case Studies</title>
+  <title>1.2 How to measure reproducibility? Classification of problems with reproducing scientific papers | ML Case Studies</title>
   <meta name="description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Acknowledgements | ML Case Studies" />
+  <meta property="og:title" content="1.2 How to measure reproducibility? Classification of problems with reproducing scientific papers | ML Case Studies" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="images/cover.png" />
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Acknowledgements | ML Case Studies" />
+  <meta name="twitter:title" content="1.2 How to measure reproducibility? Classification of problems with reproducing scientific papers | ML Case Studies" />
   
   <meta name="twitter:description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="twitter:image" content="images/cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="explainable-computer-vision-with-embeddings-and-knn-classifier.html"/>
-<link rel="next" href="references-1.html"/>
+<link rel="prev" href="title-of-the-article.html"/>
+<link rel="next" href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html"/>
 <script src="libs/header-attrs/header-attrs.js"></script>
 <script src="libs/jquery/jquery.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
@@ -278,19 +278,113 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="acknowledgements" class="section level1" number="4">
-<h1><span class="header-section-number">Chapter 4</span> Acknowledgements</h1>
-<p>This project is inspired by a fantastic book <a href="https://compstat-lmu.github.io/iml_methods_limitations/">Limitations of Interpretable Machine Learning Methods</a> created at the Department of Statistics, LMU Munich.
-We used the LIML project as cornerstone for this reopsitory.</p>
+<div id="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> How to measure reproducibility? Classification of problems with reproducing scientific papers</h2>
+<p><em>Authors: Paweł Koźmiński, Anna Urbala, Wojciech Szczypek (Warsaw University of Technology)</em></p>
+<div id="abstract-1" class="section level3" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> Abstract</h3>
+<p>After quite short time the computational aspects of scientific papers become obsolete or inexecutable (e.g. codes are not valid with current environment, resources are inaccessible, some classes require additional parameters). The extent of such a loss of timeliness of a paper may vary a lot. We develop a scale suitable for comparing reproducibility of various papers. This scale is based on enumerating and subjective evaluation of the impact of irreproducibilities on the reception of the paper.</p>
+</div>
+<div id="introduction" class="section level3" number="1.2.2">
+<h3><span class="header-section-number">1.2.2</span> Introduction</h3>
+<p>The idea of reproducibility of scientific researches is crucial especially in the area of data science. It has become more important along with the development of methods and algorithms used in machine learning as they are more and more complex and complicated. This issue concerns users of all types: students, scientists, developers. Moreover, attaching code used in a paper, helps readers to focus on the real content rather than sophisticated explanations and descriptions included in the article. It is also valuable because the users can use the code as examples of using the package. <br></p>
+<p>However problem of the reproducibility is much more complex, because there is no explicit way of measuring it. It means that most of its definitions divide articles into 2 groups - reproducible and irreproducible. Thus, finding an appropriate reproducibility metrics, which would have wider set of values would result in changing the way reproducability is perceived. As a result such a metric would provide much more information for a person who would be interested in reproducing an article.</p>
+<div id="definition" class="section level4" number="1.2.2.1">
+<h4><span class="header-section-number">1.2.2.1</span> Definition</h4>
+<p>Reproducibility as a problem has been addressed by scientists of various fields of studies. The exact definition also differs among areas of studies. For instance, Patrick Vandewall in 2009 suggested a definition of a reproducible research work: “A research work is called reproducible if all information relevant to the work, including, but not limited to, text, data and code, is made available, such that an independent researcher can reproduce the results” <span class="citation">(Vandewalle, Kovacevic, and Vetterli <a href="#ref-vandewalle2009reproducible" role="doc-biblioref">2009</a>)</span>. On the other hand, Association for Computing Machinery <span class="citation">(Computing Machinery <a href="#ref-ACMBadging2018" role="doc-biblioref">2018</a>)</span> divides the problem into three tasks as follows:<br></p>
+<ul>
+<li><p><strong>Repeatability</strong> (Same team, same experimental setup):<br>
+The measurement can be obtained with stated precision by the same team using the same measurement procedure, the same measuring system, under the same operating conditions, in the same location on multiple trials. For computational experiments, this means that a researcher can reliably repeat her own computation.</p></li>
+<li><p><strong>Replicability</strong> (Different team, same experimental setup):<br>
+The measurement can be obtained with stated precision by a different team using the same measurement procedure, the same measuring system, under the same operating conditions, in the same or a different location on multiple trials. For computational experiments, this means that an independent group can obtain the same result using the author’s own artifacts.</p></li>
+<li><p><strong>Reproducibility</strong> (Different team, different experimental setup):<br>
+The measurement can be obtained with stated precision by a different team, a different measuring system, in a different location on multiple trials. For computational experiments, this means that an independent group can obtain the same result using artifacts which they develop completely independently.
+<br></p></li>
+</ul>
+<p>For the needs of this chapter we will use the Vandewalle’s definition and treat papers as fully reproducible only when they meet the conditions listed there.</p>
+</div>
+</div>
+<div id="related-work-1" class="section level3" number="1.2.3">
+<h3><span class="header-section-number">1.2.3</span> Related Work</h3>
+<p>Reproducibility is a hot topic. “Open Science in Software Engineering” <span class="citation">(Fernández et al. <a href="#ref-Fernndez2019OpenSI" role="doc-biblioref">2019</a>)</span> describes the essence of <em>open source</em>, <em>open data</em>, <em>open access</em> and other <em>openness</em>. The article mentions that ability to reproduce work is important for the value of research. <em>Open Science</em> has many positive effects: increases access and citation counts, supports cooperation through open repositories. “Reproducibility Guide” <span class="citation">(“Reproducibility in Science: A Guide to enhancing reproducibility in scientific results and writing” <a href="#ref-repro-guide" role="doc-biblioref">2014</a>)</span> contains a lot of informations and tips on how to make research easier to reproduce. The guide also contains the list of tools that can make our research more reproducible (for example version control and automation. And the most important for us: it includes the checklist of questions that help verify the ability to reproduce. Edward Raff emphasizes the word <em>independent</em> in his article <span class="citation">(Raff <a href="#ref-RaffTheGradient2020" role="doc-biblioref">2020</a>)</span>. <em>Independent reproducibility</em> means that we can obtain similar results independently of the author and his code.</p>
+<p>These articles highlight various aspects of reproducibility. We want to verify how the authors care about reproducibility, what are their biggest reproduction issues and what type of problems can we encounter reproducing articles.</p>
+</div>
+<div id="methodology-1" class="section level3" number="1.2.4">
+<h3><span class="header-section-number">1.2.4</span> Methodology</h3>
+<p>We considered plenty of papers from many issues of <a href="https://journal.r-project.org/">The R Journal</a> - one of the most popular magazines concerning scientific researches, including new R packages. The journal stands out from the magazines because the researches usually upload supplementary material with their articles so it is very easy to check if the code can be reproduced in right way. The articles we checked during our research were published in various years - the newest comes from December 2019 while the oldest is from 2009. We have to admit that the majority of articles could be reproduced without any problems. For the needs of this article we mention only papers where any problems occured. <br>
+As we faced the problem of measuring reproducibility we discussed many ways of grading its level. One of the ideas was to create a unified measure of value that would calculate the ratio of functions that managed to execute. We quickly noticed that this approach is not appropriate as sometimes it is not fair to dock the mark by the same value in various examples. For instance we could meet a minor problem that interefered with executing an additional feature and, on the other hand, a vast problem that was a reason that we could not produce an important plot at all. Moreover, sometimes the success of executing the function, was not only defined by completing the work without errors but by the output’s quality. Sometimes the plots were produced without any number values what made them absolutely useless or without one minor annotation which still allowed to make similar conclusions as authors.<br>
+These were the reasons why we did not decide to create a simple numeric measure of reproducibility, which probably would be very convenient for data scientists, especially statisticians. When we were checking the articles in terms of reproducibility we noticed that the problems we are facing can be group into a few categories of similar ones. It was on impulse to propose six major categories that can be faced during try of reproducing the results presented in a scientific paper:</p>
+<ul>
+<li><p><strong>No access to external resources</strong><br>
+Some parts of code require access to external resources, for example third-party API or data downloaded from web. If the data was removed from the website, we may have a problem (or it can be impossible!) reproducing the results.</p></li>
+<li><p><strong>No compatibility with current versions of used packages</strong><br>
+Some packages are deprecated or only available in the older version of R. It can cause problems and is unacceptable.</p></li>
+<li><p><strong>Code vulnerable to user settings (especially graphic issues)</strong><br>
+The output often depends on the environment settings. For example the scale of the graphics can make it illegible and useless. There were cases that the code attached to article produced completely different figure than the presented one.</p></li>
+<li><p><strong>Additional configuration required</strong><br>
+Some packages require a non-standard installation. To use some features it can be required to install system packages. Sometimes it is also required to take additional steps (configure access to API e.t.c.).</p></li>
+<li><p><strong>Randomness problems</strong><br>
+Some functionalities are based on randomness. Sometimes changing the seed may change the results and make it difficult to draw correct conslusions.</p></li>
+<li><p><strong>No access to source codes</strong> <br>
+Some results shown in an article could not be reproduced because the codes had not been attached to or included in the article.</p></li>
+</ul>
+<p>We developed a 6-point scale (0 - completely irreproducible, 5 - fully reproducible) evaluating in what degree these problems belong to each category. Points are assigned subjectively depending on our feeling of the severity of the problem. When a category did not appear in the article, it was signed as N/A - not applicable. To minimilize the affect of the personal feels, every article was checked independently by at least two persons.</p>
+<div id="mark-examples" class="section level4" number="1.2.4.1">
+<h4><span class="header-section-number">1.2.4.1</span> Mark examples</h4>
+<p>Most of the articles were reproducible to some extent. None of them were fully irreproducible. However there were few examples, where inability of compiling the first chunks of code resulted in very low marks for the article and thus giving it up with no further research being carried through. Perfect example of such behaviour can be found in an article “MCMC for Generalized Linear Mixed Models with glmmBUGS”<span class="citation">(Brown and Zhou <a href="#ref-RJ-2010-003" role="doc-biblioref">2010</a>)</span>, where all of the following code chunks depended on first ones, which couldn’t be compiled. The reason was that the function, which was resposible for making crucial calculations couldn’t find a registry address. It ended up with displaying both the error and warning message.
+Second thing which led to lowering the mark was difficulty with code availibility. There were articles, for instance “RealVAMS: An R Package for Fitting a Multivariate Value-added Model (VAM)” <span class="citation">(Broatch, Green, and Karl <a href="#ref-RJ-2018-033" role="doc-biblioref">2018</a>)</span>, where there were no source codes for all of the figures, which were used in article. Moreover the figures were the main part of the article, thus we decided to lower the mark for access to the source code. Fortunately our team of scientists managed to reproduce the results, despite lack of source code. This article was also an example of having attached obsolete data. It resulted in poor similarity of graphs and plots between the figures we made ourselves and those, which were used in article. Majority of articles were given very satsfying marks, beacuse there were only a few things we could complain about. Fortunately they didin’t have such an impact on reproducibility itself, but rather were annoying for someone who wanted to achieve the same results. The perfect example of such an article is “tmvtnorm: A Package for the Truncated Multivariate Normal Distribution” <span class="citation">(Wilhelm and Manjunath <a href="#ref-tmvtnorm" role="doc-biblioref">2010</a>)</span>. The code had to be manually copied from the article and then reformatted before pasting in into the R console. It’s not a major obstacle, but it may lead to some syntax mistakes and enlengthen the time needed to reproduce the results.</p>
+</div>
+</div>
+<div id="results-1" class="section level3" number="1.2.5">
+<h3><span class="header-section-number">1.2.5</span> Results</h3>
+<p>During the research, our team of scientists examined 16 scientific articles published in The R Journal in terms of reproducibility. As stated before, we decided to divide a mark into six categories and check the level of correctness with the results described in the paper. Every category was graded in six-point scale provided always that a category might not apply in a paper. However, we did not measure the effectivity or functionality of the code as it was not in the scope of this research. To avoid the effect of subjectivity, all articles were graded by at least two of us. Later we calculated the average of the marks. When any category was marked as “not applicable” by at least one marker, it was not taken into consideration in the final summary.</p>
+<p>The list of articles checked is <a href="https://github.com/niladrem/R-reprodukowalnosc/blob/master/README.md">here</a>.</p>
+<p>The summary of our marks is presented in the boxplot.</p>
+<div class="figure">
+<img src="https://raw.githubusercontent.com/niladrem/R-reprodukowalnosc/master/Summary_of_marking_articles.png" alt="" />
+<p class="caption">Articles’ marks distribution</p>
+</div>
+<p>As we can see in the plot, packages dependent on external resources are in a minority. Despite that, when we examined one, there was often a problem with dependencies. It could be caused by many reasons, e.g. external data sources or other packages. On the other hand, availability of the source code and graphical aspects of articles turned out to be the most reproducible categories. Resistance to randomness was one of the most interesting categories in our opinion and it turned out to be a category with high variation of grades. Many authors coped with the problem by setting random seeds but sometimes the differences were unavoidable.</p>
+</div>
+<div id="summary-and-conclusions-1" class="section level3" number="1.2.6">
+<h3><span class="header-section-number">1.2.6</span> Summary and conclusions</h3>
 
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-RJ-2018-033">
+<p>Broatch, Jennifer, Jennifer Green, and Andrew Karl. 2018. “RealVAMS: An R Package for Fitting a Multivariate Value- added Model (VAM).” <em>The R Journal</em> 10 (1): 22–30. <a href="https://doi.org/10.32614/RJ-2018-033">https://doi.org/10.32614/RJ-2018-033</a>.</p>
+</div>
+<div id="ref-RJ-2010-003">
+<p>Brown, Patrick, and Lutong Zhou. 2010. “MCMC for Generalized Linear Mixed Models with glmmBUGS.” <em>The R Journal</em> 2 (1): 13–17. <a href="https://doi.org/10.32614/RJ-2010-003">https://doi.org/10.32614/RJ-2010-003</a>.</p>
+</div>
+<div id="ref-ACMBadging2018">
+<p>Computing Machinery, Association for. 2018. “Artifact Review and Badging.” <a href="https://www.acm.org/publications/policies/artifact-review-badging">https://www.acm.org/publications/policies/artifact-review-badging</a>.</p>
+</div>
+<div id="ref-Fernndez2019OpenSI">
+<p>Fernández, Daniel Méndez, Daniel Graziotin, Stefan Wagner, and Heidi Seibold. 2019. “Open Science in Software Engineering.” <em>ArXiv</em> abs/1904.06499.</p>
+</div>
+<div id="ref-RaffTheGradient2020">
+<p>Raff, Edward. 2020. “Quantifying Independently Reproducible Machine Learning.” <a href="https://thegradient.pub/independently-reproducible-machine-learning/">https://thegradient.pub/independently-reproducible-machine-learning/</a>.</p>
+</div>
+<div id="ref-repro-guide">
+<p>“Reproducibility in Science: A Guide to enhancing reproducibility in scientific results and writing.” 2014. <a href="http://ropensci.github.io/reproducibility-guide/">http://ropensci.github.io/reproducibility-guide/</a>.</p>
+</div>
+<div id="ref-vandewalle2009reproducible">
+<p>Vandewalle, Patrick, Jelena Kovacevic, and Martin Vetterli. 2009. “Reproducible Research in Signal Processing.” <em>IEEE Signal Processing Magazine</em> 26 (3): 37–47.</p>
+</div>
+<div id="ref-tmvtnorm">
+<p>Wilhelm, Stefan, and B. G. Manjunath. 2010. “tmvtnorm: A Package for the Truncated Multivariate Normal Distribution.” <em>The R Journal</em> 2 (1): 25–29. <a href="https://doi.org/10.32614/RJ-2010-005">https://doi.org/10.32614/RJ-2010-005</a>.</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="explainable-computer-vision-with-embeddings-and-knn-classifier.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="title-of-the-article.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook/js/app.min.js"></script>
@@ -321,7 +415,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/8-0-acknowledgements.Rmd",
+"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/1-2-measure-classification.Rmd",
 "text": "Edit"
 },
 "history": {
