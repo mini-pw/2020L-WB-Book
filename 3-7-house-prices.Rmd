@@ -95,7 +95,7 @@ Throughout this case study, we use the Mean Absolute Error (MAE) measure to eval
 
 The first approach was using the SAFE [@gosiewska2019safe] technique to engineer new features and produce a linear regression model. We trained a well-performing black-box `ranger` [@ranger] model and extracted new interpretable features using its Partial Dependence Profiles [@pdp]. Then we used these features to craft a new linear model which indeed was better than the baseline linear model by about 10%. It is worth noting that both of these linear models had a hard time succeeding because of the target skewness.
 
-#### Divide-and-Conquer
+#### Divide-and-conquer
 
 In this section, we present the main contribution of this paper.
 The divide-and-conquer idea has many computer science applications, e.g. in sorting algorithms, natural language processing, or parallel computing.
