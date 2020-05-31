@@ -4,8 +4,7 @@
 
 ### Abstract
 
-
-The house price estimation task has a long-lasting history in economics and statistics. Nowadays, both worlds unite to exploit the machine learning approach and achieve the best predictive results. In the literature, there are myriad of works discussing the performance-interpretability tradeoff apparent in the modelling of real estate values. In this paper, we propose a solution to this problem, which is a highly interpretable stacked model that outperforms the black-box models. We use it to examine neighbourhood parameters affecting the median house price of the United States regions in 1990.
+The house price estimation task has a long-lasting history in economics and statistics. Nowadays, both worlds unite to exploit the machine learning approach; thus, achieve the best predictive results. In the literature, there are myriad of works discussing the performance-interpretability tradeoff apparent in the modelling of real estate values. In this paper, we propose a solution to this problem, which is a highly interpretable stacked model that outperforms the black-box models. We use it to examine neighbourhood parameters affecting the median house price of the United States regions in 1990.
 
 ### Introduction
   
@@ -21,7 +20,7 @@ In this paper, we perform a case study on the actual United States Census data f
 
 The use of ML in the real estate domain is a well-documented ground [@3-7-realestate-ai] and not precisely a topic of this contribution. We relate to the works that aim to use Interpretable ML techniques [@3-7-christophmonlar] to interpret models predictions in the house price estimation problem. 
  
-The state-of-the-art approach to house price estimation is to combine linear and semi-log regression models with the Hedonic Pricing Method [@3-7-hpm1, @3-7-hpm2], which aims to determine the extent that environmental or ecosystem factors affect the price of a good. [@3-7-hpm-iml] deliberately seeks to interpret the outcome and provide information about the parameters that affect property value. There are also comparisons between the linear white-box and black-box models [@3-7-wb-vs-bb, @3-7-multiple-models] which showcase the performance-interpretability tradeoff.
+The state-of-the-art approach to house price estimation is to combine linear and semi-log regression models with the Hedonic Pricing Method [@3-7-hpm1, @3-7-hpm2], which aims to determine the extent that environmental or ecosystem factors affect the price of a good. [@3-7-hpm-iml] deliberately seeks to interpret the outcome and provide information about the parameters that affect property value. There are also comparisons between the linear white-box and black-box models [@3-7-wb-vs-bb, @3-7-multiple-models] which showcase the performance-interpretability tradeoff [@3-7-gosiewska-lifting].
 
 Nature of the topic might entail that the data is place-specific; therefore, part of the studies focus on a single location with the use of geospatial data. The case study on London [@3-7-localarea-network] links the street network community structure with house price, which takes into consideration the topology of the city. In contradiction, [@3-7-relative-absolute] uses the Oslo city data to explore the differences between the relative and absolute location attributes. Applying the data like the distance to the nearest shop and transportation is place-agnostic.
 
@@ -69,7 +68,7 @@ The comprehensive description of used data can be found in [@housepricesdata].
 
 In this section, we are going to focus on developing the best white-box model, which provides interpretability of features. Throughout this case study, we use the Mean Absolute Error (MAE) measure to evaluate the model performance, because we focus on the residuals while the mean of absolute values of residuals is the easiest to interpret.
 
-#### EDA
+#### Exploratory Data Analysis
 
 The main conclusions from the Exploratory Data Analysis are as follows:
 
@@ -96,7 +95,7 @@ Throughout this case study, we use the Mean Absolute Error (MAE) measure to eval
 
 The first approach was using the SAFE [@gosiewska2019safe] technique to engineer new features and produce a linear regression model. We trained a well-performing black-box `ranger` [@ranger] model and extracted new interpretable features using its Partial Dependence Profiles [@pdp]. Then we used these features to craft a new linear model which indeed was better than the baseline linear model by about 10%. It is worth noting that both of these linear models had a hard time succeeding because of the target skewness.
 
-#### Divide-and-conquer
+#### Divide-and-Conquer
 
 In this section, we present the main contribution of this paper.
 The divide-and-conquer idea has many computer science applications, e.g. in sorting algorithms, natural language processing, or parallel computing.
@@ -119,7 +118,7 @@ The final product is a stacked model with one classifier and `k+1` estimators. T
 
 ### Results
 
-#### Final model
+#### The stacked model
 
 For the house price task, we chose `k = 1`, and the middle point was arbitrary chosen as `100k`, which divides the data into two groups in about a 10:1 ratio. We used the `ranger` random forest model as a black-box classifier and the `rpart` [@rpart] decision tree model as a white-box estimator. 
 
@@ -139,27 +138,32 @@ knitr::include_graphics('images/3-7-tree-cheap.svg')
 knitr::include_graphics('images/3-7-tree-rich.svg')
 ```
 
-Interpreting the model presented in Figures \@ref(fig:3-7-tree1) & \@ref(fig:3-7-tree2) leads to multiple conclusions. Firstly, we can observe the noticeable impact of features like the total number of households or the average number of rooms on the median price of the house in the region, which is compliant with basic intuitions. Then we see that the bigger percentage of people between 25-64 years of age the higher the prices. 
+Interpreting the stacked model presented in Figures \@ref(fig:3-7-tree1) & \@ref(fig:3-7-tree2) leads to multiple conclusions. Firstly, we can observe the noticeable impact of features like the total number of households or the average number of rooms on the median price of the house in the region, which is compliant with basic intuitions. It is also evident that the bigger percentage of people between 25-64 years of age the higher the prices. 
 
-Finally, we come to the more critical features; the percentage of people which are of Asian or Pacific Islander race divides the prices in an opposing direction to the percentage of households with black Householder. These showcases which neighbours and how affected house prices in the '90s.
+Finally, we can observe the impact of critical features. The percentage of people which are of Asian or Pacific Islander race divides the prices in an opposing direction to the percentage of households with black Householder. The corresponding tree splits showcase which neighbours, and in what manner, affected house prices in the '90s. Whether it is a correlation or causality is a valid debate that could be further investigated. 
     
-#### Comparison
+#### Comparison of the residuals
 
-We next compare our stacked model with baseline `ranger` and `rpart` models, respectively referred to as black-box and white-box. Our solution achieves competitive performance with interpretable features. 
+In this section, we compare our stacked model with baseline `ranger` and `rpart` models, respectively referred to as black-box and white-box. Our solution achieves competitive performance with interpretable features. 
 
-**TODO: describe the plots**
+The main idea behind the divide-and-conquer technique was to minimize the maximum value of the absolute residuals, which reassures that no significant errors will happen. Such an approach may inevitably lead to minimizing the sum of the absolute residual values (MAE). In Figure \ref(fig:3-7-boxplot), we can see that the targets mentioned above were indeed met. The stacked model not only has the lowest maximum error value but also has the best performance on average, as the red dot highlights the MAE score.
 
-```{r cache=FALSE, out.width="800", fig.align="center", echo=FALSE, eval = is.html, fig.cap="Density of residuals for the stacked model compared to black-box and white-box models. The plot is divided for cheaper and more expensive houses."}
-knitr::include_graphics('images/3-7-density.png')
-```
-
-```{r cache=FALSE, out.width="800", fig.align="center", echo=FALSE, eval = is.html, fig.cap="Boxplots of residuals for the stacked model compared to black-box and white-box models. The plot is divided for cheaper and more expensive houses."}
+```{r 3-7-boxplot, cache=FALSE, out.width="800", fig.align="center", echo=FALSE, eval = is.html, fig.cap="Boxplots of residuals for the stacked model compared to black-box and white-box models. The plot is divided for cheaper and more expensive houses. The red dot highlights the MAE score."}
 knitr::include_graphics('images/3-7-boxplot.png')
 ```
 
-We present the comparison of MAE scores for all of the used models in this case study in Table \@ref(tab:3-7-table-results). There are two tasks with different variables, complexity and correlations. We calculate the scores on the test subsets. 
+Figure \ref(fig:3-7-density) presents a more in-depth analysis of model residuals. In the top, we can observe that the black-box model has the lowest absolute residual mode (tip of the distribution), but the stacked model lays more in the centre (base of the distribution), which leads to more even spread of residuals. In the bottom, we can observe that the black-box model tends to undervalue house prices, while our model overestimates them. Looking at the height of the tip of the distribution and its shape, we can conclude that the stacked model provides more reliable estimations.
 
-We can see that the linear models performed the worse, although the SAFE approach noticeably lowered the MAE. Then there is a decision tree which performed better but not so on the more laborious task. Both of the black-box models did a far better job at house price estimation. Finally, our stacked model is a champion with the best performance on both of the tasks.
+```{r 3-7-density, cache=FALSE, out.width="800", fig.align="center", echo=FALSE, eval = is.html, fig.cap="Density of residuals for the stacked model compared to black-box and white-box models. The plot is divided for cheaper and more expensive houses."}
+knitr::include_graphics('images/3-7-density.png')
+```
+
+#### Comparison of the scores
+
+
+Finally, we present the comparison of MAE scores for all of the used models in this case study in Table \@ref(tab:3-7-table-results). There are two tasks with different variables, complexity and correlations. We calculate the scores on the test subsets. 
+
+We can see that the linear models performed the worse, although the SAFE approach noticeably lowered the MAE. Then there is a decision tree which performed better but not so on the more laborious task. Both of the black-box models did a far better job at house price estimation than interpretable models. Finally, our stacked model is a champion with the best performance on both of the tasks.
 
 ```{r 3-7-table-results, echo = FALSE}
 library(kableExtra)
@@ -188,4 +192,3 @@ kable(text_tbl, align=c('c', 'c', 'c'), caption="Comparison of the MAE score for
 
 **TODO: Conclusions**
 
-**TODO: add citations to bib without the conflicts**
