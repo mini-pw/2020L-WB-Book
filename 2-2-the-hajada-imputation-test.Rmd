@@ -1,0 +1,20 @@
+## Comparison of performance of data imputation methods in the context of their impact on the prediction efficiency of classification algorithms.
+
+*Authors: Jakub Kosterna, Dawid Przybyliński, Hanna Zdulska (Warsaw University of Technology)*
+  
+### Abstract
+  
+  
+### Introduction and Motivation
+  
+  
+### Related Work
+  
+  
+### Methodology
+
+
+### Results
+
+
+### Summary and conclusions 
