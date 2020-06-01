@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>References | ML Case Studies</title>
+  <title>3.5 Interpretable, non-linear feature engineering techniques for linear regression models - exploration on concrete compressive strength dataset with a new feature importance metric. | ML Case Studies</title>
   <meta name="description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="References | ML Case Studies" />
+  <meta property="og:title" content="3.5 Interpretable, non-linear feature engineering techniques for linear regression models - exploration on concrete compressive strength dataset with a new feature importance metric. | ML Case Studies" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="images/cover.png" />
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="References | ML Case Studies" />
+  <meta name="twitter:title" content="3.5 Interpretable, non-linear feature engineering techniques for linear regression models - exploration on concrete compressive strength dataset with a new feature importance metric. | ML Case Studies" />
   
   <meta name="twitter:description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="twitter:image" content="images/cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="acknowledgements.html"/>
-
+<link rel="prev" href="can-automated-regression-beat-linear-model.html"/>
+<link rel="next" href="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html"/>
 <script src="libs/header-attrs/header-attrs.js"></script>
 <script src="libs/jquery/jquery.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
@@ -288,322 +288,131 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references-1" class="section level1 unnumbered" number="">
-<h1>References</h1>
+<div id="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models---exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric." class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> Interpretable, non-linear feature engineering techniques for linear regression models - exploration on concrete compressive strength dataset with a new feature importance metric.</h2>
+<p><em>Authors: Łukasz Brzozowski, Wojciech Kretowicz, Kacper Siemaszko (Warsaw University of Technology)</em></p>
+<div id="abstract-16" class="section level3" number="3.5.1">
+<h3><span class="header-section-number">3.5.1</span> Abstract</h3>
+<p>In this article we present and compare a number of interpretable, non-linear feature engineering techniques used to improve linear regression models performance on Cocrete compressive strength dataset. To assert their interpretability, we introduce a new metric for measuring feature importance, which uses derivatives of feature transformations to trace back original features’ impact. As a result, we obtain a thorough comparison of transformation techniques on two black-box models - Random Forest and Support Vector Machine - and three glass-box models - Decision Tree, Elastic Net, and linear regression - with the focus on the linear regression.</p>
+</div>
+<div id="introduction-and-motivation-14" class="section level3" number="3.5.2">
+<h3><span class="header-section-number">3.5.2</span> Introduction and Motivation</h3>
+<p>Linear regression is one of the simplest and easiest to interpret of the predictive models. While it has already been thorougly analysed over the years, there remain some unsolved questions. One such question is how to transform the data features in order to maximize the model’s effectiveness in predicting the new data.</p>
+<p>An example of a known and widely used approach is the Box-Cox transformation of the target variable, which allows one to improve the model’s performance with minimal increase in computational complexity <span class="citation">(Sakia <a href="#ref-boxcox" role="doc-biblioref">1992</a>)</span>. However, the choice of the predictive features’ transformations is often left to intuition and trial-and-error approach. In the article, we wish to compare various methods of features’ transformations and compare the resulting models’ performances while also their differences in feature importance.</p>
+<p>Many black box regression models use various kinds of feature engineering during the training process. Unfortunately, even though the models perform better than the interpretable ones, they do not provide information about the transformations used and non-linear dependencies between variables and the target. The goal we want to achieve is extracting features and non-linearities with understandable transformations of the training dataset.</p>
+<p>To measure the improvement of used methods we will compare their performance metrics with black box models’ as a ground truth. This will allow us to effectively measure which method brought the simple linear model closer to the black box. Moreover, we will take under consideration the improvement of black box model performance. Thanks to this, our article will not only present the methods for creating highly performant interpretable models, but also improvement of the results of black box model.</p>
+</div>
+<div id="related-work-10" class="section level3" number="3.5.3">
+<h3><span class="header-section-number">3.5.3</span> Related Work</h3>
+<p>There exist many papers related to feature engineering. We will shortly present two of them.</p>
+<p>One of these papers is “Enhancing Regression Models for Complex Systems Using Evolutionary Techniques for Feature Engineering” Patricia Arroba, José L. Risco-Martín, Marina Zapater, José M. Moya &amp; José L. Ayala <span class="citation">(Patricia Arroba <a href="#ref-ETFFE" role="doc-biblioref">2015</a>)</span>. This paper describes, how feature transformations in linear regression can be chosen based on the genetic algorithms.</p>
+<p>Another one is “Automatic feature engineering for regression models with machine learning: An evolutionary computation and statistics hybrid” Vinícius Veloso de Melo, Wolfgang Banzhaf <span class="citation">(Melo] and Banzhaf <a href="#ref-VELOSODEMELO" role="doc-biblioref">2018</a>)</span>. Similarly to the previous one, this paper tries to automate feature engineering using evolutionar computation to make a hybrid model - final model is simple linear regression while its features are found by more complex algorithm.</p>
+</div>
+<div id="methodology-16" class="section level3" number="3.5.4">
+<h3><span class="header-section-number">3.5.4</span> Methodology</h3>
+<p>The main goal of our research is to compare various methods of transforming the data in order to improve the linear regression’s performance. While we do not aim to derive an explicitly best solution to the problem, we wish to compare some known approaches and propose new ones, simultaneously verifying legitimacy of their usage. The second goal of the research is to compare the achieved models’ performances with black box models to generally compare their effectiveness. An important observation about the linear regression model is that once we transform features in order to improve the model’s performance, it strongly affects its interpretability. We therefore propose a new feature importance measure for linear regression and compare it with the usual methodes where possible.</p>
+<div id="transformation-methods" class="section level4" number="3.5.4.1">
+<h4><span class="header-section-number">3.5.4.1</span> Transformation methods</h4>
+<p>The four methods of feature transformation compared in the article include:</p>
+<ol style="list-style-type: decimal">
+<li><p>By-hand-transformations - through a trial-and-error approach we derive feature transformations that allow the linear regression models to yield better results. We use our expertise and experience with previous datasets to get possibly best transformations which are available though such process. They include taking the features to up to third power, taking logarithm, sinus, cosinus or square root of the features.</p></li>
+<li><p>Brute Force method - this method of data transformation generates huge amount of additional features being transformations of the existing features. We allow taking each feature up to the third power, taking sinus and cosinus of each feature and additionaly a product of each pair of features. The resulting dataset has 69 variables including the target (in comparison with 9 variables in the beginning).</p></li>
+<li><p>Bayesian Optimization method <span class="citation">(Bernd Bischl <a href="#ref-BO" role="doc-biblioref">2018</a>)</span> - we treat the task of finding optimal data transformation as an optimization problem. We restrict the number of transformations and their type - we create one additional feature for each feature present in the dataset being its <span class="math inline">\(x\)</span>-th power, where <span class="math inline">\(x\)</span> is calculated through the process of Bayesian optimization. It allows us to keep the dimension of the dataset relatively small while improving the model’s performance. We allowed the exponents to be chosen from interval <span class="math inline">\((1, 4]\)</span>.</p></li>
+<li><p>One of our ideas is to use Genetic Programming (GP) to find the best feature transformations. Our goal is to find a set of simple feature transformations (not necessarily unary) that will significantly boost the ordinary linear regression model performance. We will create a set of simple operations such as adding, multiplying, taking a second power, taking logarithm and so on. Each transformation is based only on these operations and specified input variables. Each genetic program tries to minimize MSE of predicting the target, thus trying to save as much information as possible in a single output variable constructed on a subset of all the input features. We will use a variation of the genetic algorithms to create an operation tree minimizing our goal. Before we fit the final model, that is the ordinary linear regression, first we select the variables to transform. The resulting linear regression is calculated on the transformed and selected variables at the very end. To summarize, each operation tree calculates one variable, but this variable may not be included at the end. To avoid strong correlation we decided to use similar trick to the one used in random forest models. Each GP is trained only on some subset of all variables. Bootstraping seems also to be an effective idea, however, we did not implement it. In the case of small number of features in the data, such as in our case, one can consider using all possible subsets of variables of fixed size. Otherwise, they can be chosen on random. This process results in a number of output variables, so we choose the final transformed features using LASSO regression or BIC. This method should find much better solutions without extending dimensionality too much nor generating too complex transformations. The general idea is to automate feature enginnering done traditionally by hand. Another advantage is control of the model’s complexity. We can stimulate how the operation trees are made, e.g. how the operations set looks like. There is also a possibilty of reducing or increasing complexity at will. Modification of this idea is to add a regularization term decreasing survival probability with increasing complexity. At the end, the model could also make a feature selection in the same way - then one of possible operations in the set would be dropping.</p></li>
+</ol>
+</div>
+<div id="feature-importance-metric" class="section level4" number="3.5.4.2">
+<h4><span class="header-section-number">3.5.4.2</span> Feature importance metric</h4>
+<p>The most natural feature importance metric for linear models such as linear regression and GLM are the absolute values of coefficients. Let <span class="math inline">\(x_1, \dots, x_n\)</span> denote the features (column vectors) and <span class="math inline">\(\hat{y}\)</span> denote the prediction. In linear models we have:
+<span class="math display">\[c + \sum_{i=1}^n a_i \cdot x_i = \hat{y}\]</span>
+where <span class="math inline">\(c\)</span> is a constant (intercept) and <span class="math inline">\(a_i\)</span> are the coefficients of regression. Formally, the Feature Importance mesaure value of the <span class="math inline">\(i-\)</span>th feature (<span class="math inline">\(FI_i\)</span>) measure is given as:
+<span class="math display">\[FI_i = |a_i|\]</span>
+We may also notice that:
+<span class="math display">\[FI_i = \Big|\frac{\partial \hat{y_i}}{\partial x_i}\Big|\]</span>
+We wish to generalize the above equation. Transforming the data in the dataset to improve the model’s performance may be expressed as generating a new dataset, where each column is a function of all the features present in the original dataset. If the newdataset has <span class="math inline">\(m\)</span> features and the new prediction vector is given as <span class="math inline">\(\dot{y}\)</span>, we then have:
+<span class="math display">\[d + \sum_{i=1}^m b_i \cdot f_i (x_1, \dots, x_n) = \dot{y}\]</span>
+where <span class="math inline">\(d\)</span> is the new intercept constant and <span class="math inline">\(b_i\)</span> are the coefficients of regression. We therefore may use the formula above to derive a new Feature Importance Measure (Derivative Feature Importance, <span class="math inline">\(DFI\)</span>) as:
+<span class="math display">\[DFI_{i, j} = \Big|\frac{\partial \dot{y_i}}{\partial x_{i, j}}\Big| = \Big|b_i \cdot \sum_{k=1}^m \frac{\partial f_k}{\partial x_{i, j}}\Big|\]</span>
+The above measure is calculated separately for each observation <span class="math inline">\(j\)</span> in the dataset. However, due to the additive properties of derivatives, we may calculated Derivative Feature Importance of the <span class="math inline">\(i\)</span>-th feature as:
+<span class="math display">\[DFI_i = \frac{1}{n}\sum_{j=1}^n DFI_{i, j}\]</span>
+which is then a global measure of Feature Importance of the <span class="math inline">\(i\)</span>-th feature.</p>
+</div>
+<div id="dataset-and-model-performance-evaluation" class="section level4" number="3.5.4.3">
+<h4><span class="header-section-number">3.5.4.3</span> Dataset and model performance evaluation</h4>
+<p>The research is conducted on <em>Concrete_Data</em> dataset from the OpenML database [<a href="https://www.openml.org/d/4353">link</a>]. The data describes the amount of ingredients in the samples - cement, blast furnace slag, fly ash, water, coarse aggregate and fine aggregate - in kilograms per cubic meter; it also contains the drying time of the samples in days, referred to as age. The target variable of the dataset is the compressive strength of each sample in megapascals (MPa), therefore rendering the task to be regressive. The dataset contains 1030 instances with no missing values. There are also no symbolic features, as we aim to investigate continuous transformations of the data. Due to the fact, that we focus on the linear regression model, the data is reduced prior to training. We remove the outliers and influential observarions based on Cook’s distances and standardized residuals.</p>
+<p>We use standard and verified methods to compare results of the models. As the target variable is continuous, we may calculate Mean Square Error (MSE), Mean Absolute Error (MAE), and R-squared measures for each model, which provide us with proper and measurable way to compare the models’ performances. The same measures may be applied to black box models. The most natural measure of feature importance for linear regression are the coefficients’ absolute values after training the model - however, such easily interpretable measures are not available for black-box models. We therefore measure their feature importance with permutational feature importance measure and caluclating drop-out loss, easily applicable to any predictive model and therefore not constraining us to choose from a restricted set. In order to provide unbiased results, we calculate the measures’ values during cross-validation process for each model, using various number of fold to present comparative results.</p>
+</div>
+</div>
+<div id="results-16" class="section level3" number="3.5.5">
+<h3><span class="header-section-number">3.5.5</span> Results</h3>
+<p>Note, that the transformations used in results section are only examples of the presented methods and various realisations may result in various final measures’ values. Considerably, the trial-and-error approach may is quite individual and the results may differ depending on the experimentator. This non-automatic method should be treated as something that can be achieved after long time of tries.</p>
+<div id="models-performance" class="section level4" number="3.5.5.1">
+<h4><span class="header-section-number">3.5.5.1</span> Models’ performance</h4>
+<center>
+<div class="figure"><span id="fig:mae3-5"></span>
+<img src="images/3-5-1.png" alt="MAE of the models after transformations" width="70%" />
+<p class="caption">
+FIGURE 3.1: MAE of the models after transformations
+</p>
+</div>
+<div class="figure"><span id="fig:mse3-5"></span>
+<img src="images/3-5-2.png" alt="MSE of the models after transformations" width="70%" />
+<p class="caption">
+FIGURE 3.2: MSE of the models after transformations
+</p>
+</div>
+</center>
+<p>The plots presented above show the values of MAE and MSE achieved by each model on the datasets after the mentioned transformations. We may observe that the linear models have significantly reduced their error values after the transformations, while the brute force method yielded best results. However, brute force method generates much more features increasing the resulting dimension of the dataset, thus increasing the time complexity and reducing the interpretability.</p>
+<p>The three remaining methods, that is: the Bayesian optimization, the trial-and-error method and the genetic modifications - provided much improvement in comparison with the models’ performance on the plain dataset as well. In this case the final space has much lower dimension. Bayesian optimization results in 16 features, the trial-and-error in 14 features and the genetic modifications result in 8 features, in comparison to 69 features after brute force transformations. All of these methods have very similar quality of predictions, considering both MAE and MSE.</p>
+<p>The remaining non-linear white-box model, namely the Decision Tree Regressor, seems to be rather unaffected by any transformations of the dataset. In comparison, both black the boxes: Random Forest and SVM with gaussian kernel, are strongly influenced, though is hard to say when black box’s prediction quality increases and when decreases.</p>
+</div>
+<div id="feature-importance-comparison" class="section level4" number="3.5.5.2">
+<h4><span class="header-section-number">3.5.5.2</span> Feature Importance comparison</h4>
+<p>The comparison of Feature Imprortance values will be between permutational Feature Importance calculated on the black-box models - Random Forest and SVM and local and global Derivative Feature Importance calculated on the datasets after brute force transformations and after the Bayesian optimization.</p>
+<div class="figure"><span id="fig:fi3-5"></span>
+<img src="images/3-5-3.png" alt="Feature Importance of RFR and SVM" width="49%" height="49%" /><img src="images/3-5-4.png" alt="Feature Importance of RFR and SVM" width="49%" height="49%" />
+<p class="caption">
+FIGURE 3.3: Feature Importance of RFR and SVM
+</p>
+</div>
+<div class="figure"><span id="fig:fi3-5bf"></span>
+<img src="images/3-5-bfl.png" alt="Local and global DFI on the dataset after brute force transformations" width="49%" height="49%" /><img src="images/3-5-bfg.png" alt="Local and global DFI on the dataset after brute force transformations" width="49%" height="49%" />
+<p class="caption">
+FIGURE 3.4: Local and global DFI on the dataset after brute force transformations
+</p>
+</div>
+<div class="figure"><span id="fig:fi3-5by"></span>
+<img src="images/3-5-byl.png" alt="Local and global DFI on the dataset after Bayesian transformations" width="49%" height="49%" /><img src="images/3-5-byg.png" alt="Local and global DFI on the dataset after Bayesian transformations" width="49%" height="49%" />
+<p class="caption">
+FIGURE 3.5: Local and global DFI on the dataset after Bayesian transformations
+</p>
+</div>
+<p>The figure 3.4 present permutational Feature Importance of the black-box models, and the figures 3.5 and 3.6 present <span class="math inline">\(DFI\)</span> values - for one observation and calculated globally, respectively. The local <span class="math inline">\(DFI\)</span> were calculated on the observations nr <span class="math inline">\(573\)</span> and <span class="math inline">\(458\)</span>. We may notice high resemblance of the black-box Feature Importance to the local <span class="math inline">\(DFI\)</span> after Brute Force trtansformations, as well as similarities between all the Feature Importance calculations overall. The order of features in <span class="math inline">\(DFI\)</span> is not precisely equal to the order of feature after permutational Feature Importance of the black-boxes; however, the order still makes sense as far as we can say based on our little knowledge of materials. Moreover, the deviations of Feature Importance measures between various models is quite common in such research.</p>
+<p>To summarize, although the deviations between black-box and glass-box models’ Feature Importance are present, we conclude that <span class="math inline">\(DFI\)</span> may provide a new way of calculating Feature Importance for linear models. Its efficiency shall be further investigated in another research. When it comes the presented comparison, the majority of important variables were detected by the <span class="math inline">\(DFI\)</span> method.</p>
+</div>
+</div>
+<div id="summary-and-conclusions-15" class="section level3" number="3.5.6">
+<h3><span class="header-section-number">3.5.6</span> Summary and conclusions</h3>
+<p>Each of the four methods leads to significant improvement in Linear Regression. All of them are based on completely different ideas and their effectivenes may vary for different tasks. It needs noting that the presented research is conducted on a dataset containing only numerical variables, so similar research for transformations of categorical variables remains to be yet conducted. However, we have presented numerous ways to transform the dataset improving the linear models while at least partially maintaining its interpretability.</p>
+<p>The black box models in this case were unsurpassed, though we achieved highly comparable results. The greatest advatange of white box usage is that every person can understand their mechanics and predictions. Therefore, the presented methods may serve as an efficient solution, when one needs to retain simplicity while also offering an improvement to predictions.</p>
+<p>Our new metric - <span class="math inline">\(DFI\)</span> - can be used to compare simple (differentiable) feature transformations in linear regression. The analytical deduction suggests, that its performance is accurate, but it shall be investigated further before being applied in general.</p>
+<p>In the end, the obtained results are satisfying and should encourage to put more effort into research about new transformation methods and interpretability metrics. The next thing to do is putting more effort into researching the new <span class="math inline">\(DFI\)</span> metric, to improve interpretability of the extended regression models. We hope that our article will inspire a number of interested readers to conduct such research.</p>
 
-<div id="refs" class="references hanging-indent">
-<div>
-<p>accenture. 2018. “UNDERSTANDING Machines: EXPLAINABLE Ai,” 19. <a href="https://www.accenture.com/_acnmedia/pdf-85/accenture-understanding-machines-explainable-ai.pdf?fbclid=IwAR0ZtyDNzHR8dMUJHPwa0CkuQXgOOE68UQV4JCcBxXudO3dlm14LjqX-B8g">https://www.accenture.com/_acnmedia/pdf-85/accenture-understanding-machines-explainable-ai.pdf?fbclid=IwAR0ZtyDNzHR8dMUJHPwa0CkuQXgOOE68UQV4JCcBxXudO3dlm14LjqX-B8g</a>.</p>
 </div>
-<div>
-<p>Alejandro Barredo Arrieta, Javier Del Ser, Natalia Díaz-Rodríguez. 2019. “Explainable Artificial Intelligence (Xai): Concepts, Taxonomies, Opportunities and Challenges Toward Responsible Ai,” 67. <a href="https://arxiv.org/abs/1910.10045">https://arxiv.org/abs/1910.10045</a>.</p>
 </div>
-<div>
-<p>Anda, Bente, Dag Sjøberg, and Audris Mockus. 2009. “Variability and Reproducibility in Software Engineering: A Study of Four Companies That Developed the Same System.” <em>Software Engineering, IEEE Transactions on</em> 35 (July): 407–29. <a href="https://doi.org/10.1109/TSE.2008.89">https://doi.org/10.1109/TSE.2008.89</a>.</p>
-</div>
-<div>
-<p>Anderson, Christopher, Joanna Anderson, Marcel van Assen, Peter Attridge, Angela Attwood, Jordan Axt, Molly Babel, et al. 2019. “Reproducibility Project: Psychology.” <a href="https://doi.org/10.17605/OSF.IO/EZCUJ">https://doi.org/10.17605/OSF.IO/EZCUJ</a>.</p>
-</div>
-<div>
-<p>Ardia, David, Lennart F. Hoogerheide, and Herman K. van Dijk. 2009. “AdMit.” <em>The R Journal</em> 1 (1): 25–30. <a href="https://doi.org/10.32614/RJ-2009-003">https://doi.org/10.32614/RJ-2009-003</a>.</p>
-</div>
-<div>
-<p>Baldominos, Alejandro, Iván Blanco, Antonio Moreno, Rubén Iturrarte, Óscar Bernárdez, and Carlos Afonso. 2018. “Identifying Real Estate Opportunities Using Machine Learning.” <em>Applied Sciences</em> 8 (November): 2321. <a href="https://doi.org/10.3390/app8112321">https://doi.org/10.3390/app8112321</a>.</p>
-</div>
-<div>
-<p>Batista, Gustavo E. A. P. A., and Maria Carolina Monard. 2003. “An Analysis of Four Missing Data Treatment Methods for Supervised Learning.” <em>Applied Artificial Intelligence</em> 17 (5-6): 519–33. <a href="https://doi.org/10.1080/713827181">https://doi.org/10.1080/713827181</a>.</p>
-</div>
-<div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-BO">
 <p>Bernd Bischl, Jakob Bossek, Jakob Richter. 2018. “MlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions,” 23. <a href="https://arxiv.org/abs/1703.03373">https://arxiv.org/abs/1703.03373</a>.</p>
 </div>
-<div>
-<p>Biecek, Przemyslaw. 2018. “DALEX: Explainers for Complex Predictive Models in R.” <em>Journal of Machine Learning Research</em> 19 (84): 1–5. <a href="http://jmlr.org/papers/v19/18-416.html">http://jmlr.org/papers/v19/18-416.html</a>.</p>
-</div>
-<div>
-<p>Biecek, Przemyslaw, and Marcin Kosinski. 2017. “archivist: An R Package for Managing, Recording and Restoring Data Analysis Results.” <em>Journal of Statistical Software</em> 82 (11): 1–28. <a href="https://doi.org/10.18637/jss.v082.i11">https://doi.org/10.18637/jss.v082.i11</a>.</p>
-</div>
-<div>
-<p>Bischl, Bernd, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Erich Studerus, Giuseppe Casalicchio, and Zachary M. Jones. 2016a. “Mlr: Machine Learning in R.” <em>Journal of Machine Learning Research</em> 17 (170): 1–5. <a href="http://jmlr.org/papers/v17/15-066.html">http://jmlr.org/papers/v17/15-066.html</a>.</p>
-</div>
-<div>
-<p>———. 2016b. “mlr: Machine Learning in R.” <em>Journal of Machine Learning Research</em> 17 (170): 1–5. <a href="http://jmlr.org/papers/v17/15-066.html">http://jmlr.org/papers/v17/15-066.html</a>.</p>
-</div>
-<div>
-<p>Bischl, Bernd, Jakob Richter, Jakob Bossek, Daniel Horn, Janek Thomas, and Michel Lang. 2017. “MlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions.” <em>arXiv Preprint arXiv:1703.03373</em>.</p>
-</div>
-<div>
-<p>Bono, Christine, L. Ried, Carole Kimberlin, and Bruce Vogel. 2007. “Missing Data on the Center for Epidemiologic Studies Depression Scale: A Comparison of 4 Imputation Techniques.” <em>Research in Social &amp; Administrative Pharmacy : RSAP</em> 3 (April): 1–27. <a href="https://doi.org/10.1016/j.sapharm.2006.04.001">https://doi.org/10.1016/j.sapharm.2006.04.001</a>.</p>
-</div>
-<div>
-<p>Broatch, Jennifer, Jennifer Green, and Andrew Karl. 2018. “RealVAMS: An R Package for Fitting a Multivariate Value- added Model (VAM).” <em>The R Journal</em> 10 (1): 22–30. <a href="https://doi.org/10.32614/RJ-2018-033">https://doi.org/10.32614/RJ-2018-033</a>.</p>
-</div>
-<div>
-<p>Brown, Patrick, and Lutong Zhou. 2010. “MCMC for Generalized Linear Mixed Models with glmmBUGS.” <em>The R Journal</em> 2 (1): 13–17. <a href="https://doi.org/10.32614/RJ-2010-003">https://doi.org/10.32614/RJ-2010-003</a>.</p>
-</div>
-<div>
-<p>Casalicchio, Giuseppe, Bernd Bischl, Dominik Kirchhoff, Michel Lang, Benjamin Hofner, Jakob Bossek, Pascal Kerschke, and Joaquin Vanschoren. 2019. <em>OpenML: Open Machine Learning and Open Data Platform</em>. <a href="https://CRAN.R-project.org/package=OpenML">https://CRAN.R-project.org/package=OpenML</a>.</p>
-</div>
-<div>
-<p>“Census dataset.” 1996. <a href="http://www.cs.toronto.edu/~delve/data/census-house/censusDetail.html">http://www.cs.toronto.edu/~delve/data/census-house/censusDetail.html</a>.</p>
-</div>
-<div>
-<p>Coeurjolly, J.-F., R. Drouilhet, P. Lafaye de Micheaux, and J.-F. Robineau. 2009. “asympTest: A Simple R Package for Classical Parametric Statistical Tests and Confidence Intervals in Large Samples.” <em>The R Journal</em> 1 (2): 26–30. <a href="https://doi.org/10.32614/RJ-2009-015">https://doi.org/10.32614/RJ-2009-015</a>.</p>
-</div>
-<div>
-<p>Computing Machinery, Association for. 2018. “Artifact Review and Badging.” <a href="https://www.acm.org/publications/policies/artifact-review-badging">https://www.acm.org/publications/policies/artifact-review-badging</a>.</p>
-</div>
-<div>
-<p>Conway, Jennifer. 2018. “Artificial Intelligence and Machine Learning : Current Applications in Real Estate.” PhD thesis. <a href="https://dspace.mit.edu/bitstream/handle/1721.1/120609/1088413444-MIT.pdf">https://dspace.mit.edu/bitstream/handle/1721.1/120609/1088413444-MIT.pdf</a>.</p>
-</div>
-<div>
-<p>Din, Allan, Martin Hoesli, and André Bender. 2001. “Environmental Variables and Real Estate Prices.” <em>Urban Studies</em> 38 (February). <a href="https://doi.org/10.1080/00420980120080899">https://doi.org/10.1080/00420980120080899</a>.</p>
-</div>
-<div>
-<p>Dray, Stéphane, and Anne-Béatrice Dufour. 2007. “The Ade4 Package: Implementing the Duality Diagram for Ecologists.” <em>Journal of Statistical Software, Articles</em> 22 (4): 1–20. <a href="https://doi.org/10.18637/jss.v022.i04">https://doi.org/10.18637/jss.v022.i04</a>.</p>
-</div>
-<div>
-<p>Drummond, Chris. 2012. “Reproducible Research: A Dissenting Opinion.” In.</p>
-</div>
-<div>
-<p>Eisner, D. A. 2018. “Reproducibility of Science: Fraud, Impact Factors and Carelessness.” <em>Journal of Molecular and Cellular Cardiology</em> 114 (January): 364–68. <a href="https://doi.org/10.1016/j.yjmcc.2017.10.009">https://doi.org/10.1016/j.yjmcc.2017.10.009</a>.</p>
-</div>
-<div>
-<p>Elmenreich, Wilfried, Philipp Moll, Sebastian Theuermann, and Mathias Lux. 2018. “Making Computer Science Results Reproducible - a Case Study Using Gradle and Docker,” August. <a href="https://doi.org/10.7287/peerj.preprints.27082v1">https://doi.org/10.7287/peerj.preprints.27082v1</a>.</p>
-</div>
-<div>
-<p>Fan, Gang-Zhi, Seow Eng Ong, and Hian Koh. 2006. “Determinants of House Price: A Decision Tree Approach.” <em>Urban Studies</em> 43 (November): 2301–16. <a href="https://doi.org/10.1080/00420980600990928">https://doi.org/10.1080/00420980600990928</a>.</p>
-</div>
-<div>
-<p>Fenton, N. E., and S. L. Pfleeger. 1997. <em>Software Metrics: A Rigorous &amp; Practical Approach</em>. International Thompson Press.</p>
-</div>
-<div>
-<p>Fern’andez, Daniel M’endez, Daniel Graziotin, Stefan Wagner, and Heidi Seibold. 2019. “Open Science in Software Engineering.” <em>CoRR</em> abs/1904.06499. <a href="http://arxiv.org/abs/1904.06499">http://arxiv.org/abs/1904.06499</a>.</p>
-</div>
-<div>
-<p>Fernández, Daniel Méndez, Daniel Graziotin, Stefan Wagner, and Heidi Seibold. 2019. “Open Science in Software Engineering.” <em>ArXiv</em> abs/1904.06499.</p>
-</div>
-<div>
-<p>Flach, Peter, Jose Hernandez-Orallo, and Cèsar Ferri. 2011. “A Coherent Interpretation of Auc as a Measure of Aggregated Classification Performance.” In <em>Proceedings of the 28th International Conference on Machine Learning, ICML 2011</em>, 657–64.</p>
-</div>
-<div>
-<p>Fomel, Sergey, Paul Sava, Ioan Vlad, Yang Liu, and Vladimir Bashkardin. 2013. “Madagascar: Open-Source Software Project for Multidimensional Data Analysis and Reproducible Computational Experiments.” <em>Journal of Open Research Software</em> 1 (November): e8. <a href="https://doi.org/10.5334/jors.ag">https://doi.org/10.5334/jors.ag</a>.</p>
-</div>
-<div>
-<p>Friedman, Jerome. 2000. “Greedy Function Approximation: A Gradient Boosting Machine.” <em>The Annals of Statistics</em> 29 (November). <a href="https://doi.org/10.1214/aos/1013203451">https://doi.org/10.1214/aos/1013203451</a>.</p>
-</div>
-<div>
-<p>Gao, Guangliang, Zhifeng Bao, Jie Cao, A. Qin, Timos Sellis, Fellow, IEEE, and Zhiang Wu. 2019. “Location-Centered House Price Prediction: A Multi-Task Learning Approach,” January. <a href="https://arxiv.org/abs/1901.01774">https://arxiv.org/abs/1901.01774</a>.</p>
-</div>
-<div>
-<p>Garrod, Guy D, and Kenneth G Willis. 1992. “Valuing Goods’ Characteristics: An Application of the Hedonic Price Method to Environmental Attributes.” <em>Journal of Environmental Management</em> 34 (1): 59–76.</p>
-</div>
-<div>
-<p>Gentleman, Robert, and Duncan Temple Lang. 2007. “Statistical Analyses and Reproducible Research.” <em>Journal of Computational and Graphical Statistics</em> 16 (1): 1–23.</p>
-</div>
-<div>
-<p>Goodman, Steven N., Daniele Fanelli, and John P. A. Ioannidis. 2016a. “What Does Research Reproducibility Mean?” <em>Science Translational Medicine</em> 8 (341). <a href="https://doi.org/10.1126/scitranslmed.aaf5027">https://doi.org/10.1126/scitranslmed.aaf5027</a>.</p>
-</div>
-<div>
-<p>———. 2016b. “What Does Research Reproducibility Mean?” <em>Science Translational Medicine</em> 8 (341): 341ps12–341ps12. <a href="https://doi.org/10.1126/scitranslmed.aaf5027">https://doi.org/10.1126/scitranslmed.aaf5027</a>.</p>
-</div>
-<div>
-<p>Gosiewska, Alicja, and Przemyslaw Biecek. 2020. “Lifting Interpretability-Performance Trade-off via Automated Feature Engineering.” <a href="https://arxiv.org/abs/2002.04267">https://arxiv.org/abs/2002.04267</a>.</p>
-</div>
-<div>
-<p>Gosiewska, Alicja, Aleksandra Gacek, Piotr Lubon, and Przemyslaw Biecek. 2019. “SAFE Ml: Surrogate Assisted Feature Extraction for Model Learning.” <a href="http://arxiv.org/abs/1902.11035">http://arxiv.org/abs/1902.11035</a>.</p>
-</div>
-<div>
-<p>Guazzelli, Alex, Michael Zeller, Wen-Ching Lin, and Graham Williams. 2009. “PMML: An Open Standard for Sharing Models.” <em>The R Journal</em> 1 (1): 60–65. <a href="https://doi.org/10.32614/RJ-2009-010">https://doi.org/10.32614/RJ-2009-010</a>.</p>
-</div>
-<div>
-<p>Gundersen, Odd Erik, and Sigbjørn Kjensmo. 2018. “State of the Art: Reproducibility in Artificial Intelligence.” <a href="https://www.aaai.org/ocs/index.php/AAAI/AAAI18/paper/view/17248">https://www.aaai.org/ocs/index.php/AAAI/AAAI18/paper/view/17248</a>.</p>
-</div>
-<div>
-<p>Günther, Frauke, and Stefan Fritsch. 2010. “neuralnet: Training of Neural Networks.” <em>The R Journal</em> 2 (1): 30–38. <a href="https://doi.org/10.32614/RJ-2010-006">https://doi.org/10.32614/RJ-2010-006</a>.</p>
-</div>
-<div>
-<p>Halstead, M. H. 1977. <em>Elements of Software Science</em>. Elsevier.</p>
-</div>
-<div>
-<p>Hankin, Robin. 2007. “Introducing Untb, an R Package for Simulating Ecological Drift Under the Unified Neutral Theory of Biodiversity.” <em>Journal of Statistical Software, Articles</em> 22 (12): 1–15. <a href="https://doi.org/10.18637/jss.v022.i12">https://doi.org/10.18637/jss.v022.i12</a>.</p>
-</div>
-<div>
-<p>Hastie, Trevor, and Rahul Mazumder. 2015. <em>SoftImpute: Matrix Completion via Iterative Soft-Thresholded Svd</em>. <a href="https://CRAN.R-project.org/package=softImpute">https://CRAN.R-project.org/package=softImpute</a>.</p>
-</div>
-<div>
-<p>Heyman, Axel, and Dag Sommervoll. 2019. “House Prices and Relative Location.” <em>Cities</em> 95 (September): 102373. <a href="https://doi.org/10.1016/j.cities.2019.06.004">https://doi.org/10.1016/j.cities.2019.06.004</a>.</p>
-</div>
-<div>
-<p>Hu, Feng, and Hang Li. 2013. “A Novel Boundary Oversampling Algorithm Based on Neighborhood Rough Set Model: NRSBoundary-Smote.” <em>Mathematical Problems in Engineering</em> 2013 (November). <a href="https://doi.org/10.1155/2013/694809">https://doi.org/10.1155/2013/694809</a>.</p>
-</div>
-<div>
-<p>Hung, Ling-Hong, Daniel Kristiyanto, Sung Lee, and Ka Yee Yeung. 2016. “GUIdock: Using Docker Containers with a Common Graphics User Interface to Address the Reproducibility of Research.” <em>PloS One</em> 11 (April): e0152686. <a href="https://doi.org/10.1371/journal.pone.0152686">https://doi.org/10.1371/journal.pone.0152686</a>.</p>
-</div>
-<div>
-<p>Josse, Julie, and François Husson. 2016. “missMDA: A Package for Handling Missing Values in Multivariate Data Analysis.” <em>Journal of Statistical Software</em> 70 (1): 1–31. <a href="https://doi.org/10.18637/jss.v070.i01">https://doi.org/10.18637/jss.v070.i01</a>.</p>
-</div>
-<div>
-<p>“Journal Metrics - Impact, Speed and Reach.” n.d. <a href="https://www.journals.elsevier.com/international-journal-of-approximate-reasoning/news/journal-metricsimpact-speed-and-reach">https://www.journals.elsevier.com/international-journal-of-approximate-reasoning/news/journal-metricsimpact-speed-and-reach</a>.</p>
-</div>
-<div>
-<p>Kim, Donghoh, and Hee-Seok Oh. 2009. “EMD: A Package for Empirical Mode Decomposition and Hilbert Spectrum.” <em>The R Journal</em> 1 (1): 40–46. <a href="https://doi.org/10.32614/RJ-2009-002">https://doi.org/10.32614/RJ-2009-002</a>.</p>
-</div>
-<div>
-<p>Kitzes, Justin, Daniel Turek, and Fatma Deniz. 2017. <em>The Practice of Reproducible Research: Case Studies and Lessons from the Data-Intensive Sciences</em>. Univ of California Press.</p>
-</div>
-<div>
-<p>Kowarik, Alexander, and Matthias Templ. 2016. “Imputation with the R Package VIM.” <em>Journal of Statistical Software</em> 74 (7): 1–16. <a href="https://doi.org/10.18637/jss.v074.i07">https://doi.org/10.18637/jss.v074.i07</a>.</p>
-</div>
-<div>
-<p>Landau, William Michael. 2018. “The Drake R Package: A Pipeline Toolkit for Reproducibility and High-Performance Computing.” <em>Journal of Open Source Software</em> 3 (21). <a href="https://doi.org/10.21105/joss.00550">https://doi.org/10.21105/joss.00550</a>.</p>
-</div>
-<div>
-<p>Law, Stephen. 2017. “Defining Street-Based Local Area and Measuring Its Effect on House Price Using a Hedonic Price Approach: The Case Study of Metropolitan London.” <em>Cities</em> 60 (February): 166–79. <a href="https://doi.org/10.1016/j.cities.2016.08.008">https://doi.org/10.1016/j.cities.2016.08.008</a>.</p>
-</div>
-<div>
-<p>LeVeque, Randall. 2009. “Python Tools for Reproducible Research on Hyperbolic Problems.” <em>Computing in Science &amp; Engineering</em> 11 (January): 19–27. <a href="https://doi.org/10.1109/MCSE.2009.13">https://doi.org/10.1109/MCSE.2009.13</a>.</p>
-</div>
-<div>
-<p>Liu, Rui, and Lu Liu. 2019. “Predicting housing price in China based on long short-term memory incorporating modified genetic algorithm.” <em>Soft Computing</em>, 1–10. <a href="https://doi.org/10.1007/s00500-018-03739-w">https://doi.org/10.1007/s00500-018-03739-w</a>.</p>
-</div>
-<div>
-<p>Marwick, B. n.d. “Rrtools: Creates a Reproducible Research Compendium (2018).”</p>
-</div>
-<div>
-<p>Marwick, Ben. 2016. “Computational Reproducibility in Archaeological Research: Basic Principles and a Case Study of Their Implementation.” <em>Journal of Archaeological Method and Theory</em> 24 (2): 424–50. <a href="https://doi.org/10.1007/s10816-015-9272-9">https://doi.org/10.1007/s10816-015-9272-9</a>.</p>
-</div>
-<div>
-<p>Marwick, Ben, Carl Boettiger, and Lincoln Mullen. 2017. “Packaging Data Analytical Work Reproducibly Using R (and Friends).” <em>The American Statistician</em> 72 (1): 80–88. <a href="https://doi.org/10.1080/00031305.2017.1375986">https://doi.org/10.1080/00031305.2017.1375986</a>.</p>
-</div>
-<div>
-<p>McCabe, T. J. 1976. “A Complexity Measure.” <em>IEEE Transactions on Software Engineering</em> 2 (4): 308–20.</p>
-</div>
-<div>
-<p>McNutt, Marcia. 2014. “Journals Unite for Reproducibility.” <em>Science</em> 346 (6210): 679–79. <a href="https://doi.org/10.1126/science.aaa1724">https://doi.org/10.1126/science.aaa1724</a>.</p>
-</div>
-<div>
+<div id="ref-VELOSODEMELO">
 <p>Melo], Vinícius [Veloso de, and Wolfgang Banzhaf. 2018. “Automatic Feature Engineering for Regression Models with Machine Learning: An Evolutionary Computation and Statistics Hybrid.” <em>Information Sciences</em> 430-431: 287–313. <a href="https://doi.org/https://doi.org/10.1016/j.ins.2017.11.041">https://doi.org/https://doi.org/10.1016/j.ins.2017.11.041</a>.</p>
 </div>
-<div>
-<p>Mevik, Björn-Helge, and Ron Wehrens. 2007. “The Pls Package: Principal Component and Partial Least Squares Regression in R.” <em>Journal of Statistical Software, Articles</em> 18 (2): 1–23. <a href="https://doi.org/10.18637/jss.v018.i02">https://doi.org/10.18637/jss.v018.i02</a>.</p>
-</div>
-<div>
-<p>Mi, Xuefei, Tetsuhisa Miwa, and Torsten Hothorn. 2009. “New Numerical Algorithm for Multivariate Normal Probabilities in Package mvtnorm.” <em>The R Journal</em> 1 (1): 37–39. <a href="https://doi.org/10.32614/RJ-2009-001">https://doi.org/10.32614/RJ-2009-001</a>.</p>
-</div>
-<div>
-<p>Molnar, Christoph. 2019. <em>Interpretable Machine Learning: A Guide for Making Black Box Models Explainable</em>. <a href="https://christophm.github.io/interpretable-ml-book/simple.html">https://christophm.github.io/interpretable-ml-book/simple.html</a>.</p>
-</div>
-<div>
-<p>Murdoch, Kumbier, Singh. 2018. “Interpretable Machine Learning: Definitions, Methods, and Applications,” 2. <a href="https://arxiv.org/pdf/1901.04592.pdf?fbclid=IwAR2frcHrhLc4iaH5-TmKKq263NVvAKHtG4uQoiVNDeLAG3QFzdje-yzZjiQ">https://arxiv.org/pdf/1901.04592.pdf?fbclid=IwAR2frcHrhLc4iaH5-TmKKq263NVvAKHtG4uQoiVNDeLAG3QFzdje-yzZjiQ</a>.</p>
-</div>
-<div>
-<p>Musil, Carol, Camille Warner, Piyanee Klainin-Yobas, and Susan Jones. 2002. “A Comparison of Imputation Techniques for Handling Missing Data.” <em>Western Journal of Nursing Research</em> 24 (December): 815–29. <a href="https://doi.org/10.1177/019394502762477004">https://doi.org/10.1177/019394502762477004</a>.</p>
-</div>
-<div>
-<p>Özalp, Ayşe, and Halil Akinci. 2017. “The Use of Hedonic Pricing Method to Determine the Parameters Affecting Residential Real Estate Prices.” <em>Arabian Journal of Geosciences</em> 10 (December). <a href="https://doi.org/10.1007/s12517-017-3331-3">https://doi.org/10.1007/s12517-017-3331-3</a>.</p>
-</div>
-<div>
-<p>Pandey. 2019. “Interpretable Machine Learning: Extracting Human Understandable Insights from Any Machine Learning Model,” April. <a href="https://towardsdatascience.com/interpretable-machine-learning-1dec0f2f3e6b">https://towardsdatascience.com/interpretable-machine-learning-1dec0f2f3e6b</a>.</p>
-</div>
-<div>
-<p>Park, Byeonghwa, and Jae Bae. 2015. “Using machine learning algorithms for housing price prediction: The case of Fairfax County, Virginia housing data.” <em>Expert Systems with Applications</em> 42 (April). <a href="https://doi.org/10.1016/j.eswa.2014.11.040">https://doi.org/10.1016/j.eswa.2014.11.040</a>.</p>
-</div>
-<div>
-<p>Patil, Prasad, Roger D. Peng, and Jeffrey T. Leek. 2016. “A Statistical Definition for Reproducibility and Replicability.” <em>Science</em>. <a href="https://doi.org/10.1101/066803">https://doi.org/10.1101/066803</a>.</p>
-</div>
-<div>
+<div id="ref-ETFFE">
 <p>Patricia Arroba, Marina Zapater, José L. Risco-Martín. 2015. “Enhancing Regression Models for Complex Systems Using Evolutionary Techniques for Feature Engineering.” <em>Journal of Grid Computing</em> 13: 409–23. <a href="https://doi.org/10.1007/s10723-014-9313-8">https://doi.org/10.1007/s10723-014-9313-8</a>.</p>
 </div>
-<div>
-<p>Peng, Roger D. 2011. “Reproducible Research in Computational Science.” <em>Science</em> 334 (6060): 1226–7. <a href="https://doi.org/10.1126/science.1213847">https://doi.org/10.1126/science.1213847</a>.</p>
-</div>
-<div>
-<p>Piccolo, Stephen R., and Michael B. Frampton. 2016. “Tools and Techniques for Computational Reproducibility.” <em>GigaScience</em> 5 (1). <a href="https://doi.org/10.1186/s13742-016-0135-4">https://doi.org/10.1186/s13742-016-0135-4</a>.</p>
-</div>
-<div>
-<p>Raff, Edward. 2020. “Quantifying Independently Reproducible Machine Learning.” <a href="https://thegradient.pub/independently-reproducible-machine-learning/">https://thegradient.pub/independently-reproducible-machine-learning/</a>.</p>
-</div>
-<div>
-<p>Rafiei, Mohammad H., and Hojjat Adeli. 2015. “A Novel Machine Learning Model for Estimation of Sale Prices of Real Estate Units.” <em>Journal of Construction Engineering and Management</em> 142 (August). <a href="https://doi.org/10.1061/(ASCE)CO.1943-7862.0001047">https://doi.org/10.1061/(ASCE)CO.1943-7862.0001047</a>.</p>
-</div>
-<div>
-<p>Randeniya, TD, Gayani Ranasinghe, and Susantha Amarawickrama. 2017. “A Model to Estimate the Implicit Values of Housing Attributes by Applying the Hedonic Pricing Method.” <em>International Journal of Built Environment and Sustainability</em> 4 (May). <a href="https://doi.org/10.11113/ijbes.v4.n2.182">https://doi.org/10.11113/ijbes.v4.n2.182</a>.</p>
-</div>
-<div>
-<p>R Core Team. 2018. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.</p>
-</div>
-<div>
-<p>“Reproducibility in Science: A Guide to enhancing reproducibility in scientific results and writing.” 2014. <a href="http://ropensci.github.io/reproducibility-guide/">http://ropensci.github.io/reproducibility-guide/</a>.</p>
-</div>
-<div>
-<p>Rosenberg, David E., Yves Filion, Rebecca Teasley, Samuel Sandoval-Solis, Jory S. Hecht, Jakobus E. van Zyl, George F. McMahon, Jeffery S. Horsburgh, Joseph R. Kasprzyk, and David G. Tarboton. 2020. “The Next Frontier: Making Research More Reproducible.” <em>Journal of Water Resources Planning and Management</em> 146 (6): 01820002. <a href="https://doi.org/10.1061/(ASCE)WR.1943-5452.0001215">https://doi.org/10.1061/(ASCE)WR.1943-5452.0001215</a>.</p>
-</div>
-<div>
-<p>Rubin, DONALD B. 1976. “Inference and missing data.” <em>Biometrika</em> 63 (3): 581–92. <a href="https://doi.org/10.1093/biomet/63.3.581">https://doi.org/10.1093/biomet/63.3.581</a>.</p>
-</div>
-<div>
+<div id="ref-boxcox">
 <p>Sakia, R. M. 1992. “The Box-Cox Transformation Technique: A Review.” <em>Journal of the Royal Statistical Society. Series D (the Statistician)</em> 41 (2): 169–78. <a href="http://www.jstor.org/stable/2348250">http://www.jstor.org/stable/2348250</a>.</p>
-</div>
-<div>
-<p>Sayyad Shirabad, J., and T. J. Menzies. 2005. “The PROMISE Repository of Software Engineering Databases.” School of Information Technology and Engineering, University of Ottawa, Canada. <a href="http://promise.site.uottawa.ca/SERepository">http://promise.site.uottawa.ca/SERepository</a>.</p>
-</div>
-<div>
-<p>Selim, Hasan. 2009. “Determinants of House Prices in Turkey: Hedonic Regression Versus Artificial Neural Network.” <em>Expert Syst. Appl.</em> 36 (March): 2843–52. <a href="https://doi.org/10.1016/j.eswa.2008.01.044">https://doi.org/10.1016/j.eswa.2008.01.044</a>.</p>
-</div>
-<div>
-<p>Slezak, Peter, and Iveta Waczulikova. 2011. “Reproducibility and Repeatability.” <em>Physiological Research / Academia Scientiarum Bohemoslovaca</em> 60 (April): 203–4; author reply 204.</p>
-</div>
-<div>
-<p>Soetaert, Karline, Thomas Petzoldt, and R. Woodrow Setzer. 2010. “Solving Differential Equations in R.” <em>The R Journal</em> 2 (2): 5–15. <a href="https://doi.org/10.32614/RJ-2010-013">https://doi.org/10.32614/RJ-2010-013</a>.</p>
-</div>
-<div>
-<p>Stanisic, Luka, Arnaud Legrand, and Vincent Danjean. 2015. “An Effective Git and Org-Mode Based Workflow for Reproducible Research.” <em>SIGOPS Oper. Syst. Rev.</em> 49 (1): 61–70. <a href="https://doi.org/10.1145/2723872.2723881">https://doi.org/10.1145/2723872.2723881</a>.</p>
-</div>
-<div>
-<p>Stef van Buuren, Karin Groothuis-Oudshoorn. 2011. “Mice: Multivariate Imputation by Chained Equations in R.” <a href="https://www.jstatsoft.org/article/view/v045i03">https://www.jstatsoft.org/article/view/v045i03</a>.</p>
-</div>
-<div>
-<p>Stekhoven, Daniel J., and Peter Buehlmann. 2012. “MissForest - Non-Parametric Missing Value Imputation for Mixed-Type Data.” <em>Bioinformatics</em> 28 (1): 112–18.</p>
-</div>
-<div>
-<p>Stodden, Victoria, David H. Bailey, Jonathan M. Borwein, Randall J. LeVeque, William J. Rider, and William Stein. 2013. “Setting the Default to Reproducible Reproducibility in Computational and Experimental Mathematics.” In.</p>
-</div>
-<div>
-<p>Stodden, Victoria, Marcia McNutt, David H. Bailey, Ewa Deelman, Yolanda Gil, Brooks Hanson, Michael A. Heroux, John P. A. Ioannidis, and Michela Taufer. 2016. “Enhancing Reproducibility for Computational Methods.” <em>Science</em> 354 (6317): 1240–1. <a href="https://doi.org/10.1126/science.aah6168">https://doi.org/10.1126/science.aah6168</a>.</p>
-</div>
-<div>
-<p>Stodden, Victoria, Jennifer Seiler, and Zhaokun Ma. 2018. “An Empirical Analysis of Journal Policy Effectiveness for Computational Reproducibility.” <em>Proceedings of the National Academy of Sciences</em> 115 (11): 2584–9. <a href="https://doi.org/10.1073/pnas.1708290115">https://doi.org/10.1073/pnas.1708290115</a>.</p>
-</div>
-<div>
-<p>Strobl, Carolin, Torsten Hothorn, and Achim Zeileis. 2009. “Party on!” <em>The R Journal</em> 1 (2): 14–17. <a href="https://doi.org/10.32614/RJ-2009-013">https://doi.org/10.32614/RJ-2009-013</a>.</p>
-</div>
-<div>
-<p>Su, Xiaoyuan, Taghi Khoshgoftaar, and Russ Greiner. 2008. “Using Imputation Techniques to Help Learn Accurate Classifiers.” <em>Proceedings - International Conference on Tools with Artificial Intelligence, ICTAI</em> 1 (December): 437–44. <a href="https://doi.org/10.1109/ICTAI.2008.60">https://doi.org/10.1109/ICTAI.2008.60</a>.</p>
-</div>
-<div>
-<p>Therneau, Terry, and Beth Atkinson. 2019. <em>Rpart: Recursive Partitioning and Regression Trees</em>. <a href="https://CRAN.R-project.org/package=rpart">https://CRAN.R-project.org/package=rpart</a>.</p>
-</div>
-<div>
-<p>Thomas, Kluyver, Ragan-Kelley Benjamin, P&amp;eacute;rez Fernando, Granger Brian, Bussonnier Matthias, Frederic Jonathan, Kelley Kyle, et al. 2016. “Jupyter Notebooks &amp;Ndash; a Publishing Format for Reproducible Computational Workflows.” <em>Stand Alone</em> 0 (Positioning and Power in Academic Publishing: Players, Agents and Agendas): 87–90. <a href="https://doi.org/10.3233/978-1-61499-649-1-87">https://doi.org/10.3233/978-1-61499-649-1-87</a>.</p>
-</div>
-<div>
-<p>van Buuren, Stef, and Karin Groothuis-Oudshoorn. 2011. “mice: Multivariate Imputation by Chained Equations in R.” <em>Journal of Statistical Software</em> 45 (3): 1–67. <a href="https://www.jstatsoft.org/v45/i03/">https://www.jstatsoft.org/v45/i03/</a>.</p>
-</div>
-<div>
-<p>Vandewalle, Patrick, Jelena Kovacevic, and Martin Vetterli. 2009. “Reproducible Research in Signal Processing.” <em>IEEE Signal Processing Magazine</em> 26 (3): 37–47.</p>
-</div>
-<div>
-<p>Vanschoren, Joaquin, Jan N. van Rijn, Bernd Bischl, and Luis Torgo. 2013. “OpenML: Networked Science in Machine Learning.” <em>SIGKDD Explorations</em> 15 (2): 49–60. <a href="https://doi.org/10.1145/2641190.2641198">https://doi.org/10.1145/2641190.2641198</a>.</p>
-</div>
-<div>
-<p>Wilhelm, Stefan, and B. G. Manjunath. 2010. “tmvtnorm: A Package for the Truncated Multivariate Normal Distribution.” <em>The R Journal</em> 2 (1): 25–29. <a href="https://doi.org/10.32614/RJ-2010-005">https://doi.org/10.32614/RJ-2010-005</a>.</p>
-</div>
-<div>
-<p>Wright, Marvin N., and Andreas Ziegler. 2017. “ranger: A Fast Implementation of Random Forests for High Dimensional Data in C++ and R.” <em>Journal of Statistical Software</em> 77 (1): 1–17. <a href="https://doi.org/10.18637/jss.v077.i01">https://doi.org/10.18637/jss.v077.i01</a>.</p>
-</div>
-<div>
-<p>Yuan, Lester. 2007. “Maximum Likelihood Method for Predicting Environmental Conditions from Assemblage Composition: The R Package Bio.infer.” <em>Journal of Statistical Software, Articles</em> 22 (3): 1–20. <a href="https://doi.org/10.18637/jss.v022.i03">https://doi.org/10.18637/jss.v022.i03</a>.</p>
-</div>
 </div>
 </div>
             </section>
@@ -611,8 +420,8 @@
           </div>
         </div>
       </div>
-<a href="acknowledgements.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="can-automated-regression-beat-linear-model.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook/js/app.min.js"></script>
@@ -643,7 +452,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/9-0-references.Rmd",
+"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/3-5-explainable-feature-engineering.Rmd",
 "text": "Edit"
 },
 "history": {
