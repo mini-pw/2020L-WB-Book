@@ -64,7 +64,10 @@ Specific results are presented in _Table 1.1_, which shows the number of examine
 | SUM | 16  | 18  | 20  | 15  | 30  | 30  | 30  | 30  | 30  | 30  | 30  |
 <p>&nbsp;</p>
 
-```{r echo=FALSE, warning=FALSE}
+_Figure 1.1_ shows the results in the original 4-level scale. Although, the number of papers varies throughout the years in every reproducibility class, it is observable that intermediate ones - I and II, are less common in the oldest and newest papers. In addition, results in 2018 and 2019 are identical. It is important to remember that from 2009 to 2012, the overall number of papers oscillated around 18 per year. After 2013, the number of researched articles was constant.
+
+<p>&nbsp;</p>
+```{r echo=FALSE, fig.cap= "Number of papers by class and publication year", warning=FALSE}
 
 library(ggplot2)
 
@@ -88,14 +91,6 @@ wyniki[41:44, 1] <- c(9, 2, 6, 13)
 colnames(wyniki) <- c("Number", "Year", "Class", "Type")
 
 wyniki$Type <- ifelse(wyniki$Class== "0" | wyniki$Class== "I", "Non-reproducible", "Reproducible")
-
-
-```
-
-_Figure 1.1_ shows the results in the original 4-level scale. Although, the number of papers varies throughout the years in every reproducibility class, it is observable that intermediate ones - I and II, are less common in the oldest and newest papers. In addition, results in 2018 and 2019 are identical. It is important to remember that from 2009 to 2012, the overall number of papers oscillated around 18 per year. After 2013, the number of researched articles was constant.
-
-<p>&nbsp;</p>
-```{r echo=FALSE, fig.cap= "Number of papers by class and publication year", warning=FALSE}
 
 p2 <- ggplot(wyniki, aes(x = Year, y = Number, fill = Class)) +
   geom_bar(position = "dodge", stat = "identity") +
