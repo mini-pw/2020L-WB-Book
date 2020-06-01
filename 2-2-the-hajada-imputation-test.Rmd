@@ -1,4 +1,4 @@
-## Comparison of performance of data imputation methods in the context of their impact on the prediction efficiency of classification algorithms.
+## The Hajada Imputation Test
 
 *Authors: Jakub Kosterna, Dawid Przybyliński, Hanna Zdulska (Warsaw University of Technology)*
   
