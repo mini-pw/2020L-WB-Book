@@ -64,7 +64,7 @@ Specific results are presented in _Table 1.1_, which shows the number of examine
 | SUM | 16  | 18  | 20  | 15  | 30  | 30  | 30  | 30  | 30  | 30  | 30  |
 <p>&nbsp;</p>
 
-```{r echo=FALSE, fig.cap="Number of papers by publication year", warning=FALSE}
+```{r echo=FALSE, warning=FALSE}
 
 library(ggplot2)
 
