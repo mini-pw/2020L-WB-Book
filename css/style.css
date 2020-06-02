@@ -21,3 +21,10 @@ blockquote > p:last-child {
 blockquote > p:first-child {
   text-align: inherit;
 }
+
+
+#which-neighbours-affected-house-prices-in-the-90s p
+{
+  text-align: justify;
+  text-justify: inter-word;
+}
