@@ -36,6 +36,7 @@ This book is the result of a student projects for [Case Studies](https://github.
 This project is inspired by a book [Limitations of Interpretable Machine Learning Methods](https://compstat-lmu.github.io/iml_methods_limitations/) created at the Department of Statistics, LMU Munich [XAI Stories. Case studies for eXplainable Artificial Intelligence](https://pbiecek.github.io/xai_stories/) done at the Warsaw University of Technology and at the University of Warsaw.
 We used the LIML project as the cornerstone for this repository.
 
+The cover created by Anna Kozak.
 
 ![Creative Commons License](images/by-nc-sa.png)
 
