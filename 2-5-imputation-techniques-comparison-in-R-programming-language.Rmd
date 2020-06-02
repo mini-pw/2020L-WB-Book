@@ -1,0 +1,140 @@
+## Imputation techniques' comparison in R programming language
+
+*Authors: Mikołaj Jakubowski, Marceli Korbin, Patryk Wrona (Warsaw University of Technology)*
+
+### Abstract
+
+The vast majority of *machine learning models* do not accept missing values, in a given dataset. Unfortunately, in real life problems, some of informations are often unavailable, therefore we need to come up with a workaround. The range of *imputation methods* however, is huge and varies from highly computing power consuming, to really simple ones. To adress the problem of choice, especially for inexperienced in *machine learning*, we demonstrate a comparison of some of the *imputation algorithms*. These methods can either be easly implemented or are offered by publicly available packages for the R language. They differ in both algorithmic and programming complexity. Moreover, the study is made using sets of data, which represent different shapes and sizes, and different locations and amounts of *missing values*.
+
+### Introduction & Motivation
+
+Nowadays, the problem of missing data has become ubiquitous in our everyday lives in each domain, for example medicine, education, criminology, politics or business affairs. There are three main problems that missing data might cause: a substantial amount of bias, more arduous handling and analysis of the data, and reductions in efficiency. Moreover, many machine learning models cannot be used because of missing data.
+
+Imputation is based on replacing missing data with an estimated value based on other available information. There are numerous kinds of imputation methods which can be divided into simple methods as well as methods involving more sophisticated algorithms. Many programming and statistical environments support data imputation via libraries and pakages. In this work, we have used RStudio due to its numerous packages giving access to implementation of various imputation methods.
+
+In the past, there was little evaluation and testing on available imputation methods. Effectively, data science and statistical modeling are both domains much younger than mathematics or physics. Besides, it is hard to say if an imputation algorithm's output is the proper one because there is no data to compare with. In order to assess an imputation method, one could make use of some statistical approach like evaluating machine learning predictions, changing data by intentionally removing a part of it, or combining both processes.
+
+In this work, we compare imputation techniques by using predictions of machine learning models, but also by confronting the amount of time each algorithm took to perform an imputation task. The whole evaluation is repeated on several datasets, varying by size and missing data percentage. All these datasets are available online and come from _OpenML_. Our goal was to find the best and the worst imputation method in function of input data and the amount of time to impute, that is the imputation real-life circumstances.
+
+### Methodology
+
+#### Function
+
+In order to study the imputations' effectiveness, we have developed a special function, called _imputeBenchmark_. It takes the dataset, the number of iterations, the list of imputation methods and the list of machine learning models as its parameters.
+
+For each imputation method listed, the function carries it out on a given dataset. The operation is run in a given number of iterations, during each of which the length of imputation is measured through reading the current time with the R base function _Sys.time_, immediately before and after the imputation being performed. After all iterations, the mean time is calculated.
+
+In the next step, every listed machine learning algorithm is tested. The dataset is divided into training data and test data, with a size ratio 9:1. Then, the current model is trained on the former and evaluated on the latter, through the use of _mlr_ functions: _makeClassifTask_, _makeLearner_, _train_ and _predict_. Having the model evaluated on a dataset, we measure its performance by means of _accuracy_ and _F1 score_. We chose these two measures as the most symmetric ones, while discarding widely used _precision_ and _recall_, due to the _F1 score_ being more concise and giving just as many useful information on the dataset balance as a harmonic mean of the former two.
+
+All the imputation time and model evaluation score measurements are systematically written down and eventually output in a list of three matrices.
+
+#### Imputation methods
+
+_imputeBenchmark_ implied any possible choice of imputation and machine learning algorithms depending on the user. That said, throughout the whole time of carrying out the study, we would use the following imputation methods:
+
+- **IRMI**: during the whole iteration, one variable is used as a response variable, whereas the rest are used as the regressors. The whole information is used to impute the response column [@2-5-templIRMI].  
+- **hotDeck**: replacing missing values in an instance with the values present in a similar row. The record to copy values from may be chosen randomly or deterministically [@2-5-HDreview].  
+- **k nearest neighbours**: a point value is approximated by the values of the closest points, based on other variables [@2-5-knn].  
+- **missForest**: a random forest is used as a multiple imputation scheme composed by classification and regression trees. Its error estimates deliver the independent imputation error calculation, without a test set necessary [@2-5-mforest].  
+- **mean, median or dominant**:  a simple, easily implementable function, which replaces all the missing values in every column independently, the value choice method being based on the datatype. Continuous features have their NAs replaced by the mean of all the present values; categorical ordinal variables are imputated by the median, while categorical nominal columns become completed with the dominant value among remaining ones.
+
+The first three were imported from the R package _VIM_, whereas missForest imputation is based on another R package of the same name.
+
+#### Machine learning models
+
+The machine learning algorithms we evaluated during the study are:
+
+- **logistic regression** (package _stats_)  
+- **naive Bayesian classificator** (package _e1071_)  
+- **binomial regression** (package _stats_)  
+- **random forests** (package _ranger_)
+
+#### Datasets
+
+We used the following seven datasets available in the _OpenML_ package to carry out all the calculations:
+
+- _**labor**_: 17 features, 57 rows, 326 missing values   
+- _**colic**_: 20 features, 368 rows, 1199 missing values  
+- _**credit-approval**_: 16 features, 690 rows, 67 missing values  
+- _**hepatitis**_: 20 features, 155 rows, 167 missing values  
+- _**vote**_: 17 features, 435 rows, 392 missing values  
+- _**eucalyptus**_: 16 features, 736 rows, 455 missing values  
+- _**echoMonths**_: 10 features, 130 rows, 97 missing values
+
+### Results
+
+#### Performance for each dataset
+All charts are self-explanatory. Based on the results below, and knowing characteristics of a dataset, it should be easy to estimate, which method of imputation is the best for desired use.
+
+##### Legend
+![](2-5-images/legenda.png)
+
+##### _**labor**_: 17 features, 57 rows, 326 missing values 
+![](2-5-images/4_labor.png)
+
+##### _**colic**_: 20 features, 368 rows, 1199 missing values 
+![](2-5-images/27_colic.png)
+
+##### _**credit-approval**_: 16 features, 690 rows, 67 missing values
+![](2-5-images/29_credit.png)
+
+##### _**hepatitis**_: 20 features, 155 rows, 167 missing values
+![](2-5-images/55_hepatitis.png)
+
+##### _**vote**_: 17 features, 435 rows, 392 missing values
+![](2-5-images/56_vote.png)
+
+##### _**eucalyptus**_: 16 features, 736 rows, 455 missing values
+![](2-5-images/188_eucalyptus.png)
+
+##### _**echoMonths**_: 10 features, 130 rows, 97 missing values
+![](2-5-images/944_echoMonths.png)
+
+##### Overall performance
+![](2-5-images/overall.png)
+
+#### Ranking
+
+We also created a leaderboard of imputation methods in function of used machine learning model. We used 2 metrics separately to evaluate classification models - Accuracy and F1 Score. The data was also divided to small and big datasets to determine whether the imputation methods' scores vary among the size of the dataset.
+
+As small datasets we chose those with indexes **4, 27, 55, 56, 944**: 
+
+- Accuracy ranking
+
+![](2-5-images/small1.png)
+
+- F1 Score ranking
+
+![](2-5-images/small2.png)
+
+We can deduce from the above ranking that **missForest** beats other imputation methods when we deal with small data sets. **Mean/median/dominant** imputation is also convenable in this case - in exception of naiveBayes model. The worst model is **kNN**.
+
+Bigger datasets possess indexes **29, 88**: 
+
+- Accuracy ranking
+
+![](2-5-images/big1.png)
+
+- F1 Score ranking
+
+![](2-5-images/big2.png)
+
+**IRMI** and **kNN** revealed to be the most accurate as far as the bigger data sets are concerned. It is also important to notice that **hotdeck** imputation from VIM package was unanimously the worst independently on used model. 
+
+All datasets: 
+
+- Accuracy ranking
+
+![](2-5-images/all1.png)
+
+- F1 Score ranking
+
+![](2-5-images/all2.png)
+
+The above ranking shows that the **missForest** imputation algorithm from the package of the same name has achieved the best scores independently on data set's size. On the other side, hotdeck performed the worst and the bigger the data set is, the lower its performance was.
+
+### Conclusions
+
+From the ranking, one can deduce that dependently on data set's size, missForest, kNN and IRMI imputation achieved the best scores. *missForest* was the most appropriate to deal with small data sets, while *kNN* and *IRMI* were outstanding at bigger data sets' imputation.
+
+Moreover, if we use random *hotdeck* imputation from VIM package, the bigger the data set is, the lower this imputation method's performance is. Enough to say that we gain time in exchange for imputation corectness. That is why **an appropriate choice of imputation method** is that important and should be made depending on the given task.
