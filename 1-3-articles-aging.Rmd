@@ -16,7 +16,7 @@ Although many articles focus on software or framework solutions for reproducibil
 
 ### CodeExtractoR package
 
-To examine sufficent number of articles, package _CodeExtractoR_ had been used. Its main functions - _extract_code_from_pdf()_ and _extract_code_from_html()_, automatically extract code snippets from pdf and html files into R files.
+To examine sufficent number of articles, package _CodeExtractoR_ has been used. Its main functions - _extract_code_from_pdf()_ and _extract_code_from_html()_, automatically extract code snippets from pdf and html files into R files.
 ```{r eval=FALSE, warning=FALSE, comment="Example of extract_code_from_html() funtion usage."}
 
 # install.packages("devtools")
@@ -33,7 +33,7 @@ output <- "output.R"
 extract_code_from_html(input_file = path_file, output_file = output, console_char = ">")
 
 ```
-To extract code from pdf, own API key to https://cloudconvert.com/ is necessary. 
+To extract code from pdf, API key to https://cloudconvert.com/ is required. 
 
 ### Methodology
 
