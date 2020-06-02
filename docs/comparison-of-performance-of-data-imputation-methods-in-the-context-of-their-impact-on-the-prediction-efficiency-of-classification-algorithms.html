@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Imputation | ML Case Studies</title>
+  <title>2.3 Comparison of performance of data imputation methods in the context of their impact on the prediction efficiency of classification algorithms | ML Case Studies</title>
   <meta name="description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Imputation | ML Case Studies" />
+  <meta property="og:title" content="2.3 Comparison of performance of data imputation methods in the context of their impact on the prediction efficiency of classification algorithms | ML Case Studies" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="images/cover.png" />
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Imputation | ML Case Studies" />
+  <meta name="twitter:title" content="2.3 Comparison of performance of data imputation methods in the context of their impact on the prediction efficiency of classification algorithms | ML Case Studies" />
   
   <meta name="twitter:description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="twitter:image" content="images/cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html"/>
-<link rel="next" href="default-imputation-efficiency-comparision.html"/>
+<link rel="prev" href="the-hajada-imputation-test.html"/>
+<link rel="next" href="various-data-imputation-techniques-in-r.html"/>
 <script src="libs/header-attrs/header-attrs.js"></script>
 <script src="libs/jquery/jquery.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
@@ -354,18 +354,108 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="imputation" class="section level1" number="2">
-<h1><span class="header-section-number">Chapter 2</span> Imputation</h1>
-<p>Imputation</p>
-<!--chapter:end:2-0-imputation.Rmd-->
+<div id="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Comparison of performance of data imputation methods in the context of their impact on the prediction efficiency of classification algorithms</h2>
+<p><em>Authors: Ada Gąssowska, Mateusz Grzyb, Elżbieta Jowik (Warsaw University of Technology)</em></p>
+<div id="abstract-10" class="section level3" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Abstract</h3>
+<p>It is very common for datasets to contain incomplete observations. The analysis conducted by ignoring cases with missing data and considering only complete instances is perceived as naive, inefficient, and exposed to bias, as incomplete ones may also convey valuable information. To incorporate these sketchy observations, various methods of handling missing data may be considered, including both less and more sophisticated approaches.</p>
+<p>It turns out, that the performance of machine learning classification models moderately depends on the approach that is applied to the imputation problem, while the time of the imputation when using different techniques, is highly diverse. During this study, we considered ten data sets, six imputation methods, and four classifiers. Mentioned imputation methods contain one basic technique (median/mode imputation) and five more sophisticated ones, which origin respectively from mice, VIM, missRanger, and softImpute R packages. For testing purposes, as the classification algorithms, we used Ranger Random Forests, XGBoost, K Nearest Neighbors, and Naive Bayes classifiers. To evaluate the performance of each imputation method/classification algorithm combination on a given dataset, we used raw Area Under the Curve (AUC), Balanced Accuracy Score (BACC), and Matthew’s Correlation Coefficient (MCC) measures, as well as rankings based on them. Times of each imputation were also verified and compared.</p>
+<p>The actual differences in prediction correctness are slight in general. In respect to the rankings, for the Ranger Random Forests, XGBoost, and Naive Bayes classification algorithms, the missRanger imputation method turned out to be the best, while for the K Nearest Neighbors - it was the basic one. As for the time of imputation, it highly depends on the technique complexity, so the basic method turns out to be the fastest one. However, the hot-deck method from the VIM package is also noteworthy, as it performs only a little worse.</p>
+<p>The analysis shows, that selecting the best imputation method/classification algorithm combination, that will work best globally, is extremely difficult, because a lot depends on the structure of the dataset, the prediction correctness assessment technique, and the amount of computational power available. In the last section of this article, we suggest a sensible approach to this problem.</p>
+</div>
+<div id="introduction-and-motivation-7" class="section level3" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Introduction and motivation</h3>
+<p>Dealing with missing data is a substantial part of feature engineering, as most of the machine learning algorithms do not accept incomplete datasets. Data imputation, especially replacing missing values with a value based on other available cases, is the solution for that problem. However, despite the acknowledged importance of it, in many practical cases, it is not handled with proper caution. Basic median/mode imputation is often used, as well as deleting rows with missing data (if the number of missing values is low).</p>
+<p>As there are many different imputation techniques, choosing which one to use is complicated, but it may be beneficial. There are no objective rules to follow, the only way to choose the best one is to perform numerous comparisons. The purpose of our experiment is to gather knowledge about the best ways to impute data while using specific classification algorithms.</p>
+</div>
+<div id="methodology-9" class="section level3" number="2.3.3">
+<h3><span class="header-section-number">2.3.3</span> Methodology</h3>
+<p>Most of the algorithms that we used for tests do not accept missing values. To find, which one from all tested imputation methods is best for each tested classification algorithm, we decided to perform the following experiment.</p>
+<p>Firstly, we created six different imputation functions:</p>
+<ul>
+<li><strong>basic method</strong> using impute() function from imputeMissings package. It imputes missing numeric values with a median and categorical variables with a mode of other records.</li>
+<li><strong>mice()</strong> function from mice package <span class="citation">(Buuren and Groothuis-Oudshoorn <a href="#ref-2-3_mice" role="doc-biblioref">2011</a>)</span>. The function uses Predictive Mean Matching to impute missing values.</li>
+<li><strong>missRanger()</strong> function from missRanger package <span class="citation">(Mayer <a href="#ref-2-3_missRanger" role="doc-biblioref">2019</a>)</span>. The technique uses the Ranger Random Forests to do fast missing value imputation by chained random forests.</li>
+<li><strong>hotdeck()</strong> function from VIM package <span class="citation">(Kowarik and Templ <a href="#ref-2-3_VIM" role="doc-biblioref">2016</a><a href="#ref-2-3_VIM" role="doc-biblioref">a</a>)</span>. Each missing value is replaced with an observed response from a “similar” unit.</li>
+<li><strong>kNN()</strong> function from VIM package <span class="citation">(Kowarik and Templ <a href="#ref-2-3_VIM" role="doc-biblioref">2016</a><a href="#ref-2-3_VIM" role="doc-biblioref">a</a>)</span>. It finds the k closest neighbors to the observation with missing data and then imputes them based on the non-missing values from its neighbors.</li>
+<li><strong>softImpute()</strong> function combined with mode imputation <span class="citation">(Hastie and Mazumder <a href="#ref-2-3_softImpute" role="doc-biblioref">2015</a><a href="#ref-2-3_softImpute" role="doc-biblioref">a</a>)</span>. The first method originates from the softImpute package and is applied to impute numeric variables. Mode imputation is used for categorical features imputation.</li>
+</ul>
+<p>To automatize our work, we also created two specialized functions - <strong>split_and_impute()</strong> and <strong>train_and_test()</strong>.</p>
+<ul>
+<li><p>The first function divides given dataset into train and test sets (with configurable proportions and with stratification on the target variable) and imputes it with specified imputation function (one of the above). It returns imputed train and test sets and the time of the imputation (all of which are can be saved to files automatically).</p></li>
+<li><p>The second function performs cross-validation on train set (the default number of folds is 5) and makes the predictions for the test set (that is, after training the model on the whole train set), with a specified classification algorithm. The target variable and label of the positive class must also be passed before the function call. Based on the mentioned predictions, it calculates AUC <span class="citation">(Flach Peter <a href="#ref-2-3_AUC" role="doc-biblioref">2011</a>)</span>, BACC <span class="citation">(Velez and Moore <a href="#ref-2-3_BACC" role="doc-biblioref">2007</a>)</span>, and MCC <span class="citation">(Boughorbel S. <a href="#ref-2-3_MCC" role="doc-biblioref">2017</a>)</span> measures for both cross-validation and test set testing stages. It also returns plots of ROC curve, AUC, BACC, and MCC measures achieved during the cross-validation stage.</p></li>
+</ul>
+<p>All ten benchmarking datasets were obtained from <a href="https://www.openml.org/" class="uri">https://www.openml.org/</a> and can be found there with detailed descriptions.</p>
+<p>Then, we proceeded in the following way:</p>
+<p>Firstly, all benchmarking datasets were split and imputed with all imputation methods using <strong>split_and_impute()</strong> function. All the resulting subsets were then saved to corresponding files. This way, all results differences observed later did not depend on any splitting or imputation randomness, as these steps were taken only once for each benchmarking dataset. The time of each imputation was also measured and taken into consideration.</p>
+<p>Secondly, for all imputation method/dataset combination <strong>train_and_test()</strong> function was called four times - once for each classification algorithm. All returned values were then used for two purposes: to create a specialized report (available here - <a href="https://github.com/PlentyCoups/WB-article-extras/blob/master/report.html" class="uri">https://github.com/PlentyCoups/WB-article-extras/blob/master/report.html</a>) used for checking process correctness (mostly by looking at cross-validation scores variances) and, more importantly, to create aggregated plots of test set scores for further inference.</p>
+<p>The following diagram may also help to visualize our methodology - <a href="https://github.com/PlentyCoups/WB-article-extras/blob/master/methodology.png" class="uri">https://github.com/PlentyCoups/WB-article-extras/blob/master/methodology.png</a>.</p>
+</div>
+<div id="results-10" class="section level3" number="2.3.4">
+<h3><span class="header-section-number">2.3.4</span> Results</h3>
+<p>Raw results were processed and assessed in the following way.</p>
+<p>Imputation times were compared in correspondence to each imputation method and dataset. Times logarithms had to be used instead of raw data, due to high differences. (Figure 1)</p>
+<p>Raw measures were compared in correspondence to each imputation method, classification algorithm, and dataset. (Figure 2)</p>
+<p>Rankings of measures were compared in correspondence to each imputation method, classification algorithm, and dataset. Each imputation method/classification algorithm combination was ranked three times on every dataset, once for each of the three used measures. The given combination gets a 1 if it gives the best result on a dataset, and a 6 if it gives the worst one. Then, such rankings were visualized through multiple boxplots with mean and median ranking calculated and marked on them. (Figure 3)</p>
+<p>Moreover, as it was already mentioned before, cross-validation scores were merged in a specialized report used for checking process correctness, that is available here - <a href="https://github.com/PlentyCoups/WB-article-extras/blob/master/report.html" class="uri">https://github.com/PlentyCoups/WB-article-extras/blob/master/report.html</a>.</p>
+<p>It should be mentioned once again, that any differences in results are only due to a change of either the imputation method, the classification algorithm, or the dataset. Divisions into train and test sets for a given dataset were always identical. Because of that, even small scores differences should be taken into consideration.</p>
+<p>Another important fact is that we took into consideration only datasets on which all of the imputation methods worked, so that all of them may be compared fairly.</p>
+<p>Below figures are best to be viewed with a slight zoom.</p>
+<div class="figure">
+<img src="images/2-3-times_plot.png" alt="" />
+<p class="caption">Figure 1: Imputation times</p>
+</div>
+<div class="figure">
+<img src="images/2-3-measures_plot.png" alt="" />
+<p class="caption">Figure 2: Raw scores</p>
+</div>
+<div class="figure">
+<img src="images/2-3-rankings_plot.png" alt="" />
+<p class="caption">Figure 3: Scores rankings</p>
+</div>
+</div>
+<div id="summary-and-conclusions-9" class="section level3" number="2.3.5">
+<h3><span class="header-section-number">2.3.5</span> Summary and conclusions</h3>
+<p>After analyzing the results, especially the plots, it became clear, that it is not possible to pick the best imputation method for all classification algorithms.</p>
+<p>For K nearest neighbors classifier the best AUC, BACC, and MCC scores were gained for the basic median/mode imputation method. For three other algorithms (Naive Bayes, XGBoost, and Ranger Random Forest) the missRanger imputation turned out to be the best one, but the basic median/mode imputer was second in most of the rankings. It was also the quickest one as can be seen in Figure 1.</p>
+<p>The imputer that turned out to be globally the worst, and also the slowest, was the one from mice package.</p>
+<p>It is very important to note, that even though we can pick globally best and worst techniques, most imputation method/classification algorithm combinations ended first on at least one dataset. Because of that, if the best possible prediction correctness is an absolute priority, it is always the best to consider all available options.</p>
+<p>In conclusion, it seems that it is a good idea to use basic median/mode imputation as a solid and fast to obtain starting point, and then, when possible and desirable, to evaluate more sophisticated methods, in search of even better ways.</p>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-2-3_MCC">
+<p>Boughorbel S., El-Anbari M., Jarray F. 2017. “Optimal Classifier for Imbalanced Data Using Matthews Correlation Coefficient Metric.” <em>PLOS One</em>. <a href="https://doi.org/https://doi.org/10.1371/journal.pone.0177678">https://doi.org/https://doi.org/10.1371/journal.pone.0177678</a>.</p>
+</div>
+<div id="ref-2-3_mice">
+<p>Buuren, Stef van, and Karin Groothuis-Oudshoorn. 2011. “Mice: Multivariate Imputation by Chained Equations in R.” <em>Journal of Statistical Software</em> 45 (3): 1–67. <a href="https://www.jstatsoft.org/article/view/v045i03">https://www.jstatsoft.org/article/view/v045i03</a>.</p>
+</div>
+<div id="ref-2-3_AUC">
+<p>Flach Peter, Ferri, Hernandez-Orallo Jose. 2011. “A Coherent Interpretation of Auc as a Measure of Aggregated Classification Performance.” <em>Proceedings of the 28th International Conference on Machine Learning</em>. <a href="https://icml.cc/2011/papers/385_icmlpaper.pdf">https://icml.cc/2011/papers/385_icmlpaper.pdf</a>.</p>
+</div>
+<div id="ref-2-3_softImpute">
+<p>Hastie, Trevor, and Rahul Mazumder. 2015a. “SoftImpute: Matrix Completion via Iterative Soft-Thresholded Svd.” <a href="https://CRAN.R-project.org/package=softImpute">https://CRAN.R-project.org/package=softImpute</a>.</p>
+</div>
+<div id="ref-2-3_VIM">
+<p>Kowarik, Alexander, and Matthias Templ. 2016a. “Imputation with the R Package Vim.” <em>Journal of Statistical Software</em> 74 (7): 1–16. <a href="https://www.jstatsoft.org/article/view/v045i03">https://www.jstatsoft.org/article/view/v045i03</a>.</p>
+</div>
+<div id="ref-2-3_missRanger">
+<p>Mayer, Michael. 2019. “MissRanger: Fast Imputation of Missing Values.” <a href="https://CRAN.R-project.org/package=missRanger">https://CRAN.R-project.org/package=missRanger</a>.</p>
+</div>
+<div id="ref-2-3_BACC">
+<p>Velez, White, D. R., and J. H Moore. 2007. “A Balanced Accuracy Function for Epistasis Modeling in Imbalanceddatasets Using Multifactor Dimensionality Reduction.” <em>Genetic Epidemiology</em>, no. 31: 306–15. <a href="https://doi.org/10.1002/gepi.20211">https://doi.org/10.1002/gepi.20211</a>.</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="default-imputation-efficiency-comparision.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="the-hajada-imputation-test.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="various-data-imputation-techniques-in-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook/js/app.min.js"></script>
@@ -396,7 +486,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/2-1-default-imputation-efficiency-comparision.Rmd",
+"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/2-3-comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.Rmd",
 "text": "Edit"
 },
 "history": {
