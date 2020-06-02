@@ -71,6 +71,7 @@ _Figure 1.1_ shows the results in the original 4-level scale. Although, the numb
 
 library(ggplot2)
 
+
 wyniki <- as.data.frame(matrix(ncol = 4, nrow = 44))
 wyniki$V2 <- as.factor(c(rep("09'", 4), rep("10'", 4), rep("11'", 4), rep("12'", 4), rep("13'", 4),
                rep("14'", 4), rep("15'", 4), rep("16'", 4), rep("17'", 4), rep("18'", 4), rep("19'", 4)))
