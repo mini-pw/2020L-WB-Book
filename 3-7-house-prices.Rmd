@@ -4,7 +4,7 @@
 
 ### Abstract
 
-The house price estimation task has a long-lasting history in economics and statistics. Nowadays, both worlds unite to exploit the machine learning approach; thus, achieve the best predictive results. In the literature, there are myriad of works discussing the performance-interpretability tradeoff apparent in the modelling of real estate values. In this paper, we propose a solution to this problem, which is a highly interpretable stacked model that outperforms the black-box models. We use it to examine neighbourhood parameters affecting the median house price of the United States regions in 1990.
+*The house price estimation task has a long-lasting history in economics and statistics. Nowadays, both worlds unite to exploit the machine learning approach; thus, achieve the best predictive results. In the literature, there are myriad of works discussing the performance-interpretability tradeoff apparent in the modelling of real estate values. In this paper, we propose a solution to this problem, which is a highly interpretable stacked model that outperforms the black-box models. We use it to examine neighbourhood parameters affecting the median house price in the United States regions in 1990.*
 
 ### Introduction
   
@@ -179,7 +179,7 @@ kable(text_tbl, align=c('c', 'c', 'c'), caption="Comparison of the MAE score for
 
 ### Conclusions
 
-This case study aimed to provide an interpretable machine learning model that achieves state-of-the-art performance on the datasets crafted from the data collected in 1990 by the United States Census Bureau. We not only provided such a model but also examined its decision-making process to determine how it estimates the median of house prices in the United States regions. The stacked model had prominently shown the impact of neighbours' age and race in predicting the outcome. 
+This case study aimed to provide an interpretable machine learning model that achieves state-of-the-art performance on the datasets crafted from the data collected in 1990 by the United States Census Bureau. We not only provided such a model but also examined its decision-making process to determine how it estimates the median house price in the United States regions. The stacked model had prominently shown the impact of neighbours' age and race in predicting the outcome. 
 
 We believe that the principles of the divide-and-conquer algorithm can be successfully applied in other domains to neglect the performance-interpretability tradeoff apparent while using machine learning models. In further research, we would like to generalize this approach into a well-defined framework and apply it to several different problems.
 
