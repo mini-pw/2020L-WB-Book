@@ -22,11 +22,11 @@ The use of ML in the real estate domain is a well-documented ground [@3-7-reales
  
 The state-of-the-art approach to house price estimation is to combine linear and semi-log regression models with the Hedonic Pricing Method [@3-7-hpm1; @3-7-hpm2], which aims to determine the extent that environmental or ecosystem factors affect the price of a good. [@3-7-hpm-iml] deliberately seeks to interpret the outcome and provide information about the parameters that affect property value. There are also comparisons between the linear white-box and black-box models [@3-7-wb-vs-bb; @3-7-multiple-models] which showcase the performance-interpretability tradeoff [@3-7-gosiewska-lifting].
 
-Nature of the topic might entail that the data is place-specific; therefore, part of the studies focus on&nbsp;a&nbsp;single location with the use of geospatial data. The case study on London [@3-7-localarea-network] links the street network community structure with house price, which takes into consideration the topology of the city. In&nbsp;contradiction, [@3-7-relative-absolute] uses the Oslo city data to explore the differences between the relative and absolute location attributes. Applying the data like the distance to the nearest shop and transportation is place-agnostic.
+Nature of the topic might entail that data is place-specific; therefore, part of the studies focus on&nbsp;a&nbsp;single location with the use of geospatial data. The case study on London [@3-7-localarea-network] links the street network community structure with house price, which takes into consideration the topology of the city. In&nbsp;contradiction, [@3-7-relative-absolute] uses the Oslo city data to explore the differences between the relative and absolute location attributes. Applying data like the distance to the nearest shop and transportation is place-agnostic.
 
-One of the new ideas is to utilize the location data from multiple sources in a Multi-Task Learning approach [@3-7-mlt]. It also studies the relationships between the tasks, which gives an extensive insight on prediction attributions. 
+One of the new ideas is to utilize location data from multiple sources in a Multi-Task Learning approach [@3-7-mlt]. It also studies the relationships between the tasks, which gives an extensive insight on prediction attributions. 
 
-In this paper we partialy aim to enhance the use of regression decision tree models, which had been utilized to estimate the house prices based on their essential characteristics in [@3-7-houseprices-tree]. 
+In this paper, we partially aim to enhance the use of regression decision tree models, which had been utilized to estimate the house prices based on their essential characteristics in [@3-7-houseprices-tree]. 
 
 ### Data
 
