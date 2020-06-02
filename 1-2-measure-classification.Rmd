@@ -74,7 +74,7 @@ The list of articles checked is [here](https://github.com/niladrem/R-reprodukowa
 
 The summary of our marks is presented in the boxplot.
 
-![Articles' marks distribution](https://raw.githubusercontent.com/niladrem/R-reprodukowalnosc/master/Summary_of_marking_articles.png)
+![Articles' marks distribution](1-2-files/Summary_of_marking_articles.png)
 
 As we can see in the plot, packages dependent on external resources are in a minority. Despite that, when we examined one, there was often a problem with dependencies. It could be caused by many reasons, e.g. external data sources or other packages. On the other hand, availability of the source code and graphical aspects of articles turned out to be the most reproducible categories. Resistance to randomness was one of the most interesting categories in our opinion and it turned out to be a category with high variation of grades. Many authors coped with the problem by setting random seeds but sometimes the differences were unavoidable.
 
