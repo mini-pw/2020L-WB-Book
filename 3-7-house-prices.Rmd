@@ -14,7 +14,7 @@ The dilemma is in blindly trusting the prediction given by so-called black-box m
 
 For many years houses have been popular properties; thus, they are of particular interest for ordinary people. What exact influence had the demographic characteristics of the house neighbourhood on its price in the '90s? Although in the absence of current technology, it has been hard to answer such question years ago [@3-7-history2001], now we can.
 
-In this paper, we perform a case study on the actual United States Census data from 1990 [@housepricesdata] and deliver an interpretable white-box model that estimates the median house price by the region. We present multiple approaches to this problem and choose the best model, which achieves similar performance to complex black-boxes. Finally, using its interpretable nature, we answer various questions that give a new life to this historical data. 
+In this paper, we perform a case study on the actual United States Census data from 1990 [@3-7-housepricesdata] and deliver an interpretable white-box model that estimates the median house price by the region. We present multiple approaches to this problem and choose the best model, which achieves similar performance to complex black-boxes. Finally, using its interpretable nature, we answer various questions that give a new life to this historical data. 
 
 ### Related Work
 
@@ -61,7 +61,7 @@ kable(text_tbl, align=c('c', 'c', 'c'), caption="Description of variables presen
 Furthermore, we will apply our Metodology (Section \@ref(sec3-7-methodology)) on a corresponding *house_16H* dataset, which has the same target but a different set of variables.
 More correlated variables of a higher variance make it&nbsp;significantly harder to estimate the median house price in a given region.
 Such validation will allow us to evaluate our model on a more demanding task.
-The comprehensive description of used data can be found in [@housepricesdata].
+The comprehensive description of used data can be found in [@3-7-housepricesdata].
 
 
 ### Methodology {#sec3-7-methodology}
