@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3.8 Explainable Computer Vision with embeddings and KNN classifier | ML Case Studies</title>
+  <title>2.3 Comparison of performance of data imputation methods in the context of their impact on the prediction efficiency of classification algorithms | ML Case Studies</title>
   <meta name="description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3.8 Explainable Computer Vision with embeddings and KNN classifier | ML Case Studies" />
+  <meta property="og:title" content="2.3 Comparison of performance of data imputation methods in the context of their impact on the prediction efficiency of classification algorithms | ML Case Studies" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="images/cover.png" />
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3.8 Explainable Computer Vision with embeddings and KNN classifier | ML Case Studies" />
+  <meta name="twitter:title" content="2.3 Comparison of performance of data imputation methods in the context of their impact on the prediction efficiency of classification algorithms | ML Case Studies" />
   
   <meta name="twitter:description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="twitter:image" content="images/cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="which-neighbours-affected-house-prices-in-the-90s.html"/>
-<link rel="next" href="acknowledgements.html"/>
+<link rel="prev" href="the-hajada-imputation-test.html"/>
+<link rel="next" href="various-data-imputation-techniques-in-r.html"/>
 <script src="libs/header-attrs/header-attrs.js"></script>
 <script src="libs/jquery/jquery.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
@@ -354,340 +354,108 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="explainable-computer-vision-with-embeddings-and-knn-classifier" class="section level2" number="3.8">
-<h2><span class="header-section-number">3.8</span> Explainable Computer Vision with embeddings and KNN classifier</h2>
-<p><em>Authors: Olaf Werner, Bogdan Jastrzębski (Warsaw University of Technology)</em></p>
-<div id="abstract-20" class="section level3" number="3.8.1">
-<h3><span class="header-section-number">3.8.1</span> Abstract</h3>
-<hr />
+<div id="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Comparison of performance of data imputation methods in the context of their impact on the prediction efficiency of classification algorithms</h2>
+<p><em>Authors: Ada Gąssowska, Mateusz Grzyb, Elżbieta Jowik (Warsaw University of Technology)</em></p>
+<div id="abstract-10" class="section level3" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Abstract</h3>
+<p>It is very common for datasets to contain incomplete observations. The analysis conducted by ignoring cases with missing data and considering only complete instances is perceived as naive, inefficient, and exposed to bias, as incomplete ones may also convey valuable information. To incorporate these sketchy observations, various methods of handling missing data may be considered, including both less and more sophisticated approaches.</p>
+<p>It turns out, that the performance of machine learning classification models moderately depends on the approach that is applied to the imputation problem, while the time of the imputation when using different techniques, is highly diverse. During this study, we considered ten data sets, six imputation methods, and four classifiers. Mentioned imputation methods contain one basic technique (median/mode imputation) and five more sophisticated ones, which origin respectively from mice, VIM, missRanger, and softImpute R packages. For testing purposes, as the classification algorithms, we used Ranger Random Forests, XGBoost, K Nearest Neighbors, and Naive Bayes classifiers. To evaluate the performance of each imputation method/classification algorithm combination on a given dataset, we used raw Area Under the Curve (AUC), Balanced Accuracy Score (BACC), and Matthew’s Correlation Coefficient (MCC) measures, as well as rankings based on them. Times of each imputation were also verified and compared.</p>
+<p>The actual differences in prediction correctness are slight in general. In respect to the rankings, for the Ranger Random Forests, XGBoost, and Naive Bayes classification algorithms, the missRanger imputation method turned out to be the best, while for the K Nearest Neighbors - it was the basic one. As for the time of imputation, it highly depends on the technique complexity, so the basic method turns out to be the fastest one. However, the hot-deck method from the VIM package is also noteworthy, as it performs only a little worse.</p>
+<p>The analysis shows, that selecting the best imputation method/classification algorithm combination, that will work best globally, is extremely difficult, because a lot depends on the structure of the dataset, the prediction correctness assessment technique, and the amount of computational power available. In the last section of this article, we suggest a sensible approach to this problem.</p>
 </div>
-<div id="introduction-3" class="section level3" number="3.8.2">
-<h3><span class="header-section-number">3.8.2</span> 3.8.1 Introduction</h3>
-<p>Computer vision is widely known use case for neural networks. However neural networks are infamous for their complexity and lack of interpretability. On the other hand simple classifiers like KNN have really poor results for complex tasks like image recognition. In this article we will prove that it is possible to get best of both worlds using emmbeddings.</p>
-<hr />
+<div id="introduction-and-motivation-7" class="section level3" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Introduction and motivation</h3>
+<p>Dealing with missing data is a substantial part of feature engineering, as most of the machine learning algorithms do not accept incomplete datasets. Data imputation, especially replacing missing values with a value based on other available cases, is the solution for that problem. However, despite the acknowledged importance of it, in many practical cases, it is not handled with proper caution. Basic median/mode imputation is often used, as well as deleting rows with missing data (if the number of missing values is low).</p>
+<p>As there are many different imputation techniques, choosing which one to use is complicated, but it may be beneficial. There are no objective rules to follow, the only way to choose the best one is to perform numerous comparisons. The purpose of our experiment is to gather knowledge about the best ways to impute data while using specific classification algorithms.</p>
 </div>
-<div id="data-4" class="section level3" number="3.8.3">
-<h3><span class="header-section-number">3.8.3</span> 3.8.2 Data</h3>
-<p>We are going to use dataset <a href="https://www.openml.org/d/40996">Fashion-Mnist</a>. Fashion-MNIST is a dataset of Zalando’s article images, consisting of a training set of 60,000 examples and a test set of 10,000 examples. Each example is a 28x28 grayscale image, associated with a label from 10 classes. Classes are following:</p>
+<div id="methodology-9" class="section level3" number="2.3.3">
+<h3><span class="header-section-number">2.3.3</span> Methodology</h3>
+<p>Most of the algorithms that we used for tests do not accept missing values. To find, which one from all tested imputation methods is best for each tested classification algorithm, we decided to perform the following experiment.</p>
+<p>Firstly, we created six different imputation functions:</p>
 <ul>
-<li><p>T-shirt/top</p></li>
-<li><p>Trouser</p></li>
-<li><p>Pullover</p></li>
-<li><p>Dress</p></li>
-<li><p>Coat</p></li>
-<li><p>Sandal</p></li>
-<li><p>Shirt</p></li>
-<li><p>Sneaker</p></li>
-<li><p>Bag</p></li>
-<li><p>Ankle boot.</p></li>
+<li><strong>basic method</strong> using impute() function from imputeMissings package. It imputes missing numeric values with a median and categorical variables with a mode of other records.</li>
+<li><strong>mice()</strong> function from mice package <span class="citation">(Buuren and Groothuis-Oudshoorn <a href="#ref-2-3_mice" role="doc-biblioref">2011</a>)</span>. The function uses Predictive Mean Matching to impute missing values.</li>
+<li><strong>missRanger()</strong> function from missRanger package <span class="citation">(Mayer <a href="#ref-2-3_missRanger" role="doc-biblioref">2019</a>)</span>. The technique uses the Ranger Random Forests to do fast missing value imputation by chained random forests.</li>
+<li><strong>hotdeck()</strong> function from VIM package <span class="citation">(Kowarik and Templ <a href="#ref-2-3_VIM" role="doc-biblioref">2016</a><a href="#ref-2-3_VIM" role="doc-biblioref">a</a>)</span>. Each missing value is replaced with an observed response from a “similar” unit.</li>
+<li><strong>kNN()</strong> function from VIM package <span class="citation">(Kowarik and Templ <a href="#ref-2-3_VIM" role="doc-biblioref">2016</a><a href="#ref-2-3_VIM" role="doc-biblioref">a</a>)</span>. It finds the k closest neighbors to the observation with missing data and then imputes them based on the non-missing values from its neighbors.</li>
+<li><strong>softImpute()</strong> function combined with mode imputation <span class="citation">(Hastie and Mazumder <a href="#ref-2-3_softImpute" role="doc-biblioref">2015</a><a href="#ref-2-3_softImpute" role="doc-biblioref">a</a>)</span>. The first method originates from the softImpute package and is applied to impute numeric variables. Mode imputation is used for categorical features imputation.</li>
 </ul>
-<hr />
-</div>
-<div id="methodology-18" class="section level3" number="3.8.4">
-<h3><span class="header-section-number">3.8.4</span> 3.8.3 Methodology</h3>
-<p>The simplest and one of the most robust classifiers is KNN. It doesn’t generalize information, instead it saves training dataset and during prediction it finds the most similar historical observations and predicts label of a new observation based on their labels. However, it not only doesn’t have the capacity to distinguish important features from not important ones, but also to find more complex interactions between variables.</p>
-<p>One way to improve KNN’s performance is to preced closest neighbour computation with transformation of the space of observations, so that the derivative variables are more meaningful. Such beneficial transformation is called embedding. It can be done in various ways.</p>
-<p>The question is, whether or not the new classifier is interpretable. We argue, that it is. The main reason is that even if we can’t interpret the embedding part, we can at least provide historical data that our model used to make prediction. Someone could argue, that it can be done with every classifier, just by finding training data that obtains the most similar prediction. However, with our classifier we can say for sure, that prediction were purely made based on the most similar cases in our dataset, which is fundamentally not true about different classifiers.</p>
-<p>An embedding can be done made in various ways. In this article we will explore different embedding techniques, including:</p>
+<p>To automatize our work, we also created two specialized functions - <strong>split_and_impute()</strong> and <strong>train_and_test()</strong>.</p>
 <ul>
-<li><p>SVD embedding</p></li>
-<li><p>Convolutional Autoencoder</p></li>
-<li><p>K-means embedding</p></li>
+<li><p>The first function divides given dataset into train and test sets (with configurable proportions and with stratification on the target variable) and imputes it with specified imputation function (one of the above). It returns imputed train and test sets and the time of the imputation (all of which are can be saved to files automatically).</p></li>
+<li><p>The second function performs cross-validation on train set (the default number of folds is 5) and makes the predictions for the test set (that is, after training the model on the whole train set), with a specified classification algorithm. The target variable and label of the positive class must also be passed before the function call. Based on the mentioned predictions, it calculates AUC <span class="citation">(Flach Peter <a href="#ref-2-3_AUC" role="doc-biblioref">2011</a>)</span>, BACC <span class="citation">(Velez and Moore <a href="#ref-2-3_BACC" role="doc-biblioref">2007</a>)</span>, and MCC <span class="citation">(Boughorbel S. <a href="#ref-2-3_MCC" role="doc-biblioref">2017</a>)</span> measures for both cross-validation and test set testing stages. It also returns plots of ROC curve, AUC, BACC, and MCC measures achieved during the cross-validation stage.</p></li>
 </ul>
-<hr />
+<p>All ten benchmarking datasets were obtained from <a href="https://www.openml.org/" class="uri">https://www.openml.org/</a> and can be found there with detailed descriptions.</p>
+<p>Then, we proceeded in the following way:</p>
+<p>Firstly, all benchmarking datasets were split and imputed with all imputation methods using <strong>split_and_impute()</strong> function. All the resulting subsets were then saved to corresponding files. This way, all results differences observed later did not depend on any splitting or imputation randomness, as these steps were taken only once for each benchmarking dataset. The time of each imputation was also measured and taken into consideration.</p>
+<p>Secondly, for all imputation method/dataset combination <strong>train_and_test()</strong> function was called four times - once for each classification algorithm. All returned values were then used for two purposes: to create a specialized report (available here - <a href="https://github.com/PlentyCoups/WB-article-extras/blob/master/report.html" class="uri">https://github.com/PlentyCoups/WB-article-extras/blob/master/report.html</a>) used for checking process correctness (mostly by looking at cross-validation scores variances) and, more importantly, to create aggregated plots of test set scores for further inference.</p>
+<p>The following diagram may also help to visualize our methodology - <a href="https://github.com/PlentyCoups/WB-article-extras/blob/master/methodology.png" class="uri">https://github.com/PlentyCoups/WB-article-extras/blob/master/methodology.png</a>.</p>
 </div>
-<div id="standard-intepretable-models" class="section level3" number="3.8.5">
-<h3><span class="header-section-number">3.8.5</span> 3.8.4 Standard Intepretable Models</h3>
-<p>In this section we will explore use of standard interpretable models and we will try to answer the question, why they are not useful when it comes to computer vision.</p>
-<hr />
-<div id="logistic-regression" class="section level4" number="3.8.5.1">
-<h4><span class="header-section-number">3.8.5.1</span> 3.8.4.1 Logistic Regression</h4>
-<p>Logistic regression is basic classification model. We get probablity of belonging to given class by:</p>
-<p><span class="math display">\[{\displaystyle p={\frac {e^{\beta _{0}+\beta _{1}x_{1}+...+\beta _{n}x_{n}}}{e^{\beta _{0}+\beta _{1}x_{1}+...+\beta _{n}x_{n}}+1}}}\]</span></p>
-<p>where <span class="math inline">\(\beta _{0},\beta _{1},...,\beta _{n}\)</span> are coefficients of logistic regression. We obtain coefficients using gradient descent. Because we have multiple labels so we train 10 diffrent logistic regression models and use softmax function to normalize probablities of belonging to any particular class.
-We then visualize coeficients as images with bright spots indicating that they are importent.
-Unfortunately the results look like this:</p>
+<div id="results-10" class="section level3" number="2.3.4">
+<h3><span class="header-section-number">2.3.4</span> Results</h3>
+<p>Raw results were processed and assessed in the following way.</p>
+<p>Imputation times were compared in correspondence to each imputation method and dataset. Times logarithms had to be used instead of raw data, due to high differences. (Figure 1)</p>
+<p>Raw measures were compared in correspondence to each imputation method, classification algorithm, and dataset. (Figure 2)</p>
+<p>Rankings of measures were compared in correspondence to each imputation method, classification algorithm, and dataset. Each imputation method/classification algorithm combination was ranked three times on every dataset, once for each of the three used measures. The given combination gets a 1 if it gives the best result on a dataset, and a 6 if it gives the worst one. Then, such rankings were visualized through multiple boxplots with mean and median ranking calculated and marked on them. (Figure 3)</p>
+<p>Moreover, as it was already mentioned before, cross-validation scores were merged in a specialized report used for checking process correctness, that is available here - <a href="https://github.com/PlentyCoups/WB-article-extras/blob/master/report.html" class="uri">https://github.com/PlentyCoups/WB-article-extras/blob/master/report.html</a>.</p>
+<p>It should be mentioned once again, that any differences in results are only due to a change of either the imputation method, the classification algorithm, or the dataset. Divisions into train and test sets for a given dataset were always identical. Because of that, even small scores differences should be taken into consideration.</p>
+<p>Another important fact is that we took into consideration only datasets on which all of the imputation methods worked, so that all of them may be compared fairly.</p>
+<p>Below figures are best to be viewed with a slight zoom.</p>
 <div class="figure">
-<img src="images/3-8-LOGREG.png" alt="" />
-<p class="caption">fig. 1: An example of logistic regression weights</p>
-</div>
-<p>We get this because logistic regression works more like a sieve.</p>
-<hr />
-</div>
-<div id="decision-trees" class="section level4" number="3.8.5.2">
-<h4><span class="header-section-number">3.8.5.2</span> 3.8.4.2 Decision Trees</h4>
-<p>Decision trees are very useful interpretable classifiers, however they are suitable when we have very few meaningful dimensions. A tree that does splits based on particular pixels is not a good classifier and it’s explanation provides little knowledge about, why those particular pixels has been chosen. That’s why we will not explore the use of this class of classifiers.</p>
-<hr />
-</div>
-</div>
-<div id="our-approach" class="section level3" number="3.8.6">
-<h3><span class="header-section-number">3.8.6</span> 3.8.5 Our Approach</h3>
-<p>In this section we will show alternative to logistic regression and decision trees, that is more interpretable and in the same time has a capacity to obtain significantly better results.</p>
-<hr />
-<div id="the-knn-classifier" class="section level4" number="3.8.6.1">
-<h4><span class="header-section-number">3.8.6.1</span> 3.8.5.1 The KNN Classifier</h4>
-<p>KNN (k nearest neighbours) is a classifier, that doesn’t generalize data. Instead, we keep the training dataset and every time we make a prediction, we calculate distance (for instance euclidean distance) between our new observation and all observations in the training dataset to find k nearest. Prediction is based on their labels.
-KNN is a robust classifier, that copes with highly non linear data. It’s also interpretable, because we can always show k nearest neighbours, which are an explanation by themselves. It, however, is not flawless. It for instance poorly scales with the size of the training dataset, while in the same time it need, at least in some domains, very big training dataset, as it doesn’t generalize any information.
-We can significantly improve it’s performance by introducing complex similarity functions. If similarity function is interpretable, we obtain highly interpretable classifier. If not, we get semi interpretable classifier, where we cannot tell, why obsevations are similar according to the model, however we can at least show similar training set examples, based on which prediction has been made.
-This complex distance functions can be made in many different ways. In this paper we explore functions of a form:
-<span class="math display">\[distance(Img1, Img2) = d_e(Embedder(Img1), Embedder(Img2))\]</span>
-where <span class="math inline">\(d_e\)</span> is euclidean distance, so we simply compute euclidean distance between embeddings of images. Here’s a scheme of KNN classifier:
-<img src="images/3-8-KNNMODEL_1.png" alt="fig. n: The KNN Classifier Architecture" />
-As we can see on fig. n, new image firstly gets embedded and then a standard classification with KNN is made. This type of architecture allowes us to create robust and interpretable classifier.</p>
-<hr />
-</div>
-<div id="embedding-techniques" class="section level4" number="3.8.6.2">
-<h4><span class="header-section-number">3.8.6.2</span> 3.8.5.2 Embedding techniques</h4>
-<p>In this section we will explore different embedding techniques.</p>
-<hr />
-<div id="k-means" class="section level5" number="3.8.6.2.1">
-<h5><span class="header-section-number">3.8.6.2.1</span> 3.8.5.2.1 K-means</h5>
-<p>Our problem is supervised one, but we can still use unsupervised aproach to get better results.
-We use K-means algorithm (also known as Lloyd’s algorithm) to find subclasses in every class.
-Algorithm:</p>
-<ol style="list-style-type: decimal">
-<li><p>Initiate number of random centroids</p></li>
-<li><p>For every observation find nearest centroid</p></li>
-<li><p>Calculate average of observations in every group found in point 2</p></li>
-<li><p>This averages becomes new centroids</p></li>
-<li><p>Repeat points 2 to 4 until all new centroids are at the distance less then <span class="math inline">\(\epsilon\)</span> from old centroids</p></li>
-</ol>
-<p>We use euclidean distance. Prediction for every new observation is simply class of nearest centroid. Algorithm is interpretable, because we can visualise centroids as images. Thanks to using K-means to find subclasses our images are not blurry.
-Also because number of all subclasses is much lower than number of records in data set using KNN only on centroids is much faster. Consider the following dataset:</p>
-<div class="figure">
-<img src="images/3-8-KMEANS_1.png" alt="" />
-<p class="caption">fig : An example of centroid image</p>
-</div>
-<p>In fact, a good subset of the training data set is enough to create a very good classifier. For instance we can choose:</p>
-<div class="figure">
-<img src="images/3-8-KMEANS_2.png" alt="" />
-<p class="caption">fig : An example of centroid image</p>
-</div>
-<p>Chosen points approximate sufficiently training data distribution. Notice, that we in fact don’t have to choose particular observations. We can instead chose points in observation space that are similar to observations. This is what k-means algorithm do and so, we can obtain good training data approximation using k-means. Here’s an example of a centroid image:</p>
-<div class="figure">
-<img src="images/3-8-KLAPEK.png" alt="" />
-<p class="caption">fig : An example of a centroid image</p>
-</div>
-<hr />
-</div>
-<div id="svd" class="section level5" number="3.8.6.2.2">
-<h5><span class="header-section-number">3.8.6.2.2</span> 3.8.5.2.2 SVD</h5>
-<p>SVD is a standard method of dimensionality reduction. It is rewriting <span class="math inline">\(m\times n\)</span> matrix
-<span class="math inline">\(M\)</span> as <span class="math inline">\(U\Sigma V^T\)</span> where <span class="math inline">\(U\)</span> is <span class="math inline">\(m\times m\)</span> orthonormal matrix, <span class="math inline">\(V^T\)</span> is <span class="math inline">\(n\times n\)</span> orthonormal matrix
-and <span class="math inline">\(\Sigma\)</span> is <span class="math inline">\(m\times n\)</span> rectangular diagonal matrix with non-negative real numbers on the diagonal.
-We assume that singular values of <span class="math inline">\(\Sigma\)</span> are in descending order. Now by taking first columns of <span class="math inline">\(V^T\)</span> we
-get vectors which are the most relevent. Let <span class="math inline">\(V_n\)</span> be matrix, whoose columns are <span class="math inline">\(V\)</span> columns with n greatest eigenvalues. Such matrix is linear transformation matrix, that turns observations into their embeddings. It can be shown, that <span class="math inline">\(V_n\)</span> is the best transformation in L2 norm sense.
-<img src="images/3-8-SVDAUTOENC_1.png" alt="fig. : SVD autoencoder diagram" />
-We can then visualise this vectors and see which parts of the picture are the most importent.
-Also we can reduce number of dimensions for KNN.</p>
-<div class="figure">
-<img src="images/3-8-HIDDEN.png" alt="" />
-<p class="caption">Most importenet vector</p>
+<img src="images/2-3-times_plot.png" alt="" />
+<p class="caption">Figure 1: Imputation times</p>
 </div>
 <div class="figure">
-<img src="images/3-8-KURTKA.png" alt="" />
-<p class="caption">Image from Dataset</p>
+<img src="images/2-3-measures_plot.png" alt="" />
+<p class="caption">Figure 2: Raw scores</p>
 </div>
 <div class="figure">
-<img src="images/3-8-KURTKA_HIDDEN.png" alt="" />
-<p class="caption">Image after using vector as filter</p>
-</div>
-<hr />
-</div>
-<div id="convolutional-autoencoder" class="section level5" number="3.8.6.2.3">
-<h5><span class="header-section-number">3.8.6.2.3</span> 3.8.5.2.3 Convolutional Autoencoder</h5>
-<p>We can create semi interpretable model by training a convolutional autoencoder and then creating KNN classifier on pretrained embeddings. As mentioned previously, it has several advantages over KNN, because it uses euclidean distance in more meaningful space. Embedder is not interpretable, but our classifier can at least show us historical observations, that had an impact on prediction, which sometimes is good enough, especially when it can be easily seen why two images are similar and we only want a computer to do humans work. For instance, if we provide 5 images of coala that caused that our image of coala has been interpreted as coala, we maybe don’t know, why those images are similar according to our classifier, however we can see, that they are similar, so further explanation of a model is not required. This model, again, is not fully interpretable.
-Our implementation of convolutional autoencoder consist of the following layers:</p>
-<ul>
-<li>Conv2d:
-<ul>
-<li>Input Channels: 1</li>
-<li>Output Channels: 50</li>
-<li>filter size: 5</li>
-</ul></li>
-<li>Conv2d:
-<ul>
-<li>Input Channels: 50</li>
-<li>Output Channels: 50</li>
-<li>filter size: 5</li>
-</ul></li>
-<li>Conv2d:
-<ul>
-<li>Input Channels: 50</li>
-<li>Output Channels: 10</li>
-<li>filter size: 5</li>
-</ul></li>
-<li>Conv2d:
-<ul>
-<li>Input Channels: 10</li>
-<li>Output Channels: 10</li>
-<li>filter size: 5</li>
-</ul></li>
-<li>Conv2d:
-<ul>
-<li>Input Channels: 10</li>
-<li>Output Channels: 1</li>
-<li>filter size: 5</li>
-</ul></li>
-<li>Conv2d:
-<ul>
-<li>Input Channels: 1</li>
-<li>Output Channels: 10</li>
-<li>filter size: 5</li>
-</ul></li>
-<li>Conv2d:
-<ul>
-<li>Input Channels: 10</li>
-<li>Output Channels: 10</li>
-<li>filter size: 5</li>
-</ul></li>
-<li>Conv2d:
-<ul>
-<li>Input Channels: 10</li>
-<li>Output Channels: 50</li>
-<li>filter size: 5</li>
-</ul></li>
-<li>Conv2d:
-<ul>
-<li>Input Channels: 50</li>
-<li>Output Channels: 50</li>
-<li>filter size: 5</li>
-</ul></li>
-<li>Conv2d:
-<ul>
-<li>Input Channels: 50</li>
-<li>Output Channels: 1</li>
-<li>filter size: 5</li>
-</ul></li>
-</ul>
-<p>along with pooling and unpooling beetween.</p>
-<div class="figure">
-<img src="images/3-8-CONVAUTOENC_1.png" alt="" />
-<p class="caption">fig. : Architecture of the convolutional autoencoder</p>
-</div>
-<hr />
+<img src="images/2-3-rankings_plot.png" alt="" />
+<p class="caption">Figure 3: Scores rankings</p>
 </div>
 </div>
-</div>
-<div id="black-box-convolutional-neural-networks" class="section level3" number="3.8.7">
-<h3><span class="header-section-number">3.8.7</span> 3.8.6 Black-Box Convolutional Neural Networks</h3>
-<p>Classical approach in computer vision is to use convolutional neural networks.
-A standard artificial neural network sees all variables as being independent
-from each other. It doesn’t capture the same patterns across image space, nor
-it recognises, that two pixels next to each other are somehow related. Shifted
-image is something completly different to a standard neural network from it’s original.
-Therefore, training a standard neural network is tricky, it requires very big dataset
-and takes a lot of time. There is, however, a smarter approach that has a capacity
-to cope with those problems. Namely, convolutional neural networks.</p>
-<p>A convolutional neural network is an artificial neural network, that tries to capture spacial dependencies between variables, for instance dimensions of pixels that are close to each other.
-It does that via introducing convolution. The easiest interpretation of convolutional neural network is that instead of training training big network that uses all variables (in our case all pixels), we train smaller transformation with smaller number of variables (smaller subset of pixels close to each other), that we use in many different places on the image. In some sense we train filters. Every filter produces a corresponding so called “channel”. After first layer we can continue filtering channels using convolutional layers. We place a danse layer (or a number of them) at the end and it’s result is our prediction. For further reading, please see … .</p>
-<p>Having a very good performance, they are impossible to explain. There are some techniques of visualising filters, however more complex networks are generally uninterpretable. Along with standard artificial neural network, we will use it as an instance of robust classifier for comparing results.
-Our implementation of convolutional neural networks consist of the following layers:</p>
-<ul>
-<li>Conv 2d:
-<ul>
-<li>Input Channels: 1</li>
-<li>Output Channels: 50</li>
-<li>filter size: 5</li>
-</ul></li>
-<li>Max Pool:
-<ul>
-<li>Size: 2</li>
-</ul></li>
-<li>Conv 2d:
-<ul>
-<li>Input Channels: 50</li>
-<li>Output Channels: 70</li>
-<li>filter size: 5</li>
-</ul></li>
-<li>Max Pool:
-<ul>
-<li>Size: 2</li>
-</ul></li>
-<li>Conv 2d:
-<ul>
-<li>Input Channels: 70</li>
-<li>Output Channels: 100</li>
-<li>filter size: 5</li>
-</ul></li>
-<li>Max Pool:
-<ul>
-<li>Size: 2</li>
-</ul></li>
-<li>Conv 2d:
-<ul>
-<li>Input Channels: 100</li>
-<li>Output Channels: 150</li>
-<li>filter size: 5</li>
-</ul></li>
-<li>Linear:
-<ul>
-<li>Input_size: 1350</li>
-<li>Output_size: 500</li>
-</ul></li>
-<li>Linear:
-<ul>
-<li>Input_size: 200</li>
-<li>Output_size: 10</li>
-</ul></li>
-</ul>
-<p>Here’s architecture’s visualisation:
-<img src="images/3-8-BlackBoxCONV_1.png" alt="fig. : The architecture of the Convolutional classifier" /></p>
-<hr />
-</div>
-<div id="results-19" class="section level3" number="3.8.8">
-<h3><span class="header-section-number">3.8.8</span> Results</h3>
-<table>
-<thead>
-<tr class="header">
-<th>Model</th>
-<th>ACC</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Black-Box Convolutional</td>
-<td>0.941</td>
-</tr>
-<tr class="even">
-<td>Logistic regression</td>
-<td>0.847</td>
-</tr>
-<tr class="odd">
-<td>KNN base</td>
-<td>0.8606</td>
-</tr>
-<tr class="even">
-<td>KNN SVD</td>
-<td>0.8001</td>
-</tr>
-<tr class="odd">
-<td>KNN K-means</td>
-<td>0.8512</td>
-</tr>
-<tr class="even">
-<td>KNN Convolutional</td>
-<td>0.902</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="conclusions-1" class="section level3" number="3.8.9">
-<h3><span class="header-section-number">3.8.9</span> Conclusions</h3>
-</div>
-<div id="bibliography" class="section level3" number="3.8.10">
-<h3><span class="header-section-number">3.8.10</span> Bibliography</h3>
+<div id="summary-and-conclusions-9" class="section level3" number="2.3.5">
+<h3><span class="header-section-number">2.3.5</span> Summary and conclusions</h3>
+<p>After analyzing the results, especially the plots, it became clear, that it is not possible to pick the best imputation method for all classification algorithms.</p>
+<p>For K nearest neighbors classifier the best AUC, BACC, and MCC scores were gained for the basic median/mode imputation method. For three other algorithms (Naive Bayes, XGBoost, and Ranger Random Forest) the missRanger imputation turned out to be the best one, but the basic median/mode imputer was second in most of the rankings. It was also the quickest one as can be seen in Figure 1.</p>
+<p>The imputer that turned out to be globally the worst, and also the slowest, was the one from mice package.</p>
+<p>It is very important to note, that even though we can pick globally best and worst techniques, most imputation method/classification algorithm combinations ended first on at least one dataset. Because of that, if the best possible prediction correctness is an absolute priority, it is always the best to consider all available options.</p>
+<p>In conclusion, it seems that it is a good idea to use basic median/mode imputation as a solid and fast to obtain starting point, and then, when possible and desirable, to evaluate more sophisticated methods, in search of even better ways.</p>
 
 </div>
 </div>
-<!-- </div> -->
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-2-3_MCC">
+<p>Boughorbel S., El-Anbari M., Jarray F. 2017. “Optimal Classifier for Imbalanced Data Using Matthews Correlation Coefficient Metric.” <em>PLOS One</em>. <a href="https://doi.org/https://doi.org/10.1371/journal.pone.0177678">https://doi.org/https://doi.org/10.1371/journal.pone.0177678</a>.</p>
+</div>
+<div id="ref-2-3_mice">
+<p>Buuren, Stef van, and Karin Groothuis-Oudshoorn. 2011. “Mice: Multivariate Imputation by Chained Equations in R.” <em>Journal of Statistical Software</em> 45 (3): 1–67. <a href="https://www.jstatsoft.org/article/view/v045i03">https://www.jstatsoft.org/article/view/v045i03</a>.</p>
+</div>
+<div id="ref-2-3_AUC">
+<p>Flach Peter, Ferri, Hernandez-Orallo Jose. 2011. “A Coherent Interpretation of Auc as a Measure of Aggregated Classification Performance.” <em>Proceedings of the 28th International Conference on Machine Learning</em>. <a href="https://icml.cc/2011/papers/385_icmlpaper.pdf">https://icml.cc/2011/papers/385_icmlpaper.pdf</a>.</p>
+</div>
+<div id="ref-2-3_softImpute">
+<p>Hastie, Trevor, and Rahul Mazumder. 2015a. “SoftImpute: Matrix Completion via Iterative Soft-Thresholded Svd.” <a href="https://CRAN.R-project.org/package=softImpute">https://CRAN.R-project.org/package=softImpute</a>.</p>
+</div>
+<div id="ref-2-3_VIM">
+<p>Kowarik, Alexander, and Matthias Templ. 2016a. “Imputation with the R Package Vim.” <em>Journal of Statistical Software</em> 74 (7): 1–16. <a href="https://www.jstatsoft.org/article/view/v045i03">https://www.jstatsoft.org/article/view/v045i03</a>.</p>
+</div>
+<div id="ref-2-3_missRanger">
+<p>Mayer, Michael. 2019. “MissRanger: Fast Imputation of Missing Values.” <a href="https://CRAN.R-project.org/package=missRanger">https://CRAN.R-project.org/package=missRanger</a>.</p>
+</div>
+<div id="ref-2-3_BACC">
+<p>Velez, White, D. R., and J. H Moore. 2007. “A Balanced Accuracy Function for Epistasis Modeling in Imbalanceddatasets Using Multifactor Dimensionality Reduction.” <em>Genetic Epidemiology</em>, no. 31: 306–15. <a href="https://doi.org/10.1002/gepi.20211">https://doi.org/10.1002/gepi.20211</a>.</p>
+</div>
+</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="which-neighbours-affected-house-prices-in-the-90s.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="acknowledgements.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="the-hajada-imputation-test.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="various-data-imputation-techniques-in-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook/js/app.min.js"></script>
@@ -718,7 +486,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/3-8-computer-vision.Rmd",
+"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/2-3-comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.Rmd",
 "text": "Edit"
 },
 "history": {
