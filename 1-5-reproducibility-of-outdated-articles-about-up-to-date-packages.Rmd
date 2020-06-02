@@ -4,13 +4,13 @@
 
 ### Abstract
 
+The inability to reproduce scientific articles may be due to the passage of time. Factors such as changes in data or software updates - whether author-dependent or not - may make it difficult to reproduce the results after a long time. It would seem obvious that old scientific articles about R-packages are usually difficult to reproduce. But what if this package is still supported? In what way the continuous support changes the possibility of reproducing these articles? In this article we will look at examples of still updated R-packages from 2010 or older in order to analyse the type and degree of changes.
 
 ### Introduction and Motivation
 
 The problem of the inability to reproduce the results of research presented in a scientific article may result from a number of reasons - at each stage of design, implementation, analysis and description of research results we must remember the problem of reproducibility - without sufficient attention paid to it, there is no chance to ensure the possibility of reproducing the results obtained by one team at a later time and by other people who often do not have full knowledge of the scope presented in the article. Reproducibility is a problem in both business and science. Science, because it allows credibility of research results [@McNutt679]. Business, because we care about the correct operation of technology in any environment [@Anda407]. 
 As cited from “What does research reproducibility mean?” [@Goodman2016];
 “Although the importance of multiple studies corroborating a given result is acknowledged in virtually all of the sciences, the modern use of “reproducible research” was originally applied not to corroboration, but to transparency, with application in the computational sciences. Computer scientist Jon Claerbout coined the term and associated it with a software platform and set of procedures that permit the reader of a paper to see the entire processing trail from the raw data and code to figures and tables. This concept has been carried forward into many data-intensive domains, including epidemiology, computational biology, economics, and clinical trials. According to a U.S. National Science Foundation (NSF) subcommittee on replicability in science, “reproducibility refers to the ability of a researcher to duplicate the results of a prior study using the same materials as were used by the original investigator. That is, a second researcher might use the same raw data to build the same analysis files and implement the same statistical analysis in an attempt to yield the same results…. Reproducibility is a minimum necessary condition for a finding to be believable and informative.”
-
 
 ### Related Work
 
