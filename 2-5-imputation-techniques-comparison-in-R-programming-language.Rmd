@@ -4,17 +4,17 @@
 
 ### Abstract
 
-The vast majority of *machine learning models* do not accept missing values, in a given dataset. Unfortunately, in real life problems, some of informations are often unavailable, therefore we need to come up with a workaround. The range of *imputation methods* however, is huge and varies from highly computing power consuming, to really simple ones. To adress the problem of choice, especially for inexperienced in *machine learning*, we demonstrate a comparison of some of the *imputation algorithms*. These methods can either be easly implemented or are offered by publicly available packages for the R language. They differ in both algorithmic and programming complexity. Moreover, the study is made using sets of data, which represent different shapes and sizes, and different locations and amounts of *missing values*.
+The vast majority of *machine learning models* do not accept missing values in a given dataset. Unfortunately, in real life problems, some informations are often unavailable. Therefore, we need to come up with a workaround. The range of *imputation methods*, however, is huge and varies from highly computing power consuming, to really simple ones. To address the problem of choice, especially for inexperienced in *machine learning*, we demonstrate a comparison of some of the *imputation algorithms*. These methods can either be easily implemented or are offered by publicly available packages for the R language. They differ in both algorithmic and programming complexity. Moreover, the study is made using sets of data, which represent different shapes and sizes, and different locations and amounts of *missing values*.
 
 ### Introduction & Motivation
 
 Nowadays, the problem of missing data has become ubiquitous in our everyday lives in each domain, for example medicine, education, criminology, politics or business affairs. There are three main problems that missing data might cause: a substantial amount of bias, more arduous handling and analysis of the data, and reductions in efficiency. Moreover, many machine learning models cannot be used because of missing data.
 
-Imputation is based on replacing missing data with an estimated value based on other available information. There are numerous kinds of imputation methods which can be divided into simple methods as well as methods involving more sophisticated algorithms. Many programming and statistical environments support data imputation via libraries and pakages. In this work, we have used RStudio due to its numerous packages giving access to implementation of various imputation methods.
+Imputation bases on replacing missing data with an estimated value based on other available information. There are numerous kinds of imputation methods which can be divided into simple methods as well as methods involving more sophisticated algorithms. Many programming and statistical environments support data imputation via libraries and pakages. In this work, we have used RStudio due to its numerous packages giving access to implementation of various imputation methods.
 
 In the past, there was little evaluation and testing on available imputation methods. Effectively, data science and statistical modeling are both domains much younger than mathematics or physics. Besides, it is hard to say if an imputation algorithm's output is the proper one because there is no data to compare with. In order to assess an imputation method, one could make use of some statistical approach like evaluating machine learning predictions, changing data by intentionally removing a part of it, or combining both processes.
 
-In this work, we compare imputation techniques by using predictions of machine learning models, but also by confronting the amount of time each algorithm took to perform an imputation task. The whole evaluation is repeated on several datasets, varying by size and missing data percentage. All these datasets are available online and come from _OpenML_. Our goal was to find the best and the worst imputation method in function of input data and the amount of time to impute, that is the imputation real-life circumstances.
+In this work, we compare imputation techniques by using predictions of machine learning models, but also by confronting the amount of time each algorithm took to perform an imputation task. The whole evaluation is repeated on several datasets, varying by size and missing data percentage. All these datasets are available online and come from OpenML. Our goal was to find the best and the worst imputation method in function of input data and the amount of time to impute, that is the imputation real-life circumstances.
 
 ### Methodology
 
@@ -30,7 +30,7 @@ All the imputation time and model evaluation score measurements are systematical
 
 #### Imputation methods
 
-_imputeBenchmark_ implied any possible choice of imputation and machine learning algorithms depending on the user. That said, throughout the whole time of carrying out the study, we would use the following imputation methods:
+_imputeBenchmark_ implied any possible choice of imputation and machine learning algorithms depending on the user. Nevertheless, throughout the whole time of carrying out the study, we would use the following imputation methods:
 
 - **IRMI**: during the whole iteration, one variable is used as a response variable, whereas the rest are used as the regressors. The whole information is used to impute the response column [@2-5-templIRMI].  
 - **hotDeck**: replacing missing values in an instance with the values present in a similar row. The record to copy values from may be chosen randomly or deterministically [@2-5-HDreview].  
@@ -64,7 +64,7 @@ We used the following seven datasets available in the _OpenML_ package to carry 
 ### Results
 
 #### Performance for each dataset
-All charts are self-explanatory. Based on the results below, and knowing characteristics of a dataset, it should be easy to estimate, which method of imputation is the best for desired use.
+All charts are self-explanatory. Based on the results below, and knowing characteristics of a dataset, it should be easy to estimate which method of imputation is the best for a desired use.
 
 ##### Legend
 ![](2-5-images/legenda.png)
@@ -93,6 +93,16 @@ All charts are self-explanatory. Based on the results below, and knowing charact
 ##### Overall performance
 ![](2-5-images/overall.png)
 
+#### Time measurements
+
+In Average:
+- 5,96s - **IRMI**  
+- 0,94s - **missForest**  
+- 0,22s - **hotdeck**  
+- 0,9s - **kNN**  
+
+For the biggest explored dataset highest *IRMI* time was 17 seconds. Generally none of these algorithms are highly time consuming. However it may be worth to acknowledge, that sometimes if we are dealing with a huge dataset, and we do not dispose a lot of time, *IRMI* might not be a good choice. Especially that, *missForest* most often produces better results.
+
 #### Ranking
 
 We also created a leaderboard of imputation methods in function of used machine learning model. We used 2 metrics separately to evaluate classification models - Accuracy and F1 Score. The data was also divided to small and big datasets to determine whether the imputation methods' scores vary among the size of the dataset.
@@ -107,7 +117,7 @@ As small datasets we chose those with indexes **4, 27, 55, 56, 944**:
 
 ![](2-5-images/small2.png)
 
-We can deduce from the above ranking that **missForest** beats other imputation methods when we deal with small data sets. **Mean/median/dominant** imputation is also convenable in this case - in exception of naiveBayes model. The worst model is **kNN**.
+We can deduce from the above ranking that *missForest* beats other imputation methods when we deal with small data sets. **Mean/median/dominant** imputation is also convenable in this case - in exception of naiveBayes model. The worst model is 
 
 Bigger datasets possess indexes **29, 88**: 
 
@@ -119,7 +129,7 @@ Bigger datasets possess indexes **29, 88**:
 
 ![](2-5-images/big2.png)
 
-**IRMI** and **kNN** revealed to be the most accurate as far as the bigger data sets are concerned. It is also important to notice that **hotdeck** imputation from VIM package was unanimously the worst independently on used model. 
+**IRMI** and **kNN** revealed to be the most accurate as far as the bigger data sets are concerned. It is also important to notice that **hotdeck** imputation from VIM package was unanimously the worst independently of used model. 
 
 All datasets: 
 
@@ -131,10 +141,13 @@ All datasets:
 
 ![](2-5-images/all2.png)
 
-The above ranking shows that the **missForest** imputation algorithm from the package of the same name has achieved the best scores independently on data set's size. On the other side, hotdeck performed the worst and the bigger the data set is, the lower its performance was.
+The above ranking shows that the **missForest** imputation algorithm from the package of the same name has achieved the best scores independently of data set's size. On the other side, hotdeck performed the worst and the bigger the data set is, the lower its performance was. 
+
+
+
 
 ### Conclusions
 
-From the ranking, one can deduce that dependently on data set's size, missForest, kNN and IRMI imputation achieved the best scores. *missForest* was the most appropriate to deal with small data sets, while *kNN* and *IRMI* were outstanding at bigger data sets' imputation.
+From the ranking, one can deduce that depending on data set's size, missForest, kNN and IRMI imputation achieved the best scores. *missForest* was the most appropriate to deal with small data sets, while *kNN* and *IRMI* were outstanding at bigger data sets' imputation.
 
 Moreover, if we use random *hotdeck* imputation from VIM package, the bigger the data set is, the lower this imputation method's performance is. Enough to say that we gain time in exchange for imputation corectness. That is why **an appropriate choice of imputation method** is that important and should be made depending on the given task.
