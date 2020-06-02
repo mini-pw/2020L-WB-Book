@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3.4 Can Automated Regression beat linear model? | ML Case Studies</title>
+  <title>References | ML Case Studies</title>
   <meta name="description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3.4 Can Automated Regression beat linear model? | ML Case Studies" />
+  <meta property="og:title" content="References | ML Case Studies" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="images/cover.png" />
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3.4 Can Automated Regression beat linear model? | ML Case Studies" />
+  <meta name="twitter:title" content="References | ML Case Studies" />
   
   <meta name="twitter:description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="twitter:image" content="images/cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html"/>
-<link rel="next" href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"/>
+<link rel="prev" href="acknowledgements.html"/>
+
 <script src="libs/header-attrs/header-attrs.js"></script>
 <script src="libs/jquery/jquery.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
@@ -294,68 +294,343 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="can-automated-regression-beat-linear-model" class="section level2" number="3.4">
-<h2><span class="header-section-number">3.4</span> Can Automated Regression beat linear model?</h2>
-<p><em>Authors: Bartłomiej Granat, Szymon Maksymiuk, (Warsaw University of Technology)</em></p>
-<div id="abstract-16" class="section level3" number="3.4.1">
-<h3><span class="header-section-number">3.4.1</span> Abstract</h3>
-</div>
-<div id="introduction-and-motivation-14" class="section level3" number="3.4.2">
-<h3><span class="header-section-number">3.4.2</span> Introduction and Motivation</h3>
-<p>Health-related problems have been a topic of multiple papers throughout the years and machine learning brought some new methods to modern medicine. We care so much about our lives that every single algorithm and method eventually gets tested on some medical data.</p>
-<p>What is unique about health data is that black-box models are completely useless in this subject. Almost always doctors know whether a patient is sick or not. What is important to them is the reason <strong>why</strong> he is sick. That’s why explainable machine learning is the key to make all of us healthier. However, making a good explainable model for health data might be close to impossible. Medical problems of all kinds can be very unique, complex, or completely random. That’s why researchers spend numerous hours on improving their explainable models and that’s why <strong>we</strong> decided to test our approach on <code>liver disorders</code> dataset.</p>
-<p>The following dataset is well known in the field of machine learning and that’s exactly the reason why we chose it. It is described in the next chapter. Our goal was to find a relatively clean dataset with many models already done by other people. We don’t want to show that properly cleaned data gives better results but to achieve, an explainable model found after a complex analysis that we want to test.</p>
-<p>In this paper we do a case study on <code>liver disorders</code> dataset and want to prove that by using automated regression it is possible to build an easy to understand prediction that outperforms black-box models on the real dataset and at the same time achieve similar results to other researchers.</p>
-</div>
-<div id="data-1" class="section level3" number="3.4.3">
-<h3><span class="header-section-number">3.4.3</span> Data</h3>
-<p>The dataset we use to test our hypothesis is a well-known <code>liver-disorders</code> first created by ‘BUPA Medical Research Ltd.’ containing a single male patient as a row. The data consists of 5 features which are the results of blood tests a physician might use to inform diagnosis. There is no ground truth in the data set relating to the presence or absence of a disorder. The target feature is attribute drinks, which are numerical. Some of the researchers tend to split the patients into 2 groups: 0 - patients that drink less than 3 half-pint equivalents of alcoholic beverages per day and 1 - patients that drink more or equal to 3 and focus on a classification problem.</p>
-<p>All of the features are numerical. The data is available for 345 patients and contains 0 missing values.</p>
-<p>The dataset consists of 7 attributes:</p>
-<ol style="list-style-type: decimal">
-<li>mcv - mean corpuscular volume</li>
-<li>alkphos - alkaline phosphatase</li>
-<li>sgpt - alanine aminotransferase</li>
-<li>sgot - aspartate aminotransferase</li>
-<li>gammagt - gamma-glutamyl transpeptidase</li>
-<li>drinks - number of half-pint equivalents of alcoholic beverages drunk per day</li>
-<li>selector - field created by the BUPA researchers to split the data into train/test sets</li>
-</ol>
-<p>For further readings on the dataset and misunderstandings related to the selector column incorrectly treated as target refer to: “McDermott &amp; Forsyth 2016, Diagnosing a disorder in a classification benchmark, Pattern Recognition Letters, Volume 73.”</p>
-</div>
-<div id="methodology-15" class="section level3" number="3.4.4">
-<h3><span class="header-section-number">3.4.4</span> Methodology</h3>
-<p>AutoMl Model <span class="math inline">\(M_{aml}\)</span> and the dataset <span class="math inline">\(D\)</span> that consists of <span class="math inline">\(D_{X} = X\)</span> which is set of independent variables and <span class="math inline">\(D_{y} = y\)</span> - dependent variable (ie. target). We assume that <span class="math inline">\(M_{aml}\)</span> is an unknown function <span class="math inline">\(M_{aml}: \mathbb{R}^{p} \to \mathbb{R}\)</span>, where p is a snumber of features in the <span class="math inline">\(D\)</span> Dataset, that satisfies <span class="math inline">\(y = M_{aml}(X) + \epsilon\)</span> where <span class="math inline">\(\epsilon\)</span> is an error vector. Automated regression constructs known vector function <span class="math inline">\(G_{AR} : \mathbb{R}^{n \times p} \to \mathbb{R}^{n \times p}\)</span> where <span class="math inline">\(n\)</span> is a number of observations, that satisfies <span class="math inline">\(y = G_{AR}(X)\beta + \epsilon\)</span> thus it is linear regression model fitted for transformated data.</p>
-<p>To find <span class="math inline">\(G_{AR}\)</span> we have to put some constraints. First of all we want it to minimize loss function <span class="math inline">\(L: \mathbb{R}^{n} \to \mathbb{R}\)</span> given by following formula <span class="math inline">\(L : \frac{\sum_{i=1}^{n}(y_{i}-\hat{y_{i}})^{2}\sum_{i=1}^{n}(y_{i}-\bar{y_{i}})^{2}}{\sum_{i=1}^{n}(\hat{y_{i}}-\bar{y_{i}})^{2}}\)</span> which can be interpreted as Mean Square Error divided by the R-squred coefficient of determination and stands as a tradeoff between fit and results. Another constraint is a domain of valid transformations of particular variables. For given dataset, described in the previous paragraphs we decided to use:</p>
-<ul>
-<li>Feature selection
-<ul>
-<li>XAI feature Importance</li>
-<li>AIC/BIC</li>
-</ul></li>
-<li>Continuous transformation
-<ul>
-<li>Polynomial transformation</li>
-<li>Lograthmic transformation</li>
-</ul></li>
-<li>Discrete transformation
-<ul>
-<li>SAFE method</li>
-</ul></li>
-<li>Feature concatenation
-<ul>
-<li>Multiplication of pair of features.</li>
-</ul></li>
-</ul>
-<p>Obviously, XAI related methods are conducted using AutoML Model. We’ve decided to omit data imputation as an element of valid transformations dataset because liver-disorders dataset does not meet with the problem of missing values.</p>
-<p>The optimization process is conducted based on Bayesian Optimization and the backtracing idea. Each main element of the domain of valid transformations is one step in the process of creation <span class="math inline">\(G_{AR}\)</span> function. Within each step, Bayesian optimization will be used to find the best transformation for the given level. During further steps, if any of transformation did not improve model, ie. <span class="math inline">\(L\)</span> function was only growing, the algorithm takes second, the third, etc. solution from previous steps according to backtracking idea. If for no one of <span class="math inline">\(k\)</span> such iterations, where k is known parameter, a better solution is found, step is omitted.</p>
-</div>
-<div id="results-16" class="section level3" number="3.4.5">
-<h3><span class="header-section-number">3.4.5</span> Results</h3>
-</div>
-<div id="summary-and-conclusions-15" class="section level3" number="3.4.6">
-<h3><span class="header-section-number">3.4.6</span> Summary and conclusions</h3>
+<div id="references-2" class="section level1 unnumbered" number="">
+<h1>References</h1>
 
+<div id="refs" class="references hanging-indent">
+<div>
+<p>accenture. 2018. “UNDERSTANDING Machines: EXPLAINABLE Ai,” 19. <a href="https://www.accenture.com/_acnmedia/pdf-85/accenture-understanding-machines-explainable-ai.pdf?fbclid=IwAR0ZtyDNzHR8dMUJHPwa0CkuQXgOOE68UQV4JCcBxXudO3dlm14LjqX-B8g">https://www.accenture.com/_acnmedia/pdf-85/accenture-understanding-machines-explainable-ai.pdf?fbclid=IwAR0ZtyDNzHR8dMUJHPwa0CkuQXgOOE68UQV4JCcBxXudO3dlm14LjqX-B8g</a>.</p>
+</div>
+<div>
+<p>Alejandro Barredo Arrieta, Javier Del Ser, Natalia Díaz-Rodríguez. 2019. “Explainable Artificial Intelligence (Xai): Concepts, Taxonomies, Opportunities and Challenges Toward Responsible Ai,” 67. <a href="https://arxiv.org/abs/1910.10045">https://arxiv.org/abs/1910.10045</a>.</p>
+</div>
+<div>
+<p>Anda, Bente, Dag Sjøberg, and Audris Mockus. 2009. “Variability and Reproducibility in Software Engineering: A Study of Four Companies That Developed the Same System.” <em>Software Engineering, IEEE Transactions on</em> 35 (July): 407–29. <a href="https://doi.org/10.1109/TSE.2008.89">https://doi.org/10.1109/TSE.2008.89</a>.</p>
+</div>
+<div>
+<p>Anderson, Christopher, Joanna Anderson, Marcel van Assen, Peter Attridge, Angela Attwood, Jordan Axt, Molly Babel, et al. 2019. “Reproducibility Project: Psychology.” <a href="https://doi.org/10.17605/OSF.IO/EZCUJ">https://doi.org/10.17605/OSF.IO/EZCUJ</a>.</p>
+</div>
+<div>
+<p>Ardia, David, Lennart F. Hoogerheide, and Herman K. van Dijk. 2009. “AdMit.” <em>The R Journal</em> 1 (1): 25–30. <a href="https://doi.org/10.32614/RJ-2009-003">https://doi.org/10.32614/RJ-2009-003</a>.</p>
+</div>
+<div>
+<p>Baldominos, Alejandro, Iván Blanco, Antonio Moreno, Rubén Iturrarte, Óscar Bernárdez, and Carlos Afonso. 2018. “Identifying Real Estate Opportunities Using Machine Learning.” <em>Applied Sciences</em> 8 (November): 2321. <a href="https://doi.org/10.3390/app8112321">https://doi.org/10.3390/app8112321</a>.</p>
+</div>
+<div>
+<p>Batista, Gustavo E. A. P. A., and Maria Carolina Monard. 2003. “An Analysis of Four Missing Data Treatment Methods for Supervised Learning.” <em>Applied Artificial Intelligence</em> 17 (5-6): 519–33. <a href="https://doi.org/10.1080/713827181">https://doi.org/10.1080/713827181</a>.</p>
+</div>
+<div>
+<p>Bernd Bischl, Jakob Bossek, Jakob Richter. 2018. “MlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions,” 23. <a href="https://arxiv.org/abs/1703.03373">https://arxiv.org/abs/1703.03373</a>.</p>
+</div>
+<div>
+<p>Biecek, Przemyslaw. 2018. “DALEX: Explainers for Complex Predictive Models in R.” <em>Journal of Machine Learning Research</em> 19 (84): 1–5. <a href="http://jmlr.org/papers/v19/18-416.html">http://jmlr.org/papers/v19/18-416.html</a>.</p>
+</div>
+<div>
+<p>Biecek, Przemyslaw, and Marcin Kosinski. 2017. “archivist: An R Package for Managing, Recording and Restoring Data Analysis Results.” <em>Journal of Statistical Software</em> 82 (11): 1–28. <a href="https://doi.org/10.18637/jss.v082.i11">https://doi.org/10.18637/jss.v082.i11</a>.</p>
+</div>
+<div>
+<p>Bischl, Bernd, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Erich Studerus, Giuseppe Casalicchio, and Zachary M. Jones. 2016a. “Mlr: Machine Learning in R.” <em>Journal of Machine Learning Research</em> 17 (170): 1–5. <a href="http://jmlr.org/papers/v17/15-066.html">http://jmlr.org/papers/v17/15-066.html</a>.</p>
+</div>
+<div>
+<p>———. 2016b. “mlr: Machine Learning in R.” <em>Journal of Machine Learning Research</em> 17 (170): 1–5. <a href="http://jmlr.org/papers/v17/15-066.html">http://jmlr.org/papers/v17/15-066.html</a>.</p>
+</div>
+<div>
+<p>Bischl, Bernd, Jakob Richter, Jakob Bossek, Daniel Horn, Janek Thomas, and Michel Lang. 2017. “MlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions.” <em>arXiv Preprint arXiv:1703.03373</em>.</p>
+</div>
+<div>
+<p>Bono, Christine, L. Ried, Carole Kimberlin, and Bruce Vogel. 2007. “Missing Data on the Center for Epidemiologic Studies Depression Scale: A Comparison of 4 Imputation Techniques.” <em>Research in Social &amp; Administrative Pharmacy : RSAP</em> 3 (April): 1–27. <a href="https://doi.org/10.1016/j.sapharm.2006.04.001">https://doi.org/10.1016/j.sapharm.2006.04.001</a>.</p>
+</div>
+<div>
+<p>Boughorbel S., El-Anbari M., Jarray F. 2017. “Optimal Classifier for Imbalanced Data Using Matthews Correlation Coefficient Metric.” <em>PLOS One</em>. <a href="https://doi.org/https://doi.org/10.1371/journal.pone.0177678">https://doi.org/https://doi.org/10.1371/journal.pone.0177678</a>.</p>
+</div>
+<div>
+<p>Broatch, Jennifer, Jennifer Green, and Andrew Karl. 2018. “RealVAMS: An R Package for Fitting a Multivariate Value- added Model (VAM).” <em>The R Journal</em> 10 (1): 22–30. <a href="https://doi.org/10.32614/RJ-2018-033">https://doi.org/10.32614/RJ-2018-033</a>.</p>
+</div>
+<div>
+<p>Brown, Patrick, and Lutong Zhou. 2010. “MCMC for Generalized Linear Mixed Models with glmmBUGS.” <em>The R Journal</em> 2 (1): 13–17. <a href="https://doi.org/10.32614/RJ-2010-003">https://doi.org/10.32614/RJ-2010-003</a>.</p>
+</div>
+<div>
+<p>Buuren, Stef van, and Karin Groothuis-Oudshoorn. 2011. “Mice: Multivariate Imputation by Chained Equations in R.” <em>Journal of Statistical Software</em> 45 (3): 1–67. <a href="https://www.jstatsoft.org/article/view/v045i03">https://www.jstatsoft.org/article/view/v045i03</a>.</p>
+</div>
+<div>
+<p>Casalicchio, Giuseppe, Bernd Bischl, Dominik Kirchhoff, Michel Lang, Benjamin Hofner, Jakob Bossek, Pascal Kerschke, and Joaquin Vanschoren. 2019. <em>OpenML: Open Machine Learning and Open Data Platform</em>. <a href="https://CRAN.R-project.org/package=OpenML">https://CRAN.R-project.org/package=OpenML</a>.</p>
+</div>
+<div>
+<p>“Census dataset.” 1996. <a href="http://www.cs.toronto.edu/~delve/data/census-house/censusDetail.html">http://www.cs.toronto.edu/~delve/data/census-house/censusDetail.html</a>.</p>
+</div>
+<div>
+<p>Coeurjolly, J.-F., R. Drouilhet, P. Lafaye de Micheaux, and J.-F. Robineau. 2009. “asympTest: A Simple R Package for Classical Parametric Statistical Tests and Confidence Intervals in Large Samples.” <em>The R Journal</em> 1 (2): 26–30. <a href="https://doi.org/10.32614/RJ-2009-015">https://doi.org/10.32614/RJ-2009-015</a>.</p>
+</div>
+<div>
+<p>Computing Machinery, Association for. 2018. “Artifact Review and Badging.” <a href="https://www.acm.org/publications/policies/artifact-review-badging">https://www.acm.org/publications/policies/artifact-review-badging</a>.</p>
+</div>
+<div>
+<p>Conway, Jennifer. 2018. “Artificial Intelligence and Machine Learning : Current Applications in Real Estate.” PhD thesis. <a href="https://dspace.mit.edu/bitstream/handle/1721.1/120609/1088413444-MIT.pdf">https://dspace.mit.edu/bitstream/handle/1721.1/120609/1088413444-MIT.pdf</a>.</p>
+</div>
+<div>
+<p>Din, Allan, Martin Hoesli, and André Bender. 2001. “Environmental Variables and Real Estate Prices.” <em>Urban Studies</em> 38 (February). <a href="https://doi.org/10.1080/00420980120080899">https://doi.org/10.1080/00420980120080899</a>.</p>
+</div>
+<div>
+<p>Dray, Stéphane, and Anne-Béatrice Dufour. 2007. “The Ade4 Package: Implementing the Duality Diagram for Ecologists.” <em>Journal of Statistical Software, Articles</em> 22 (4): 1–20. <a href="https://doi.org/10.18637/jss.v022.i04">https://doi.org/10.18637/jss.v022.i04</a>.</p>
+</div>
+<div>
+<p>Drummond, Chris. 2012. “Reproducible Research: A Dissenting Opinion.” In.</p>
+</div>
+<div>
+<p>Eisner, D. A. 2018. “Reproducibility of Science: Fraud, Impact Factors and Carelessness.” <em>Journal of Molecular and Cellular Cardiology</em> 114 (January): 364–68. <a href="https://doi.org/10.1016/j.yjmcc.2017.10.009">https://doi.org/10.1016/j.yjmcc.2017.10.009</a>.</p>
+</div>
+<div>
+<p>Elmenreich, Wilfried, Philipp Moll, Sebastian Theuermann, and Mathias Lux. 2018. “Making Computer Science Results Reproducible - a Case Study Using Gradle and Docker,” August. <a href="https://doi.org/10.7287/peerj.preprints.27082v1">https://doi.org/10.7287/peerj.preprints.27082v1</a>.</p>
+</div>
+<div>
+<p>Fan, Gang-Zhi, Seow Eng Ong, and Hian Koh. 2006. “Determinants of House Price: A Decision Tree Approach.” <em>Urban Studies</em> 43 (November): 2301–16. <a href="https://doi.org/10.1080/00420980600990928">https://doi.org/10.1080/00420980600990928</a>.</p>
+</div>
+<div>
+<p>Fenton, N. E., and S. L. Pfleeger. 1997. <em>Software Metrics: A Rigorous &amp; Practical Approach</em>. International Thompson Press.</p>
+</div>
+<div>
+<p>Fern’andez, Daniel M’endez, Daniel Graziotin, Stefan Wagner, and Heidi Seibold. 2019. “Open Science in Software Engineering.” <em>CoRR</em> abs/1904.06499. <a href="http://arxiv.org/abs/1904.06499">http://arxiv.org/abs/1904.06499</a>.</p>
+</div>
+<div>
+<p>Fernández, Daniel Méndez, Daniel Graziotin, Stefan Wagner, and Heidi Seibold. 2019. “Open Science in Software Engineering.” <em>ArXiv</em> abs/1904.06499.</p>
+</div>
+<div>
+<p>Flach, Peter, Jose Hernandez-Orallo, and Cèsar Ferri. 2011. “A Coherent Interpretation of Auc as a Measure of Aggregated Classification Performance.” In <em>Proceedings of the 28th International Conference on Machine Learning, ICML 2011</em>, 657–64.</p>
+</div>
+<div>
+<p>Flach Peter, Ferri, Hernandez-Orallo Jose. 2011. “A Coherent Interpretation of Auc as a Measure of Aggregated Classification Performance.” <em>Proceedings of the 28th International Conference on Machine Learning</em>. <a href="https://icml.cc/2011/papers/385_icmlpaper.pdf">https://icml.cc/2011/papers/385_icmlpaper.pdf</a>.</p>
+</div>
+<div>
+<p>Fomel, Sergey, Paul Sava, Ioan Vlad, Yang Liu, and Vladimir Bashkardin. 2013. “Madagascar: Open-Source Software Project for Multidimensional Data Analysis and Reproducible Computational Experiments.” <em>Journal of Open Research Software</em> 1 (November): e8. <a href="https://doi.org/10.5334/jors.ag">https://doi.org/10.5334/jors.ag</a>.</p>
+</div>
+<div>
+<p>Friedman, Jerome. 2000. “Greedy Function Approximation: A Gradient Boosting Machine.” <em>The Annals of Statistics</em> 29 (November). <a href="https://doi.org/10.1214/aos/1013203451">https://doi.org/10.1214/aos/1013203451</a>.</p>
+</div>
+<div>
+<p>Gao, Guangliang, Zhifeng Bao, Jie Cao, A. Qin, Timos Sellis, Fellow, IEEE, and Zhiang Wu. 2019. “Location-Centered House Price Prediction: A Multi-Task Learning Approach,” January. <a href="https://arxiv.org/abs/1901.01774">https://arxiv.org/abs/1901.01774</a>.</p>
+</div>
+<div>
+<p>Garrod, Guy D, and Kenneth G Willis. 1992. “Valuing Goods’ Characteristics: An Application of the Hedonic Price Method to Environmental Attributes.” <em>Journal of Environmental Management</em> 34 (1): 59–76.</p>
+</div>
+<div>
+<p>Gentleman, Robert, and Duncan Temple Lang. 2007. “Statistical Analyses and Reproducible Research.” <em>Journal of Computational and Graphical Statistics</em> 16 (1): 1–23.</p>
+</div>
+<div>
+<p>Goodman, Steven N., Daniele Fanelli, and John P. A. Ioannidis. 2016a. “What Does Research Reproducibility Mean?” <em>Science Translational Medicine</em> 8 (341). <a href="https://doi.org/10.1126/scitranslmed.aaf5027">https://doi.org/10.1126/scitranslmed.aaf5027</a>.</p>
+</div>
+<div>
+<p>———. 2016b. “What Does Research Reproducibility Mean?” <em>Science Translational Medicine</em> 8 (341): 341ps12–341ps12. <a href="https://doi.org/10.1126/scitranslmed.aaf5027">https://doi.org/10.1126/scitranslmed.aaf5027</a>.</p>
+</div>
+<div>
+<p>Gosiewska, Alicja, and Przemyslaw Biecek. 2020. “Lifting Interpretability-Performance Trade-off via Automated Feature Engineering.” <a href="https://arxiv.org/abs/2002.04267">https://arxiv.org/abs/2002.04267</a>.</p>
+</div>
+<div>
+<p>Gosiewska, Alicja, Aleksandra Gacek, Piotr Lubon, and Przemyslaw Biecek. 2019. “SAFE Ml: Surrogate Assisted Feature Extraction for Model Learning.” <a href="http://arxiv.org/abs/1902.11035">http://arxiv.org/abs/1902.11035</a>.</p>
+</div>
+<div>
+<p>Guazzelli, Alex, Michael Zeller, Wen-Ching Lin, and Graham Williams. 2009. “PMML: An Open Standard for Sharing Models.” <em>The R Journal</em> 1 (1): 60–65. <a href="https://doi.org/10.32614/RJ-2009-010">https://doi.org/10.32614/RJ-2009-010</a>.</p>
+</div>
+<div>
+<p>Gundersen, Odd Erik, and Sigbjørn Kjensmo. 2018. “State of the Art: Reproducibility in Artificial Intelligence.” <a href="https://www.aaai.org/ocs/index.php/AAAI/AAAI18/paper/view/17248">https://www.aaai.org/ocs/index.php/AAAI/AAAI18/paper/view/17248</a>.</p>
+</div>
+<div>
+<p>Günther, Frauke, and Stefan Fritsch. 2010. “neuralnet: Training of Neural Networks.” <em>The R Journal</em> 2 (1): 30–38. <a href="https://doi.org/10.32614/RJ-2010-006">https://doi.org/10.32614/RJ-2010-006</a>.</p>
+</div>
+<div>
+<p>Halstead, M. H. 1977. <em>Elements of Software Science</em>. Elsevier.</p>
+</div>
+<div>
+<p>Hankin, Robin. 2007. “Introducing Untb, an R Package for Simulating Ecological Drift Under the Unified Neutral Theory of Biodiversity.” <em>Journal of Statistical Software, Articles</em> 22 (12): 1–15. <a href="https://doi.org/10.18637/jss.v022.i12">https://doi.org/10.18637/jss.v022.i12</a>.</p>
+</div>
+<div>
+<p>Hastie, Trevor, and Rahul Mazumder. 2015a. “SoftImpute: Matrix Completion via Iterative Soft-Thresholded Svd.” <a href="https://CRAN.R-project.org/package=softImpute">https://CRAN.R-project.org/package=softImpute</a>.</p>
+</div>
+<div>
+<p>———. 2015b. <em>SoftImpute: Matrix Completion via Iterative Soft-Thresholded Svd</em>. <a href="https://CRAN.R-project.org/package=softImpute">https://CRAN.R-project.org/package=softImpute</a>.</p>
+</div>
+<div>
+<p>Heyman, Axel, and Dag Sommervoll. 2019. “House Prices and Relative Location.” <em>Cities</em> 95 (September): 102373. <a href="https://doi.org/10.1016/j.cities.2019.06.004">https://doi.org/10.1016/j.cities.2019.06.004</a>.</p>
+</div>
+<div>
+<p>Hu, Feng, and Hang Li. 2013. “A Novel Boundary Oversampling Algorithm Based on Neighborhood Rough Set Model: NRSBoundary-Smote.” <em>Mathematical Problems in Engineering</em> 2013 (November). <a href="https://doi.org/10.1155/2013/694809">https://doi.org/10.1155/2013/694809</a>.</p>
+</div>
+<div>
+<p>Hung, Ling-Hong, Daniel Kristiyanto, Sung Lee, and Ka Yee Yeung. 2016. “GUIdock: Using Docker Containers with a Common Graphics User Interface to Address the Reproducibility of Research.” <em>PloS One</em> 11 (April): e0152686. <a href="https://doi.org/10.1371/journal.pone.0152686">https://doi.org/10.1371/journal.pone.0152686</a>.</p>
+</div>
+<div>
+<p>Josse, Julie, and François Husson. 2016. “missMDA: A Package for Handling Missing Values in Multivariate Data Analysis.” <em>Journal of Statistical Software</em> 70 (1): 1–31. <a href="https://doi.org/10.18637/jss.v070.i01">https://doi.org/10.18637/jss.v070.i01</a>.</p>
+</div>
+<div>
+<p>“Journal Metrics - Impact, Speed and Reach.” n.d. <a href="https://www.journals.elsevier.com/international-journal-of-approximate-reasoning/news/journal-metricsimpact-speed-and-reach">https://www.journals.elsevier.com/international-journal-of-approximate-reasoning/news/journal-metricsimpact-speed-and-reach</a>.</p>
+</div>
+<div>
+<p>Kim, Donghoh, and Hee-Seok Oh. 2009. “EMD: A Package for Empirical Mode Decomposition and Hilbert Spectrum.” <em>The R Journal</em> 1 (1): 40–46. <a href="https://doi.org/10.32614/RJ-2009-002">https://doi.org/10.32614/RJ-2009-002</a>.</p>
+</div>
+<div>
+<p>Kitzes, Justin, Daniel Turek, and Fatma Deniz. 2017. <em>The Practice of Reproducible Research: Case Studies and Lessons from the Data-Intensive Sciences</em>. Univ of California Press.</p>
+</div>
+<div>
+<p>Kowarik, Alexander, and Matthias Templ. 2016a. “Imputation with the R Package Vim.” <em>Journal of Statistical Software</em> 74 (7): 1–16. <a href="https://www.jstatsoft.org/article/view/v045i03">https://www.jstatsoft.org/article/view/v045i03</a>.</p>
+</div>
+<div>
+<p>———. 2016b. “Imputation with the R Package VIM.” <em>Journal of Statistical Software</em> 74 (7): 1–16. <a href="https://doi.org/10.18637/jss.v074.i07">https://doi.org/10.18637/jss.v074.i07</a>.</p>
+</div>
+<div>
+<p>Landau, William Michael. 2018. “The Drake R Package: A Pipeline Toolkit for Reproducibility and High-Performance Computing.” <em>Journal of Open Source Software</em> 3 (21). <a href="https://doi.org/10.21105/joss.00550">https://doi.org/10.21105/joss.00550</a>.</p>
+</div>
+<div>
+<p>Law, Stephen. 2017. “Defining Street-Based Local Area and Measuring Its Effect on House Price Using a Hedonic Price Approach: The Case Study of Metropolitan London.” <em>Cities</em> 60 (February): 166–79. <a href="https://doi.org/10.1016/j.cities.2016.08.008">https://doi.org/10.1016/j.cities.2016.08.008</a>.</p>
+</div>
+<div>
+<p>LeVeque, Randall. 2009. “Python Tools for Reproducible Research on Hyperbolic Problems.” <em>Computing in Science &amp; Engineering</em> 11 (January): 19–27. <a href="https://doi.org/10.1109/MCSE.2009.13">https://doi.org/10.1109/MCSE.2009.13</a>.</p>
+</div>
+<div>
+<p>Liu, Rui, and Lu Liu. 2019. “Predicting housing price in China based on long short-term memory incorporating modified genetic algorithm.” <em>Soft Computing</em>, 1–10. <a href="https://doi.org/10.1007/s00500-018-03739-w">https://doi.org/10.1007/s00500-018-03739-w</a>.</p>
+</div>
+<div>
+<p>Marwick, B. n.d. “Rrtools: Creates a Reproducible Research Compendium (2018).”</p>
+</div>
+<div>
+<p>Marwick, Ben. 2016. “Computational Reproducibility in Archaeological Research: Basic Principles and a Case Study of Their Implementation.” <em>Journal of Archaeological Method and Theory</em> 24 (2): 424–50. <a href="https://doi.org/10.1007/s10816-015-9272-9">https://doi.org/10.1007/s10816-015-9272-9</a>.</p>
+</div>
+<div>
+<p>Marwick, Ben, Carl Boettiger, and Lincoln Mullen. 2017. “Packaging Data Analytical Work Reproducibly Using R (and Friends).” <em>The American Statistician</em> 72 (1): 80–88. <a href="https://doi.org/10.1080/00031305.2017.1375986">https://doi.org/10.1080/00031305.2017.1375986</a>.</p>
+</div>
+<div>
+<p>Mayer, Michael. 2019. “MissRanger: Fast Imputation of Missing Values.” <a href="https://CRAN.R-project.org/package=missRanger">https://CRAN.R-project.org/package=missRanger</a>.</p>
+</div>
+<div>
+<p>McCabe, T. J. 1976. “A Complexity Measure.” <em>IEEE Transactions on Software Engineering</em> 2 (4): 308–20.</p>
+</div>
+<div>
+<p>McNutt, Marcia. 2014. “Journals Unite for Reproducibility.” <em>Science</em> 346 (6210): 679–79. <a href="https://doi.org/10.1126/science.aaa1724">https://doi.org/10.1126/science.aaa1724</a>.</p>
+</div>
+<div>
+<p>Melo], Vinícius [Veloso de, and Wolfgang Banzhaf. 2018. “Automatic Feature Engineering for Regression Models with Machine Learning: An Evolutionary Computation and Statistics Hybrid.” <em>Information Sciences</em> 430-431: 287–313. <a href="https://doi.org/https://doi.org/10.1016/j.ins.2017.11.041">https://doi.org/https://doi.org/10.1016/j.ins.2017.11.041</a>.</p>
+</div>
+<div>
+<p>Mevik, Björn-Helge, and Ron Wehrens. 2007. “The Pls Package: Principal Component and Partial Least Squares Regression in R.” <em>Journal of Statistical Software, Articles</em> 18 (2): 1–23. <a href="https://doi.org/10.18637/jss.v018.i02">https://doi.org/10.18637/jss.v018.i02</a>.</p>
+</div>
+<div>
+<p>Mi, Xuefei, Tetsuhisa Miwa, and Torsten Hothorn. 2009. “New Numerical Algorithm for Multivariate Normal Probabilities in Package mvtnorm.” <em>The R Journal</em> 1 (1): 37–39. <a href="https://doi.org/10.32614/RJ-2009-001">https://doi.org/10.32614/RJ-2009-001</a>.</p>
+</div>
+<div>
+<p>Molnar, Christoph. 2019. <em>Interpretable Machine Learning: A Guide for Making Black Box Models Explainable</em>. <a href="https://christophm.github.io/interpretable-ml-book/simple.html">https://christophm.github.io/interpretable-ml-book/simple.html</a>.</p>
+</div>
+<div>
+<p>Murdoch, Kumbier, Singh. 2018. “Interpretable Machine Learning: Definitions, Methods, and Applications,” 2. <a href="https://arxiv.org/pdf/1901.04592.pdf?fbclid=IwAR2frcHrhLc4iaH5-TmKKq263NVvAKHtG4uQoiVNDeLAG3QFzdje-yzZjiQ">https://arxiv.org/pdf/1901.04592.pdf?fbclid=IwAR2frcHrhLc4iaH5-TmKKq263NVvAKHtG4uQoiVNDeLAG3QFzdje-yzZjiQ</a>.</p>
+</div>
+<div>
+<p>Musil, Carol, Camille Warner, Piyanee Klainin-Yobas, and Susan Jones. 2002. “A Comparison of Imputation Techniques for Handling Missing Data.” <em>Western Journal of Nursing Research</em> 24 (December): 815–29. <a href="https://doi.org/10.1177/019394502762477004">https://doi.org/10.1177/019394502762477004</a>.</p>
+</div>
+<div>
+<p>Özalp, Ayşe, and Halil Akinci. 2017. “The Use of Hedonic Pricing Method to Determine the Parameters Affecting Residential Real Estate Prices.” <em>Arabian Journal of Geosciences</em> 10 (December). <a href="https://doi.org/10.1007/s12517-017-3331-3">https://doi.org/10.1007/s12517-017-3331-3</a>.</p>
+</div>
+<div>
+<p>Pandey. 2019. “Interpretable Machine Learning: Extracting Human Understandable Insights from Any Machine Learning Model,” April. <a href="https://towardsdatascience.com/interpretable-machine-learning-1dec0f2f3e6b">https://towardsdatascience.com/interpretable-machine-learning-1dec0f2f3e6b</a>.</p>
+</div>
+<div>
+<p>Park, Byeonghwa, and Jae Bae. 2015. “Using machine learning algorithms for housing price prediction: The case of Fairfax County, Virginia housing data.” <em>Expert Systems with Applications</em> 42 (April). <a href="https://doi.org/10.1016/j.eswa.2014.11.040">https://doi.org/10.1016/j.eswa.2014.11.040</a>.</p>
+</div>
+<div>
+<p>Patil, Prasad, Roger D. Peng, and Jeffrey T. Leek. 2016. “A Statistical Definition for Reproducibility and Replicability.” <em>Science</em>. <a href="https://doi.org/10.1101/066803">https://doi.org/10.1101/066803</a>.</p>
+</div>
+<div>
+<p>Patricia Arroba, Marina Zapater, José L. Risco-Martín. 2015. “Enhancing Regression Models for Complex Systems Using Evolutionary Techniques for Feature Engineering.” <em>Journal of Grid Computing</em> 13: 409–23. <a href="https://doi.org/10.1007/s10723-014-9313-8">https://doi.org/10.1007/s10723-014-9313-8</a>.</p>
+</div>
+<div>
+<p>Peng, Roger D. 2011. “Reproducible Research in Computational Science.” <em>Science</em> 334 (6060): 1226–7. <a href="https://doi.org/10.1126/science.1213847">https://doi.org/10.1126/science.1213847</a>.</p>
+</div>
+<div>
+<p>Piccolo, Stephen R., and Michael B. Frampton. 2016. “Tools and Techniques for Computational Reproducibility.” <em>GigaScience</em> 5 (1). <a href="https://doi.org/10.1186/s13742-016-0135-4">https://doi.org/10.1186/s13742-016-0135-4</a>.</p>
+</div>
+<div>
+<p>Raff, Edward. 2020. “Quantifying Independently Reproducible Machine Learning.” <a href="https://thegradient.pub/independently-reproducible-machine-learning/">https://thegradient.pub/independently-reproducible-machine-learning/</a>.</p>
+</div>
+<div>
+<p>Rafiei, Mohammad H., and Hojjat Adeli. 2015. “A Novel Machine Learning Model for Estimation of Sale Prices of Real Estate Units.” <em>Journal of Construction Engineering and Management</em> 142 (August). <a href="https://doi.org/10.1061/(ASCE)CO.1943-7862.0001047">https://doi.org/10.1061/(ASCE)CO.1943-7862.0001047</a>.</p>
+</div>
+<div>
+<p>Randeniya, TD, Gayani Ranasinghe, and Susantha Amarawickrama. 2017. “A Model to Estimate the Implicit Values of Housing Attributes by Applying the Hedonic Pricing Method.” <em>International Journal of Built Environment and Sustainability</em> 4 (May). <a href="https://doi.org/10.11113/ijbes.v4.n2.182">https://doi.org/10.11113/ijbes.v4.n2.182</a>.</p>
+</div>
+<div>
+<p>R Core Team. 2018. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.</p>
+</div>
+<div>
+<p>“Reproducibility in Science: A Guide to enhancing reproducibility in scientific results and writing.” 2014. <a href="http://ropensci.github.io/reproducibility-guide/">http://ropensci.github.io/reproducibility-guide/</a>.</p>
+</div>
+<div>
+<p>Rosenberg, David E., Yves Filion, Rebecca Teasley, Samuel Sandoval-Solis, Jory S. Hecht, Jakobus E. van Zyl, George F. McMahon, Jeffery S. Horsburgh, Joseph R. Kasprzyk, and David G. Tarboton. 2020. “The Next Frontier: Making Research More Reproducible.” <em>Journal of Water Resources Planning and Management</em> 146 (6): 01820002. <a href="https://doi.org/10.1061/(ASCE)WR.1943-5452.0001215">https://doi.org/10.1061/(ASCE)WR.1943-5452.0001215</a>.</p>
+</div>
+<div>
+<p>Rubin, DONALD B. 1976. “Inference and missing data.” <em>Biometrika</em> 63 (3): 581–92. <a href="https://doi.org/10.1093/biomet/63.3.581">https://doi.org/10.1093/biomet/63.3.581</a>.</p>
+</div>
+<div>
+<p>Sakia, R. M. 1992. “The Box-Cox Transformation Technique: A Review.” <em>Journal of the Royal Statistical Society. Series D (the Statistician)</em> 41 (2): 169–78. <a href="http://www.jstor.org/stable/2348250">http://www.jstor.org/stable/2348250</a>.</p>
+</div>
+<div>
+<p>Sayyad Shirabad, J., and T. J. Menzies. 2005. “The PROMISE Repository of Software Engineering Databases.” School of Information Technology and Engineering, University of Ottawa, Canada. <a href="http://promise.site.uottawa.ca/SERepository">http://promise.site.uottawa.ca/SERepository</a>.</p>
+</div>
+<div>
+<p>Selim, Hasan. 2009. “Determinants of House Prices in Turkey: Hedonic Regression Versus Artificial Neural Network.” <em>Expert Syst. Appl.</em> 36 (March): 2843–52. <a href="https://doi.org/10.1016/j.eswa.2008.01.044">https://doi.org/10.1016/j.eswa.2008.01.044</a>.</p>
+</div>
+<div>
+<p>Slezak, Peter, and Iveta Waczulikova. 2011. “Reproducibility and Repeatability.” <em>Physiological Research / Academia Scientiarum Bohemoslovaca</em> 60 (April): 203–4; author reply 204.</p>
+</div>
+<div>
+<p>Soetaert, Karline, Thomas Petzoldt, and R. Woodrow Setzer. 2010. “Solving Differential Equations in R.” <em>The R Journal</em> 2 (2): 5–15. <a href="https://doi.org/10.32614/RJ-2010-013">https://doi.org/10.32614/RJ-2010-013</a>.</p>
+</div>
+<div>
+<p>Stanisic, Luka, Arnaud Legrand, and Vincent Danjean. 2015. “An Effective Git and Org-Mode Based Workflow for Reproducible Research.” <em>SIGOPS Oper. Syst. Rev.</em> 49 (1): 61–70. <a href="https://doi.org/10.1145/2723872.2723881">https://doi.org/10.1145/2723872.2723881</a>.</p>
+</div>
+<div>
+<p>Stef van Buuren, Karin Groothuis-Oudshoorn. 2011. “Mice: Multivariate Imputation by Chained Equations in R.” <a href="https://www.jstatsoft.org/article/view/v045i03">https://www.jstatsoft.org/article/view/v045i03</a>.</p>
+</div>
+<div>
+<p>Stekhoven, Daniel J., and Peter Buehlmann. 2012. “MissForest - Non-Parametric Missing Value Imputation for Mixed-Type Data.” <em>Bioinformatics</em> 28 (1): 112–18.</p>
+</div>
+<div>
+<p>Stodden, Victoria, David H. Bailey, Jonathan M. Borwein, Randall J. LeVeque, William J. Rider, and William Stein. 2013. “Setting the Default to Reproducible Reproducibility in Computational and Experimental Mathematics.” In.</p>
+</div>
+<div>
+<p>Stodden, Victoria, Marcia McNutt, David H. Bailey, Ewa Deelman, Yolanda Gil, Brooks Hanson, Michael A. Heroux, John P. A. Ioannidis, and Michela Taufer. 2016. “Enhancing Reproducibility for Computational Methods.” <em>Science</em> 354 (6317): 1240–1. <a href="https://doi.org/10.1126/science.aah6168">https://doi.org/10.1126/science.aah6168</a>.</p>
+</div>
+<div>
+<p>Stodden, Victoria, Jennifer Seiler, and Zhaokun Ma. 2018. “An Empirical Analysis of Journal Policy Effectiveness for Computational Reproducibility.” <em>Proceedings of the National Academy of Sciences</em> 115 (11): 2584–9. <a href="https://doi.org/10.1073/pnas.1708290115">https://doi.org/10.1073/pnas.1708290115</a>.</p>
+</div>
+<div>
+<p>Strobl, Carolin, Torsten Hothorn, and Achim Zeileis. 2009. “Party on!” <em>The R Journal</em> 1 (2): 14–17. <a href="https://doi.org/10.32614/RJ-2009-013">https://doi.org/10.32614/RJ-2009-013</a>.</p>
+</div>
+<div>
+<p>Su, Xiaoyuan, Taghi Khoshgoftaar, and Russ Greiner. 2008. “Using Imputation Techniques to Help Learn Accurate Classifiers.” <em>Proceedings - International Conference on Tools with Artificial Intelligence, ICTAI</em> 1 (December): 437–44. <a href="https://doi.org/10.1109/ICTAI.2008.60">https://doi.org/10.1109/ICTAI.2008.60</a>.</p>
+</div>
+<div>
+<p>Therneau, Terry, and Beth Atkinson. 2019. <em>Rpart: Recursive Partitioning and Regression Trees</em>. <a href="https://CRAN.R-project.org/package=rpart">https://CRAN.R-project.org/package=rpart</a>.</p>
+</div>
+<div>
+<p>Thomas, Kluyver, Ragan-Kelley Benjamin, P&amp;eacute;rez Fernando, Granger Brian, Bussonnier Matthias, Frederic Jonathan, Kelley Kyle, et al. 2016. “Jupyter Notebooks &amp;Ndash; a Publishing Format for Reproducible Computational Workflows.” <em>Stand Alone</em> 0 (Positioning and Power in Academic Publishing: Players, Agents and Agendas): 87–90. <a href="https://doi.org/10.3233/978-1-61499-649-1-87">https://doi.org/10.3233/978-1-61499-649-1-87</a>.</p>
+</div>
+<div>
+<p>van Buuren, Stef, and Karin Groothuis-Oudshoorn. 2011. “mice: Multivariate Imputation by Chained Equations in R.” <em>Journal of Statistical Software</em> 45 (3): 1–67. <a href="https://www.jstatsoft.org/v45/i03/">https://www.jstatsoft.org/v45/i03/</a>.</p>
+</div>
+<div>
+<p>Vandewalle, Patrick, Jelena Kovacevic, and Martin Vetterli. 2009. “Reproducible Research in Signal Processing.” <em>IEEE Signal Processing Magazine</em> 26 (3): 37–47.</p>
+</div>
+<div>
+<p>Vanschoren, Joaquin, Jan N. van Rijn, Bernd Bischl, and Luis Torgo. 2013. “OpenML: Networked Science in Machine Learning.” <em>SIGKDD Explorations</em> 15 (2): 49–60. <a href="https://doi.org/10.1145/2641190.2641198">https://doi.org/10.1145/2641190.2641198</a>.</p>
+</div>
+<div>
+<p>Velez, White, D. R., and J. H Moore. 2007. “A Balanced Accuracy Function for Epistasis Modeling in Imbalanceddatasets Using Multifactor Dimensionality Reduction.” <em>Genetic Epidemiology</em>, no. 31: 306–15. <a href="https://doi.org/10.1002/gepi.20211">https://doi.org/10.1002/gepi.20211</a>.</p>
+</div>
+<div>
+<p>Wilhelm, Stefan, and B. G. Manjunath. 2010. “tmvtnorm: A Package for the Truncated Multivariate Normal Distribution.” <em>The R Journal</em> 2 (1): 25–29. <a href="https://doi.org/10.32614/RJ-2010-005">https://doi.org/10.32614/RJ-2010-005</a>.</p>
+</div>
+<div>
+<p>Wright, Marvin N., and Andreas Ziegler. 2017. “ranger: A Fast Implementation of Random Forests for High Dimensional Data in C++ and R.” <em>Journal of Statistical Software</em> 77 (1): 1–17. <a href="https://doi.org/10.18637/jss.v077.i01">https://doi.org/10.18637/jss.v077.i01</a>.</p>
+</div>
+<div>
+<p>Yuan, Lester. 2007. “Maximum Likelihood Method for Predicting Environmental Conditions from Assemblage Composition: The R Package Bio.infer.” <em>Journal of Statistical Software, Articles</em> 22 (3): 1–20. <a href="https://doi.org/10.18637/jss.v022.i03">https://doi.org/10.18637/jss.v022.i03</a>.</p>
+</div>
 </div>
 </div>
             </section>
@@ -363,8 +638,8 @@
           </div>
         </div>
       </div>
-<a href="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="acknowledgements.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook/js/app.min.js"></script>
@@ -395,7 +670,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/3-4-Can-automated-regression-beat-AutoML.Rmd",
+"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/9-0-references.Rmd",
 "text": "Edit"
 },
 "history": {

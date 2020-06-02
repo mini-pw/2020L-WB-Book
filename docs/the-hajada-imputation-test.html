@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3.4 Can Automated Regression beat linear model? | ML Case Studies</title>
+  <title>2.2 The Hajada Imputation Test | ML Case Studies</title>
   <meta name="description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3.4 Can Automated Regression beat linear model? | ML Case Studies" />
+  <meta property="og:title" content="2.2 The Hajada Imputation Test | ML Case Studies" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="images/cover.png" />
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3.4 Can Automated Regression beat linear model? | ML Case Studies" />
+  <meta name="twitter:title" content="2.2 The Hajada Imputation Test | ML Case Studies" />
   
   <meta name="twitter:description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="twitter:image" content="images/cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html"/>
-<link rel="next" href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"/>
+<link rel="prev" href="default-imputation-efficiency-comparision.html"/>
+<link rel="next" href="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms-.html"/>
 <script src="libs/header-attrs/header-attrs.js"></script>
 <script src="libs/jquery/jquery.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
@@ -294,68 +294,110 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="can-automated-regression-beat-linear-model" class="section level2" number="3.4">
-<h2><span class="header-section-number">3.4</span> Can Automated Regression beat linear model?</h2>
-<p><em>Authors: Bartłomiej Granat, Szymon Maksymiuk, (Warsaw University of Technology)</em></p>
-<div id="abstract-16" class="section level3" number="3.4.1">
-<h3><span class="header-section-number">3.4.1</span> Abstract</h3>
+<div id="the-hajada-imputation-test" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> The Hajada Imputation Test</h2>
+<p><em>Authors: Jakub Kosterna, Dawid Przybyliński, Hanna Zdulska (Warsaw University of Technology)</em></p>
+<div id="abstract-9" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Abstract</h3>
+<p>There are many different ways of dealing with missing values. Depending on their quantity and properties, various methods turn out to be the best. The fact is, there is no one universal best method of imputation, and different problems require various solutions. Using one and the same solution for each dataset is certainly not the best option, but sometimes it is convenient or even necessary to focus on one particular method without much insight into its effect - for example, when time limits us or when, due to the complexity of the algorithm or class of problems, we are forced to choose only one method.</p>
+<p>In this chapter which we decided to name <em>The Hajada Imputation Test</em> (taken from the first two letters of creators’ names) we will take a look at several popular imputation methods and try to compare them with each other, including ranking of algorithms taken into account and finally choosing the best one. Obviously its result will not be the final verdict declaring which imputation algorithm is clearly better or worse, but considering the comparison of their quality on different datasets, we will be able to assess their collective performance and effectiveness against the backdrop of the whole. For this purpose, we will test the modified collections for getting rid of missing values on several machine learning classification algorithms, and then considering the selected quality measures after comparing the results, we will get the desired view. Due to the need to obtain a clear and interpretable result, we have limited ourselves to the problem of binary classification.</p>
 </div>
-<div id="introduction-and-motivation-14" class="section level3" number="3.4.2">
-<h3><span class="header-section-number">3.4.2</span> Introduction and Motivation</h3>
-<p>Health-related problems have been a topic of multiple papers throughout the years and machine learning brought some new methods to modern medicine. We care so much about our lives that every single algorithm and method eventually gets tested on some medical data.</p>
-<p>What is unique about health data is that black-box models are completely useless in this subject. Almost always doctors know whether a patient is sick or not. What is important to them is the reason <strong>why</strong> he is sick. That’s why explainable machine learning is the key to make all of us healthier. However, making a good explainable model for health data might be close to impossible. Medical problems of all kinds can be very unique, complex, or completely random. That’s why researchers spend numerous hours on improving their explainable models and that’s why <strong>we</strong> decided to test our approach on <code>liver disorders</code> dataset.</p>
-<p>The following dataset is well known in the field of machine learning and that’s exactly the reason why we chose it. It is described in the next chapter. Our goal was to find a relatively clean dataset with many models already done by other people. We don’t want to show that properly cleaned data gives better results but to achieve, an explainable model found after a complex analysis that we want to test.</p>
-<p>In this paper we do a case study on <code>liver disorders</code> dataset and want to prove that by using automated regression it is possible to build an easy to understand prediction that outperforms black-box models on the real dataset and at the same time achieve similar results to other researchers.</p>
-</div>
-<div id="data-1" class="section level3" number="3.4.3">
-<h3><span class="header-section-number">3.4.3</span> Data</h3>
-<p>The dataset we use to test our hypothesis is a well-known <code>liver-disorders</code> first created by ‘BUPA Medical Research Ltd.’ containing a single male patient as a row. The data consists of 5 features which are the results of blood tests a physician might use to inform diagnosis. There is no ground truth in the data set relating to the presence or absence of a disorder. The target feature is attribute drinks, which are numerical. Some of the researchers tend to split the patients into 2 groups: 0 - patients that drink less than 3 half-pint equivalents of alcoholic beverages per day and 1 - patients that drink more or equal to 3 and focus on a classification problem.</p>
-<p>All of the features are numerical. The data is available for 345 patients and contains 0 missing values.</p>
-<p>The dataset consists of 7 attributes:</p>
+<div id="introduction-and-motivation-7" class="section level3" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> Introduction and Motivation</h3>
+<p>In statistics, imputation is the process of replacing missing data with substituted values. Over the years, humanity has created many different methods accomplishing that, including the simple and instinctive ones but also more advanced and hard to be easily explained. Choosing the best-suited imputation method for the dataset with missing values is still the daily dilemma of every data scientist and there isn’t one universally recognized best technique. Some scientists believe the crux lies in the most advanced and sophisticated algorithms, others trust the simplest of all possible. In a way, both parts are right - the first naturally win in speed of execution, but the second ones do not have advanced operations implemented for nothing and this usually results in data that more accurately reflects reality or what might be expected from it. How do the individual popular ways fall on the famous collections from OpenML100<sup>1</sup>? Many wondered, we decided to find the answer to this question. Many were wondering, but few answered this question - some interesting conclusions have been developed here.</p>
+<div id="imputation-functions" class="section level4" number="2.2.2.1">
+<h4><span class="header-section-number">2.2.2.1</span> Imputation functions</h4>
+<p>Six different methods have been taken into consideration. Their selection is well thought out - they are all widely known in the world of Data Science, and at the same time they differ significantly in approach, implementation, concept and results. Comparing them not only results in a fair view of the strictly indicated implementations, but also what result subsequent approaches result in.</p>
+<p>Three simple imputation methods and three more advanced algorithms offered by popular packages were taken to consideration and their comparison. The clash of implementations with such a degree of diversity of complexity gives a clear message whether it pays off to reach for an advanced algorithm from the package prepared by professionals for many hours, conducted on many tests, or rather stay with minimalism and write easy code solving the problem in a trivial way.</p>
+<p>Methods compared in subsequent stages are:</p>
 <ol style="list-style-type: decimal">
-<li>mcv - mean corpuscular volume</li>
-<li>alkphos - alkaline phosphatase</li>
-<li>sgpt - alanine aminotransferase</li>
-<li>sgot - aspartate aminotransferase</li>
-<li>gammagt - gamma-glutamyl transpeptidase</li>
-<li>drinks - number of half-pint equivalents of alcoholic beverages drunk per day</li>
-<li>selector - field created by the BUPA researchers to split the data into train/test sets</li>
+<li><em>mode / median replace</em> - basic process which puts in a place of missing data median cells from their columns for numerical values and dominants for categorical ones.</li>
+<li><em>remove rows</em> - trivial solution of removing rows containing any missing data.</li>
+<li><em>‘bogo’ random replace</em> - simple algorithm replacing NA values with random numbers or factors from their features.</li>
+<li><em>mice</em> <sup>2</sup> - advanced method creating multiple imputations for multivariate missing data, based on <em>Fully Conditional Specification</em> <sup>3</sup>, where each incomplete variable is imputed by a separate model. Standard imputation with <em>maxit</em> parameter of value 0 and default 5 number of imputed datasets.</li>
+<li><em>VIM</em> <sup>4</sup> - standard k-nearest neighbors algorithm taken from the library.</li>
+<li><em>missForest</em> <sup>5</sup> - imputation based on random forest offered by the package.</li>
 </ol>
-<p>For further readings on the dataset and misunderstandings related to the selector column incorrectly treated as target refer to: “McDermott &amp; Forsyth 2016, Diagnosing a disorder in a classification benchmark, Pattern Recognition Letters, Volume 73.”</p>
 </div>
-<div id="methodology-15" class="section level3" number="3.4.4">
-<h3><span class="header-section-number">3.4.4</span> Methodology</h3>
-<p>AutoMl Model <span class="math inline">\(M_{aml}\)</span> and the dataset <span class="math inline">\(D\)</span> that consists of <span class="math inline">\(D_{X} = X\)</span> which is set of independent variables and <span class="math inline">\(D_{y} = y\)</span> - dependent variable (ie. target). We assume that <span class="math inline">\(M_{aml}\)</span> is an unknown function <span class="math inline">\(M_{aml}: \mathbb{R}^{p} \to \mathbb{R}\)</span>, where p is a snumber of features in the <span class="math inline">\(D\)</span> Dataset, that satisfies <span class="math inline">\(y = M_{aml}(X) + \epsilon\)</span> where <span class="math inline">\(\epsilon\)</span> is an error vector. Automated regression constructs known vector function <span class="math inline">\(G_{AR} : \mathbb{R}^{n \times p} \to \mathbb{R}^{n \times p}\)</span> where <span class="math inline">\(n\)</span> is a number of observations, that satisfies <span class="math inline">\(y = G_{AR}(X)\beta + \epsilon\)</span> thus it is linear regression model fitted for transformated data.</p>
-<p>To find <span class="math inline">\(G_{AR}\)</span> we have to put some constraints. First of all we want it to minimize loss function <span class="math inline">\(L: \mathbb{R}^{n} \to \mathbb{R}\)</span> given by following formula <span class="math inline">\(L : \frac{\sum_{i=1}^{n}(y_{i}-\hat{y_{i}})^{2}\sum_{i=1}^{n}(y_{i}-\bar{y_{i}})^{2}}{\sum_{i=1}^{n}(\hat{y_{i}}-\bar{y_{i}})^{2}}\)</span> which can be interpreted as Mean Square Error divided by the R-squred coefficient of determination and stands as a tradeoff between fit and results. Another constraint is a domain of valid transformations of particular variables. For given dataset, described in the previous paragraphs we decided to use:</p>
+<div id="datasets" class="section level4" number="2.2.2.2">
+<h4><span class="header-section-number">2.2.2.2</span> Datasets</h4>
+<p>The fourteen data frames were taken from OpenML100 collection <sup>1</sup> and were corrected specifically for this research. Both small and simple frames were chosen as well as more complex and containing a lot of information, difficult to explain or present. They can be found under the following identifiers with the following names: 1590 - <em>adult</em>, 188 - <em>eucalyptus</em>, 23381 - <em>dresses-sales</em>, 29 - <em>credit-approval</em>, 38 - <em>sick</em>, 40536 - <em>SpeedDating</em>, 41278 - <em>okcupid-stem</em>, 56 - <em>vote</em>, 6332 - <em>cylinder-bands</em>, 1018 - <em>ipums_la_99-small</em>, 27 - <em>colic</em>, 4 - <em>labor</em>, 55 - <em>hepatitis</em> and 944 - <em>echoMonths</em>.</p>
+<p>These above have been placed in individual directories identified by id in the prepared directory. The six imputations mentioned earlier were conducted on all fourteen of them, but only on six imputations were successful in their entirety.</p>
+</div>
+<div id="binary-classification-algorithms" class="section level4" number="2.2.2.3">
+<h4><span class="header-section-number">2.2.2.3</span> Binary classification algorithms</h4>
+<p>In order to compare the quality of the imputed data and see how this supplementation of deficiencies works in practice, five binary classification algorithms have been selected. Their choice was made after careful analysis and extensive discussion, in order to find models that are both widely known and used, but also apply to different approaches and give reasonably distinguishable results using different techniques. The final choice fell on:</p>
 <ul>
-<li>Feature selection
-<ul>
-<li>XAI feature Importance</li>
-<li>AIC/BIC</li>
-</ul></li>
-<li>Continuous transformation
-<ul>
-<li>Polynomial transformation</li>
-<li>Lograthmic transformation</li>
-</ul></li>
-<li>Discrete transformation
-<ul>
-<li>SAFE method</li>
-</ul></li>
-<li>Feature concatenation
-<ul>
-<li>Multiplication of pair of features.</li>
-</ul></li>
+<li><em>classification tree from rpart<sup>6</sup></em> - classic algorithm which uses a decision tree to go from observations about an item to conclusions about the item’s target value,</li>
+<li><em>k-Nearest Neighbors<sup>7</sup> from class<sup>8</sup> package</em> - standard knn<sup>7</sup> model attributing a given observation to a target corresponding to its closest observations in space,</li>
+<li><em>naive Bayes from e1071<sup>9</sup></em> - well-known classification computing the conditional a-posterior probabilities of a categorical class variable given independent predictor variables using the Bayes rule.</li>
+<li><em>random forest from ranger<sup>10</sup></em> - algorithm consisting of many decisions trees uses bagging and feature randomness when building each individual tree trying to create an uncorrelated forest of trees whose prediction by committee is more accurate than that of any individual tree.</li>
+<li><em>Support Vector Machine from e1071<sup>9</sup></em> - a discriminative classifier formally defined by a separating hyperplane.</li>
 </ul>
-<p>Obviously, XAI related methods are conducted using AutoML Model. We’ve decided to omit data imputation as an element of valid transformations dataset because liver-disorders dataset does not meet with the problem of missing values.</p>
-<p>The optimization process is conducted based on Bayesian Optimization and the backtracing idea. Each main element of the domain of valid transformations is one step in the process of creation <span class="math inline">\(G_{AR}\)</span> function. Within each step, Bayesian optimization will be used to find the best transformation for the given level. During further steps, if any of transformation did not improve model, ie. <span class="math inline">\(L\)</span> function was only growing, the algorithm takes second, the third, etc. solution from previous steps according to backtracking idea. If for no one of <span class="math inline">\(k\)</span> such iterations, where k is known parameter, a better solution is found, step is omitted.</p>
 </div>
-<div id="results-16" class="section level3" number="3.4.5">
-<h3><span class="header-section-number">3.4.5</span> Results</h3>
 </div>
-<div id="summary-and-conclusions-15" class="section level3" number="3.4.6">
-<h3><span class="header-section-number">3.4.6</span> Summary and conclusions</h3>
+<div id="methology" class="section level3" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> Methology</h3>
+<div id="reading-datasets" class="section level4" number="2.2.3.1">
+<h4><span class="header-section-number">2.2.3.1</span> Reading datasets</h4>
+<p>In order to read all datasets another function was used, which returned a dataframe containing all the important informations about the test matrices. The generated frames of imputation results and times were saved using parallel processing<sup>11</sup>.</p>
+</div>
+<div id="metrics-functions" class="section level4" number="2.2.3.2">
+<h4><span class="header-section-number">2.2.3.2</span> Metrics functions</h4>
+<p>In order to test the same test-train splits we used random seed 1357 for all datasets. For each machine learning model after every imputation was created confusion matrix and the values of four basic metrics:</p>
+<ul>
+<li><em>accuracy</em> - <span class="math inline">\(\frac{TP+TN}{TP+FP+FN+TN}\)</span></li>
+<li><em>precision</em> - <span class="math inline">\(\frac{TP}{TP+FP}\)</span></li>
+<li><em>recall</em> - <span class="math inline">\(\frac{TP}{TP+FN}\)</span></li>
+<li><em>f1</em> - <span class="math inline">\(2*\frac{Recall * Precision}{Recall + Precision}\)</span></li>
+</ul>
+<p>For the final conclusion, ranking concerned only the last one. Additionally, Matthews correlation coefficient<sup>12</sup> measures were also computed.</p>
+<p><span class="math inline">\({\displaystyle {\text{MCC}}={\frac {{\mathit {TP}}\times {\mathit {TN}}-{\mathit {FP}}\times {\mathit {FN}}}{\sqrt {({\mathit {TP}}+{\mathit {FP}})({\mathit {TP}}+{\mathit {FN}})({\mathit {TN}}+{\mathit {FP}})({\mathit {TN}}+{\mathit {FN}})}}}}\)</span></p>
+<p>These two give great information about the quality of imputation and a good comparison. It resulted in simple and clear information about which observations are well classified, which ones are wrong and how they should be. The main advantage of them is accounting for target variable’s inbalance. Considering sets’ different properties, even when it comes to balancing, comparing those measures, the fact that they show the pros and cons of given result will additionally be worthwhile to compare them.</p>
+</div>
+</div>
+<div id="results-9" class="section level3" number="2.2.4">
+<h3><span class="header-section-number">2.2.4</span> Results</h3>
+<div id="comparing-imputation-times" class="section level4" number="2.2.4.1">
+<h4><span class="header-section-number">2.2.4.1</span> Comparing imputation times</h4>
+<p>A dataframe containing information about imputation methods was built.</p>
+<p><img src="2-2-files/imputationTimesScatter.png" /></p>
+<p>Judging by the logarithmic scale, there is no surprise that removing rows and mode/median replenishment are definitely the fastest methods, with removing rows being several times faster. What would you expect, also “random values” imputation was quite fast, but slower than the two mentioned. Looking at more advanced ones, definitely <em>VIM</em> turned up to be the fastest - times usually being approximately 5-10 times shorter than <em>missForest</em> and <em>mice</em>. These last two are quite slow, with the former appearing to be slightly faster.</p>
+<p>For a better view a boxplot was also created:</p>
+<p><img src="2-2-files/imputationTimesBoxplot.png" /></p>
+<p>Taking into account all the imputations which have been implemented, it is clearly seen that removing rows as well as replacing with mode or median really stand out. However, we cannot fully compare the other four - due to the fact that missForest failed on three datasets, and mice - up to seven, mostly for datasets greater in size.</p>
+<p>Considering such a large spread of data size, there is a very interesting difference between median and mean for VIM’s time - the first is almost seven minutes, the second - barely a second and a half. In general, however, it is certainly much longer than methods for removing incomplete rows and filling with mode/median.</p>
+<p>Also time was compared for those datasets for which all imputations were successful - these are ids 27, 38, 55, 56, 944, 188 (dataset with id 4 softened on removing rows containing any missing items, because each of its poems had some missing items). Taking into account the mean time, definitely <em>missForest</em> was the slowest, but also its standard deviation seemed to be incomparably large - this is probably due to the fact that for smaller sets it is doing well, but due to its complexity, its slowdown can be seen for very sizeable datasets. <em>VIM</em> turned out to be better for quick calculations than <em>missForest</em> and <em>mice</em>, and considering the median, <em>mice</em> is comparable to <em>missForest</em> - so for small datasets there is not much difference between them, and a lot of time was definitely needed to devote to these larger data frames.</p>
+</div>
+<div id="best-measures" class="section level4" number="2.2.4.2">
+<h4><span class="header-section-number">2.2.4.2</span> Best measures</h4>
+<p>In order to compare <em>F1</em> and <em>MCC</em> measures, mean results on all sets for all imputations were calculated. Then, for each machine learning algorithm a ranking was created - so that the imputation with best results obtained the first rank, second best - 2nd, etc. The rank’s distributions for every imputation came out as shown by the following boxplot:</p>
+<p><img src="2-2-files/rankingGood.png" /></p>
+<p>It might seem that the results of the methods are very close to each other, but the above visualization takes into account rankings only for successful imputations - to get the correct comparison there is a need to make a ranking with failing methods receiving the worst ranks instead of being omitted. The outcome was presented below:</p>
+<p><img src="2-2-files/rankingAll.png" /></p>
+<p>Considering the imputation times and results, it can be said that the knn<sup>7</sup> algorithm from the VIM package proved to be “universally” the best. Out of the advanced methods it falls out the fastest, and its results are also the best. However, it is more difficult to choose second and subsequent places - looking at the results, the simple methods are very quick, but they differ from the more advanced ones. Looking at the advanced ones, with the exception of VIM, MissForest stands out. However, his problem is time. So after VIM, it seems second best to use mean / median replenishment for a small amount of time and missForest for a large one. However, although mode / medain usually obtained worse ranks, there was no extensive difference in results between the methods - which is not visible in the charts. “removeRows” is characterized by large fluctuations, and therefore we advise against using it.</p>
+</div>
+<div id="summary-and-conclusions-8" class="section level4" number="2.2.4.3">
+<h4><span class="header-section-number">2.2.4.3</span> Summary and conclusions</h4>
+<p>The experiment can be considered successful when it comes to the datasets and tools made available to us - calculated measures, visualizations made, as well as conclusions led us, among others, to the intuition that probably <em>VIM</em> is really a resplendent package, supplementing the missing values with medians from columns is not is such an unwise idea as it may seem and <em>missForest</em> is also noteworthy - if one has time for running it and the dataset isn’t too sizeable. Unfortunately, it is impossible to draw an objective conclusion based on such a small number of tested data - with as few as 14 sets, problems with imputations on some of them or too small dataframes not giving a satisfactory answer. Nevertheless, the code is certainly very valuable and for more datasets it could confirm one or another belief.</p>
+</div>
+<div id="references" class="section level4" number="2.2.4.4">
+<h4><span class="header-section-number">2.2.4.4</span> References</h4>
+<p><em><sup>1</sup>OpenML100: a predecessor of the OpenML-CC18, a suite of 100 classification datasets from OpenML which were carefully selected to be usable by many algorithms and also represent datasets commonly used in machine learning research</em></p>
+<p><em><sup>2</sup>mice: Multivariate Imputation by Chained Equations, package created by Stef van Buuren, Karin Groothuis-Oudshoorn, Gerko Vink, Rianne Schouten, Alexander Robitzsch, Lisa Doove, Shahab Jolani, Margarita Moreno-Betancur, Ian White, Philipp Gaffert, Florian Meinfelder, Bernie Gray</em></p>
+<p><em><sup>3</sup>Fully conditional specification: Imputes multivariate missing data on a variable-by-variable basis (Van Buuren et al. 2006; Van Buuren 2007a).</em></p>
+<p><em><sup>4</sup>VIM: Visualization and Imputation of Missing Values, package created by Matthias Templ, Alexander Kowarik, Andreas Alfons, Bernd Prantner</em></p>
+<p><em><sup>5</sup>missForest: Nonparametric Missing Value Imputation using Random Forest Daniel J. Stekhoven</em></p>
+<p><em><sup>6</sup>rpart: Recursive Partitioning and Regression Trees, package by Terry Therneau, Beth Atkinson, Brian Ripley</em></p>
+<p><em><sup>7</sup>k-nearest neighbors algorithm: a non-parametric method with the input consisting of the k closest training examples in the feature space.</em></p>
+<p><em><sup>8</sup>class: Various functions for classification, including k-nearest neighbour, Learning Vector Quantization and Self-Organizing Maps, package created by Brian Ripley, William Venables</em></p>
+<p><em><sup>9</sup>e1071: Misc Functions of the Department of Statistics, Probability Theory Group (Formerly: E1071), TU Wien, package created by David Meyer</em></p>
+<p><em><sup>10</sup>ranger: A Fast Implementation of Random Forests, package created by Marvin N. Wright, Stefan Wager, Philipp Probst</em></p>
+<p><em><sup>11</sup>parallel: Support for parallel computation, including by forking (taken from package multicore), by sockets (taken from package snow) and random-number generation</em></p>
+<p><em><sup>12</sup>Matthews correlation coefficient: a measure of the quality of binary (two-class) classifications, introduced by biochemist Brian W. Matthews in 1975</em></p>
+<p><em><sup>11</sup>Matthews correlation coefficient: a measure of the quality of binary (two-class) classifications, introduced by biochemist Brian W. Matthews in 1975</em></p>
 
+</div>
 </div>
 </div>
             </section>
@@ -363,8 +405,8 @@
           </div>
         </div>
       </div>
-<a href="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="default-imputation-efficiency-comparision.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms-.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook/js/app.min.js"></script>
@@ -395,7 +437,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/3-4-Can-automated-regression-beat-AutoML.Rmd",
+"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/2-2-the-hajada-imputation-test.Rmd",
 "text": "Edit"
 },
 "history": {
