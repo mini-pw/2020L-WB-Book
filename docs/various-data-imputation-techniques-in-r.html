@@ -209,14 +209,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>2</b> Imputation</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="default-imputation-efficiency-comparision.html"><a href="default-imputation-efficiency-comparision.html"><i class="fa fa-check"></i><b>2.1</b> Default imputation efficiency comparision</a>
+<li class="chapter" data-level="2.1" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html"><i class="fa fa-check"></i><b>2.1</b> Default imputation efficiency comparison</a>
 <ul>
-<li class="chapter" data-level="2.1.1" data-path="default-imputation-efficiency-comparision.html"><a href="default-imputation-efficiency-comparision.html#abstract-8"><i class="fa fa-check"></i><b>2.1.1</b> Abstract</a></li>
-<li class="chapter" data-level="2.1.2" data-path="default-imputation-efficiency-comparision.html"><a href="default-imputation-efficiency-comparision.html#introduction-and-motivation-5"><i class="fa fa-check"></i><b>2.1.2</b> Introduction and Motivation</a></li>
-<li class="chapter" data-level="2.1.3" data-path="default-imputation-efficiency-comparision.html"><a href="default-imputation-efficiency-comparision.html#related-work-4"><i class="fa fa-check"></i><b>2.1.3</b> Related Work</a></li>
-<li class="chapter" data-level="2.1.4" data-path="default-imputation-efficiency-comparision.html"><a href="default-imputation-efficiency-comparision.html#methodology-8"><i class="fa fa-check"></i><b>2.1.4</b> Methodology</a></li>
-<li class="chapter" data-level="2.1.5" data-path="default-imputation-efficiency-comparision.html"><a href="default-imputation-efficiency-comparision.html#results-8"><i class="fa fa-check"></i><b>2.1.5</b> Results</a></li>
-<li class="chapter" data-level="2.1.6" data-path="default-imputation-efficiency-comparision.html"><a href="default-imputation-efficiency-comparision.html#summary-and-conclusions-7"><i class="fa fa-check"></i><b>2.1.6</b> Summary and conclusions</a></li>
+<li class="chapter" data-level="2.1.1" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html#abstract-8"><i class="fa fa-check"></i><b>2.1.1</b> Abstract</a></li>
+<li class="chapter" data-level="2.1.2" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html#introduction-and-motivation-5"><i class="fa fa-check"></i><b>2.1.2</b> Introduction and Motivation</a></li>
+<li class="chapter" data-level="2.1.3" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html#related-work-4"><i class="fa fa-check"></i><b>2.1.3</b> Related Work</a></li>
+<li class="chapter" data-level="2.1.4" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html#methodology-8"><i class="fa fa-check"></i><b>2.1.4</b> Methodology</a></li>
+<li class="chapter" data-level="2.1.5" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html#results-8"><i class="fa fa-check"></i><b>2.1.5</b> Results</a></li>
+<li class="chapter" data-level="2.1.6" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html#summary-and-conclusions-7"><i class="fa fa-check"></i><b>2.1.6</b> Summary and conclusions</a></li>
 </ul></li>
 <li class="chapter" data-level="2.2" data-path="the-hajada-imputation-test.html"><a href="the-hajada-imputation-test.html"><i class="fa fa-check"></i><b>2.2</b> The Hajada Imputation Test</a>
 <ul>
@@ -414,11 +414,11 @@ When data are missing not at random, the missingness is related to the character
 <p>Clean data sets were split into two data sets, training and testing, in proportion <span class="math inline">\(1/4\)</span> respectively. This split was performed randomly and only once for every data set that’s mean every imputation technique used the same split. Imputation was performed separately for train and test sets. Before split, we also remove the target column to avoid using it in imputation. For our study, we decided to choose five packages designed for missing data imputation in the R language and one self-implemented basic technique:</p>
 <ul>
 <li><strong>Mode and median</strong>: Simple technique of filling missing values with mode (for categorical variables) and median (for continuous variables) of complete values in a variable. Implemented with basic R language functions.</li>
-<li><strong>mice</strong><span class="citation">(van Buuren and Groothuis-Oudshoorn <a href="#ref-2_4_mice2011" role="doc-biblioref">2011</a>)</span>: Package allows to perform multivariate imputation by chained equations (MICE), which is a type of multiple imputation. The method is based on Fully Conditional Specification, where each incomplete variable is imputed by a separate model.</li>
+<li><strong>mice</strong><span class="citation">(van Buuren and Groothuis-Oudshoorn <a href="#ref-2_4_mice2011" role="doc-biblioref">2011</a><a href="#ref-2_4_mice2011" role="doc-biblioref">b</a>)</span>: Package allows to perform multivariate imputation by chained equations (MICE), which is a type of multiple imputation. The method is based on Fully Conditional Specification, where each incomplete variable is imputed by a separate model.</li>
 <li><strong>missMDA</strong><span class="citation">(Josse and Husson <a href="#ref-2_4_missMDA2016" role="doc-biblioref">2016</a>)</span>: Package for multiple missing values imputation. Data sets are imputed with the principal component method, regularized iterative FAMD algorithm (factorial analysis for mixed data). Firstly estimation of the number of dimensions for factorial analysis is essential.</li>
-<li><strong>missFOREST</strong><span class="citation">(Stekhoven and Buehlmann <a href="#ref-2_4_missForest2012" role="doc-biblioref">2012</a>)</span>: Package can be used for imputation with predictions of the random forest model, trained on complete observations. The package works on data with complex interactions and non-linear relations. Enables parallel calculations.</li>
+<li><strong>missFOREST</strong><span class="citation">(Stekhoven and Buehlmann <a href="#ref-2_4_missForest2012" role="doc-biblioref">2012</a><a href="#ref-2_4_missForest2012" role="doc-biblioref">b</a>)</span>: Package can be used for imputation with predictions of the random forest model, trained on complete observations. The package works on data with complex interactions and non-linear relations. Enables parallel calculations.</li>
 <li><strong>softImpute</strong><span class="citation">(Hastie and Mazumder <a href="#ref-2_4_R-softImpute" role="doc-biblioref">2015</a><a href="#ref-2_4_R-softImpute" role="doc-biblioref">b</a>)</span>: Package for matrix imputation with nuclear-norm regularization. The algorithm works like EM, solving an optimization problem using a soft-thresholded SVD algorithm. Works only with continuous variables.</li>
-<li><strong>VIM</strong><span class="citation">(Kowarik and Templ <a href="#ref-2_4_VIM2016" role="doc-biblioref">2016</a><a href="#ref-2_4_VIM2016" role="doc-biblioref">b</a>)</span>: Package for visualization and imputation of missing values. It offers iterative robust model-based imputation (IRMI). In each iteration, one variable is used as a response variable and the remaining variables as the regressors.</li>
+<li><strong>VIM</strong><span class="citation">(Kowarik and Templ <a href="#ref-2_4_VIM2016" role="doc-biblioref">2016</a><a href="#ref-2_4_VIM2016" role="doc-biblioref">c</a>)</span>: Package for visualization and imputation of missing values. It offers iterative robust model-based imputation (IRMI). In each iteration, one variable is used as a response variable and the remaining variables as the regressors.</li>
 </ul>
 <p>First, we use median/mode imputation, which is a very simple method and it is used as a base result for more complex algorithms to compare.
 Imputation method form mice package don’t require any form of help because can impute numeric and categorical features.
@@ -614,7 +614,7 @@ On the other side, there is Mice, which times can reach very high values.</p>
 <p>Josse, Julie, and François Husson. 2016. “missMDA: A Package for Handling Missing Values in Multivariate Data Analysis.” <em>Journal of Statistical Software</em> 70 (1): 1–31. <a href="https://doi.org/10.18637/jss.v070.i01">https://doi.org/10.18637/jss.v070.i01</a>.</p>
 </div>
 <div id="ref-2_4_VIM2016">
-<p>Kowarik, Alexander, and Matthias Templ. 2016b. “Imputation with the R Package VIM.” <em>Journal of Statistical Software</em> 74 (7): 1–16. <a href="https://doi.org/10.18637/jss.v074.i07">https://doi.org/10.18637/jss.v074.i07</a>.</p>
+<p>Kowarik, Alexander, and Matthias Templ. 2016c. “Imputation with the R Package VIM.” <em>Journal of Statistical Software</em> 74 (7): 1–16. <a href="https://doi.org/10.18637/jss.v074.i07">https://doi.org/10.18637/jss.v074.i07</a>.</p>
 </div>
 <div id="ref-2_4_musil2002impcomp">
 <p>Musil, Carol, Camille Warner, Piyanee Klainin-Yobas, and Susan Jones. 2002. “A Comparison of Imputation Techniques for Handling Missing Data.” <em>Western Journal of Nursing Research</em> 24 (December): 815–29. <a href="https://doi.org/10.1177/019394502762477004">https://doi.org/10.1177/019394502762477004</a>.</p>
@@ -623,13 +623,13 @@ On the other side, there is Mice, which times can reach very high values.</p>
 <p>Rubin, DONALD B. 1976. “Inference and missing data.” <em>Biometrika</em> 63 (3): 581–92. <a href="https://doi.org/10.1093/biomet/63.3.581">https://doi.org/10.1093/biomet/63.3.581</a>.</p>
 </div>
 <div id="ref-2_4_missForest2012">
-<p>Stekhoven, Daniel J., and Peter Buehlmann. 2012. “MissForest - Non-Parametric Missing Value Imputation for Mixed-Type Data.” <em>Bioinformatics</em> 28 (1): 112–18.</p>
+<p>Stekhoven, Daniel J., and Peter Buehlmann. 2012a. “MissForest - Non-Parametric Missing Value Imputation for Mixed-Type Data.” <em>Bioinformatics</em> 28 (1): 112–18.</p> 2012b. “MissForest - Non-Parametric Missing Value Imputation for Mixed-Type Data.” <em>Bioinformatics</em> 28 (1): 112–18.</p>
 </div>
 <div id="ref-2_4_su2008impclasif">
 <p>Su, Xiaoyuan, Taghi Khoshgoftaar, and Russ Greiner. 2008. “Using Imputation Techniques to Help Learn Accurate Classifiers.” <em>Proceedings - International Conference on Tools with Artificial Intelligence, ICTAI</em> 1 (December): 437–44. <a href="https://doi.org/10.1109/ICTAI.2008.60">https://doi.org/10.1109/ICTAI.2008.60</a>.</p>
 </div>
 <div id="ref-2_4_mice2011">
-<p>van Buuren, Stef, and Karin Groothuis-Oudshoorn. 2011. “mice: Multivariate Imputation by Chained Equations in R.” <em>Journal of Statistical Software</em> 45 (3): 1–67. <a href="https://www.jstatsoft.org/v45/i03/">https://www.jstatsoft.org/v45/i03/</a>.</p>
+<p>van Buuren, Stef, and Karin Groothuis-Oudshoorn. 2011b. “mice: Multivariate Imputation by Chained Equations in R.” <em>Journal of Statistical Software</em> 45 (3): 1–67. <a href="https://www.jstatsoft.org/v45/i03/">https://www.jstatsoft.org/v45/i03/</a>.</p>
 </div>
 </div>
             </section>

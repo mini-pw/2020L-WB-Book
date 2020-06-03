@@ -209,14 +209,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>2</b> Imputation</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="default-imputation-efficiency-comparision.html"><a href="default-imputation-efficiency-comparision.html"><i class="fa fa-check"></i><b>2.1</b> Default imputation efficiency comparision</a>
+<li class="chapter" data-level="2.1" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html"><i class="fa fa-check"></i><b>2.1</b> Default imputation efficiency comparison</a>
 <ul>
-<li class="chapter" data-level="2.1.1" data-path="default-imputation-efficiency-comparision.html"><a href="default-imputation-efficiency-comparision.html#abstract-8"><i class="fa fa-check"></i><b>2.1.1</b> Abstract</a></li>
-<li class="chapter" data-level="2.1.2" data-path="default-imputation-efficiency-comparision.html"><a href="default-imputation-efficiency-comparision.html#introduction-and-motivation-5"><i class="fa fa-check"></i><b>2.1.2</b> Introduction and Motivation</a></li>
-<li class="chapter" data-level="2.1.3" data-path="default-imputation-efficiency-comparision.html"><a href="default-imputation-efficiency-comparision.html#related-work-4"><i class="fa fa-check"></i><b>2.1.3</b> Related Work</a></li>
-<li class="chapter" data-level="2.1.4" data-path="default-imputation-efficiency-comparision.html"><a href="default-imputation-efficiency-comparision.html#methodology-8"><i class="fa fa-check"></i><b>2.1.4</b> Methodology</a></li>
-<li class="chapter" data-level="2.1.5" data-path="default-imputation-efficiency-comparision.html"><a href="default-imputation-efficiency-comparision.html#results-8"><i class="fa fa-check"></i><b>2.1.5</b> Results</a></li>
-<li class="chapter" data-level="2.1.6" data-path="default-imputation-efficiency-comparision.html"><a href="default-imputation-efficiency-comparision.html#summary-and-conclusions-7"><i class="fa fa-check"></i><b>2.1.6</b> Summary and conclusions</a></li>
+<li class="chapter" data-level="2.1.1" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html#abstract-8"><i class="fa fa-check"></i><b>2.1.1</b> Abstract</a></li>
+<li class="chapter" data-level="2.1.2" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html#introduction-and-motivation-5"><i class="fa fa-check"></i><b>2.1.2</b> Introduction and Motivation</a></li>
+<li class="chapter" data-level="2.1.3" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html#related-work-4"><i class="fa fa-check"></i><b>2.1.3</b> Related Work</a></li>
+<li class="chapter" data-level="2.1.4" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html#methodology-8"><i class="fa fa-check"></i><b>2.1.4</b> Methodology</a></li>
+<li class="chapter" data-level="2.1.5" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html#results-8"><i class="fa fa-check"></i><b>2.1.5</b> Results</a></li>
+<li class="chapter" data-level="2.1.6" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html#summary-and-conclusions-7"><i class="fa fa-check"></i><b>2.1.6</b> Summary and conclusions</a></li>
 </ul></li>
 <li class="chapter" data-level="2.2" data-path="the-hajada-imputation-test.html"><a href="the-hajada-imputation-test.html"><i class="fa fa-check"></i><b>2.2</b> The Hajada Imputation Test</a>
 <ul>
@@ -377,8 +377,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><strong>basic method</strong> using impute() function from imputeMissings package. It imputes missing numeric values with a median and categorical variables with a mode of other records.</li>
 <li><strong>mice()</strong> function from mice package <span class="citation">(Buuren and Groothuis-Oudshoorn <a href="#ref-2-3_mice" role="doc-biblioref">2011</a>)</span>. The function uses Predictive Mean Matching to impute missing values.</li>
 <li><strong>missRanger()</strong> function from missRanger package <span class="citation">(Mayer <a href="#ref-2-3_missRanger" role="doc-biblioref">2019</a>)</span>. The technique uses the Ranger Random Forests to do fast missing value imputation by chained random forests.</li>
-<li><strong>hotdeck()</strong> function from VIM package <span class="citation">(Kowarik and Templ <a href="#ref-2-3_VIM" role="doc-biblioref">2016</a><a href="#ref-2-3_VIM" role="doc-biblioref">a</a>)</span>. Each missing value is replaced with an observed response from a “similar” unit.</li>
-<li><strong>kNN()</strong> function from VIM package <span class="citation">(Kowarik and Templ <a href="#ref-2-3_VIM" role="doc-biblioref">2016</a><a href="#ref-2-3_VIM" role="doc-biblioref">a</a>)</span>. It finds the k closest neighbors to the observation with missing data and then imputes them based on the non-missing values from its neighbors.</li>
+<li><strong>hotdeck()</strong> function from VIM package <span class="citation">(Kowarik and Templ <a href="#ref-2-3_VIM" role="doc-biblioref">2016</a><a href="#ref-2-3_VIM" role="doc-biblioref">b</a>)</span>. Each missing value is replaced with an observed response from a “similar” unit.</li>
+<li><strong>kNN()</strong> function from VIM package <span class="citation">(Kowarik and Templ <a href="#ref-2-3_VIM" role="doc-biblioref">2016</a><a href="#ref-2-3_VIM" role="doc-biblioref">b</a>)</span>. It finds the k closest neighbors to the observation with missing data and then imputes them based on the non-missing values from its neighbors.</li>
 <li><strong>softImpute()</strong> function combined with mode imputation <span class="citation">(Hastie and Mazumder <a href="#ref-2-3_softImpute" role="doc-biblioref">2015</a><a href="#ref-2-3_softImpute" role="doc-biblioref">a</a>)</span>. The first method originates from the softImpute package and is applied to impute numeric variables. Mode imputation is used for categorical features imputation.</li>
 </ul>
 <p>To automatize our work, we also created two specialized functions - <strong>split_and_impute()</strong> and <strong>train_and_test()</strong>.</p>
@@ -440,7 +440,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Hastie, Trevor, and Rahul Mazumder. 2015a. “SoftImpute: Matrix Completion via Iterative Soft-Thresholded Svd.” <a href="https://CRAN.R-project.org/package=softImpute">https://CRAN.R-project.org/package=softImpute</a>.</p>
 </div>
 <div id="ref-2-3_VIM">
-<p>Kowarik, Alexander, and Matthias Templ. 2016a. “Imputation with the R Package Vim.” <em>Journal of Statistical Software</em> 74 (7): 1–16. <a href="https://www.jstatsoft.org/article/view/v045i03">https://www.jstatsoft.org/article/view/v045i03</a>.</p>
+<p>Kowarik, Alexander, and Matthias Templ. 2016b. “Imputation with the R Package Vim.” <em>Journal of Statistical Software</em> 74 (7): 1–16. <a href="https://www.jstatsoft.org/article/view/v045i03">https://www.jstatsoft.org/article/view/v045i03</a>.</p>
 </div>
 <div id="ref-2-3_missRanger">
 <p>Mayer, Michael. 2019. “MissRanger: Fast Imputation of Missing Values.” <a href="https://CRAN.R-project.org/package=missRanger">https://CRAN.R-project.org/package=missRanger</a>.</p>

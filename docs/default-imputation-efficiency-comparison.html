@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>1.3 Aging articles. How time affects reproducibility of scientific papers? | ML Case Studies</title>
+  <title>2.1 Default imputation efficiency comparison | ML Case Studies</title>
   <meta name="description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="1.3 Aging articles. How time affects reproducibility of scientific papers? | ML Case Studies" />
+  <meta property="og:title" content="2.1 Default imputation efficiency comparison | ML Case Studies" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="images/cover.png" />
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="1.3 Aging articles. How time affects reproducibility of scientific papers? | ML Case Studies" />
+  <meta name="twitter:title" content="2.1 Default imputation efficiency comparison | ML Case Studies" />
   
   <meta name="twitter:description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="twitter:image" content="images/cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html"/>
-<link rel="next" href="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html"/>
+<link rel="prev" href="imputation.html"/>
+<link rel="next" href="the-hajada-imputation-test.html"/>
 <script src="libs/header-attrs/header-attrs.js"></script>
 <script src="libs/jquery/jquery.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
@@ -354,216 +354,905 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="aging-articles.-how-time-affects-reproducibility-of-scientific-papers" class="section level2" number="1.3">
-<h2><span class="header-section-number">1.3</span> Aging articles. How time affects reproducibility of scientific papers?</h2>
-<p><em>Authors: Paweł Morgen, Piotr Sieńko, Konrad Welkier (Warsaw University of Technology)</em></p>
-<div id="abstract-2" class="section level3" number="1.3.1">
-<h3><span class="header-section-number">1.3.1</span> Abstract</h3>
-<p>Reproduction of a code presented in scientific papers tend to be a laborious yet important process since it enables readers a better understanding of the tools proposed by the authors. While recreating an article various difficulties are faced what can result in calling the paper irreproducible. Some reasons why such situations occur stem from the year when the article was published (for example usage of no more supported packages). The purpose of the following paper is to prove whether this is a general trend which means answering the question: is the year when the article was published related to the reproducibility of the paper. To do so a package CodeExtractorR was created that enables extracting code from PDF files. By using this tool a significant number of articles could be analyzed and therefore results received enabled us to give an objective answer to the stated question.</p>
+<div id="default-imputation-efficiency-comparison" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Default imputation efficiency comparison</h2>
+<p><em>Authors: Jakub Pingielski, Paulina Przybyłek, Renata Rólkiewicz, Jakub Wiśniewski (Warsaw University of Technology)</em></p>
+<div id="abstract-8" class="section level3" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Abstract</h3>
+<p>Imputation of missing values is one of the most common preprocessing steps when working with many real-life datasets.
+Most popular strategies are filling missing data with median or mode. They are easy to implement and fast to compute, but it is said that this naive approach might not lead to the best model performance. In contrast, more advanced procedures e.g. using tree-based models despite adding algorithmic complexity and computational costs to training procedure, are thought to be better in quality of imputation.<br />
+Using those more complex methods however, requires domain knowledge and time to tune or change hyperparameters of those methods. This step is sometimes omitted and more sophisticated methods do not reach their full potential. So is this leverage over simple imputation methods still significant for more complex methods with default parameters or maybe in this case simple imputation methods are not only faster but more efficient? In this article, we will try to answer this question. We will compare efficiency of 9 default imputation methods using 5 models trained on 11 classification datasets from OpenML repository and present imputations effect on 4 different measures of model performance: Area Under the Curve (AUC), geometric mean of sensitivity and specificity, Balanced Accuracy and Weighted TPR-TNR <span class="citation">(Jadhav <a href="#ref-2-1-weighted-tpr-tnr" role="doc-biblioref">2020</a>)</span>.</p>
 </div>
-<div id="introduction-1" class="section level3" number="1.3.2">
-<h3><span class="header-section-number">1.3.2</span> Introduction</h3>
-<p>Every article published in a scientific journal is aimed at improving our knowledge in a certain field. To prove their theories, authors should provide papers with detailed, working examples and extensive supplementary materials to reproduce results. Unfortunately, these conditions are not always fulfilled. In such a case, other researchers are not able to verify and accept the solutions presented by the author. Moreover, the article is not only useless for the scientific community but also for business recipients.</p>
-<p>Over the years, several different definitions of reproducibility have been proposed. According to <span class="citation">Gentleman and Temple Lang (<a href="#ref-gentleman2007statistical" role="doc-biblioref">2007</a>)</span>, reproducible research are papers with accompanying software tools that allow the reader to directly reproduce methods that are presented in the research paper. Other authors suggest that scientific paper is reproducible only if text, data and code are made available and allow an independent researcher to recreate the results <span class="citation">(Vandewalle, Kovacevic, and Vetterli <a href="#ref-vandewalle2009reproducible" role="doc-biblioref">2009</a>)</span>. Second definition emphasizes the importance of accessibility to data used in researches, therefore it seems to be more suitable and complete interpretation of reproducibility. In addition, in this article, we used scale based on the spectrum of reproducibility, proposed by <span class="citation">Peng (<a href="#ref-Peng1226" role="doc-biblioref">2011</a>)</span>. In his work, he also mentioned reproducibility as a minimal requirement for assessing the scientific value of the paper. In the past few years, computing has become an essential part of scientific workflow. Some best practices for writing and publishing reproducible scientific article were presented by <span class="citation">Stodden et al. (<a href="#ref-Stodden2013SettingTD" role="doc-biblioref">2013</a>)</span>. Furthermore, she made a brief overview of existing tools and software that facilitate this task. Similar issue was closely described by <span class="citation">Kitzes, Turek, and Deniz (<a href="#ref-kitzes2017practice" role="doc-biblioref">2017</a>)</span>. Tools created solely for reproducibility in R were proposed by <span class="citation">Marwick (<a href="#ref-marwickrrtools" role="doc-biblioref">n.d.</a>)</span> in package rrtools.</p>
-<p>Although many articles focus on software or framework solutions for reproducibility problems, analysis of scientific papers reproducibility in the context of release date has, to the best of the authors’ knowledge, not been described before. The intention of such research is to find correlations between age of article and its reproducibility. Authors believe that finding these dependencies will allow to calculate the estimated life span of data science article. Furthermore, as replicability helps with applying proposed methods and tools, its approximated level might be helpful in estimating usefulness of every scientific article.</p>
+<div id="introduction-and-motivation-5" class="section level3" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> Introduction and Motivation</h3>
+<p>Data is becoming more and more useful and valuable in various industries. Companies started to gather data on a scale that has not been imagined before. But with more data comes more problems. One of them is missing values. Omitting observations affected by them is one way, but why doing it while the information that they posses might be still valuable? This is why imputation of missing values is essential when dealing with real life data. But there is various methods of imputation and for inexperienced user it might be confusing and hard to decide which one to use. It may be even harder to design metrics that allow comparing methods between them. Sometimes omitting rows or even removing columns and NA can give satisfying results but in the majority of time it is worse than simple imputation methods. For simple tasks mean/median and mode are fast and computationally efficient and can give good results. But they have no variance and because of that can give worse results on complex datasets than more robust methods. On the other hand, random forests and decision trees are in theory more accurate but it takes more valuable time for them to give an answer. Furthermore, parameter changing and tuning can be difficult and time consuming. Deciding which method is the best for an inexperienced user who will not be tuning hiperparameters is the purpose of this article. We are benchmarking methods that have different complexity from various packages along with simple imputation methods but without parameter tuning, so that casual users can benefit from it. The default methods from packages are easy to use and despite not living up to their potential they give more than acceptable results.</p>
 </div>
-<div id="codeextractor-package" class="section level3" number="1.3.3">
-<h3><span class="header-section-number">1.3.3</span> CodeExtractoR package</h3>
-<p>To examine sufficent number of articles, package <em>CodeExtractoR</em> has been used. Its main functions - <em>extract_code_from_pdf()</em> and <em>extract_code_from_html()</em>, automatically extract code snippets from pdf and html files into R files.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html#cb1-1"></a><span class="co"># install.packages(&quot;devtools&quot;)</span></span>
-<span id="cb1-2"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html#cb1-2"></a>devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;MrDomani/CodeExtractoR&quot;</span>)</span>
-<span id="cb1-3"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html#cb1-3"></a><span class="kw">library</span>(CodeExtractoR)</span>
-<span id="cb1-4"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html#cb1-4"></a></span>
-<span id="cb1-5"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html#cb1-5"></a><span class="co"># Path to file</span></span>
-<span id="cb1-6"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html#cb1-6"></a>path_file &lt;-<span class="st"> &quot;filepath.html&quot;</span></span>
-<span id="cb1-7"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html#cb1-7"></a>  </span>
-<span id="cb1-8"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html#cb1-8"></a><span class="co"># Path to R file output</span></span>
-<span id="cb1-9"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html#cb1-9"></a>output &lt;-<span class="st"> &quot;output.R&quot;</span></span>
-<span id="cb1-10"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html#cb1-10"></a></span>
-<span id="cb1-11"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html#cb1-11"></a><span class="co"># Extracting code</span></span>
-<span id="cb1-12"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html#cb1-12"></a><span class="kw">extract_code_from_html</span>(<span class="dt">input_file =</span> path_file, <span class="dt">output_file =</span> output, <span class="dt">console_char =</span> <span class="st">&quot;&gt;&quot;</span>)</span></code></pre></div>
-<p>To extract code from pdf, API key to <a href="https://cloudconvert.com/" class="uri">https://cloudconvert.com/</a> is required.</p>
+<div id="related-work-4" class="section level3" number="2.1.3">
+<h3><span class="header-section-number">2.1.3</span> Related Work</h3>
+<p>Missing data imputation is a challenging issue in machine learning (ML) and data mining. <span class="citation">(Little and Rubin <a href="#ref-2-1-little-rubin" role="doc-biblioref">2002</a>)</span> defined three main categories of missing values, but most more or less generic methods of imputation, which have been proposed in the last few decades, are suited for data from one of this category. Many programmers are actively creating and looking for new strategies of data imputation that enable creating the best ML model possible. They use various packages to visualize and impute missing data with different methods like knn or even different model for each feature with missing values <span class="citation">(Kowarik and Templ <a href="#ref-2-1-VIM" role="doc-biblioref">2016</a><a href="#ref-2-1-VIM" role="doc-biblioref">a</a>)</span>. Some methods form popular packages follow fully conditional specification approach where one variable with missing values becomes target variable <span class="citation">(van Buuren and Groothuis-Oudshoorn <a href="#ref-2-1-mice" role="doc-biblioref">2011</a><a href="#ref-2-1-mice" role="doc-biblioref">a</a>)</span>. To our knowledge there is not many available papers comparing different methods of imputations from different packages and measuring their efficiency on multiple models and datasets. The use of metric is crucial for this task because not all metrics are suitable for all datasets. <span class="citation">(Jadhav <a href="#ref-2-1-weighted-tpr-tnr" role="doc-biblioref">2020</a>)</span> presented a new metric for measuring the performance of ML models on imbalanced datasets, which according to the authors is the best overall metric available.</p>
 </div>
-<div id="methodology-2" class="section level3" number="1.3.4">
-<h3><span class="header-section-number">1.3.4</span> Methodology</h3>
-<p>The first issue that should be touched upon, while considering the methodology behind preparing this article, is the scale used to assess the reproducibility of the papers. In the Introduction it was already mentioned how the scale was created but a more detailed description is required. The authors decided that the scale should consist of 4 levels (from 0 up to 3):</p>
+<div id="methodology-8" class="section level3" number="2.1.4">
+<h3><span class="header-section-number">2.1.4</span> Methodology</h3>
+<hr />
+<div id="datasets" class="section level4" number="2.1.4.1">
+<h4><span class="header-section-number">2.1.4.1</span> <em>Datasets</em></h4>
+<p>The information about these datasets is given in the Table <a href="default-imputation-efficiency-comparison.html#tab:2-1-statistics-tab">2.1</a>. All of them belong to OpenML datasets.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:2-1-statistics-tab">TABLE 2.1: </span>Datasets Information
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Dataset
+</th>
+<th style="text-align:right;">
+Number of observations
+</th>
+<th style="text-align:right;">
+Number of features
+</th>
+<th style="text-align:right;">
+Imbalance ratio
+</th>
+<th style="text-align:right;">
+Percent of missing values
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+cylinder-bands
+</td>
+<td style="text-align:right;">
+540
+</td>
+<td style="text-align:right;">
+31
+</td>
+<td style="text-align:right;">
+1.368
+</td>
+<td style="text-align:right;">
+5.299
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+credit-approval
+</td>
+<td style="text-align:right;">
+690
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+1.248
+</td>
+<td style="text-align:right;">
+0.607
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+adult
+</td>
+<td style="text-align:right;">
+5000
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+3.146
+</td>
+<td style="text-align:right;">
+0.958
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+eucalyptus
+</td>
+<td style="text-align:right;">
+736
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+1.307
+</td>
+<td style="text-align:right;">
+3.864
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+dresses-sales
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+1.381
+</td>
+<td style="text-align:right;">
+14.692
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+colic
+</td>
+<td style="text-align:right;">
+368
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+1.706
+</td>
+<td style="text-align:right;">
+16.291
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sick
+</td>
+<td style="text-align:right;">
+3772
+</td>
+<td style="text-align:right;">
+28
+</td>
+<td style="text-align:right;">
+15.329
+</td>
+<td style="text-align:right;">
+2.171
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+labor
+</td>
+<td style="text-align:right;">
+57
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+1.850
+</td>
+<td style="text-align:right;">
+33.643
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+hepatitis
+</td>
+<td style="text-align:right;">
+155
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+3.844
+</td>
+<td style="text-align:right;">
+5.387
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+vote
+</td>
+<td style="text-align:right;">
+435
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+1.589
+</td>
+<td style="text-align:right;">
+5.301
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+echoMonths
+</td>
+<td style="text-align:right;">
+130
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+1.031
+</td>
+<td style="text-align:right;">
+7.462
+</td>
+</tr>
+</tbody>
+</table>
+<p>Imbalance ratio is computed as follows <span class="math inline">\(imbalance\_{ratio} = n/p\)</span> where <span class="math inline">\(n\)</span> - negative class and <span class="math inline">\(p\)</span> - positive class</p>
+<hr />
+</div>
+<div id="imputing-strategies" class="section level4" number="2.1.4.2">
+<h4><span class="header-section-number">2.1.4.2</span> <em>Imputing strategies</em></h4>
+<p>We analyzed nine different imputing strategies:</p>
 <ol style="list-style-type: decimal">
-<li>The 0 grade was given in case when no chunk of code gave the anticipated results and no figure was reproduced successfully (in practice such situation occurred mainly when the package described in the article was no more available).</li>
-<li>The 1 grade means that at least one example gave the results that the authors waited for, while it also includes situations when about half of the code in the chunks behaved as expected.</li>
-<li>The 2 grade was awarded to the articles that were reproducible “in the majority”
-what also means that they were not reproducible in 100%.</li>
-<li>The 3 grade was received by the articles that were fully reproducible and no problems were encountered in the process. Such a result was highly anticipated by the authors but the criteria for this grade were rather strict.</li>
+<li><em>remove columns</em> - removing columns with missing values</li>
+<li><em>random fill</em> - imputing with random values from given feature</li>
+<li><em>median and mode</em> - imputing with median (for numerical features) and mode (for categorical features)</li>
+<li><em>missForest</em> - imputing with Random Forests (using missForest package <span class="citation">(Stekhoven and Buehlmann <a href="#ref-2-1-missForest" role="doc-biblioref">2012</a><a href="#ref-2-1-missForest" role="doc-biblioref">a</a>)</span>)</li>
+<li><em>vim knn</em> - imputing with k-Nearest Neighbor Imputation based on a variation of the Gower Distance (using VIM package <span class="citation">(Kowarik and Templ <a href="#ref-2-1-VIM" role="doc-biblioref">2016</a><a href="#ref-2-1-VIM" role="doc-biblioref">a</a>)</span>)</li>
+<li><em>vim hotdeck</em> - imputing with sequential, random (within a domain) hot-deck algorithm (using VIM package)</li>
+<li><em>vim irmi</em> - imputing with Iterative Robust Model-Based Imputation (IRMI) (using VIM package)</li>
+<li><em>pmm (mice)</em> - imputing with Fully Conditional Specification and predictive mean matching (using mice package <span class="citation">(van Buuren and Groothuis-Oudshoorn <a href="#ref-2-1-mice" role="doc-biblioref">2011</a><a href="#ref-2-1-mice" role="doc-biblioref">a</a>)</span>)</li>
+<li><em>cart (mice)</em> - imputing with Fully Conditional Specification and classification and regression trees (using mice package)</li>
 </ol>
-<p>The second issue that also played a vital role in the authors’ work was the scope of the analysis. It was decided that in order to maintain “other thing equal” according to a well-known Latin phrase “ceteris paribus” only one online journal – The R Journal – was taken into account. Being equipped with a tool for faster reproduction of articles – the CodeExtractoR package – the authors agreed to examine about 20 articles that were published across a few years. Such a great number of papers meant that the approach taken could be described as holistic. It is also worth mentioning that usually 30 articles from each year were analyzed (at least whenever it was possible). Finally, it should be noted that in the case of the date when they were published the examined articles range from 2009 up to 2019. The third and final issue that should be considered in this part of the article focuses on the measures undertaken by the authors in order to tackle the problem of biased assessment. Although the scale that was proposed was not totally dependent on the person who was using it, it still left someplace for personal liking and disliking of the paper. As a way of marginalization of this trend the authors have taken part in many conversations when the facts that led to specific grading of the articles were shared. This enabled awarding the grades even more fairly. However, the final measure was much more simple and it was believed to be much more effective as well when compared to the previous one. The articles for each year were divided into 3 groups and assigned to one author each. Thus each author has examined the papers from the whole range of release dates that were taken into account.</p>
+<p>The first three methods are self-explanatory and do not have any hyperparameters to tune. In contrast, algorithms provided in missForest, VIM and mice packages are complex and may require costly hyperparameters tuning. We used default implementations in our experiments, based on the assumption that additional complexity and more hyperparameters might create too steep learning curve for average data scientist.</p>
+<p>Since neither mlr nor caret package enables using custom imputing methods in modeling pipeline, the only way to avoid data leakage was to impute values separately for train and test datasets. This imposes a severe limitation on our imputation effectiveness, especially for small datasets, since information learned during imputing values in training data set cannot be used during test set imputation.</p>
+<hr />
 </div>
-<div id="results-2" class="section level3" number="1.3.5">
-<h3><span class="header-section-number">1.3.5</span> Results</h3>
-<p>Specific results are presented in <em>Table 1.1</em>, which shows the number of examined articles from 2009 up to 2019, grouped by received grade. The column “Grade” represents the 0 - III scale of reproducibility. The rest of the columns shows a number of papers that achieved a particular grade in each year.</p>
-<p>
- 
-</p>
+<div id="classification-algorithms" class="section level4" number="2.1.4.3">
+<h4><span class="header-section-number">2.1.4.3</span> <em>Classification algorithms</em></h4>
+<p>All models were based on classifiers from caret package <span class="citation">(Kuhn <a href="#ref-2-1-caret" role="doc-biblioref">2008</a>)</span> with AUC being the summary metric that was used to select the optimal model. Our goal was to use classification models that are as different from each other as possible, to check if model complexity and flexibility have an impact on the effectiveness of imputation strategy.
+Selected classification algorithms are listed below.</p>
+<ol style="list-style-type: decimal">
+<li>Bagged CART - simple classification trees with bootstrap aggregation. <em>treebag</em> builds multiple models from different subsets of data. At the end constructs a final aggregated and more accurate (according to chosen metric) model.</li>
+<li>Random Forest - very flexible, robust and popular algorithm, with no assumptions about data. Multiple classification trees trained on bagged data. For this article implementation called <em>ranger</em> will be used because of its lower computing time leverage.<br />
+</li>
+<li>Multivariate Adaptive Regression Spline - assumes that relation between features and response can be expressed by
+combining two linear models at certain cutoff point - can be regarded as a model with flexibility between linear and nonlinear models. Implementation called <em>earth</em> will be used.</li>
+<li>k-Nearest Neighbors - assumes that similar observations are close to each other in feature space, assumes very local impact of features. <em>knn</em> is simple algorithm and will be good benchmark for others.</li>
+<li>Naive Bayes - nonlinear model with assumption that all features are independent from each other. Pros of <em>nb</em> are: fast in training, easily interpretable, has little hyperparameters to tune.</li>
+</ol>
+<p>While some of these algorithms have multiple hyperparameters to tune it will not be covered in this article. Tuning for different data can be time-consuming especially when datasets are large and tuning them could mitigate the effect of data imputation. Based on this factor default implementations and parameters of those algorithms will be used. It might not get the best score in metrics but it will be fair for all the imputation methods. It can be argued that impact of imputation will be even more visible without parameter tuning. All algorithms will be trained and tested on the same data but some will be encoded.</p>
+<hr />
+</div>
+<div id="metrics" class="section level4" number="2.1.4.4">
+<h4><span class="header-section-number">2.1.4.4</span> <em>Metrics</em></h4>
+<p>Having that caveat in mind, we performed the aforementioned imputing methods for 11 datasets from the OpenML repository. Since all datasets were binary classification problems and many of them were heavily imbalanced, we used 4 metrics to evaluate our models’ performance (see Table below).</p>
 <table>
+<caption>Classifier Evaluation Measures</caption>
 <thead>
 <tr class="header">
-<th>Grade</th>
-<th>09’</th>
-<th>10’</th>
-<th>11’</th>
-<th>12’</th>
-<th>13’</th>
-<th>14’</th>
-<th>15’</th>
-<th>16’</th>
-<th>17’</th>
-<th>18’</th>
-<th>19’</th>
+<th>Measure</th>
+<th>Formula</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>0</td>
-<td>3</td>
-<td>2</td>
-<td>6</td>
-<td>4</td>
-<td>6</td>
-<td>8</td>
-<td>5</td>
-<td>9</td>
-<td>5</td>
-<td>9</td>
-<td>9</td>
+<td>AUC</td>
+<td>Measures area under plot of Sensitivity against Specificity</td>
 </tr>
 <tr class="even">
-<td>I</td>
-<td>4</td>
-<td>2</td>
-<td>0</td>
-<td>2</td>
-<td>3</td>
-<td>6</td>
-<td>6</td>
-<td>10</td>
-<td>3</td>
-<td>2</td>
-<td>2</td>
+<td>Balanced Accuracy</td>
+<td><span class="math inline">\(\frac{1}{2}(Sensitivity+Specificity)\)</span></td>
 </tr>
 <tr class="odd">
-<td>II</td>
-<td>3</td>
-<td>7</td>
-<td>8</td>
-<td>4</td>
-<td>13</td>
-<td>6</td>
-<td>10</td>
-<td>7</td>
-<td>14</td>
-<td>6</td>
-<td>6</td>
+<td>Geometric Mean</td>
+<td><span class="math inline">\(\sqrt{Sensitivity*Specificity}\)</span></td>
 </tr>
 <tr class="even">
-<td>III</td>
-<td>6</td>
-<td>7</td>
-<td>6</td>
-<td>5</td>
-<td>8</td>
-<td>10</td>
-<td>9</td>
-<td>4</td>
-<td>8</td>
-<td>13</td>
-<td>13</td>
-</tr>
-<tr class="odd">
-<td>SUM</td>
-<td>16</td>
-<td>18</td>
-<td>20</td>
-<td>15</td>
-<td>30</td>
-<td>30</td>
-<td>30</td>
-<td>30</td>
-<td>30</td>
-<td>30</td>
-<td>30</td>
+<td>Weighted TPR-TNR</td>
+<td><span class="math inline">\((Sensitivity*\frac{N}{P+N})+(Specificity*\frac{P}{P+N})\)</span></td>
 </tr>
 </tbody>
 </table>
-<p>
- 
-</p>
-<p>
- 
-</p>
-<p><em>Figure 1.1</em> shows the results in the original 4-level scale. Although, the number of papers varies throughout the years in every reproducibility class, it is observable that intermediate ones - I and II, are less common in the oldest and newest papers. In addition, results in 2018 and 2019 are identical. It is important to remember that from 2009 to 2012, the overall number of papers oscillated around 18 per year. After 2013, the number of researched articles was constant.</p>
-<p>
- 
-</p>
-<div class="figure"><span id="fig:unnamed-chunk-3"></span>
-<img src="book_files/figure-html/unnamed-chunk-3-1.svg" alt="Number of papers by class and publication year" width="672" />
+<p>Area under ROC curve (AUC) is used as a general performance metrics, while the rest is used to specifically evaluate model performance on imbalanced data sets.<br />
+Accuracy measures how good model is in correctly predicting both positive and negative cases. If your dataset is imbalanced, then “regular” accuracy may not be enough (cost of misclassification of minority class instance is higher than for majority class instance). That is why we use Balanced Accuracy, which is the arithmetic mean of the TPR (Sensitivity) and FPR (Specificity).<br />
+Geometric Mean (of Sensitivity and Specificity) is a metric that measures the balance between classification performances on both the majority and minority classes.<br />
+Weighted TPR-TNR is a very promising new single-valued measure for classification. It takes into account the imbalance ratio of the dataset and assign different weights to the TPR and TNR (where P is the total number of positive cases and N is the total number of negative cases).</p>
+<hr />
+</div>
+<div id="experiment" class="section level4" number="2.1.4.5">
+<h4><span class="header-section-number">2.1.4.5</span> <em>Experiment</em></h4>
+<p>To sum up, in the experiment we used 5 different classification algorithms and 11 different datasets to assess performance of the imputation of missing values using the previously described measures. The experiment workflow was presented in Figure <a href="default-imputation-efficiency-comparison.html#fig:2-1-workflow">2.1</a>.</p>
+<div class="figure" style="text-align: center"><span id="fig:2-1-workflow"></span>
+<img src="images/2-1-workflow.png" alt="Experiment workflow" width="800" />
 <p class="caption">
-FIGURE 1.1: Number of papers by class and publication year
+FIGURE 2.1: Experiment workflow
 </p>
 </div>
-<p>
- 
-</p>
-<p>After calculating the percentage of each class in a specific year ( <em>Figure 1.2</em>, <em>Figure 1.3</em>), it is observed, that in the two oldest examined years - 2009 and 2010 - a ratio of completely unreproducible papers (with 0 or I class ) is surprisingly low. Furthermore, papers with III class of reproducibility are nearly 40% of all articles in these years.</p>
-<p>
- 
-</p>
-<div class="figure"><span id="fig:unnamed-chunk-4"></span>
-<img src="book_files/figure-html/unnamed-chunk-4-1.svg" alt="Ratio of each class throughout years" width="672" />
+<p>The caret package in R programming was used to conduct the experiment. Classification algorithms used in this experiment were: <em>ranger</em>, <em>earth</em>, <em>treebag</em>, <em>knn</em>, <em>nb</em> existing in function train() from this package.</p>
+<p>The procedure followed to assess performance of the imputation of missing values was as follows:</p>
+<ol style="list-style-type: decimal">
+<li>The dataset was divided into train and test subsets with split ratio 80/20.</li>
+<li>We imputed values separately in train and test datasets. This process was repeated for all nine different imputing strategies. Time of imputation was measured independently outside this workflow.</li>
+<li>All imputed train and test datasets were used in five classification algorithms.</li>
+<li>Numerical variables were centered and scaled to mean 0 and standard deviation 1. For <em>knn</em> datasets were also encoded with one-hot encoding.</li>
+<li>The classifiers were built using transformed train datasets.</li>
+<li>The classification results were obtained using transformed test datasets.</li>
+</ol>
+<p>Before dividing into training and test subsets and building classifiers, seed equal to one was set.</p>
+</div>
+</div>
+<div id="results-8" class="section level3" number="2.1.5">
+<h3><span class="header-section-number">2.1.5</span> Results</h3>
+<p>Before analyzing results, three caveats:</p>
+<ol style="list-style-type: decimal">
+<li>some of our datasets were quite small, with 100 or so observations</li>
+<li>some of our datasets were heavily imbalanced</li>
+<li>some imputations methods did not coverage or generally impute data due to specificity of the dataset. This methods are:
+<ul>
+<li><em>remove columns</em> 3/11 failed</li>
+<li><em>pmm (mice)</em> 3/11 failed</li>
+<li><em>cart (mice)</em> 3/11 failed</li>
+<li><em>vim irmi</em> 5/11 failed</li>
+</ul></li>
+</ol>
+<p>For <em>removing columns</em> explanation is simple. In some datasets missing values are in every column so after removing all columns model has no
+data to be trained on. For other methods, it is more complicated to explain. Apart from removing columns methods they did not throw an error and tried
+to imput the data but without success.</p>
+<p>While analyzing the results we are looking at two things:</p>
+<ol style="list-style-type: decimal">
+<li>for which imputation method the metrics have the best results</li>
+<li>time of imputation</li>
+</ol>
+<p>Especially for big datasets, using sophisticated imputation methods requires many hours or even days of computing which makes them inefficient. For that reason datasets with tens of thousands of observations were truncated to 5000.</p>
+<hr />
+<div id="imputation-results" class="section level4" number="2.1.5.1">
+<h4><span class="header-section-number">2.1.5.1</span> <em>Imputation results</em></h4>
+<div id="mean-metrics" class="section level5" number="2.1.5.1.1">
+<h5><span class="header-section-number">2.1.5.1.1</span> <strong><em>Mean metrics</em></strong></h5>
+<p>With this first look at the results of imputations values of performance metrics will be taken into consideration (see Table <a href="default-imputation-efficiency-comparison.html#tab:2-1-mean-metrics-tab">2.2</a>). Note that in this experiment methods that failed to impute data will be omitted so the whole picture of efficiency among imputation metrics might be distorted. This issue will be addressed in the next section.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:2-1-mean-metrics-tab">TABLE 2.2: </span>Mean metrics for each model
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Imputation name
+</th>
+<th style="text-align:right;">
+AUC
+</th>
+<th style="text-align:right;">
+BACC
+</th>
+<th style="text-align:right;">
+GM
+</th>
+<th style="text-align:right;">
+Weighted TPR-TNR
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+cart (mice)
+</td>
+<td style="text-align:right;">
+0.8581
+</td>
+<td style="text-align:right;">
+0.7884
+</td>
+<td style="text-align:right;">
+0.7702
+</td>
+<td style="text-align:right;">
+0.7379
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+median and mode
+</td>
+<td style="text-align:right;">
+0.8670
+</td>
+<td style="text-align:right;">
+0.7931
+</td>
+<td style="text-align:right;">
+0.7783
+</td>
+<td style="text-align:right;">
+0.7516
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+missForest
+</td>
+<td style="text-align:right;">
+0.8515
+</td>
+<td style="text-align:right;">
+0.7879
+</td>
+<td style="text-align:right;">
+0.7611
+</td>
+<td style="text-align:right;">
+0.7453
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pmm (mice)
+</td>
+<td style="text-align:right;">
+0.8568
+</td>
+<td style="text-align:right;">
+0.7847
+</td>
+<td style="text-align:right;">
+0.7678
+</td>
+<td style="text-align:right;">
+0.7360
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+random fill
+</td>
+<td style="text-align:right;">
+0.8717
+</td>
+<td style="text-align:right;">
+0.8037
+</td>
+<td style="text-align:right;">
+0.7900
+</td>
+<td style="text-align:right;">
+0.7687
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+remove columns
+</td>
+<td style="text-align:right;">
+0.7648
+</td>
+<td style="text-align:right;">
+0.6623
+</td>
+<td style="text-align:right;">
+0.5541
+</td>
+<td style="text-align:right;">
+0.5523
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+vim hotdeck
+</td>
+<td style="text-align:right;">
+0.8534
+</td>
+<td style="text-align:right;">
+0.7839
+</td>
+<td style="text-align:right;">
+0.7701
+</td>
+<td style="text-align:right;">
+0.7486
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+vim irmi
+</td>
+<td style="text-align:right;">
+0.8220
+</td>
+<td style="text-align:right;">
+0.7474
+</td>
+<td style="text-align:right;">
+0.7215
+</td>
+<td style="text-align:right;">
+0.6812
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+vim knn
+</td>
+<td style="text-align:right;">
+0.8667
+</td>
+<td style="text-align:right;">
+0.7771
+</td>
+<td style="text-align:right;">
+0.7563
+</td>
+<td style="text-align:right;">
+0.7445
+</td>
+</tr>
+</tbody>
+</table>
+<p>As seen above <em>random fill</em> is the best imputation method in all metrics. Second in place in all metrics was <em>median and mode</em>. <em>cart (mice)</em> was third 2 times and <em>vim knn</em> with <em>vim hotdeck</em> were third each one time. Simple imputation methods were superior for these datasets. The worst idea seems to be removing columns and using irmi.</p>
+</div>
+<div id="ranking-of-results" class="section level5" number="2.1.5.1.2">
+<h5><span class="header-section-number">2.1.5.1.2</span> <strong><em>Ranking of results</em></strong></h5>
+<p>Each model has its specific features and might be thriving after applying different imputation methods. Seeing which method was the best (and the worst) for each model should give a more wide perspective. For creating ranking only Weighted TPR-TNR will be taken into consideration. This is because this metric takes into account the imbalance ratio of the datasets and thanks to it equal evaluation for all datasets will be ensured. Rank feature here is average of ranks from all datasets so if some imputation was second in the metric it would be given rank 2. If two imputations had the same values in the metric they would both have the same rank. If the imputation method failed to impute it was assigned last rank. Top 3 best imputations was presented in the Table <a href="default-imputation-efficiency-comparison.html#tab:2-1-ranking-best-tab">2.3</a>.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:2-1-ranking-best-tab">TABLE 2.3: </span>Top 3 best imputations for each model
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Model name
+</th>
+<th style="text-align:left;">
+1th method imputation
+</th>
+<th style="text-align:left;">
+2th method imputation
+</th>
+<th style="text-align:left;">
+3th method imputation
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+ranger
+</td>
+<td style="text-align:left;">
+vim knn
+</td>
+<td style="text-align:left;">
+missForest
+</td>
+<td style="text-align:left;">
+pmm (mice)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+earth
+</td>
+<td style="text-align:left;">
+random fill
+</td>
+<td style="text-align:left;">
+median and mode
+</td>
+<td style="text-align:left;">
+cart (mice)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+treebag
+</td>
+<td style="text-align:left;">
+random fill
+</td>
+<td style="text-align:left;">
+cart (mice)
+</td>
+<td style="text-align:left;">
+median and mode
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+knn
+</td>
+<td style="text-align:left;">
+missForest
+</td>
+<td style="text-align:left;">
+random fill
+</td>
+<td style="text-align:left;">
+vim knn
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nb
+</td>
+<td style="text-align:left;">
+random fill
+</td>
+<td style="text-align:left;">
+median and mode
+</td>
+<td style="text-align:left;">
+missForest
+</td>
+</tr>
+</tbody>
+</table>
+<p>Random fill is the best in 3 out of 5 models. For ranger and knn the best are VIM knn and missForest respectively. In our top 3 ranking also appears median and mode and two mice methods - pmm and cart.</p>
+<p>Now let’s see the top 3 worst imputations in the Table <a href="default-imputation-efficiency-comparison.html#tab:2-1-ranking-worst-tab">2.4</a>.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:2-1-ranking-worst-tab">TABLE 2.4: </span>Top 3 worst imputations for each model
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Model name
+</th>
+<th style="text-align:left;">
+7th method imputation
+</th>
+<th style="text-align:left;">
+8th method imputation
+</th>
+<th style="text-align:left;">
+9th method imputation
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+ranger
+</td>
+<td style="text-align:left;">
+vim hotdeck
+</td>
+<td style="text-align:left;">
+vim irmi
+</td>
+<td style="text-align:left;">
+remove columns
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+earth
+</td>
+<td style="text-align:left;">
+pmm (mice)
+</td>
+<td style="text-align:left;">
+vim irmi
+</td>
+<td style="text-align:left;">
+remove columns
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+treebag
+</td>
+<td style="text-align:left;">
+vim knn
+</td>
+<td style="text-align:left;">
+vim irmi
+</td>
+<td style="text-align:left;">
+remove columns
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+knn
+</td>
+<td style="text-align:left;">
+vim irmi
+</td>
+<td style="text-align:left;">
+pmm (mice)
+</td>
+<td style="text-align:left;">
+remove columns
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nb
+</td>
+<td style="text-align:left;">
+cart (mice)
+</td>
+<td style="text-align:left;">
+vim irmi
+</td>
+<td style="text-align:left;">
+remove columns
+</td>
+</tr>
+</tbody>
+</table>
+<p>Removing columns is the worst choice when imputing data, which is not surprising. It removes vital information from data resulting in significantly worse performance. Second from the end is almost for all models vim irmi.</p>
+<p>Visualization in the Figure <a href="default-imputation-efficiency-comparison.html#fig:2-1-ranking">2.2</a> shows the mean rank of imputation methods for each model. Average was measured on 11 datasets. The more mean rank of the method is closer to 1 the better. Some trends and stability of methods are visible.</p>
+<div class="figure" style="text-align: center"><span id="fig:2-1-ranking"></span>
+<img src="images/2-1-ranks.png" alt="Average rank plot" width="800" />
 <p class="caption">
-FIGURE 1.2: Ratio of each class throughout years
+FIGURE 2.2: Average rank plot
 </p>
 </div>
-<p>
- 
-</p>
-<p>Except for 2019, 2018 and 2016, percentage of fully reproducible papers (III class) is stable. In the newest articles, this percentage is slightly higher. Year 2016 is the only one, where unreproducible papers were in the majority. Only in 3 cases, percentage of reproducible articles dropped below 60%.</p>
-<p>
- 
-</p>
-<div class="figure"><span id="fig:unnamed-chunk-5"></span>
-<img src="book_files/figure-html/unnamed-chunk-5-1.svg" alt="Summarized results throughout years" width="672" />
+<p><em>Random fill</em> is the best method. It was the best for three models and second-best for one model. <em>Median and mode</em> and <em>missForest</em> were also really good for all models. The worst without a doubt is <em>removing columns</em>. Some methods are really good for certain models but vary bad for others (for example <em>pmm (mice)</em>) in contrary to <em>random fill</em> and <em>median and mode</em> which were equally good for all models.</p>
+</div>
+<div id="similarity-of-imputations" class="section level5" number="2.1.5.1.3">
+<h5><span class="header-section-number">2.1.5.1.3</span> <strong><em>Similarity of imputations</em></strong></h5>
+<p>To see how similar are imputations to each other we used biplot. Biplot is using PCA to reduce the dimensionality of the data in our case of results. If imputation names are close to each other, it means that they produce similar results. If arrows are close to each other metric values are correlated. Data came from our imputation results for all models without NA values. Then for each imputation data was averaged and processed by PCA (see Figure <a href="default-imputation-efficiency-comparison.html#fig:2-1-pca">2.3</a>).</p>
+<div class="figure" style="text-align: center"><span id="fig:2-1-pca"></span>
+<img src="images/2-1-PCA.png" alt="Rank biplot" width="800" />
 <p class="caption">
-FIGURE 1.3: Summarized results throughout years
+FIGURE 2.3: Rank biplot
 </p>
 </div>
-<p>
- 
+<p>Some imputation techniques seem to be distant from others. Mainly VIM’s irmi, remove columns, pmm and knn. Judging by the red arrows (loadings plot), there are similarities in ranks among treebag and earth models. Knn and ranger are not very correlated with ranks achieved by them.</p>
+<hr />
+</div>
+</div>
+<div id="imputation-time" class="section level4" number="2.1.5.2">
+<h4><span class="header-section-number">2.1.5.2</span> <em>Imputation time</em></h4>
+<p>In imputation not only results matter. While having small dataset imputation time is not something worth considering. But when having tens or hundreds of thousands of observations some more complex imputations might take really long time. In this case maximum samples in data is 5000 but differences are already visible. This experiment was repeated 10 times to ensure higher reliability of data.</p>
+<div id="mean-time" class="section level5" number="2.1.5.2.1">
+<h5><span class="header-section-number">2.1.5.2.1</span> <strong><em>Mean time</em></strong></h5>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:2-1-time-tab">TABLE 2.5: </span>Average results - time
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Imputation name
+</th>
+<th style="text-align:right;">
+Time
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+remove columns
+</td>
+<td style="text-align:right;">
+0.0140
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+random fill
+</td>
+<td style="text-align:right;">
+0.0154
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+median and mode
+</td>
+<td style="text-align:right;">
+0.0272
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+vim hotdeck
+</td>
+<td style="text-align:right;">
+0.2484
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+vim knn
+</td>
+<td style="text-align:right;">
+1.6833
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pmm (mice)
+</td>
+<td style="text-align:right;">
+8.1867
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+missForest
+</td>
+<td style="text-align:right;">
+8.9694
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+vim irmi
+</td>
+<td style="text-align:right;">
+10.1300
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+cart (mice)
+</td>
+<td style="text-align:right;">
+20.0550
+</td>
+</tr>
+</tbody>
+</table>
+<p>As one might predict, imputation with mean and mode removing columns or filling NA’s with random value are the fastest methods (see Table <a href="default-imputation-efficiency-comparison.html#tab:2-1-time-tab">2.5</a>). Imputations from VIM package also have small computation time. Imputing with missForest package or using predictive mean matching in mice package is more than 1000 times slower, whilst using cart instead of pmm in mice package additionally increases computation time more than threefold.</p>
+</div>
+<div id="distribution-of-time" class="section level5" number="2.1.5.2.2">
+<h5><span class="header-section-number">2.1.5.2.2</span> <strong><em>Distribution of time</em></strong></h5>
+<div class="figure" style="text-align: center"><span id="fig:2-1-time"></span>
+<img src="images/2-1-time.png" alt="Time distribution" width="800" />
+<p class="caption">
+FIGURE 2.4: Time distribution
 </p>
 </div>
-<div id="summary-and-conclusions-2" class="section level3" number="1.3.6">
-<h3><span class="header-section-number">1.3.6</span> Summary and conclusions</h3>
-<p>This article has presented an analysis of scientific papers reproducibility in the context of publication date. As a part of this work, 280 articles from RJournal have been verified. Collected results show that even though recently published articles are more likely to be fully reproducible than older ones, time does not affect reproducibility as we could have expected. A higher ratio of complete reproducibility occurs only for papers from the last 2 years. In articles from 2009 – 2017 there is no evident correlation between reproducibility and year of publication. However, several patterns are possible to recognize. Firstly, except for the year 2016, in each year percentage of reproducible articles (class II or III) was higher than unreproducible ones (class 0 or I). Secondly, the proportion of fully reproducible articles seems to oscillate between 30% - 40%. Moreover, the earliest years have a similar or even lower ratio of complete irreproducibility than later ones. These unexpected observations might be explained by the fact that older packages appear to be less dependent on other libraries. Additionally, modern packages contain more complex and dedicated functions, therefore they are more vulnerable to changes.
-Undoubtedly, this paper does not cover all aspects of scientific articles obsolescence, however, we believe that the data we have collected might be a valuable starting point for further research.</p>
+<p>Imputation time is shown in the shape of boxplots (see Figure <a href="default-imputation-efficiency-comparison.html#fig:2-1-time">2.4</a>). Clear distinction between mice, missForest and VIM’ irmi packages functions which are significantly slower than other methods. On contrary here imputation time was taken into consideration even when NA’s were produced.</p>
+</div>
+<div id="influence-of-amount-of-na-on-time" class="section level5" number="2.1.5.2.3">
+<h5><span class="header-section-number">2.1.5.2.3</span> <strong><em>Influence of amount of NA on time</em></strong></h5>
+<div class="figure" style="text-align: center"><span id="fig:2-1-influence-NA"></span>
+<img src="images/2-1-influence-NA.png" alt="Number of NA and imputation time" width="800" />
+<p class="caption">
+FIGURE 2.5: Number of NA and imputation time
+</p>
+</div>
+<p>The time needed to process NA’s is very volatile (see Figure <a href="default-imputation-efficiency-comparison.html#fig:2-1-influence-NA">2.5</a>). For simple imputation methods and VIM’s hotdeck time needed compared to the rest of the imputations seems to be constant. This plot was achieved by getting information from datasets and imputing ten times. Then the median was taken from times of dataset imputation. Fluctuations might be effect of different data types, number of factors, continuous variables distribution.</p>
+</div>
+</div>
+</div>
+<div id="summary-and-conclusions-7" class="section level3" number="2.1.6">
+<h3><span class="header-section-number">2.1.6</span> Summary and conclusions</h3>
+<p>Our experiments have unexpected results - it turns out that using naive strategy of imputing with random values resulted in models with the best performance. The reason of poor performance of more complex imputation methods might be the fact that we used default values of hyperparameters and some tuning may be required to show full potential of these methods. Some datasets were simple and small therefore potential imputation leverage could be insignificant. What we did prove was that simple imputation methods might still be valuable despite their apparent flaws. What was significant was the big overhead that simple imputations had in terms of results achieved in time. While having a big dataset with a limited number of missing values they might be the best solution because some methods use whole data to train it’s missing value imputation.<br />
+We might not ignore huge computational overhead that is the result of using complex computing methods. The point of this paper was to test those methods for inexperienced users and find the most valuable one for them. As for now considering both performance and time the best are <em>random fill</em>, <em>median and mode</em>. They achieve more than satisfying results, are reliable and work for every dataset. Judging by the results it is better to use simple imputation methods than more complex methods with default parameters from various packages.</p>
 
 </div>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
-<div id="ref-gentleman2007statistical">
-<p>Gentleman, Robert, and Duncan Temple Lang. 2007. “Statistical Analyses and Reproducible Research.” <em>Journal of Computational and Graphical Statistics</em> 16 (1): 1–23.</p>
+<div id="ref-2-1-weighted-tpr-tnr">
+<p>Jadhav, Anil. 2020. “A Novel Weighted Tpr-Tnr Measure to Assess Performance of the Classifiers.” <em>Expert Systems with Applications</em> 152 (March): 113391. <a href="https://doi.org/10.1016/j.eswa.2020.113391">https://doi.org/10.1016/j.eswa.2020.113391</a>.</p>
 </div>
-<div id="ref-kitzes2017practice">
-<p>Kitzes, Justin, Daniel Turek, and Fatma Deniz. 2017. <em>The Practice of Reproducible Research: Case Studies and Lessons from the Data-Intensive Sciences</em>. Univ of California Press.</p>
+<div id="ref-2-1-VIM">
+<p>Kowarik, Alexander, and Matthias Templ. 2016a. “Imputation with the R Package VIM.” <em>Journal of Statistical Software</em> 74 (7): 1–16. <a href="https://doi.org/10.18637/jss.v074.i07">https://doi.org/10.18637/jss.v074.i07</a>.</p>
 </div>
-<div id="ref-marwickrrtools">
-<p>Marwick, B. n.d. “Rrtools: Creates a Reproducible Research Compendium (2018).”</p>
+<div id="ref-2-1-caret">
+<p>Kuhn, Max. 2008. “Building Predictive Models in R Using the Caret Package.” <em>Journal of Statistical Software, Articles</em> 28 (5): 1–26. <a href="https://doi.org/10.18637/jss.v028.i05">https://doi.org/10.18637/jss.v028.i05</a>.</p>
 </div>
-<div id="ref-Peng1226">
-<p>Peng, Roger D. 2011. “Reproducible Research in Computational Science.” <em>Science</em> 334 (6060): 1226–7. <a href="https://doi.org/10.1126/science.1213847">https://doi.org/10.1126/science.1213847</a>.</p>
+<div id="ref-2-1-little-rubin">
+<p>Little, R. J. A., and D. B. Rubin. 2002. <em>Statistical Analysis with Missing Data</em>. Wiley Series in Probability and Mathematical Statistics. Probability and Mathematical Statistics. Wiley. <a href="http://books.google.com/books?id=aYPwAAAAMAAJ">http://books.google.com/books?id=aYPwAAAAMAAJ</a>.</p>
 </div>
-<div id="ref-Stodden2013SettingTD">
-<p>Stodden, Victoria, David H. Bailey, Jonathan M. Borwein, Randall J. LeVeque, William J. Rider, and William Stein. 2013. “Setting the Default to Reproducible Reproducibility in Computational and Experimental Mathematics.” In.</p>
+<div id="ref-2-1-missForest">
+<p>Stekhoven, Daniel J., and Peter Buehlmann. 2012a. “MissForest - Non-Parametric Missing Value Imputation for Mixed-Type Data.” <em>Bioinformatics</em> 28 (1): 112–18.</p>
 </div>
-<div id="ref-vandewalle2009reproducible">
-<p>Vandewalle, Patrick, Jelena Kovacevic, and Martin Vetterli. 2009. “Reproducible Research in Signal Processing.” <em>IEEE Signal Processing Magazine</em> 26 (3): 37–47.</p>
+<div id="ref-2-1-mice">
+<p>van Buuren, Stef, and Karin Groothuis-Oudshoorn. 2011a. “mice: Multivariate Imputation by Chained Equations in R.” <em>Journal of Statistical Software</em> 45 (3): 1–67. <a href="https://www.jstatsoft.org/v45/i03/">https://www.jstatsoft.org/v45/i03/</a>.</p>
 </div>
 </div>
             </section>
@@ -571,8 +1260,8 @@ Undoubtedly, this paper does not cover all aspects of scientific articles obsole
           </div>
         </div>
       </div>
-<a href="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="imputation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="the-hajada-imputation-test.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook/js/app.min.js"></script>
@@ -603,7 +1292,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/1-3-articles-aging.Rmd",
+"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/2-1-default-imputation-efficiency-comparison.Rmd",
 "text": "Edit"
 },
 "history": {
