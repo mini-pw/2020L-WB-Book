@@ -107,9 +107,9 @@ We compared if current versions of packages have more or less reproducibility is
 
 **Correlations with auxiliary variables**  
 ```{r, echo=FALSE, warning = FALSE, message = FALSE}
+library(corrplot)
 cordf <- read.csv("./1-7-data/corr.csv")
 testdf <- cor.mtest(cordf, method="pearson")
-library(corrplot)
 corrplot(cor(cordf[,1:5], cordf[,-(1:5)]), p.mat=testdf$p[1:5, -(1:5)], tl.col="black", tl.srt=45, addCoef.col = "black", sig.level=0.05, insig="pch")
 ```
 
