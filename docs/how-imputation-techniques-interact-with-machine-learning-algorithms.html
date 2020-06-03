@@ -21,6 +21,7 @@
   <meta name="twitter:description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="twitter:image" content="images/cover.png" />
 
+<meta name="author" content="" />
 
 
 <meta name="date" content="2020-06-03" />
@@ -32,7 +33,6 @@
   
 <link rel="prev" href="imputation-techniques-comparison-in-r-programming-language.html"/>
 <link rel="next" href="interpretability.html"/>
-<script src="libs/header-attrs/header-attrs.js"></script>
 <script src="libs/jquery/jquery.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
@@ -54,26 +54,25 @@
 
 
 <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -82,9 +81,9 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {   }
+  {  }
 @media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+a.sourceLine::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -117,7 +116,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="css\style.css" type="text/css" />
 </head>
 
 <body>
@@ -133,14 +132,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./"><h3>ML Case Studies</h3></a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
-<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
 <li class="chapter" data-level="" data-path="technical-setup.html"><a href="technical-setup.html"><i class="fa fa-check"></i>Technical Setup</a></li>
 </ul></li>
-<li class="chapter" data-level="1" data-path="reproducibility.html"><a href="reproducibility.html"><i class="fa fa-check"></i><b>1</b> Reproducibility of scientific papers</a>
-<ul>
-<li class="chapter" data-level="1.1" data-path="title-of-the-article.html"><a href="title-of-the-article.html"><i class="fa fa-check"></i><b>1.1</b> Title of the article</a>
-<ul>
+<li class="chapter" data-level="1" data-path="reproducibility.html"><a href="reproducibility.html"><i class="fa fa-check"></i><b>1</b> Reproducibility of scientific papers</a><ul>
+<li class="chapter" data-level="1.1" data-path="title-of-the-article.html"><a href="title-of-the-article.html"><i class="fa fa-check"></i><b>1.1</b> Title of the article</a><ul>
 <li class="chapter" data-level="1.1.1" data-path="title-of-the-article.html"><a href="title-of-the-article.html#abstract"><i class="fa fa-check"></i><b>1.1.1</b> Abstract</a></li>
 <li class="chapter" data-level="1.1.2" data-path="title-of-the-article.html"><a href="title-of-the-article.html#introduction-and-motivation"><i class="fa fa-check"></i><b>1.1.2</b> Introduction and Motivation</a></li>
 <li class="chapter" data-level="1.1.3" data-path="title-of-the-article.html"><a href="title-of-the-article.html#related-work"><i class="fa fa-check"></i><b>1.1.3</b> Related Work</a></li>
@@ -148,8 +144,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.1.5" data-path="title-of-the-article.html"><a href="title-of-the-article.html#results"><i class="fa fa-check"></i><b>1.1.5</b> Results</a></li>
 <li class="chapter" data-level="1.1.6" data-path="title-of-the-article.html"><a href="title-of-the-article.html#summary-and-conclusions"><i class="fa fa-check"></i><b>1.1.6</b> Summary and conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html"><a href="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html"><i class="fa fa-check"></i><b>1.2</b> How to measure reproducibility? Classification of problems with reproducing scientific papers</a>
-<ul>
+<li class="chapter" data-level="1.2" data-path="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html"><a href="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html"><i class="fa fa-check"></i><b>1.2</b> How to measure reproducibility? Classification of problems with reproducing scientific papers</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html"><a href="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html#abstract-1"><i class="fa fa-check"></i><b>1.2.1</b> Abstract</a></li>
 <li class="chapter" data-level="1.2.2" data-path="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html"><a href="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html#introduction"><i class="fa fa-check"></i><b>1.2.2</b> Introduction</a></li>
 <li class="chapter" data-level="1.2.3" data-path="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html"><a href="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html#related-work-1"><i class="fa fa-check"></i><b>1.2.3</b> Related Work</a></li>
@@ -157,8 +152,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2.5" data-path="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html"><a href="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html#results-1"><i class="fa fa-check"></i><b>1.2.5</b> Results</a></li>
 <li class="chapter" data-level="1.2.6" data-path="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html"><a href="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html#summary-and-conclusions-1"><i class="fa fa-check"></i><b>1.2.6</b> Summary and conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html"><i class="fa fa-check"></i><b>1.3</b> Aging articles. How time affects reproducibility of scientific papers?</a>
-<ul>
+<li class="chapter" data-level="1.3" data-path="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html"><i class="fa fa-check"></i><b>1.3</b> Aging articles. How time affects reproducibility of scientific papers?</a><ul>
 <li class="chapter" data-level="1.3.1" data-path="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html#abstract-2"><i class="fa fa-check"></i><b>1.3.1</b> Abstract</a></li>
 <li class="chapter" data-level="1.3.2" data-path="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html#introduction-1"><i class="fa fa-check"></i><b>1.3.2</b> Introduction</a></li>
 <li class="chapter" data-level="1.3.3" data-path="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html#codeextractor-package"><i class="fa fa-check"></i><b>1.3.3</b> CodeExtractoR package</a></li>
@@ -166,14 +160,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.3.5" data-path="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html#results-2"><i class="fa fa-check"></i><b>1.3.5</b> Results</a></li>
 <li class="chapter" data-level="1.3.6" data-path="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html#summary-and-conclusions-2"><i class="fa fa-check"></i><b>1.3.6</b> Summary and conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html"><a href="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html"><i class="fa fa-check"></i><b>1.4</b> Ways to reproduce articles in terms of release date and magazine</a>
-<ul>
+<li class="chapter" data-level="1.4" data-path="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html"><a href="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html"><i class="fa fa-check"></i><b>1.4</b> Ways to reproduce articles in terms of release date and magazine</a><ul>
 <li class="chapter" data-level="1.4.1" data-path="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html"><a href="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html#abstract-3"><i class="fa fa-check"></i><b>1.4.1</b> Abstract</a></li>
 <li class="chapter" data-level="1.4.2" data-path="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html"><a href="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html#methodology-3"><i class="fa fa-check"></i><b>1.4.2</b> Methodology</a></li>
 <li class="chapter" data-level="1.4.3" data-path="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html"><a href="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html#results-3"><i class="fa fa-check"></i><b>1.4.3</b> Results</a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html"><a href="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html"><i class="fa fa-check"></i><b>1.5</b> Reproducibility of outdated articles about up-to-date R packages</a>
-<ul>
+<li class="chapter" data-level="1.5" data-path="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html"><a href="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html"><i class="fa fa-check"></i><b>1.5</b> Reproducibility of outdated articles about up-to-date R packages</a><ul>
 <li class="chapter" data-level="1.5.1" data-path="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html"><a href="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html#abstract-4"><i class="fa fa-check"></i><b>1.5.1</b> Abstract</a></li>
 <li class="chapter" data-level="1.5.2" data-path="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html"><a href="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html#introduction-and-motivation-1"><i class="fa fa-check"></i><b>1.5.2</b> Introduction and Motivation</a></li>
 <li class="chapter" data-level="1.5.3" data-path="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html"><a href="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html#related-work-2"><i class="fa fa-check"></i><b>1.5.3</b> Related Work</a></li>
@@ -181,8 +173,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.5.5" data-path="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html"><a href="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html#results-4"><i class="fa fa-check"></i><b>1.5.5</b> Results</a></li>
 <li class="chapter" data-level="1.5.6" data-path="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html"><a href="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html#summary-and-conclusions-3"><i class="fa fa-check"></i><b>1.5.6</b> Summary and conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="1.6" data-path="correlation-between-reproducibility-of-research-papers-and-their-objective.html"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html"><i class="fa fa-check"></i><b>1.6</b> Correlation between reproducibility of research papers and their objective</a>
-<ul>
+<li class="chapter" data-level="1.6" data-path="correlation-between-reproducibility-of-research-papers-and-their-objective.html"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html"><i class="fa fa-check"></i><b>1.6</b> Correlation between reproducibility of research papers and their objective</a><ul>
 <li class="chapter" data-level="1.6.1" data-path="correlation-between-reproducibility-of-research-papers-and-their-objective.html"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#abstract-5"><i class="fa fa-check"></i><b>1.6.1</b> Abstract</a></li>
 <li class="chapter" data-level="1.6.2" data-path="correlation-between-reproducibility-of-research-papers-and-their-objective.html"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#introduction-and-motivation-2"><i class="fa fa-check"></i><b>1.6.2</b> Introduction and Motivation</a></li>
 <li class="chapter" data-level="1.6.3" data-path="correlation-between-reproducibility-of-research-papers-and-their-objective.html"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#related-work-3"><i class="fa fa-check"></i><b>1.6.3</b> Related Work</a></li>
@@ -190,16 +181,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.6.5" data-path="correlation-between-reproducibility-of-research-papers-and-their-objective.html"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#results-5"><i class="fa fa-check"></i><b>1.6.5</b> Results</a></li>
 <li class="chapter" data-level="1.6.6" data-path="correlation-between-reproducibility-of-research-papers-and-their-objective.html"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#summary-conclusions-and-encouragement"><i class="fa fa-check"></i><b>1.6.6</b> Summary, conclusions and encouragement</a></li>
 </ul></li>
-<li class="chapter" data-level="1.7" data-path="how-active-development-affects-reproducibility.html"><a href="how-active-development-affects-reproducibility.html"><i class="fa fa-check"></i><b>1.7</b> How active development affects reproducibility</a>
-<ul>
+<li class="chapter" data-level="1.7" data-path="how-active-development-affects-reproducibility.html"><a href="how-active-development-affects-reproducibility.html"><i class="fa fa-check"></i><b>1.7</b> How active development affects reproducibility</a><ul>
 <li class="chapter" data-level="1.7.1" data-path="how-active-development-affects-reproducibility.html"><a href="how-active-development-affects-reproducibility.html#abstract-6"><i class="fa fa-check"></i><b>1.7.1</b> Abstract</a></li>
 <li class="chapter" data-level="1.7.2" data-path="how-active-development-affects-reproducibility.html"><a href="how-active-development-affects-reproducibility.html#introduction-and-motivation-3"><i class="fa fa-check"></i><b>1.7.2</b> Introduction and Motivation</a></li>
 <li class="chapter" data-level="1.7.3" data-path="how-active-development-affects-reproducibility.html"><a href="how-active-development-affects-reproducibility.html#methodology-6"><i class="fa fa-check"></i><b>1.7.3</b> Methodology</a></li>
 <li class="chapter" data-level="1.7.4" data-path="how-active-development-affects-reproducibility.html"><a href="how-active-development-affects-reproducibility.html#results-6"><i class="fa fa-check"></i><b>1.7.4</b> Results</a></li>
 <li class="chapter" data-level="1.7.5" data-path="how-active-development-affects-reproducibility.html"><a href="how-active-development-affects-reproducibility.html#summary-and-conclusions-4"><i class="fa fa-check"></i><b>1.7.5</b> Summary and conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="1.8" data-path="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html"><a href="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html"><i class="fa fa-check"></i><b>1.8</b> Reproducibility differences of articles published in various journals and using R or Python language</a>
-<ul>
+<li class="chapter" data-level="1.8" data-path="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html"><a href="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html"><i class="fa fa-check"></i><b>1.8</b> Reproducibility differences of articles published in various journals and using R or Python language</a><ul>
 <li class="chapter" data-level="1.8.1" data-path="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html"><a href="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html#abstract-7"><i class="fa fa-check"></i><b>1.8.1</b> Abstract</a></li>
 <li class="chapter" data-level="1.8.2" data-path="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html"><a href="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html#introduction-and-motivation-4"><i class="fa fa-check"></i><b>1.8.2</b> Introduction and Motivation</a></li>
 <li class="chapter" data-level="1.8.3" data-path="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html"><a href="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html#methodology-7"><i class="fa fa-check"></i><b>1.8.3</b> Methodology</a></li>
@@ -207,10 +196,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.8.5" data-path="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html"><a href="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html#summary-and-conclusions-5"><i class="fa fa-check"></i><b>1.8.5</b> Summary and conclusions</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>2</b> Imputation</a>
-<ul>
-<li class="chapter" data-level="2.1" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html"><i class="fa fa-check"></i><b>2.1</b> Default imputation efficiency comparison</a>
-<ul>
+<li class="chapter" data-level="2" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>2</b> Imputation</a><ul>
+<li class="chapter" data-level="2.1" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html"><i class="fa fa-check"></i><b>2.1</b> Default imputation efficiency comparison</a><ul>
 <li class="chapter" data-level="2.1.1" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html#abstract-8"><i class="fa fa-check"></i><b>2.1.1</b> Abstract</a></li>
 <li class="chapter" data-level="2.1.2" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html#introduction-and-motivation-5"><i class="fa fa-check"></i><b>2.1.2</b> Introduction and Motivation</a></li>
 <li class="chapter" data-level="2.1.3" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html#related-work-4"><i class="fa fa-check"></i><b>2.1.3</b> Related Work</a></li>
@@ -218,39 +205,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.1.5" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html#results-8"><i class="fa fa-check"></i><b>2.1.5</b> Results</a></li>
 <li class="chapter" data-level="2.1.6" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html#summary-and-conclusions-6"><i class="fa fa-check"></i><b>2.1.6</b> Summary and conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="the-hajada-imputation-test.html"><a href="the-hajada-imputation-test.html"><i class="fa fa-check"></i><b>2.2</b> The Hajada Imputation Test</a>
-<ul>
+<li class="chapter" data-level="2.2" data-path="the-hajada-imputation-test.html"><a href="the-hajada-imputation-test.html"><i class="fa fa-check"></i><b>2.2</b> The Hajada Imputation Test</a><ul>
 <li class="chapter" data-level="2.2.1" data-path="the-hajada-imputation-test.html"><a href="the-hajada-imputation-test.html#abstract-9"><i class="fa fa-check"></i><b>2.2.1</b> Abstract</a></li>
 <li class="chapter" data-level="2.2.2" data-path="the-hajada-imputation-test.html"><a href="the-hajada-imputation-test.html#introduction-and-motivation-6"><i class="fa fa-check"></i><b>2.2.2</b> Introduction and Motivation</a></li>
 <li class="chapter" data-level="2.2.3" data-path="the-hajada-imputation-test.html"><a href="the-hajada-imputation-test.html#methology"><i class="fa fa-check"></i><b>2.2.3</b> Methology</a></li>
 <li class="chapter" data-level="2.2.4" data-path="the-hajada-imputation-test.html"><a href="the-hajada-imputation-test.html#results-9"><i class="fa fa-check"></i><b>2.2.4</b> Results</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html"><a href="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html"><i class="fa fa-check"></i><b>2.3</b> Comparison of performance of data imputation methods in the context of their impact on the prediction efficiency of classification algorithms</a>
-<ul>
+<li class="chapter" data-level="2.3" data-path="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html"><a href="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html"><i class="fa fa-check"></i><b>2.3</b> Comparison of performance of data imputation methods in the context of their impact on the prediction efficiency of classification algorithms</a><ul>
 <li class="chapter" data-level="2.3.1" data-path="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html"><a href="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html#abstract-10"><i class="fa fa-check"></i><b>2.3.1</b> Abstract</a></li>
 <li class="chapter" data-level="2.3.2" data-path="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html"><a href="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html#introduction-and-motivation-7"><i class="fa fa-check"></i><b>2.3.2</b> Introduction and motivation</a></li>
 <li class="chapter" data-level="2.3.3" data-path="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html"><a href="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html#methodology-9"><i class="fa fa-check"></i><b>2.3.3</b> Methodology</a></li>
 <li class="chapter" data-level="2.3.4" data-path="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html"><a href="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html#results-10"><i class="fa fa-check"></i><b>2.3.4</b> Results</a></li>
 <li class="chapter" data-level="2.3.5" data-path="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html"><a href="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html#summary-and-conclusions-8"><i class="fa fa-check"></i><b>2.3.5</b> Summary and conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="various-data-imputation-techniques-in-r.html"><a href="various-data-imputation-techniques-in-r.html"><i class="fa fa-check"></i><b>2.4</b> Various data imputation techniques in R</a>
-<ul>
+<li class="chapter" data-level="2.4" data-path="various-data-imputation-techniques-in-r.html"><a href="various-data-imputation-techniques-in-r.html"><i class="fa fa-check"></i><b>2.4</b> Various data imputation techniques in R</a><ul>
 <li class="chapter" data-level="2.4.1" data-path="various-data-imputation-techniques-in-r.html"><a href="various-data-imputation-techniques-in-r.html#abstract-11"><i class="fa fa-check"></i><b>2.4.1</b> Abstract</a></li>
 <li class="chapter" data-level="2.4.2" data-path="various-data-imputation-techniques-in-r.html"><a href="various-data-imputation-techniques-in-r.html#introduction-and-motivation-8"><i class="fa fa-check"></i><b>2.4.2</b> Introduction and motivation</a></li>
 <li class="chapter" data-level="2.4.3" data-path="various-data-imputation-techniques-in-r.html"><a href="various-data-imputation-techniques-in-r.html#methodology-10"><i class="fa fa-check"></i><b>2.4.3</b> Methodology</a></li>
 <li class="chapter" data-level="2.4.4" data-path="various-data-imputation-techniques-in-r.html"><a href="various-data-imputation-techniques-in-r.html#results-11"><i class="fa fa-check"></i><b>2.4.4</b> Results</a></li>
 <li class="chapter" data-level="2.4.5" data-path="various-data-imputation-techniques-in-r.html"><a href="various-data-imputation-techniques-in-r.html#summary-and-conclusions-9"><i class="fa fa-check"></i><b>2.4.5</b> Summary and conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="imputation-techniques-comparison-in-r-programming-language.html"><a href="imputation-techniques-comparison-in-r-programming-language.html"><i class="fa fa-check"></i><b>2.5</b> Imputation techniques’ comparison in R programming language</a>
-<ul>
+<li class="chapter" data-level="2.5" data-path="imputation-techniques-comparison-in-r-programming-language.html"><a href="imputation-techniques-comparison-in-r-programming-language.html"><i class="fa fa-check"></i><b>2.5</b> Imputation techniques’ comparison in R programming language</a><ul>
 <li class="chapter" data-level="2.5.1" data-path="imputation-techniques-comparison-in-r-programming-language.html"><a href="imputation-techniques-comparison-in-r-programming-language.html#abstract-12"><i class="fa fa-check"></i><b>2.5.1</b> Abstract</a></li>
 <li class="chapter" data-level="2.5.2" data-path="imputation-techniques-comparison-in-r-programming-language.html"><a href="imputation-techniques-comparison-in-r-programming-language.html#introduction-motivation"><i class="fa fa-check"></i><b>2.5.2</b> Introduction &amp; Motivation</a></li>
 <li class="chapter" data-level="2.5.3" data-path="imputation-techniques-comparison-in-r-programming-language.html"><a href="imputation-techniques-comparison-in-r-programming-language.html#methodology-11"><i class="fa fa-check"></i><b>2.5.3</b> Methodology</a></li>
 <li class="chapter" data-level="2.5.4" data-path="imputation-techniques-comparison-in-r-programming-language.html"><a href="imputation-techniques-comparison-in-r-programming-language.html#results-12"><i class="fa fa-check"></i><b>2.5.4</b> Results</a></li>
 <li class="chapter" data-level="2.5.5" data-path="imputation-techniques-comparison-in-r-programming-language.html"><a href="imputation-techniques-comparison-in-r-programming-language.html#conclusions"><i class="fa fa-check"></i><b>2.5.5</b> Conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="how-imputation-techniques-interact-with-machine-learning-algorithms.html"><a href="how-imputation-techniques-interact-with-machine-learning-algorithms.html"><i class="fa fa-check"></i><b>2.6</b> How imputation techniques interact with machine learning algorithms</a>
-<ul>
+<li class="chapter" data-level="2.6" data-path="how-imputation-techniques-interact-with-machine-learning-algorithms.html"><a href="how-imputation-techniques-interact-with-machine-learning-algorithms.html"><i class="fa fa-check"></i><b>2.6</b> How imputation techniques interact with machine learning algorithms</a><ul>
 <li class="chapter" data-level="2.6.1" data-path="how-imputation-techniques-interact-with-machine-learning-algorithms.html"><a href="how-imputation-techniques-interact-with-machine-learning-algorithms.html#abstract-13"><i class="fa fa-check"></i><b>2.6.1</b> Abstract</a></li>
 <li class="chapter" data-level="2.6.2" data-path="how-imputation-techniques-interact-with-machine-learning-algorithms.html"><a href="how-imputation-techniques-interact-with-machine-learning-algorithms.html#introduction-and-motivation-9"><i class="fa fa-check"></i><b>2.6.2</b> Introduction and Motivation</a></li>
 <li class="chapter" data-level="2.6.3" data-path="how-imputation-techniques-interact-with-machine-learning-algorithms.html"><a href="how-imputation-techniques-interact-with-machine-learning-algorithms.html#methodology-12"><i class="fa fa-check"></i><b>2.6.3</b> Methodology</a></li>
@@ -258,10 +240,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.6.5" data-path="how-imputation-techniques-interact-with-machine-learning-algorithms.html"><a href="how-imputation-techniques-interact-with-machine-learning-algorithms.html#summary-and-conclusions-10"><i class="fa fa-check"></i><b>2.6.5</b> Summary and conclusions</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="interpretability.html"><a href="interpretability.html"><i class="fa fa-check"></i><b>3</b> Interpretability</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html"><a href="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html"><i class="fa fa-check"></i><b>3.1</b> Building an explainable model for ordinal classification on Eucalyptus dataset. Meeting black box model performance levels.</a>
-<ul>
+<li class="chapter" data-level="3" data-path="interpretability.html"><a href="interpretability.html"><i class="fa fa-check"></i><b>3</b> Interpretability</a><ul>
+<li class="chapter" data-level="3.1" data-path="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html"><a href="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html"><i class="fa fa-check"></i><b>3.1</b> Building an explainable model for ordinal classification on Eucalyptus dataset. Meeting black box model performance levels.</a><ul>
 <li class="chapter" data-level="3.1.1" data-path="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html"><a href="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html#abstract-14"><i class="fa fa-check"></i><b>3.1.1</b> Abstract</a></li>
 <li class="chapter" data-level="3.1.2" data-path="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html"><a href="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html#introduction-and-motivation-10"><i class="fa fa-check"></i><b>3.1.2</b> 1. Introduction and Motivation</a></li>
 <li class="chapter" data-level="3.1.3" data-path="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html"><a href="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html#related-work-5"><i class="fa fa-check"></i><b>3.1.3</b> 2. Related Work</a></li>
@@ -271,8 +251,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1.7" data-path="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html"><a href="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html#summary-and-conclusions-11"><i class="fa fa-check"></i><b>3.1.7</b> 6. Summary and conclusions</a></li>
 <li class="chapter" data-level="3.1.8" data-path="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html"><a href="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html#references-1"><i class="fa fa-check"></i><b>3.1.8</b> 7. References</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="predicting-code-defects-using-interpretable-static-measures-.html"><a href="predicting-code-defects-using-interpretable-static-measures-.html"><i class="fa fa-check"></i><b>3.2</b> Predicting code defects using interpretable static measures.</a>
-<ul>
+<li class="chapter" data-level="3.2" data-path="predicting-code-defects-using-interpretable-static-measures-.html"><a href="predicting-code-defects-using-interpretable-static-measures-.html"><i class="fa fa-check"></i><b>3.2</b> Predicting code defects using interpretable static measures.</a><ul>
 <li class="chapter" data-level="3.2.1" data-path="predicting-code-defects-using-interpretable-static-measures-.html"><a href="predicting-code-defects-using-interpretable-static-measures-.html#abstract-15"><i class="fa fa-check"></i><b>3.2.1</b> Abstract</a></li>
 <li class="chapter" data-level="3.2.2" data-path="predicting-code-defects-using-interpretable-static-measures-.html"><a href="predicting-code-defects-using-interpretable-static-measures-.html#introduction-and-motivation-11"><i class="fa fa-check"></i><b>3.2.2</b> Introduction and Motivation</a></li>
 <li class="chapter" data-level="3.2.3" data-path="predicting-code-defects-using-interpretable-static-measures-.html"><a href="predicting-code-defects-using-interpretable-static-measures-.html#dataset"><i class="fa fa-check"></i><b>3.2.3</b> Dataset</a></li>
@@ -280,8 +259,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.5" data-path="predicting-code-defects-using-interpretable-static-measures-.html"><a href="predicting-code-defects-using-interpretable-static-measures-.html#results-15"><i class="fa fa-check"></i><b>3.2.5</b> Results</a></li>
 <li class="chapter" data-level="3.2.6" data-path="predicting-code-defects-using-interpretable-static-measures-.html"><a href="predicting-code-defects-using-interpretable-static-measures-.html#summary-and-conclusions-12"><i class="fa fa-check"></i><b>3.2.6</b> Summary and conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html"><a href="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html"><i class="fa fa-check"></i><b>3.3</b> Using interpretable Machine Learning models in the Higgs boson detection.</a>
-<ul>
+<li class="chapter" data-level="3.3" data-path="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html"><a href="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html"><i class="fa fa-check"></i><b>3.3</b> Using interpretable Machine Learning models in the Higgs boson detection.</a><ul>
 <li class="chapter" data-level="3.3.1" data-path="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html"><a href="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html#abstract-16"><i class="fa fa-check"></i><b>3.3.1</b> Abstract</a></li>
 <li class="chapter" data-level="3.3.2" data-path="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html"><a href="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html#introduction-and-motivation-12"><i class="fa fa-check"></i><b>3.3.2</b> Introduction and Motivation</a></li>
 <li class="chapter" data-level="3.3.3" data-path="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html"><a href="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html#related-work-6"><i class="fa fa-check"></i><b>3.3.3</b> Related Work</a></li>
@@ -289,8 +267,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.5" data-path="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html"><a href="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html#results-16"><i class="fa fa-check"></i><b>3.3.5</b> Results</a></li>
 <li class="chapter" data-level="3.3.6" data-path="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html"><a href="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html#summary-and-conclusions-13"><i class="fa fa-check"></i><b>3.3.6</b> Summary and conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="can-automated-regression-beat-linear-model.html"><a href="can-automated-regression-beat-linear-model.html"><i class="fa fa-check"></i><b>3.4</b> Can Automated Regression beat linear model?</a>
-<ul>
+<li class="chapter" data-level="3.4" data-path="can-automated-regression-beat-linear-model.html"><a href="can-automated-regression-beat-linear-model.html"><i class="fa fa-check"></i><b>3.4</b> Can Automated Regression beat linear model?</a><ul>
 <li class="chapter" data-level="3.4.1" data-path="can-automated-regression-beat-linear-model.html"><a href="can-automated-regression-beat-linear-model.html#abstract-17"><i class="fa fa-check"></i><b>3.4.1</b> Abstract</a></li>
 <li class="chapter" data-level="3.4.2" data-path="can-automated-regression-beat-linear-model.html"><a href="can-automated-regression-beat-linear-model.html#introduction-and-motivation-13"><i class="fa fa-check"></i><b>3.4.2</b> Introduction and Motivation</a></li>
 <li class="chapter" data-level="3.4.3" data-path="can-automated-regression-beat-linear-model.html"><a href="can-automated-regression-beat-linear-model.html#data-1"><i class="fa fa-check"></i><b>3.4.3</b> Data</a></li>
@@ -298,35 +275,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4.5" data-path="can-automated-regression-beat-linear-model.html"><a href="can-automated-regression-beat-linear-model.html#results-17"><i class="fa fa-check"></i><b>3.4.5</b> Results</a></li>
 <li class="chapter" data-level="3.4.6" data-path="can-automated-regression-beat-linear-model.html"><a href="can-automated-regression-beat-linear-model.html#summary-and-conclusions-14"><i class="fa fa-check"></i><b>3.4.6</b> Summary and conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="3.5" data-path="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"><a href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"><i class="fa fa-check"></i><b>3.5</b> Interpretable, non-linear feature engineering techniques for linear regression models - exploration on concrete compressive strength dataset with a new feature importance metric.</a>
-<ul>
+<li class="chapter" data-level="3.5" data-path="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"><a href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"><i class="fa fa-check"></i><b>3.5</b> Interpretable, non-linear feature engineering techniques for linear regression models - exploration on concrete compressive strength dataset with a new feature importance metric.</a><ul>
 <li class="chapter" data-level="3.5.1" data-path="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"><a href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html#abstract-18"><i class="fa fa-check"></i><b>3.5.1</b> Abstract</a></li>
-<li class="chapter" data-level="3.5.2" data-path="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"><a href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html#introduction-and-motivation-14"><i class="fa fa-check"></i><b>3.5.2</b> Introduction and Motivation</a></li>
-<li class="chapter" data-level="3.5.3" data-path="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"><a href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html#related-work-7"><i class="fa fa-check"></i><b>3.5.3</b> Related Work</a></li>
-<li class="chapter" data-level="3.5.4" data-path="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"><a href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html#methodology-17"><i class="fa fa-check"></i><b>3.5.4</b> Methodology</a></li>
-<li class="chapter" data-level="3.5.5" data-path="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"><a href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html#results-18"><i class="fa fa-check"></i><b>3.5.5</b> Results</a></li>
-<li class="chapter" data-level="3.5.6" data-path="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"><a href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html#summary-and-conclusions-15"><i class="fa fa-check"></i><b>3.5.6</b> Summary and conclusions</a></li>
+<li class="chapter" data-level="3.5.2" data-path="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"><a href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html#introduction-and-related-works"><i class="fa fa-check"></i><b>3.5.2</b> Introduction and Related Works</a></li>
+<li class="chapter" data-level="3.5.3" data-path="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"><a href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html#methodology-17"><i class="fa fa-check"></i><b>3.5.3</b> Methodology</a></li>
+<li class="chapter" data-level="3.5.4" data-path="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"><a href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html#results-18"><i class="fa fa-check"></i><b>3.5.4</b> Results</a></li>
+<li class="chapter" data-level="3.5.5" data-path="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"><a href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html#summary-and-conclusions-15"><i class="fa fa-check"></i><b>3.5.5</b> Summary and conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="3.6" data-path="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html"><a href="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html"><i class="fa fa-check"></i><b>3.6</b> Surpassing black box model’s performance on unbalanced data with an interpretable one using advanced feature engineering</a>
-<ul>
+<li class="chapter" data-level="3.6" data-path="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html"><a href="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html"><i class="fa fa-check"></i><b>3.6</b> Surpassing black box model’s performance on unbalanced data with an interpretable one using advanced feature engineering</a><ul>
 <li class="chapter" data-level="3.6.1" data-path="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html"><a href="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html#abstract-19"><i class="fa fa-check"></i><b>3.6.1</b> Abstract</a></li>
-<li class="chapter" data-level="3.6.2" data-path="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html"><a href="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html#introduction-and-motivation-15"><i class="fa fa-check"></i><b>3.6.2</b> Introduction and Motivation</a></li>
+<li class="chapter" data-level="3.6.2" data-path="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html"><a href="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html#introduction-and-motivation-14"><i class="fa fa-check"></i><b>3.6.2</b> Introduction and Motivation</a></li>
 <li class="chapter" data-level="3.6.3" data-path="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html"><a href="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html#data-2"><i class="fa fa-check"></i><b>3.6.3</b> Data</a></li>
-<li class="chapter" data-level="3.6.4" data-path="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html"><a href="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html#related-work-8"><i class="fa fa-check"></i><b>3.6.4</b> Related work</a></li>
+<li class="chapter" data-level="3.6.4" data-path="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html"><a href="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html#related-work-7"><i class="fa fa-check"></i><b>3.6.4</b> Related work</a></li>
 <li class="chapter" data-level="3.6.5" data-path="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html"><a href="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html#methodology-18"><i class="fa fa-check"></i><b>3.6.5</b> Methodology</a></li>
 </ul></li>
-<li class="chapter" data-level="3.7" data-path="which-neighbours-affected-house-prices-in-the-90s.html"><a href="which-neighbours-affected-house-prices-in-the-90s.html"><i class="fa fa-check"></i><b>3.7</b> Which Neighbours Affected House Prices in the ’90s?</a>
-<ul>
+<li class="chapter" data-level="3.7" data-path="which-neighbours-affected-house-prices-in-the-90s.html"><a href="which-neighbours-affected-house-prices-in-the-90s.html"><i class="fa fa-check"></i><b>3.7</b> Which Neighbours Affected House Prices in the ’90s?</a><ul>
 <li class="chapter" data-level="3.7.1" data-path="which-neighbours-affected-house-prices-in-the-90s.html"><a href="which-neighbours-affected-house-prices-in-the-90s.html#abstract-20"><i class="fa fa-check"></i><b>3.7.1</b> Abstract</a></li>
 <li class="chapter" data-level="3.7.2" data-path="which-neighbours-affected-house-prices-in-the-90s.html"><a href="which-neighbours-affected-house-prices-in-the-90s.html#introduction-2"><i class="fa fa-check"></i><b>3.7.2</b> Introduction</a></li>
-<li class="chapter" data-level="3.7.3" data-path="which-neighbours-affected-house-prices-in-the-90s.html"><a href="which-neighbours-affected-house-prices-in-the-90s.html#related-work-9"><i class="fa fa-check"></i><b>3.7.3</b> Related Work</a></li>
+<li class="chapter" data-level="3.7.3" data-path="which-neighbours-affected-house-prices-in-the-90s.html"><a href="which-neighbours-affected-house-prices-in-the-90s.html#related-work-8"><i class="fa fa-check"></i><b>3.7.3</b> Related Work</a></li>
 <li class="chapter" data-level="3.7.4" data-path="which-neighbours-affected-house-prices-in-the-90s.html"><a href="which-neighbours-affected-house-prices-in-the-90s.html#data-3"><i class="fa fa-check"></i><b>3.7.4</b> Data</a></li>
 <li class="chapter" data-level="3.7.5" data-path="which-neighbours-affected-house-prices-in-the-90s.html"><a href="which-neighbours-affected-house-prices-in-the-90s.html#sec3-7-methodology"><i class="fa fa-check"></i><b>3.7.5</b> Methodology</a></li>
 <li class="chapter" data-level="3.7.6" data-path="which-neighbours-affected-house-prices-in-the-90s.html"><a href="which-neighbours-affected-house-prices-in-the-90s.html#results-19"><i class="fa fa-check"></i><b>3.7.6</b> Results</a></li>
 <li class="chapter" data-level="3.7.7" data-path="which-neighbours-affected-house-prices-in-the-90s.html"><a href="which-neighbours-affected-house-prices-in-the-90s.html#conclusions-1"><i class="fa fa-check"></i><b>3.7.7</b> Conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="3.8" data-path="explainable-computer-vision-with-embeddings-and-knn-classifier.html"><a href="explainable-computer-vision-with-embeddings-and-knn-classifier.html"><i class="fa fa-check"></i><b>3.8</b> Explainable Computer Vision with embeddings and KNN classifier</a>
-<ul>
+<li class="chapter" data-level="3.8" data-path="explainable-computer-vision-with-embeddings-and-knn-classifier.html"><a href="explainable-computer-vision-with-embeddings-and-knn-classifier.html"><i class="fa fa-check"></i><b>3.8</b> Explainable Computer Vision with embeddings and KNN classifier</a><ul>
 <li class="chapter" data-level="3.8.1" data-path="explainable-computer-vision-with-embeddings-and-knn-classifier.html"><a href="explainable-computer-vision-with-embeddings-and-knn-classifier.html#abstract-21"><i class="fa fa-check"></i><b>3.8.1</b> Abstract</a></li>
 <li class="chapter" data-level="3.8.2" data-path="explainable-computer-vision-with-embeddings-and-knn-classifier.html"><a href="explainable-computer-vision-with-embeddings-and-knn-classifier.html#introduction-3"><i class="fa fa-check"></i><b>3.8.2</b> 3.8.1 Introduction</a></li>
 <li class="chapter" data-level="3.8.3" data-path="explainable-computer-vision-with-embeddings-and-knn-classifier.html"><a href="explainable-computer-vision-with-embeddings-and-knn-classifier.html#data-4"><i class="fa fa-check"></i><b>3.8.3</b> 3.8.2 Data</a></li>
@@ -361,10 +333,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="how-imputation-techniques-interact-with-machine-learning-algorithms" class="section level2" number="2.6">
+<div id="how-imputation-techniques-interact-with-machine-learning-algorithms" class="section level2">
 <h2><span class="header-section-number">2.6</span> How imputation techniques interact with machine learning algorithms</h2>
 <p><em>Authors: Martyna Majchrzak, Agata Makarewicz, Jacek Wiśniewski (Warsaw University of Technology)</em></p>
-<div id="abstract-13" class="section level3" number="2.6.1">
+<div id="abstract-13" class="section level3">
 <h3><span class="header-section-number">2.6.1</span> Abstract</h3>
 <p>Imputation of missing values is a common step in the machine learning process and sometimes a difficult problem. Many real-life datasets contain incomplete observations and dealing with them is a key part of modelling as most of the algorithms provided by widely used R packages (for instance caret or mlr) require complete data.
 This report aims to measure the influence of five different imputation methods on the performance of selected classification models. Simple, common methods such as basic mean, median, and mode are compared with advanced imputation techniques from specialized R packages - mice, VIM, and softImpute.
@@ -372,19 +344,19 @@ As tested algorithms, Recursive Partitioning And Regression Trees, Naive Bayes, 
 Its prediction effectiveness is assessed by F1 measure (also called F1 score) to provide a proper measure for both balanced and imbalanced data.<br />
 </p>
 </div>
-<div id="introduction-and-motivation-9" class="section level3" number="2.6.2">
+<div id="introduction-and-motivation-9" class="section level3">
 <h3><span class="header-section-number">2.6.2</span> Introduction and Motivation</h3>
 <p>Missing data occurring in datasets is a common and sometimes difficult problem. Many real-world datasets, such as, for instance, medical records, are often incomplete. Unfortunately, in the field of machine learning, this is an issue which must be handled because many algorithms cannot work with missing values. Therefore, dealing with them is an important part of reprocessing data in the machine learning process.
 One way to do it is “omission” - removing observations or variables with at least one missing value. However, this strategy is frequently inappropriate because we can lose some important data or significantly reduce it if the percentage of missing values is high.
 Fortunately, imputation serves the need better. By definition, imputation is a process of replacing missing data with substituted values. We can distinguish 2 types of imputation. First one is single imputation - we the information from only one variable to impute missing values.
 It includes the basic methods such as imputing with mean or mode, which are fast and easy to implement, however they do not guarantee a very good performance. The second one is multiple imputations, in which we impute many values (perform imputation many times), leading to creating many complete datasets. This type includes more sophisticated strategies for instance the ones using tree-based models, which usually result in better models, but enhance the algorithm’s complexity and computational time.
-Before choosing an imputation approach, it is also important to identify the missing data pattern (or mechanism). We commonly distinguish 3, according to <span class="citation">Donald B. Rubin (<a href="#ref-Rubin" role="doc-biblioref">1976</a>)</span> : Missing Completely at Random (MCAR), Missing at Random (MAR) and Missing Not at Random (MNAR), however, we will not focus on them in this study.
+Before choosing an imputation approach, it is also important to identify the missing data pattern (or mechanism). We commonly distinguish 3, according to <span class="citation">Donald B. Rubin (<a href="#ref-Rubin">1976</a>)</span> : Missing Completely at Random (MCAR), Missing at Random (MAR) and Missing Not at Random (MNAR), however, we will not focus on them in this study.
 For the R language, there are implemented multiple imputations techniques in many different packages. It is often hard to choose the best approach. Our goal is to examine how these methods perform on different datasets and how they interact with different classification algorithms.</p>
 </div>
-<div id="methodology-12" class="section level3" number="2.6.3">
+<div id="methodology-12" class="section level3">
 <h3><span class="header-section-number">2.6.3</span> Methodology</h3>
 <p>Our work can be divided into 4 major stages: data preparation, imputation, classification models’ training, and finally, evaluation of their performance. All of them are outlined in detail in the following paragraphs.</p>
-<div id="data-preparation" class="section level4" number="2.6.3.1">
+<div id="data-preparation" class="section level4">
 <h4><span class="header-section-number">2.6.3.1</span> Data preparation</h4>
 <p>In the following table are presented the datasets used for this experiment, along with their OpenML ID number, name, number of instances, number of features and number of missing values. The datasets vary in size and number of missing values.</p>
 <table>
@@ -516,7 +488,7 @@ For the R language, there are implemented multiple imputations techniques in man
 <p><em>Tab. 1. OpenML datasets used in the study</em></p>
 <p>As seen in the table, we used 14 datasets from OpenML library, all of which are designed for binary classification. Before starting the experiment, each of them was individually preprocessed, what usually included reducing the number of categories (for instance by converting strings to lower case or dividing date column into more features) or simply removing features with too many of them, removing features which didn’t contain any useful information, and correcting some spelling mistakes.</p>
 </div>
-<div id="imputation-strategies" class="section level4" number="2.6.3.2">
+<div id="imputation-strategies" class="section level4">
 <h4><span class="header-section-number">2.6.3.2</span> Imputation strategies</h4>
 <p>Each prepared dataset was split into train set (80% of observation) and test set (20% of observation).
 They are imputed separately, using the methods described below, to avoid data leakage.
@@ -525,18 +497,18 @@ The imputations, that were performed and analyzed in our study include:</p>
 <li><p><strong>mean/mode imputation</strong><br />
 One of the basic techniques replaces missing values with a mean (for continuous variables) and mode (for categorical variables) of complete values in the given variable. Implemented with basic R functions.</p></li>
 <li><p><strong>mice (predictive mean matching)</strong><br />
-Performs multivariate imputation by chained equations, meaning it creates multiple imputations (replacement values) for multivariate missing data. Implemented with mice() function (with method parameter set to “pmm”) from mice package <span class="citation">(Buuren <a href="#ref-MicePackage" role="doc-biblioref">2020</a>)</span>.</p></li>
+Performs multivariate imputation by chained equations, meaning it creates multiple imputations (replacement values) for multivariate missing data. Implemented with mice() function (with method parameter set to “pmm”) from mice package <span class="citation">(Buuren <a href="#ref-MicePackage">2020</a>)</span>.</p></li>
 <li><p><strong>k-nearest neighbours</strong><br />
-An aggregation of the non-missing values of the k nearest neighbours is used as an imputed value. The kind of aggregation depends on the type of the variable. Implemented with kNN() function from the VIM package <span class="citation">(Matthias Templ <a href="#ref-VIMPackage" role="doc-biblioref">2020</a>)</span>.</p></li>
+An aggregation of the non-missing values of the k nearest neighbours is used as an imputed value. The kind of aggregation depends on the type of the variable. Implemented with kNN() function from the VIM package <span class="citation">(Matthias Templ <a href="#ref-VIMPackage">2020</a>)</span>.</p></li>
 <li><p><strong>hotdeck</strong><br />
-Each missing value is replaced with an observed response from a “similar” unit. Implemented with hotdeck() function from VIM package <span class="citation">(Matthias Templ <a href="#ref-VIMPackage" role="doc-biblioref">2020</a>)</span>.</p></li>
+Each missing value is replaced with an observed response from a “similar” unit. Implemented with hotdeck() function from VIM package <span class="citation">(Matthias Templ <a href="#ref-VIMPackage">2020</a>)</span>.</p></li>
 <li><p><strong>softImpute combined with median/mode imputation</strong><br />
-For numeric variables function softImpute() from softImpute package <span class="citation">(Trevor Hastie <a href="#ref-softImputePackage" role="doc-biblioref">2015</a>)</span> is used, fitting a low-rank matrix approximation to a matrix with missing values via nuclear-norm regularization. For remaining variables, missing values are imputed with median or mode, which is implemented with impute() function from the imputeMissings() package <span class="citation">(Matthijs Meire <a href="#ref-imputeMissingsPackage" role="doc-biblioref">2016</a>)</span>.</p></li>
+For numeric variables function softImpute() from softImpute package <span class="citation">(Trevor Hastie <a href="#ref-softImputePackage">2015</a>)</span> is used, fitting a low-rank matrix approximation to a matrix with missing values via nuclear-norm regularization. For remaining variables, missing values are imputed with median or mode, which is implemented with impute() function from the imputeMissings() package <span class="citation">(Matthijs Meire <a href="#ref-imputeMissingsPackage">2016</a>)</span>.</p></li>
 </ul>
 </div>
-<div id="classification-algorithms-1" class="section level4" number="2.6.3.3">
+<div id="classification-algorithms-1" class="section level4">
 <h4><span class="header-section-number">2.6.3.3</span> Classification algorithms</h4>
-<p>We chose five different algorithms: two linear classifiers (NB, LDA), two tree-based models (RPART, Ranger), and one kernel estimation (KNN). For each train set and for every imputation method all five classifiers were trained. The modelling was performed using the mlr3 package <span class="citation">(Michel Lang <a href="#ref-mlr3Package" role="doc-biblioref">2020</a>)</span>.</p>
+<p>We chose five different algorithms: two linear classifiers (NB, LDA), two tree-based models (RPART, Ranger), and one kernel estimation (KNN). For each train set and for every imputation method all five classifiers were trained. The modelling was performed using the mlr3 package <span class="citation">(Michel Lang <a href="#ref-mlr3Package">2020</a>)</span>.</p>
 <ul>
 <li><p><strong>RPART (Recursive Partitioning And Regression Trees)</strong><br />
 Based on decision trees, works by splitting the dataset recursively, until a predetermined termination criterion is reached or no improvement can be made. At each step, the split is made based on the independent variable that splits the data best (results in the largest possible reduction in the heterogeneity of the dependent (predicted) variable).</p></li>
@@ -551,7 +523,7 @@ An object is classified by a majority vote of its neighbours, being assigned to 
 </ul>
 <p>After the training stage, the time has come to check how selected imputations and algorithms interact with each other. Again, for each - in this case - test set and every imputation all five classifiers listed above make a prediction. Assessing their performance is outlined in the next paragraph.</p>
 </div>
-<div id="implementation-and-model-evaluation" class="section level4" number="2.6.3.4">
+<div id="implementation-and-model-evaluation" class="section level4">
 <h4><span class="header-section-number">2.6.3.4</span> Implementation and model evaluation</h4>
 <p>To conduct the experiment two functions were written:</p>
 <ul>
@@ -568,10 +540,10 @@ An object is classified by a majority vote of its neighbours, being assigned to 
 <p>The overall measure of the imputation performance is a mean of its ranks from all datasets.</p>
 </div>
 </div>
-<div id="results-13" class="section level3" number="2.6.4">
+<div id="results-13" class="section level3">
 <h3><span class="header-section-number">2.6.4</span> Results</h3>
 <p>A missing value <code>NA</code> in the results table implicates, either that an imputation failed on this particular dataset, leaving missing values in it (when there are a few of them in a column), or that the model didn’t manage to perform on the entire dataset, no matter what imputation (when there is a full row of missing values).</p>
-<div id="results-of-rpart-classification-algorithm" class="section level4" number="2.6.4.1">
+<div id="results-of-rpart-classification-algorithm" class="section level4">
 <h4><span class="header-section-number">2.6.4.1</span> Results of Rpart classification algorithm</h4>
 <table>
 <thead>
@@ -706,7 +678,7 @@ An object is classified by a majority vote of its neighbours, being assigned to 
 <p><em>Fig. 1. Ranking for Rpart classification algorithm.</em></p>
 <p>Generally, VIM knn and MICE pmm imputations gave the best results when combined with the Rpart model.</p>
 </div>
-<div id="results-of-naive-bayes-classification-algorithm" class="section level4" number="2.6.4.2">
+<div id="results-of-naive-bayes-classification-algorithm" class="section level4">
 <h4><span class="header-section-number">2.6.4.2</span> Results of Naive Bayes classification algorithm</h4>
 <table>
 <thead>
@@ -841,7 +813,7 @@ The F1 measure values vary a lot more than in the Rpart model, from around 0.12 
 <p><em>Fig. 2. Ranking for Naive Bayes classification algorithm.</em></p>
 <p>Generally, MICE pmm imputation gave the best results when combined with the Naive Bayes model.</p>
 </div>
-<div id="results-of-ranger-classification-algorithm" class="section level4" number="2.6.4.3">
+<div id="results-of-ranger-classification-algorithm" class="section level4">
 <h4><span class="header-section-number">2.6.4.3</span> Results of Ranger classification algorithm</h4>
 <table>
 <thead>
@@ -976,7 +948,7 @@ The other F1 measure values are mostly between 0.6 and 0.99, with some outliers 
 <p><em>Fig. 3. Ranking for Ranger classification algorithm.</em></p>
 <p>Generally, softImpute and VIM hotdeck imputations gave the best results when combined with the Ranger model.</p>
 </div>
-<div id="results-of-lda-classification-algorithm" class="section level4" number="2.6.4.4">
+<div id="results-of-lda-classification-algorithm" class="section level4">
 <h4><span class="header-section-number">2.6.4.4</span> Results of LDA classification algorithm</h4>
 <table>
 <thead>
@@ -1111,7 +1083,7 @@ The F1 score values are mostly between 0.6 and 0.99, with some outliers like the
 <p><em>Fig. 4. Ranking for LDA classification algorithm.</em></p>
 <p>Generally, VIM hotdeck imputation gave the best results when combined with the LDA model.</p>
 </div>
-<div id="results-of-kknn-classification-algorithm" class="section level4" number="2.6.4.5">
+<div id="results-of-kknn-classification-algorithm" class="section level4">
 <h4><span class="header-section-number">2.6.4.5</span> Results of KKNN classification algorithm</h4>
 <table>
 <thead>
@@ -1246,7 +1218,7 @@ The F1 score values are mostly between 0.65 and 0.99, with some outliers like th
 <p><em>Fig. 5. Ranking for Rpart classification algorithm.</em></p>
 <p>Generally, mean/mode imputation gave the best results when combined with the Weighted KNN model. VIM knn and softImpute were second best.</p>
 </div>
-<div id="comparing-models" class="section level4" number="2.6.4.6">
+<div id="comparing-models" class="section level4">
 <h4><span class="header-section-number">2.6.4.6</span> Comparing Models</h4>
 <p>The heatmap below presents the mean from ranks of given imputation on all the datasets, combined with each classification model.</p>
 <p><img src="data/2-6-data/Heatmapa_piekna_wszystkie.png" /></p>
@@ -1254,7 +1226,7 @@ The F1 score values are mostly between 0.65 and 0.99, with some outliers like th
 <p>It clearly shows, that no imputation performs the best with every model. Every model has one or two imputations, that interact with it better than the others, but those are different for every classifier.</p>
 <p>The efficiency of the model combined with a particular imputation depends on numerous factors. In the next chapter the impact of one possible factor - the percentage of missing values in the dataset before the imputation - will be discussed.</p>
 </div>
-<div id="the-impact-of-the-percentage-of-missing-values" class="section level4" number="2.6.4.7">
+<div id="the-impact-of-the-percentage-of-missing-values" class="section level4">
 <h4><span class="header-section-number">2.6.4.7</span> The impact of the percentage of missing values</h4>
 <p>During the study, it was brought to the researchers’ attention, that some of the unusual results appeared for the datasets, that originally had a higher than average percentage of missing values.
 Therefore, an analogical chart was created, using only the following 4 datasets with the highest percentage of missing values.</p>
@@ -1312,10 +1284,10 @@ Therefore, an analogical chart was created, using only the following 4 datasets 
 <p>The appearance of such dependence may suggest, that number of missing values in a dataset may be a contributing factor to the efficiency of an imputation method combined with a classification model.</p>
 </div>
 </div>
-<div id="summary-and-conclusions-10" class="section level3" number="2.6.5">
+<div id="summary-and-conclusions-10" class="section level3">
 <h3><span class="header-section-number">2.6.5</span> Summary and conclusions</h3>
 <p>The conclusions from this study can be divided into those, that apply to choose the best imputation method if the model is imposed, and those which can help to choose a classification model in the first place.</p>
-<div id="choosing-an-imputation-for-a-model" class="section level4" number="2.6.5.1">
+<div id="choosing-an-imputation-for-a-model" class="section level4">
 <h4><span class="header-section-number">2.6.5.1</span> Choosing an imputation for a model</h4>
 <p>The choice of the best imputation technique for a particular classification model is not a simple task and it should be made considering a multitude of factors. From this study it seems that the best methods for the following models are:</p>
 <ul>
@@ -1328,12 +1300,12 @@ Therefore, an analogical chart was created, using only the following 4 datasets 
 <p>This results may be affected by the specificity of the datasets and should not be treated as final recommendations.</p>
 <p>However, when reliability is needed, the only method we do not recommend is MICE pmm - it failed to impute 4 of the 14 datasets.</p>
 </div>
-<div id="choosing-a-model" class="section level4" number="2.6.5.2">
+<div id="choosing-a-model" class="section level4">
 <h4><span class="header-section-number">2.6.5.2</span> Choosing a model</h4>
 <p>It is worth noting, that from all the models, only Rpart and Naive Bayes managed to perform on those datasets, that MiCE failed to impute, despite the fact, that they still had missing values. Besides, Naive Bayes was able to perform on every single one of the 14 datasets, which makes it the champion of this study, as far as the reliability of the model is concerned.</p>
 <p>When choosing a classification model for a dataset with the percentage of missing values, Weighted KNN, Ranger and Naive Bayes may provide better results than Rpart and LDA models.</p>
 </div>
-<div id="further-reseach" class="section level4" number="2.6.5.3">
+<div id="further-reseach" class="section level4">
 <h4><span class="header-section-number">2.6.5.3</span> Further reseach</h4>
 <p>There probably is no one imputation method that exceeds all the others in the matters discussed in this study. Although, further research, based on more datasets and imputation techniques, could help to provide more clearer guidelines for when to choose which imputation method, taking more than just the classification model used into consideration and when to choose which classification model.</p>
 
