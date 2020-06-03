@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3.6 Surpassing black box model’s performance on unbalanced data with an interpretable one using advanced feature engineering | ML Case Studies</title>
+  <title>1.6 Correlation between reproducibility of research papers and their objective | ML Case Studies</title>
   <meta name="description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3.6 Surpassing black box model’s performance on unbalanced data with an interpretable one using advanced feature engineering | ML Case Studies" />
+  <meta property="og:title" content="1.6 Correlation between reproducibility of research papers and their objective | ML Case Studies" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="images/cover.png" />
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3.6 Surpassing black box model’s performance on unbalanced data with an interpretable one using advanced feature engineering | ML Case Studies" />
+  <meta name="twitter:title" content="1.6 Correlation between reproducibility of research papers and their objective | ML Case Studies" />
   
   <meta name="twitter:description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="twitter:image" content="images/cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"/>
-<link rel="next" href="which-neighbours-affected-house-prices-in-the-90s.html"/>
+<link rel="prev" href="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html"/>
+<link rel="next" href="how-active-development-affects-reproducibility.html"/>
 <script src="libs/header-attrs/header-attrs.js"></script>
 <script src="libs/jquery/jquery.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
@@ -362,351 +362,377 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering" class="section level2" number="3.6">
-<h2><span class="header-section-number">3.6</span> Surpassing black box model’s performance on unbalanced data with an interpretable one using advanced feature engineering</h2>
-<p><em>Authors: Witold Merkel, Adam Rydelek, Michał Stawikowski (Warsaw University of Technology)</em></p>
-<div id="abstract-19" class="section level3" number="3.6.1">
-<h3><span class="header-section-number">3.6.1</span> Abstract</h3>
-<p>Explainability is the most talked about topic of modern predictive models. The article touches on the topic of such models and their benefits. The main focus is to prove that even on complicated data, explainable models can achieve comparable performance to the best black-box models. Not only are there described strategies allowing better results but also greater explainability. The dataset used in experiments is the adult dataset from OpenML which is from Census database. During the experiments there are multiple processing techniques used, SAFE and different imputation methods among others. Every tool used is explained and the results gained from each part are shown and explained. Thanks to the fact that adult dataset is vastly unbalanced there is a perfect opportunity to present techniques which can be used to handle such tasks. All those methods combined allow for a presentation of a clear workflow enhancing explainable models performance with emphasis on decision tree models. The best results we achieved with decision tree model using methods mentioned above. However at first the best score was achieved by logistic regression, which from the start beat the black boxes. On the other hand it was not possible to tune it, to get it any better. For this reason, our final model is a decision tree, that despite starting as one of the worst surpasses all of the other boxes white and black. This shows that everything can be accomplished with adequate feature engineering, while keeping them explainable.</p>
+<div id="correlation-between-reproducibility-of-research-papers-and-their-objective" class="section level2" number="1.6">
+<h2><span class="header-section-number">1.6</span> Correlation between reproducibility of research papers and their objective</h2>
+<p><em>Authors: Przemysław Chojecki, Kacper Staroń, Jakub Szypuła (Warsaw University of Technology)</em></p>
+<div id="abstract-5" class="section level3" number="1.6.1">
+<h3><span class="header-section-number">1.6.1</span> Abstract</h3>
+<p>Reproducibility is a quality of research crucial for modern science. But is perfect reproducibility an ultimate requirement for every element of scientific process to be valid? Not necessarily, it is possible that important factor in this case will be purpose of given part of research. In this article we will attempt to provide a system of analyzing reproducibility of scientific papers involving mainly the purpose of theirs elements and search for dependencies between those variables.</p>
 </div>
-<div id="introduction-and-motivation-15" class="section level3" number="3.6.2">
-<h3><span class="header-section-number">3.6.2</span> Introduction and Motivation</h3>
-<p>Recently, an increase in demand of interpretable models can be seen. Machine learning models have gained in popularity in recent years among many fields of business science, industry and also more and more often in medicine. Interpretability is a quickly growing part of machine learning, and there have been many works examining all of the aspects of interpretations. <span class="citation">(Murdoch <a href="#ref-IMLDEA" role="doc-biblioref">2018</a>)</span> The problem, however, turned out to be blackbox models, which did not provide sufficient information about the motivation in making specific decisions by the models. Some of machine learning models are considered as black boxes. This means that we can get accurate predictions from them, but we give up the ability of clearly explaining or identifying the logic behind these decisions. <span class="citation">(Pandey <a href="#ref-IML" role="doc-biblioref">2019</a>)</span> Interpretability of models is a desirable feature among specialists in fields other than machine learning, it helps them make better decisions, justify their choices, and combine expert knowledge with the model’s indications.</p>
-<p>Humans and computers work differently in how they sense, understand and learn. Machines deals with large volume of data and finding hidden patterns in it and people are better at seeing the bigger picture and finding high-level patterns. <span class="citation">(accenture <a href="#ref-UME" role="doc-biblioref">2018</a>)</span> Trust and transparency are also demanded. There are many methods that can help us create an interpretable model. One of the ways to achieve interpretability is to use only a certain subset of algorithms that create interpretable models. Some of the algorithms considered to be interpretable are: linear regression, logistic regression, decision trees or K Nearest Neighbours (KNN). <span class="citation">(Molnar <a href="#ref-christophmonlar" role="doc-biblioref">2019</a><a href="#ref-christophmonlar" role="doc-biblioref">a</a>)</span> Another way may be to use blackboxes to create an interpretable model. They can help us during transformation of the original data set or, for example, in selecting variables.</p>
-<p>In this article, we will discuss the process of creating an interpretable model whose target effectiveness will be comparable to blackbox models. We will present the whole workflow, during which we will get acquainted with the dataset with which we will work, we will use advanced feature engineering methods and compare the results obtained during all phases of process. An additional problem we will face during work will be unbalanced data and creating a model that will take them into account during prediction. We will use machine learning tools and frameworks available in R and Python.</p>
+<div id="introduction-and-motivation-2" class="section level3" number="1.6.2">
+<h3><span class="header-section-number">1.6.2</span> Introduction and Motivation</h3>
+<p>It is common knowledge that reproducibility is a way for science to evolve. It is the heart of the scientific method to revisit pre-existing measurements and to try to reproduce its results. However, the term „reproducibility” itself, as well it is crucial to the scientific methodology, it can be also universal at the expense of unambiguousness and usability.<br />
+For the purpose of this paper we will have recourse to the definition introduced by ACM:<br />
+Reproducibility - The measurement can be obtained with stated precision by a different team, a different measuring system, in a different location on multiple trials. For computational experiments, this means that an independent group can obtain the same resultusing artefacts which they develop completely independently.<br />
+This particular definition ilustrates perfectly how in the course of establishing the meaning of term „Reproducibility”, the level of importance of auxiliary measurements and settings of the experiment to the overall results is omitted. It is notably significant misconception especially in the experiments from the field of computional science, when reproducing or even maintaining precise operating conditions is usually impossible.<br />
+In the following chapters we will attempt to perform an analysis of reproducibility of the papers submitted to the RJournal, regarding especially presumed objectives of enclosed auxilliary computations and artifacts (i. e. code chunks) in overarching structure of a given paper.<br />
+</p>
 </div>
-<div id="data-2" class="section level3" number="3.6.3">
-<h3><span class="header-section-number">3.6.3</span> Data</h3>
-<p>The dataset used is the adult dataset from OpenML. The original data comes from UCI and was extracted by Barry Becker from the 1994 Census database. The task is to predict whether a given adult makes more than $50,000 a year based attributes such as:</p>
+<div id="related-work-3" class="section level3" number="1.6.3">
+<h3><span class="header-section-number">1.6.3</span> Related Work</h3>
+<p>Although there are many research papers related to this article, the following three could be perceived as a “basis” for our study.<br />
+1. Daniel Mendez, Daniel Graziotin, Stefan Wagner, and Heidi Seibold provides a definition of reproducibility this article uses, and distinguishes it from replicability<span class="citation">(Fern’andez et al. <a href="#ref-Mendez2019defRepr" role="doc-biblioref">2019</a>)</span>.<br />
+2. Steven N. Goodman, Daniele Fanelli and John P. A. Ioannidis defines multiple interpretations of reproducibility. It further divides and classifies reproducibility, and provides a basis on how one can do it<span class="citation">(Goodman, Fanelli, and Ioannidis <a href="#ref-Goodman341ps12" role="doc-biblioref">2016</a><a href="#ref-Goodman341ps12" role="doc-biblioref">a</a>)</span>.<br />
+</p>
+<p>In their search the authors have not encountered other research papers that study the aspect of reproducibility this article focuses on. If said papers do not actually exist, then this article could provide insights on previously unexamined aspects of reproducibility.<br />
+</p>
+</div>
+<div id="methodology-5" class="section level3" number="1.6.4">
+<h3><span class="header-section-number">1.6.4</span> Methodology</h3>
+<div id="general-approach" class="section level4" number="1.6.4.1">
+<h4><span class="header-section-number">1.6.4.1</span> General approach</h4>
+<p>The methodology presented in the following section is a direct consequence of how we approach scientific article as an experience devised by an author for the reader. Our focus is to determine, how author alter this experience by using code chunks instead of plain text. In other words, we ask a question “Why have the authors used the <code>R</code> code?”
+Assumption that execution of enclosed code is an integral part of said experience and by extension code chunks supposed to be reproducible for reader to percept the article as intended seems to be reasonable.
+However it may not be correct in every case.
+Let us consider a situation, where generated output is essential to the thesis stated in the article. If the code is irreproducible, the reader cannot believe the authors. It devastates their credibility.
+But what if a goal of the code was to illustrate general tendency in data and output is reproducible only to some degree? Then it may still fulfill its purpose in the article and the lack of full reproducibility does not intefere with experience for a reader.
+Following this thought process inevitably leads to new questions, f.e. is it possible for executable code to serve its purpose in article while being completely unreproducible?</p>
+<p>To explore this topic we decided to focus on objectives of code in scientific papers.
+We have decided that the most accurate and reliable way of finding the purposes of code chunks in scientific articles is by examples. That is why we have analyzed over <span class="math inline">\(30\)</span> papers from <code>The R Journal</code> [<a href="https://journal.r-project.org" class="uri">https://journal.r-project.org</a>].<br />
+We have gathered the code chunks into groups and considered a three degree of purpose: the whole article, the group of chunks, and the single chunk of code. We have prepared a list of possible purposes for every level and assign them to our examples. The whole list of purposes is explained in the next chapter.<br />
+Then we have produced our measure of reproducibility, which is also detailed later.<br />
+</p>
+</div>
+<div id="objectives" class="section level4" number="1.6.4.2">
+<h4><span class="header-section-number">1.6.4.2</span> Objectives</h4>
+<p>Since this article is centred around objectives, our understanding of them is of utmost importance. That is why we divided them into three categories, further divided into classes. We described them in detail in the sections below. To limit our individual biases in assessing what the intended objective is, we referred to relevant paragraphs in the original research paper. It has to be noted, that an object (let it be an article, a group of chunks or a chunk) can have more than one objective.</p>
+<div id="main-objectives" class="section level5" number="1.6.4.2.1">
+<h5><span class="header-section-number">1.6.4.2.1</span> Main Objectives</h5>
+<p>Both code chunks by themselves and performed computations corresponding with them can provide wide variety of information. However we can identify and describe reasons why the programming language is present in general in a given paper. All code chunks serve together as a vital element supporting narration of the article and its objective usually can be identified with main objective of narration in article as a whole.</p>
+<p>We systematized main objectives and grouped them into the following general objectives:</p>
 <ul>
-<li><p>age,</p></li>
-<li><p>race,</p></li>
-<li><p>sex,</p></li>
-<li><p>education,</p></li>
-<li><p>native country,</p></li>
-<li><p>work class,</p></li>
-<li><p>weekly work hours,</p></li>
-<li><p>capital gain,</p></li>
-<li><p>capital loss,</p></li>
-<li><p>proximation for the demographic background of people,</p></li>
-<li><p>relationship,</p></li>
-<li><p>marital status,</p></li>
-<li><p>occupation.</p></li>
-</ul>
-<p>In the above mentioned dataset we can observe a problem with target class distribution which is vastly unbalanced. The ratio of positive and negative values is around one to four. The dataset has overall of more than forty eight thousand observations and fifteen features, some of which are scarce.</p>
-</div>
-<div id="related-work-9" class="section level3" number="3.6.4">
-<h3><span class="header-section-number">3.6.4</span> Related work</h3>
-<p>Many works concerning Explainable Artificial Intelligence have arose during the last few years as the topic got more and more popular. [Explainable Artificial Intelligence (XAI): Concepts, Taxonomies, Opportunities and Challenges toward Responsible AI] <span class="citation">(Alejandro Barredo Arrieta <a href="#ref-EAICTOC" role="doc-biblioref">2019</a>)</span> is a paper about XAI in general and many challenges concerning the topic. The article addresses all kinds of easily explainable models which set our focus on enhancing kNN and decision tree based models. [SAFE ML: Surrogate Assisted Feature Extraction For Model Learing] <span class="citation">(Gosiewska et al. <a href="#ref-gosiewska2019safe" role="doc-biblioref">2019</a>)</span> on the hand focuses on using Black Box models as surrogate models for improving explainable models.</p>
-</div>
-<div id="methodology-18" class="section level3" number="3.6.5">
-<h3><span class="header-section-number">3.6.5</span> Methodology</h3>
-<p>As mentioned before we are going to work on an unbalanced dataset. In order to handle this issue and achieve the best possible results during our future work we are going to use two measures: AUPRC and AUC. The former one is designed to take the lack of balance into account. The dataset will be divided into two partitions using stratification in order to handle scarce factor levels. The training part of the dataset is going to be used to compare the effects of many processes used to enhance the results. We are going to use five fold cross-validation. The final results are going to be presented using the test dataset.</p>
-<p>Our workflow can be divided into the following steps:</p>
-<div id="eda" class="section level4" number="3.6.5.1">
-<h4><span class="header-section-number">3.6.5.1</span> EDA</h4>
-<p>In this part we have gotten accustomed with the dataset. We started with feature distribution and definition analysis and studied the dependency of other variables on the target class. The column correlation was also taken into account.</p>
-<div id="distribution-of-numeric-variables" class="section level5" number="3.6.5.1.1">
-<h5><span class="header-section-number">3.6.5.1.1</span> Distribution of numeric variables</h5>
-<div class="figure">
-<img src="images/3-6-1.png" alt="" />
-<p class="caption">Data distribution</p>
-</div>
-<p>On this plot we can see the distribution of numeric variables. Some of them are normally distributed but there are also highly skewed variables such as capital-gain and capital-loss.</p>
-</div>
-<div id="correlation-plot-of-numeric-variables" class="section level5" number="3.6.5.1.2">
-<h5><span class="header-section-number">3.6.5.1.2</span> Correlation plot of numeric variables</h5>
-<div class="figure">
-<img src="images/3-6-2.png" alt="" />
-<p class="caption">Correlation</p>
-</div>
-<p>On this plot we can observe that the numeric variables have weak correlations with each other.</p>
-</div>
-<div id="density-of-observations-by-age-and-education" class="section level5" number="3.6.5.1.3">
-<h5><span class="header-section-number">3.6.5.1.3</span> Density of observations by age and education</h5>
-<div class="figure">
-<img src="images/3-6-3.png" alt="" />
-<p class="caption">Density</p>
-</div>
-<p>We can see the density of observations divided by age and education-num features. Education-num is a numeric variable that depicts the education level in an ordered way.</p>
-</div>
-<div id="level-of-education-by-target-class" class="section level5" number="3.6.5.1.4">
-<h5><span class="header-section-number">3.6.5.1.4</span> Level of education by target class</h5>
-<div class="figure">
-<img src="images/3-6-4.png" alt="" />
-<p class="caption">Education</p>
-</div>
-<p>We can observe that the highest rate of positive target class is for PHD and professors which does not surprise.</p>
-</div>
-<div id="work-class-by-target-class" class="section level5" number="3.6.5.1.5">
-<h5><span class="header-section-number">3.6.5.1.5</span> Work class by target class</h5>
-<div class="figure">
-<img src="images/3-6-5.png" alt="" />
-<p class="caption">Work class</p>
-</div>
-<p>The highest rate when divided by work class can be observed for self-employed people.</p>
-</div>
-<div id="age-by-target-class" class="section level5" number="3.6.5.1.6">
-<h5><span class="header-section-number">3.6.5.1.6</span> Age by target class</h5>
-<div class="figure">
-<img src="images/3-6-6.png" alt="" />
-<p class="caption">Age</p>
-</div>
-<p>The density of people earning more than $50000 is skewed toward the elderly.</p>
-</div>
-</div>
-<div id="initial-data-preparation-1" class="section level4" number="3.6.5.2">
-<h4><span class="header-section-number">3.6.5.2</span> Initial Data Preparation</h4>
-<p>The main focus of this part is to analyze and input the missing data. The side tasks are handling outliers and transformation of skewed variables using logistic functions. A few most popular imputation methods will be compared. We are not only going to use basic aggregation functions like mean and mode but also other machine learning models and advance imputation methods like <span class="citation">(Stef van Buuren <a href="#ref-MICE" role="doc-biblioref">2011</a>)</span>. The results are going to be compared using a model that is robust to missing data which is a basic decision tree.</p>
-<div id="missing-data-by-feature" class="section level5" number="3.6.5.2.1">
-<h5><span class="header-section-number">3.6.5.2.1</span> Missing Data by Feature</h5>
-<div class="figure">
-<img src="images/3-6-7.png" alt="" />
-<p class="caption">Missing Data</p>
-</div>
-<p>Missing data can be observed in three columns. They account up to eight percent of data.</p>
-</div>
-<div id="missing-data-pattern" class="section level5" number="3.6.5.2.2">
-<h5><span class="header-section-number">3.6.5.2.2</span> Missing Data Pattern</h5>
-<div class="figure">
-<img src="images/3-6-8.png" alt="" />
-<p class="caption">Missing Data Pattern</p>
-</div>
-<p>The bottom figure shows relation between missing variables, when a certain variables is absent in correspondence to other.</p>
-</div>
-<div id="imputation-results-1" class="section level5" number="3.6.5.2.3">
-<h5><span class="header-section-number">3.6.5.2.3</span> Imputation Results</h5>
-<table>
-<thead>
-<tr class="header">
-<th>Imputation type</th>
-<th>AUPRC</th>
-<th>AUC</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>none</td>
-<td>0.6457237</td>
-<td>0.8357408</td>
-</tr>
-<tr class="even">
-<td>Mean and mode basic imputation</td>
-<td>0.6472785</td>
-<td>0.8362379</td>
-</tr>
-<tr class="odd">
-<td>KNN imputation</td>
-<td>0.6547221</td>
-<td>0.838437</td>
-</tr>
-<tr class="even">
-<td>MICE imputation</td>
-<td>0.6452505</td>
-<td>0.834577</td>
-</tr>
-<tr class="odd">
-<td>Missing data removal</td>
-<td>0.6515376</td>
-<td>0.8355305</td>
-</tr>
-</tbody>
-</table>
-<p>We can observe that the best results were achieved using KNN imputation so from now on this will be the used method.</p>
-</div>
-<div id="outliers" class="section level5" number="3.6.5.2.4">
-<h5><span class="header-section-number">3.6.5.2.4</span> Outliers</h5>
-<div class="figure">
-<img src="images/3-6-9.png" alt="" />
-<p class="caption">Missing Data</p>
-</div>
-<p>Some outliers can be observed in fnlwgt columns which is described as proximation for the demographic background of people. The data was cropped to 300000 value.</p>
-</div>
-<div id="skewness" class="section level5" number="3.6.5.2.5">
-<h5><span class="header-section-number">3.6.5.2.5</span> Skewness</h5>
-<div class="figure">
-<img src="images/3-6-10.png" alt="" />
-<p class="caption">Skewness of fnlwgt</p>
-</div>
-<p>The previously mentioned feature was also skewed. The solution for this problem was a basic logistic transformation.</p>
-<div class="figure">
-<img src="images/3-6-11.png" alt="" />
-<p class="caption">Transformation of fnlwgt</p>
-</div>
-<p>The transformation was successful and the new feature has an appropriate distribution.</p>
-</div>
-</div>
-<div id="feature-engineering-and-tuning" class="section level4" number="3.6.5.3">
-<h4><span class="header-section-number">3.6.5.3</span> Feature Engineering and Tuning</h4>
-<p>Firstly we are going to compare a few most popular Machine Learning models on our initially prepared dataset. We picked three popular explainable models: <strong>KNN</strong>, <strong>Decision Tree</strong> and <strong>Logistic Regression</strong>.</p>
-<div id="first-comparison-of-models" class="section level5" number="3.6.5.3.1">
-<h5><span class="header-section-number">3.6.5.3.1</span> First comparison of models</h5>
-<div class="figure">
-<img src="images/3-6-12.png" alt="" />
-<p class="caption">First results</p>
-</div>
-<p>The best result was achieved by logistic regression which was surprising and shows how capable explainable models can be even on complex data, non of later modifications had any impact on the model so we decided to exclude it from further considerations. The next best explainable model ranked by AUPRC was <strong>KNN</strong> and <strong>Decision Tree</strong>. Due to the fact that logistic regression obtained a better result than black boxes at the very start, and the <strong>KNN</strong> model is not globally interpretable, we will focus on the decision tree, which is a popular and easily interpretable model. That is the reason why we are going to work mainly with this model and initially with KNN for comparison in our goal to achieve similar results to Black Box models using it, but our final model will be a decision tree. The best Black boxes were <strong>Random Forest</strong> and <strong>Adaboost</strong>, because of that in the later phase of our project we will depend on them to make our results better. During the Feature Engineering we will utilize strategies such as transforming and extracting features using the SAFE algorithm mentioned in the article above. Amongst other strategies we will use variable selection based on random forest feature importance and tuning models with Bayesian optimization - mlrMBO <span class="citation">(Bernd Bischl <a href="#ref-BO" role="doc-biblioref">2018</a>)</span> based on custom measure: AUPRC and not the typical AUC. Another interesting aspect that we are going to look into is changing the type of target to numeric and by doing so changing our task from classification to regression, surprisingly it improves our results.</p>
-</div>
-<div id="rsafe" class="section level5" number="3.6.5.3.2">
-<h5><span class="header-section-number">3.6.5.3.2</span> rSAFE</h5>
-<blockquote>
-<p>The SAFE ML algorithm uses a complex model as a surrogate. New binary
-features are created on the basis of surrogate predictions. These new
-features are used to train a simple refined model. (…) method
-that uses elastic black-boxes as surrogate models to create a simpler,
-less opaque, yet still accurate and interpretable glass-box models.
-New models are created on newly engineered features extracted/learned
-with the help of a surrogate model.</p>
-</blockquote>
-<p><span class="citation">(Gosiewska et al. <a href="#ref-gosiewska2019safe" role="doc-biblioref">2019</a>)</span></p>
-<p>To extract new variables we will use rSAFE, which will depend on two different Black Box models: Random Forest and Adaboost. Those models were tuned to increase the final result. Based on the initial variables and the new ones created by the rSafe algorithm, we will choose the combination that will be the best for this problem. We will achieve this by analyzing various values ​​of the “regularization penalty” parameter in the data extraction algorithm in the rSafe package and choosing the one that gives us the best result.</p>
-<table>
-<thead>
-<tr class="header">
-<th>Model</th>
-<th>From AUPRC</th>
-<th>To AUPRC</th>
-<th>From AUC</th>
-<th>To AUC</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>decision tree</td>
-<td>0.655</td>
-<td>0.674</td>
-<td>0.842</td>
-<td>0.851</td>
-</tr>
-<tr class="even">
-<td>knn</td>
-<td>0.698</td>
-<td>0.706</td>
-<td>0.859</td>
-<td>0.868</td>
-</tr>
-</tbody>
-</table>
-<p>From the above table it can be observed that this method gave us a significant improvement in terms of AUC and AUPRC. New variables that were extracted and chosen with penalty regularization are:</p>
-<ul>
-<li>“age_new” - new levels: (-Inf, 32] and (32, Inf),</li>
-<li>“fnlwgt_new” - new levels: (-Inf, 11.70863] and (11.70863, Inf),</li>
-<li>"hours.per.week_new - new levels: (-Inf, 40] and (40, Inf),</li>
-<li>“race_new” - new levels: White_Asian-Pac-Islander and Amer-Indian-Eskimo_Other_Black.</li>
+<li>package overview - presenting general structure of specific package, providing example of aplications implemented functions and discussing its performance</li>
+<li>object construction - presenting process of constructing and developing virtual object</li>
+<li>introduction to subject - using performing code as a complement to educational resource concerning given topic</li>
+<li>method implementation - presenting in-depth process of developing solution and explaining it</li>
+<li>addressing an issue - presenting solution to specific scientific/computational problem</li>
+<li>error identification - recognising and presenting error in existing package, possibly submit alternative solution covering mentioned error</li>
 </ul>
 </div>
-<div id="change-to-regression" class="section level5" number="3.6.5.3.3">
-<h5><span class="header-section-number">3.6.5.3.3</span> Change to regression</h5>
-<p>The next approach we chose based on our previous experience with unbalanced datasets is changing our task from classification to regression and by doing so we improved our prediction. Non of later modifications had any impact on the KNN model so we decided to exclude it from further considerations.</p>
+<div id="intermediate-objectives" class="section level5" number="1.6.4.2.2">
+<h5><span class="header-section-number">1.6.4.2.2</span> Intermediate Objectives</h5>
+<p>Since code chunks in research papers seldom appear on their own, but rather are part of a larger group of chunks serving a certain purpose. For instance, let there be three chunks, named A, B, and C. Let A load data from an external source, B modifies the data and extract a subset of it, and let C generate a plot, based on the data obtained from the two previous chunks. While each chunk has its own distinct objective, together they have at least common one - in this example this is generating a plot. Plot generated by A, B and C can be used to compare between performance of various functions. These chunk group’s objectives we define as intermediate objectives.</p>
+<p>We systematized intermediate objectives and grouped them into the following general objectives:</p>
+<ul>
+<li>package usage - examples on how does an R package operate, how one can use functions provided by the package, in what manner output is generated etc.</li>
+<li>practical use - underscoring of the practical usage of code used in code chunks in that group.</li>
+<li>method comparison - comparison between functions and/or methods. For example, a microbenchmark between base R functions and functions from a presented package.</li>
+<li>generating output - generating an output, for example plots, .csv files, images etc.</li>
+<li>presenting specification - presentation on what package specification looks like.</li>
+<li>data preparation - preparation of data that may be used later in the paper. This includes both loading the data and modifying it.</li>
+<li>occurrence demonstration - demonstration of an occurrence described earlier in the article.</li>
+<li>introduction to analysis - introduction to analysing a certain topic and data related to it.</li>
+<li>possible error - description of a possible error one can encounter and how one can solve it.</li>
+</ul>
+</div>
+<div id="chunk-objectives" class="section level5" number="1.6.4.2.3">
+<h5><span class="header-section-number">1.6.4.2.3</span> Chunk Objectives</h5>
+<p>Each chunk has a role - it serves one or more purposes, which we define as chunk objectives.</p>
+<p>We systematized chunk objectives and grouped them into the following general objectives:</p>
+<ul>
+<li>aesthethic example - an example showcasing how output generated by the code chunk looks like.</li>
+<li>functional example - an example of how functions showcased in the chunk work.</li>
+<li>instruction - an instruction on how one achieves desired effect using R code.</li>
+<li>instruction (package) - same as above, but using functions from the package introduced in the article containing the chunk.</li>
+<li>data preparation - preparation of data for the following chunks.</li>
+<li>data exploration - merging, subsetting, summarisation of data and other types of data manipulation used in order to explore data.</li>
+<li>foreign error - turning attention to an error in work done by other author(s).</li>
+<li>solving a problem - description of how one solves a given problem using R code.</li>
+<li>data modification - modifying data in order to achieve desired effect.</li>
+<li>presentation of results - presenting result of computation within the article. This can be done by specific summarising functions (e.g. summarise) or simply printing base R vectors.</li>
+<li>plot - plotting graphs in the article.</li>
+<li>generating files - generation of files, this includes graphical, text and other files.</li>
+<li>results processing - processing of results in order to improve their aesthethic value or to make them more readable.</li>
+<li>erroneous action - presenting code that does not run properly as an example of an action should be avoided.</li>
+<li>uncallable code - code that, in principle, is impossible to run. This includes pseudocode.</li>
+<li>comparison to foreign work - comparation of authors’ work (functions, methods etc.) with work of others, that achieves the same effect. This includes benchmark performance comparisons.</li>
+<li>empirical proof - validation of what is mathematically described in earlier sections.</li>
+</ul>
+</div>
+</div>
+<div id="reproducibility-1" class="section level4" number="1.6.4.3">
+<h4><span class="header-section-number">1.6.4.3</span> Reproducibility</h4>
+<p>The sole purpose of this paper is to explore interactions between purposes of code chunks usage and reproducibility aberrations. That requires a system of classification of reproducibility.
+We provide simple categorization of forms of reproducibility into the 6 types. This classification system shall serve as a tool for initial phase of our analysis, thus it is not directly involving purpose of discussed code at this stage.</p>
+<ul>
+<li>1 - perfect reproducibility - code perform flawlessly and after initial configuration precise output is recreated</li>
+<li>2 - margin of error - after initial configuration code provides output matching expectations within acceptable margin of error (f.e. difference in rounded decimals, default parameters of generated graphics)</li>
+<li>3 - editorial correction - code requires minor corrections to be executable and viable due to editorial error or changes in naming conventions</li>
+<li>4 - environment setup - code to execute properly requires major and time-consuming setup and environment changes or may be not able to provide expected results at all</li>
+<li>5 - unreproducible - code undoubtedly cannot be reproduced (f.e. due to unavailable data, unavailable package, unsupported fatal error)</li>
+<li>-1 - missing point of reference - article does not provide (or vaguely provides) expected performence and determining reproducilibity is impossible</li>
+</ul>
+</div>
+<div id="tables-description" class="section level4" number="1.6.4.4">
+<h4><span class="header-section-number">1.6.4.4</span> Tables description</h4>
+<p>For analysis purposes we have gathered data from randomly selected scientific papers in <code>The R Journal</code> and arranged them into 3 distinct tables stored in 3 .csv files.</p>
+<div id="table-of-articles" class="section level5" number="1.6.4.4.1">
+<h5><span class="header-section-number">1.6.4.4.1</span> Table of articles</h5>
+<p>Every row represents one article contains information about sum of lengths of the code chunks in given article and its general purpose, one-hot encoded (6 categories).</p>
 <table>
 <thead>
 <tr class="header">
-<th>Model</th>
-<th>From AUPRC</th>
-<th>To AUPRC</th>
-<th>From AUC</th>
-<th>To AUC</th>
+<th>length</th>
+<th>package overview</th>
+<th>object construction</th>
+<th>…</th>
+<th>error identification</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>decision tree</td>
-<td>0.674</td>
-<td>0.716</td>
-<td>0.851</td>
-<td>0.865</td>
+<td>15</td>
+<td>TRUE</td>
+<td>FALSE</td>
+<td>…</td>
+<td>FALSE</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>TRUE</td>
+<td>TRUE</td>
+<td>…</td>
+<td>FALSE</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>TRUE</td>
+<td>FALSE</td>
+<td>…</td>
+<td>FALSE</td>
 </tr>
 </tbody>
 </table>
-<p>In case of KNN there was no visible improvement.</p>
 </div>
-<div id="variable-selection" class="section level5" number="3.6.5.3.4">
-<h5><span class="header-section-number">3.6.5.3.4</span> Variable selection</h5>
-<p>Additionally we carried out a variable selection on those that are currently used. It was based on feature importance from a random forest model, we use ten most important variables from fifteen that were being used before.</p>
+<div id="table-of-groups" class="section level5" number="1.6.4.4.2">
+<h5><span class="header-section-number">1.6.4.4.2</span> Table of groups</h5>
+<p>Every row represents one group of chunks and cointains information about sum of lengths of the code chunks in given group and its general purpose, one-hot encoded (9 categories).</p>
 <table>
 <thead>
 <tr class="header">
-<th>Model</th>
-<th>From AUPRC</th>
-<th>To AUPRC</th>
-<th>From AUC</th>
-<th>To AUC</th>
+<th>length</th>
+<th>package usage</th>
+<th>practical use</th>
+<th>…</th>
+<th>possible error</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>decision tree</td>
-<td>0.716</td>
-<td>0.720</td>
-<td>0.865</td>
-<td>0.871</td>
+<td>15</td>
+<td>TRUE</td>
+<td>FALSE</td>
+<td>…</td>
+<td>FALSE</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>TRUE</td>
+<td>TRUE</td>
+<td>…</td>
+<td>FALSE</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>TRUE</td>
+<td>FALSE</td>
+<td>…</td>
+<td>FALSE</td>
 </tr>
 </tbody>
 </table>
-<p>The improvement is slight, but because of this operation we are using a less complicated model, so we decided to use it.</p>
 </div>
-<div id="tuning" class="section level5" number="3.6.5.3.5">
-<h5><span class="header-section-number">3.6.5.3.5</span> Tuning</h5>
-<p>Last phase was tuning our decision tree model. We based it on mlrMBO, but our method is adjusted to the task. The optimized measure is AUPRC, this proces is slightly different from optimizing AUC. Before using MBO we select the optimal range of parameters like: “minsplit” - the minimum number of observations that must exist in a node in order for a split to be attempted. and “minbucket” - the minimum number of observations in any terminal node.. After selecting ten optimal values of the first one we select ten optimal for the second. For each of those hundred pairs we use MBO to find the optimal “cp” - complexity parameter. Any split that does not decrease the overall lack of fit by a factor of cp is not attempted. The result we achieved:</p>
+<div id="table-of-chunks" class="section level5" number="1.6.4.4.3">
+<h5><span class="header-section-number">1.6.4.4.3</span> Table of chunks</h5>
+<p>Every row represents one chunk and contains information its length, reproducibility and its general purpose, one-hot encoded (17 categories).</p>
 <table>
 <thead>
 <tr class="header">
-<th>Model</th>
-<th>From AUPRC</th>
-<th>To AUPRC</th>
-<th>From AUC</th>
-<th>To AUC</th>
+<th>length</th>
+<th>reproducibility scale</th>
+<th>aesthethic example</th>
+<th>…</th>
+<th>empirical proof</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>decision tree</td>
-<td>0.720</td>
-<td>0.794</td>
-<td>0.871</td>
-<td>0.912</td>
+<td>5</td>
+<td>2</td>
+<td>FALSE</td>
+<td>…</td>
+<td>FALSE</td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td>2</td>
+<td>FALSE</td>
+<td>…</td>
+<td>FALSE</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>4</td>
+<td>FALSE</td>
+<td>…</td>
+<td>FALSE</td>
 </tr>
 </tbody>
 </table>
-<p>Results achieved in this phase are really high, we managed to top those from black boxes and the logistic regression one.</p>
+</div>
+<div id="length-assessment" class="section level5" number="1.6.4.4.4">
+<h5><span class="header-section-number">1.6.4.4.4</span> Length assessment</h5>
+<p>To objectively determine a length of code we have decided to count it according to the following rules:<br />
+* ignore all empty and commented lines<br />
+* ignore assignments, unless it contains the execution of a function<br />
+* ignore executions of functions <code>library</code> and <code>data</code><br />
+* ignore lines containing only parenthesis<br />
+</p>
 </div>
 </div>
-<div id="results-and-conclusion" class="section level4" number="3.6.5.4">
-<h4><span class="header-section-number">3.6.5.4</span> Results and conclusion</h4>
+</div>
+<div id="results-5" class="section level3" number="1.6.5">
+<h3><span class="header-section-number">1.6.5</span> Results</h3>
+<p>In this section, we perform a basic analysis of the data we have gathered during our study.</p>
+<div id="preliminary-analysis" class="section level4" number="1.6.5.1">
+<h4><span class="header-section-number">1.6.5.1</span> Preliminary analysis</h4>
+<p>The data can be loaded by:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb2-1"></a>art &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./1-6-files/articles.csv&quot;</span>)</span>
+<span id="cb2-2"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb2-2"></a>chnk &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./1-6-files/chunks.csv&quot;</span>)</span>
+<span id="cb2-3"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb2-3"></a>grp &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./1-6-files/groups.csv&quot;</span>)</span>
+<span id="cb2-4"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb2-4"></a></span>
+<span id="cb2-5"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb2-5"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb2-6"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb2-6"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb2-7"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb2-7"></a><span class="kw">library</span>(reshape2)</span></code></pre></div>
+<p>Frequency of every reproducibility score can be obtained by:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb3-1"></a><span class="co"># frequency of every reproducibility score</span></span>
+<span id="cb3-2"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb3-2"></a>chnk <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(reproducibility.scale) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">table</span>()</span></code></pre></div>
+<pre><code>## .
+##  -1   0   1   2   3   4   5 
+##  33   1 194  45  11  13  41</code></pre>
+<p>As we can see, most chunks were fully reproducible, with total areproducibility being the second most common occurence.
+What further can be analysed is how reproducible is each objective, how often it occurs and the total length of each objective (i.e. sum of length in lines of all chunks containing specific objective). This analysis can be achieved by the following code:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-1"></a><span class="co"># mean reproduciblity scale score for reach objective</span></span>
+<span id="cb5-2"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-2"></a>mean_repr &lt;-<span class="st"> </span>chnk[<span class="op">-</span><span class="dv">1</span>,] <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb5-3"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-3"></a><span class="st">  </span><span class="kw">sapply</span>(<span class="cf">function</span>(x){x<span class="op">*</span>chnk[<span class="op">-</span><span class="dv">1</span>,]<span class="op">$</span>reproducibility.scale}) <span class="op">%&gt;%</span><span class="st"> </span>data.frame <span class="op">%&gt;%</span></span>
+<span id="cb5-4"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-4"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>reproducibility.scale, <span class="op">-</span>length)</span>
+<span id="cb5-5"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-5"></a>mean_repr[mean_repr<span class="op">==</span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></span>
+<span id="cb5-6"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-6"></a>mean_repr[mean_repr<span class="op">==-</span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></span>
+<span id="cb5-7"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-7"></a>mean_repr &lt;-<span class="st"> </span><span class="kw">summarize_if</span>(mean_repr, is.numeric, mean, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span>melt</span>
+<span id="cb5-8"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-8"></a><span class="kw">colnames</span>(mean_repr)[<span class="dv">2</span>] &lt;-<span class="st"> &quot;mean_repr_score&quot;</span></span>
+<span id="cb5-9"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-9"></a></span>
+<span id="cb5-10"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-10"></a><span class="co"># length for every objective</span></span>
+<span id="cb5-11"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-11"></a>licznik &lt;-<span class="st"> </span>chnk <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>length, <span class="op">-</span>reproducibility.scale) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise_all</span>(sum) <span class="op">%&gt;%</span><span class="st"> </span>melt</span>
+<span id="cb5-12"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-12"></a>tot_length &lt;-<span class="st"> </span>chnk <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>reproducibility.scale) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">melt</span>(<span class="dt">id.vars =</span> <span class="st">&quot;length&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb5-13"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-13"></a><span class="st">  </span><span class="kw">filter</span>(value) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>value) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(variable) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">total_length =</span> <span class="kw">sum</span>(length))</span>
+<span id="cb5-14"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-14"></a>mean_repr &lt;-<span class="st"> </span><span class="kw">inner_join</span>(<span class="kw">inner_join</span>(tot_length, licznik), mean_repr, <span class="dt">by =</span> <span class="st">&quot;variable&quot;</span>)</span>
+<span id="cb5-15"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-15"></a><span class="kw">arrange</span>(mean_repr, mean_repr_score)</span></code></pre></div>
+<pre><code>## [90m# A tibble: 17 x 4[39m
+##    variable          total_length value mean_repr_score
+##    [3m[90m&lt;fct&gt;[39m[23m                    [3m[90m&lt;int&gt;[39m[23m [3m[90m&lt;int&gt;[39m[23m           [3m[90m&lt;dbl&gt;[39m[23m
+## [90m 1[39m results.processi…            5     4            1   
+## [90m 2[39m presentation.of.…          174    74            1.21
+## [90m 3[39m foreign.error               34     6            1.33
+## [90m 4[39m data.exploration            43    13            1.42
+## [90m 5[39m data.preparation           365    59            1.43
+## [90m 6[39m solving.a.problem          247    40            1.44
+## [90m 7[39m erroneous.action             7     3            1.5 
+## [90m 8[39m empirical.proof             78    19            1.68
+## [90m 9[39m instruction..pac…          513   124            1.70
+## [90m10[39m instruction                264    35            1.76
+## [90m11[39m data.modification           98    23            1.83
+## [90m12[39m comparison.to.fo…           42     7            1.86
+## [90m13[39m functional.examp…          456   129            2.26
+## [90m14[39m plot                       247    60            2.36
+## [90m15[39m aesthethic.examp…          182    41            2.46
+## [90m16[39m generating.files            64    19            2.83
+## [90m17[39m uncallable.code             74    21          [31mNaN[39m</code></pre>
+<p>As it is shown, objectives vary in their mean reproducibility score with examples scoring worse than instructions and results presentation better than plots.</p>
+<p>On the following plot higher the value of variable - worst level of reproducibility. Exact values should not be interpreted as continuous variable, legitimite information can be obtained by analyzing order of categories sorted with regard to their avarage reproducibility score.</p>
+<p><img src="1-6-files/reprodukowalnosc_celu_chunki.png" alt="text" /><br />
+</p>
+<p>On this plot we can observe difference in values of <code>plot</code> and <code>presentation of results</code>. Clearly <code>plot</code> is more likely to be irreproducible than a showcase of results in any other way
+Moreover, both <code>aesthetic example</code> and <code>functional example</code> values are almost the highest, what may indicate that in general authors put relatively low effort into them, since their perfect reproducibility may not be essential to the article as a whole.
+During our analysis <code>result processing</code> chunks were encountered only <span class="math inline">\(4\)</span> times and all of them were reproducible, which in our opinion is not a basis for stating any meanigful conclusions.</p>
+</div>
+<div id="frequency-of-objectives" class="section level4" number="1.6.5.2">
+<h4><span class="header-section-number">1.6.5.2</span> Frequency of objectives</h4>
+<p>Next, we will visualize the frequency of occurences of every objective, for every category.</p>
 <div class="figure">
-<img src="images/3-6-13.png" alt="" />
-<p class="caption">Differences between each stage</p>
+<img src="1-6-files/chunk_freq.png" alt="" />
+<p class="caption">text</p>
 </div>
-<p>From the above chart, we can see that thanks to our actions the performance of a fully interpretable model surpassed all basic black boxes and logistic regression, which from the start had really high results. It proves that it is possible to achieve comparable or even better results with interpretable models than black boxes even on unbalanced datasets, such as “adult”. It requires some work, but there are a lot of methods that make it possible to improve our performance. Some of them may be based on very well-functioning black box models. Probably in comparison with tuned black box model, we would achieve lesser results, but interpretable models have an advantage, people can understand why some choices were made and can be safely use when transparency and ease of understanding are needed. Using models such as logistic regression or decision trees make it possible. In this paper we showed that models built using these algorithms after some modifications are able to get similar results to such powerful models as random forest or adaboost, and even artificial deep neural networks.</p>
+<div class="figure">
+<img src="1-6-files/group_freq.png" alt="" />
+<p class="caption">text</p>
+</div>
+<div class="figure">
+<img src="1-6-files/art_freq.png" alt="" />
+<p class="caption">text</p>
+</div>
+<p>After the objectives are sorted with regard to their frequency, one can see that they appear to be similar to 1/x function plot. It indicates that certain objectives are far more frequent than others, while the less popular ones remain at similar levels of frequency.</p>
+</div>
+<div id="average-length" class="section level4" number="1.6.5.3">
+<h4><span class="header-section-number">1.6.5.3</span> Average length</h4>
+<p>Average length of a code chunk with a specific objective:</p>
+<p><img src="1-6-files/srednia_dlugosc_celu_chunki.png" alt="text" /><br />
+</p>
+<p><code>erroneous action</code> generally requiring a small amount of code suggests that standard aproach to this objective is simply execution of one line of code, just to trigger the error.<br />
+</p>
+<p>Average length of a group of chunks with a specific objective:</p>
+<p><img src="1-6-files/srednia_dlugosc_celu_grupy.png" alt="text" /><br />
+</p>
+<p>The code for <code>method comparison</code> has to show a solution offered by a described package as well as how to approach such a problem with other sources. What is more, the author has to show the differences between them, which as we can see usually requires additional lines of code.<br />
+</p>
+<p>Average length of all of the code chunks in an article with a specific objective:</p>
+<p><img src="1-6-files/srednia_dlugosc_celu_artykoly.png" alt="text" /><br />
+</p>
+<p>Clearly <code>error identifaction</code> articles include the gratest amount of code, probably for the same reasons as <code>porownanie.metod</code> in the group objectives. It can be space and timeconsuming to showcase the solution to a problem with a package, without a package and point out precisely the difference between them.<br />
+</p>
+</div>
+<div id="objectives-correlations-matrices" class="section level4" number="1.6.5.4">
+<h4><span class="header-section-number">1.6.5.4</span> Objectives correlations matrices</h4>
+<p>Two important conclusions can be drawn from the correlation matrix. First - there is no strong correlation between individual objectives, which may imply that the objectives proposed by us do not overlap heavily. Second - correlation between the reproducibility score and individual objectives is also not that high. Because of that we cannot be certain whether there is a clear link between reproducibility score and objective of any given chunk. However, after closer inspection of the following matrices, we can formulate few additional general observations.</p>
+<p><img src="1-6-files/korelacje_celu_chunki.png" alt="text" /><br />
+On featured chunks objectives correalation matrix we can observe how:
+* There is a positive correlation between <code>comparison to foreign work</code> and <code>empirical proof</code>. However it is rather an effect of a small amount of data. There were only <span class="math inline">\(7\)</span> instances of <code>comparison to foreign work</code> and <span class="math inline">\(4\)</span> of them are also <code>empirical proof</code>.
+* We found no correlation between <code>erroneous action</code> and <code>comparison to foreign work</code>. When an author shows a problem in someone’s code or package, he does not compare it to his own. He would rather show it in the next chunk.</p>
+<p><img src="1-6-files/korelacje_celu_grupy.png" alt="text" /><br />
+On featured intermediate objectives correalation matrix we can observe how:
+* It is less likely to find a group that is both dzialanie.pakietu and przygotowanie.danych. It is because in the preparation of data most of the code is in plain <code>R</code> or other popular libraries and not in the one shown in the paper.<br />
+* There is a big negative correlation between dzialanie.pakietu and prezentowanie.specyfikacji. When there is a code that is prezentowanie.specyfikacji, it is mostly a theoretical approach, while the dzialanie.pakietu underscore the practical approach.<br />
+</p>
+<p><img src="1-6-files/korelacje_celu_artykoly.png" alt="text" /><br />
+On featured main objectives correalation matrix we can observe how:
+* All of the researched article present a package, therefore the correlation is not defined for it.<br />
+* Articles serving as an introduction to the topic are also implementing additional features.<br />
+</p>
+</div>
+</div>
+<div id="summary-conclusions-and-encouragement" class="section level3" number="1.6.6">
+<h3><span class="header-section-number">1.6.6</span> Summary, conclusions and encouragement</h3>
+<p>For purpose of research described in this article we developed an intuitive system of objectives classifaction of singular code chunks, groups of chunks and whole scientific papers concerning development of programming languageges (in this case - <code>R</code>). Initial analysis of the data acquired by using mentioned system may imply that lists of objectives proposed by us do not overlap heavily and therefore they indeed can be used as valid scientific method.
+To sum up the effects of applying this method for a selection of the scientific articles from <code>The R Journal</code>, correlation between the reproducibility score and individual objectives is not significantly high. It may indicate that dataset considered in this paper is simply not extensive enough. We sincerely encourage readers to perform their own analysis on wide variety of scientific articles not covered in this paper, preprocessed using developed system.</p>
 
-</div>
 </div>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
-<div id="ref-UME">
-<p>accenture. 2018. “UNDERSTANDING Machines: EXPLAINABLE Ai,” 19. <a href="https://www.accenture.com/_acnmedia/pdf-85/accenture-understanding-machines-explainable-ai.pdf?fbclid=IwAR0ZtyDNzHR8dMUJHPwa0CkuQXgOOE68UQV4JCcBxXudO3dlm14LjqX-B8g">https://www.accenture.com/_acnmedia/pdf-85/accenture-understanding-machines-explainable-ai.pdf?fbclid=IwAR0ZtyDNzHR8dMUJHPwa0CkuQXgOOE68UQV4JCcBxXudO3dlm14LjqX-B8g</a>.</p>
+<div id="ref-Mendez2019defRepr">
+<p>Fern’andez, Daniel M’endez, Daniel Graziotin, Stefan Wagner, and Heidi Seibold. 2019. “Open Science in Software Engineering.” <em>CoRR</em> abs/1904.06499. <a href="http://arxiv.org/abs/1904.06499">http://arxiv.org/abs/1904.06499</a>.</p>
 </div>
-<div id="ref-EAICTOC">
-<p>Alejandro Barredo Arrieta, Javier Del Ser, Natalia Díaz-Rodríguez. 2019. “Explainable Artificial Intelligence (Xai): Concepts, Taxonomies, Opportunities and Challenges Toward Responsible Ai,” 67. <a href="https://arxiv.org/abs/1910.10045">https://arxiv.org/abs/1910.10045</a>.</p>
-</div>
-<div id="ref-BO">
-<p>Bernd Bischl, Jakob Bossek, Jakob Richter. 2018. “MlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions,” 23. <a href="https://arxiv.org/abs/1703.03373">https://arxiv.org/abs/1703.03373</a>.</p>
-</div>
-<div id="ref-gosiewska2019safe">
-<p>Gosiewska, Alicja, Aleksandra Gacek, Piotr Lubon, and Przemyslaw Biecek. 2019. “SAFE Ml: Surrogate Assisted Feature Extraction for Model Learning.” <a href="http://arxiv.org/abs/1902.11035">http://arxiv.org/abs/1902.11035</a>.</p>
-</div>
-<div id="ref-christophmonlar">
-<p>Molnar, Christoph. 2019a. <em>Interpretable Machine Learning: A Guide for Making Black Box Models Explainable</em>. <a href="https://christophm.github.io/interpretable-ml-book/simple.html">https://christophm.github.io/interpretable-ml-book/simple.html</a>.</p>
-</div>
-<div id="ref-IMLDEA">
-<p>Murdoch, Kumbier, Singh. 2018. “Interpretable Machine Learning: Definitions, Methods, and Applications,” 2. <a href="https://arxiv.org/pdf/1901.04592.pdf?fbclid=IwAR2frcHrhLc4iaH5-TmKKq263NVvAKHtG4uQoiVNDeLAG3QFzdje-yzZjiQ">https://arxiv.org/pdf/1901.04592.pdf?fbclid=IwAR2frcHrhLc4iaH5-TmKKq263NVvAKHtG4uQoiVNDeLAG3QFzdje-yzZjiQ</a>.</p>
-</div>
-<div id="ref-IML">
-<p>Pandey. 2019. “Interpretable Machine Learning: Extracting Human Understandable Insights from Any Machine Learning Model,” April. <a href="https://towardsdatascience.com/interpretable-machine-learning-1dec0f2f3e6b">https://towardsdatascience.com/interpretable-machine-learning-1dec0f2f3e6b</a>.</p>
-</div>
-<div id="ref-MICE">
-<p>Stef van Buuren, Karin Groothuis-Oudshoorn. 2011. “Mice: Multivariate Imputation by Chained Equations in R.” <a href="https://www.jstatsoft.org/article/view/v045i03">https://www.jstatsoft.org/article/view/v045i03</a>.</p>
+<div id="ref-Goodman341ps12">
+<p>Goodman, Steven N., Daniele Fanelli, and John P. A. Ioannidis. 2016a. “What Does Research Reproducibility Mean?” <em>Science Translational Medicine</em> 8 (341). <a href="https://doi.org/10.1126/scitranslmed.aaf5027">https://doi.org/10.1126/scitranslmed.aaf5027</a>.</p>
 </div>
 </div>
             </section>
@@ -714,8 +740,8 @@ with the help of a surrogate model.</p>
           </div>
         </div>
       </div>
-<a href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="which-neighbours-affected-house-prices-in-the-90s.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="how-active-development-affects-reproducibility.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook/js/app.min.js"></script>
@@ -746,7 +772,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/3-6-surpassing-black-box.Rmd",
+"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/1-6-correlation-reproducivility-purpose.Rmd",
 "text": "Edit"
 },
 "history": {
