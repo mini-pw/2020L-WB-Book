@@ -40,7 +40,7 @@ The four methods of feature transformation compared in the article include:
 
 #### Feature importance metric
 
-Feauture importance is a metric showing which predictors (columns) are the most important to the model's final prediction. The metric becomes more and more significant, because machine learning algorithms play an important role in almost any decision making process from banking to medical areas. A more precise description of Feature Importance may be found in [ref]. 
+Feauture importance is a metric showing which predictors (columns) are the most important to the model's final prediction. The metric becomes more and more significant, because machine learning algorithms play an important role in almost any decision making process from banking to medical areas. A more precise description of Feature Importance may be found in [@DALEX]. 
 
 The most natural feature importance metric for linear models such as linear regression and GLM are the absolute values of coefficients. Let $x_1, \dots, x_n$ denote the features (column vectors) and $\hat{y}$ denote the prediction. In linear models we have:
 $$c + \sum_{i=1}^n a_i \cdot x_i = \hat{y}$$
