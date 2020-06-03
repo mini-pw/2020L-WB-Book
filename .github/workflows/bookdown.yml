@@ -43,6 +43,7 @@ jobs:
           R -e 'install.packages("kableExtra")'    
           R -e 'install.packages("corrplot")'
           R -e 'install.packages("tidyr")'   
+          R -e 'install.packages("reshape2")'   
           R -e 'renv::restore()'
       
       - name: Build site
