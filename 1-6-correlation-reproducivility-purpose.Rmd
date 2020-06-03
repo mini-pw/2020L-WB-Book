@@ -155,9 +155,9 @@ In this section, we perform a basic analysis of the data we have gathered during
 The data can be loaded by:
 
 ```{r, eval=TRUE, cache=TRUE, include=TRUE}
-art <- read.csv("articles.csv")
-chnk <- read.csv("chunks.csv")
-grp <- read.csv("groups.csv")
+art <- read.csv("./1-6-files/articles.csv")
+chnk <- read.csv("./1-6-files/chunks.csv")
+grp <- read.csv("./1-6-files/groups.csv")
 
 library(dplyr)
 library(ggplot2)
@@ -185,8 +185,8 @@ mean_repr <- summarize_if(mean_repr, is.numeric, mean, na.rm = TRUE) %>% melt
 colnames(mean_repr)[2] <- "mean_repr_score"
 
 # length for every objective
-licznik <- chnk %>% select(-Author, -length, -reproducibility.scale) %>% summarise_all(sum) %>% melt
-tot_length <- chnk %>% select(-Author, -reproducibility.scale) %>% melt(id.vars = "length") %>%
+licznik <- chnk %>% select(-length, -reproducibility.scale) %>% summarise_all(sum) %>% melt
+tot_length <- chnk %>% select(-reproducibility.scale) %>% melt(id.vars = "length") %>%
   filter(value) %>% select(-value) %>% group_by(variable) %>% summarise(total_length = sum(length))
 mean_repr <- inner_join(inner_join(tot_length, licznik), mean_repr, by = "variable")
 arrange(mean_repr, mean_repr_score)
