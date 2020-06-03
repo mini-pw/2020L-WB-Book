@@ -367,6 +367,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>Authors: Bartłomiej Eljasiak, Konrad Komisarczyk, Mariusz Słapek (Warsaw University of Technology)</em></p>
 <div id="abstract-7" class="section level3" number="1.8.1">
 <h3><span class="header-section-number">1.8.1</span> Abstract</h3>
+<p>The aim of this article is to present differences in reproducing both code and results of papers from three popular journals: Journal of Machine Learning Research, Journal of Open Source Software, Journal of Statistical Software. Additionally, every journal has been split into two categories for Python and R articles respectively. Following we propose two general methods of scoring the reproducibility and based on them we mark several dozen articles. We have observed distinct traits of papers from each journal. R is shown to be the most reproducible language, moreover, the Journal of Open Source Software - a journal with least scientific credit received the highest marks in our comparison.</p>
 </div>
 <div id="introduction-and-motivation-4" class="section level3" number="1.8.2">
 <h3><span class="header-section-number">1.8.2</span> Introduction and Motivation</h3>
@@ -382,14 +383,14 @@ There are no publications related to the reproducibility topic which compare dif
 <h3><span class="header-section-number">1.8.3</span> Methodology</h3>
 <p>We decided to focus on three journals:</p>
 <ul>
-<li>The Journal of Statistical Software<br />
+<li>The Journal of Statistical Software (JSTAT)<br />
 </li>
-<li>The Journal of Machine Learning Research<br />
+<li>The Journal of Machine Learning Research (JMLR)<br />
 </li>
-<li>The Journal of Open Source Software</li>
+<li>The Journal of Open Source Software (JOSS)</li>
 </ul>
 <p>The Journal of Statistical Software and The Journal of Machine Learning Research are well known among scientists in the field of data science. The Journal of Open Source Software is relatively new, was established in 2016.</p>
-<p>We choose articles randomly from the time frame 2015-present. From every journal we choose 10 articles, of which 5 are articles introducing an R package and 5 are introducing a Python library. We choose only articles having tests on their github repositories. For our metrics we test the following:</p>
+<p>We choose articles randomly from the time frame 2010-present. From every journal we choose around 10 articles, of which around 5 are articles introducing an R package and around 5 are introducing a Python library. We choose only articles having tests on their github repositories. For our metrics we test the following:</p>
 <ul>
 <li>Tests on github provided by authors - for R packages <code>test_that</code> tests, for Python libraries <code>pytest</code> and <code>unittest</code> tests.<br />
 </li>
@@ -424,194 +425,229 @@ There are no publications related to the reproducibility topic which compare dif
 <p>Results of reproducing all chosen articles are presented in the following table:</p>
 <table>
 <colgroup>
-<col width="63%" />
 <col width="5%" />
 <col width="6%" />
-<col width="9%" />
-<col width="14%" />
+<col width="65%" />
+<col width="8%" />
+<col width="13%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th>Title</th>
 <th>Journal</th>
 <th>Language</th>
+<th>Title</th>
 <th>StudentsMark</th>
 <th>ReproducibilityValue</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Autorank: A Python package for automated ranking of classifiers</td>
 <td>JOSS</td>
 <td>Python</td>
+<td>Autorank: A Python package for automated ranking of classifiers</td>
 <td>4</td>
 <td>0.95</td>
 </tr>
 <tr class="even">
-<td>Beyond Tandem Analysis: Joint Dimension Reduction and Clustering in R</td>
 <td>JSTAT</td>
 <td>R</td>
+<td>Beyond Tandem Analysis: Joint Dimension Reduction and Clustering in R</td>
 <td>5</td>
 <td>1</td>
 </tr>
 <tr class="odd">
-<td>CoClust: A Python Package for Co-Clustering</td>
 <td>JSTAT</td>
 <td>Python</td>
+<td>CoClust: A Python Package for Co-Clustering</td>
 <td>2</td>
 <td>0.3</td>
 </tr>
 <tr class="even">
-<td>corr2D: Implementation of Two-Dimensional Correlation Analysis in R</td>
 <td>JSTAT</td>
 <td>R</td>
+<td>corr2D: Implementation of Two-Dimensional Correlation Analysis in R</td>
 <td>4</td>
 <td>1</td>
 </tr>
 <tr class="odd">
-<td>frailtyEM: An R Package for Estimating Semiparametric Shared Frailty Models</td>
 <td>JSTAT</td>
 <td>R</td>
+<td>frailtyEM: An R Package for Estimating Semiparametric Shared Frailty Models</td>
 <td>4</td>
 <td>0.79</td>
 </tr>
 <tr class="even">
-<td>Graph Transliterator: A graph-based transliteration tool</td>
 <td>JOSS</td>
 <td>Python</td>
+<td>Graph Transliterator: A graph-based transliteration tool</td>
 <td>4</td>
 <td>0.93</td>
 </tr>
 <tr class="odd">
-<td>iml: An R package for Interpretable Machine Learning</td>
-<td>JOSS</td>
-<td>R</td>
+<td>JMLR</td>
+<td>Python</td>
+<td>HyperTools: a Python Toolbox for Gaining Geometric Insights into High-Dimensional Data</td>
 <td>5</td>
-<td>1</td>
+<td>0.96</td>
 </tr>
 <tr class="even">
-<td>learningCurve: An implementation of Crawford’s and Wright’s learning curve production functions</td>
 <td>JOSS</td>
 <td>R</td>
+<td>iml: An R package for Interpretable Machine Learning</td>
 <td>5</td>
 <td>1</td>
 </tr>
 <tr class="odd">
-<td>mimosa: A Modern Graphical User Interface for 2-level Mixed Models</td>
 <td>JOSS</td>
 <td>R</td>
+<td>learningCurve: An implementation of Crawford’s and Wright’s learning curve production functions</td>
+<td>5</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>JOSS</td>
+<td>R</td>
+<td>mimosa: A Modern Graphical User Interface for 2-level Mixed Models</td>
 <td>3</td>
 <td>0.67</td>
 </tr>
-<tr class="even">
-<td>mlr: Machine Learning in R</td>
+<tr class="odd">
 <td>JMLR</td>
 <td>R</td>
+<td>mlr: Machine Learning in R</td>
 <td>4</td>
 <td>0.98</td>
 </tr>
+<tr class="even">
+<td>JMLR</td>
+<td>R</td>
+<td>Model-based Boosting 2.0</td>
+<td>4</td>
+<td>0.95</td>
+</tr>
 <tr class="odd">
-<td>OpenEnsembles: A Python Resource for Ensemble Clustering</td>
+<td>JSTAT</td>
+<td>Python</td>
+<td>Natter: A Python Natural Image Statistics Toolbox</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>JSTAT</td>
+<td>R</td>
+<td>Network Coincidence Analysis: The netCoin R Package</td>
+<td>4</td>
+<td>0.91</td>
+</tr>
+<tr class="odd">
 <td>JMLR</td>
 <td>Python</td>
+<td>OpenEnsembles: A Python Resource for Ensemble Clustering</td>
 <td>2</td>
 <td>0.78</td>
 </tr>
 <tr class="even">
-<td>origami: A Generalized Framework for Cross-Validation in R</td>
 <td>JOSS</td>
 <td>R</td>
+<td>origami: A Generalized Framework for Cross-Validation in R</td>
 <td>5</td>
 <td>1</td>
 </tr>
 <tr class="odd">
-<td>py-pde: A Python package for solving partial differential equations</td>
 <td>JOSS</td>
 <td>Python</td>
+<td>py-pde: A Python package for solving partial differential equations</td>
 <td>2</td>
 <td>0.86</td>
 </tr>
 <tr class="even">
-<td>PyEscape: A narrow escape problem simulator packagefor Python</td>
 <td>JOSS</td>
 <td>Python</td>
+<td>PyEscape: A narrow escape problem simulator packagefor Python</td>
 <td>2</td>
 <td>0.8</td>
 </tr>
 <tr class="odd">
-<td>Pyglmnet: Python implementation of elastic-net regularized generalized linear models</td>
 <td>JOSS</td>
 <td>Python</td>
+<td>Pyglmnet: Python implementation of elastic-net regularized generalized linear models</td>
 <td>5</td>
 <td>0.98</td>
 </tr>
 <tr class="even">
-<td>pyParticleEst: A Python Framework for Particle-Based Estimation Methods</td>
 <td>JSTAT</td>
 <td>Python</td>
+<td>pyParticleEst: A Python Framework for Particle-Based Estimation Methods</td>
 <td>3</td>
 <td>0.67</td>
 </tr>
 <tr class="odd">
-<td>“PypeR, A Python Package for Using R in Python”</td>
 <td>JSTAT</td>
 <td>Python</td>
+<td>“PypeR, A Python Package for Using R in Python”</td>
 <td>3</td>
 <td>1</td>
 </tr>
 <tr class="even">
-<td>“Rclean: A Tool for Writing Cleaner, More Transparent Code”</td>
 <td>JOSS</td>
 <td>R</td>
+<td>“Rclean: A Tool for Writing Cleaner, More Transparent Code”</td>
 <td>5</td>
 <td>1</td>
 </tr>
 <tr class="odd">
-<td>RLPy: A Value-Function-Based Reinforcement Learning Framework for Education and Research</td>
 <td>JMLR</td>
 <td>Python</td>
+<td>RLPy: A Value-Function-Based Reinforcement Learning Framework for Education and Research</td>
 <td>2</td>
 <td>0.59</td>
 </tr>
 <tr class="even">
-<td>rmcfs: An R Package for Monte Carlo Feature Selection and Interdependency Discovery</td>
 <td>JSTAT</td>
 <td>R</td>
+<td>rmcfs: An R Package for Monte Carlo Feature Selection and Interdependency Discovery</td>
 <td>2</td>
 <td>0.57</td>
 </tr>
 <tr class="odd">
-<td>Seglearn: A Python Package for Learning Sequences and Time Series</td>
 <td>JMLR</td>
 <td>Python</td>
+<td>Seglearn: A Python Package for Learning Sequences and Time Series</td>
 <td>4</td>
 <td>0.88</td>
 </tr>
 <tr class="even">
-<td>tacmagic: Positron emission tomography analysis in R</td>
+<td>JSTAT</td>
+<td>Python</td>
+<td>Simulated Data for Linear Regression with Structured and Sparse Penalties: Introducing pylearn-simulate</td>
+<td>2</td>
+<td>0.3</td>
+</tr>
+<tr class="odd">
 <td>JOSS</td>
 <td>R</td>
+<td>tacmagic: Positron emission tomography analysis in R</td>
 <td>5</td>
 <td>1</td>
 </tr>
-<tr class="odd">
-<td>TensorLy: Tensor Learning in Python</td>
+<tr class="even">
 <td>JMLR</td>
 <td>Python</td>
+<td>TensorLy: Tensor Learning in Python</td>
+<td>3</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>JMLR</td>
+<td>R</td>
+<td>The flare Package for High Dimensional Linear Regression and Precision Matrix Estimation in R</td>
 <td>3</td>
 <td>1</td>
 </tr>
 <tr class="even">
-<td>The flare Package for High Dimensional Linear Regression and Precision Matrix Estimation in R</td>
 <td>JMLR</td>
 <td>R</td>
-<td>3</td>
-<td>1</td>
-</tr>
-<tr class="odd">
 <td>The huge Package for High-dimensional Undirected Graph Estimation in R</td>
-<td>JMLR</td>
-<td>R</td>
 <td>3</td>
 <td>1</td>
 </tr>
@@ -658,9 +694,39 @@ FIGURE 1.9: Comparison of mean ‘Reproducibility Value’ score of reproduced a
 </p>
 </div>
 <p>Same as with ‘Student’s Mark’ we can see that R articles had a better mean score and Journal of Open Source Software had the best mean score among the journals.</p>
+<p>We also examined similar statistics for 6 groups - every journal-language pair.</p>
+<div class="figure"><span id="fig:plot-mark-both-stacked"></span>
+<img src="book_files/figure-html/plot-mark-both-stacked-1.svg" alt="Distribution of 'Student's Mark' score of reproduced articles within each journal-language pair." width="672" />
+<p class="caption">
+FIGURE 1.10: Distribution of ‘Student’s Mark’ score of reproduced articles within each journal-language pair.
+</p>
+</div>
+<div class="figure"><span id="fig:plot-mark-both"></span>
+<img src="book_files/figure-html/plot-mark-both-1.svg" alt="Comparison of mean 'Student's Mark' score of reproduced articles between journal-language pairs." width="672" />
+<p class="caption">
+FIGURE 1.11: Comparison of mean ‘Student’s Mark’ score of reproduced articles between journal-language pairs.
+</p>
+</div>
+<div class="figure"><span id="fig:plot-value-both"></span>
+<img src="book_files/figure-html/plot-value-both-1.svg" alt="Comparison of mean 'Reproducibility Value' score of reproduced articles between journal-language pairs." width="672" />
+<p class="caption">
+FIGURE 1.12: Comparison of mean ‘Reproducibility Value’ score of reproduced articles between journal-language pairs.
+</p>
+</div>
+<p>On these plots we can see that within each journal R always has a higher mean score than Python in both metrics.
+On the other hand, the difference between languages within JMLR and JOSS is not as significant as in JSTAT.</p>
 </div>
 <div id="summary-and-conclusions-6" class="section level3" number="1.8.5">
 <h3><span class="header-section-number">1.8.5</span> Summary and conclusions</h3>
+<p>In this article, we presented the differences between three scientific journals and two most popular data science programming languages in the context of the reproducibility of articles.
+Based on our research, we have to come to the following conclusions:</p>
+<ul>
+<li><p>The Journal of Open Source Software has the highest score in both metrics. Articles from this journal are often published by professional developers in contrary to other journals dominated by theoretical scientists. That is why, in our opinion, the quality of code on JOSS could be higher. Similarly, the Journal of Machine Learning Research is occupied by people being more professional developers than the Journal of Statistical Software. This is because, as the names suggest, JMLR is connected more to machine learning and JSTAT to statistics. And this may be, from our point of view, why JSTAT scored the lowest in both metrics.</p></li>
+<li><p>According to our research R is more reproducible than Python. The difference between these two languages in JMLR and JOSS is not as significant as in JSTAT. It is due to the fact that R is a language “made by statisticians for statisticians” and JSTAT articles are focused on statistics more than articles from other journals.</p></li>
+<li><p>Some of the Python packages were created in Python2, which is no longer supported. This created many problems with reproducing them.</p></li>
+<li><p>Most of the articles from JOSS had specified requirements in contrast to the other two journals. This contributed to higher JOSS results.</p></li>
+</ul>
+<p>To sum up, our research suggests that articles published in JOSS and using R language are the most reproducible, but research conducted on a bigger sample is needed to confirm our results. What is more, a similar comparison of other journals and languages can be made.</p>
 
 </div>
 </div>
