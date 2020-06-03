@@ -367,6 +367,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>Authors: Ngoc Anh Nguyen, Piotr Piątyszek, Marcin Łukaszyk (Warsaw University of Technology)</em></p>
 <div id="abstract-6" class="section level3" number="1.7.1">
 <h3><span class="header-section-number">1.7.1</span> Abstract</h3>
+<p>Researchers creating packages can keep them updated or abandon them. Our motivation was to examine how these two approaches impact the reproducibility of the scientific paper. Using ten different auxiliary variables like GitHub commits or stars count we tested which correlates with the most widespread classes of reproducibility issues we have found. As a result, we propose two guidelines for people designing packages.</p>
 </div>
 <div id="introduction-and-motivation-3" class="section level3" number="1.7.2">
 <h3><span class="header-section-number">1.7.2</span> Introduction and Motivation</h3>
@@ -391,7 +392,7 @@ We measured how many examples aren’t reproducible using these two versions. We
 <strong>3. Result</strong> - output differs<br />
 Using these we can compare specific issues in the current and old versions of the package.</p>
 <p><strong>Auxiliary variables</strong><br />
-To measure how a package is developed, we used several auxiliary variables from GitHub and CRAN:</p>
+To measure how a package is developed, we used several auxiliary variables from GitHub and CRAN collected on 2019-05-19:</p>
 <ul>
 <li>number of stars</li>
 <li>number of subscribers</li>
@@ -450,102 +451,6 @@ new.result.issues
 <tbody>
 <tr>
 <td style="text-align:left;">
-VSURF
-</td>
-<td style="text-align:left;">
-1.0.2
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-MVN
-</td>
-<td style="text-align:left;">
-3.8
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-mldr
-</td>
-<td style="text-align:left;">
-0.2.51
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 fanplot
 </td>
 <td style="text-align:left;">
@@ -562,38 +467,6 @@ fanplot
 </td>
 <td style="text-align:right;">
 0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Peptides
-</td>
-<td style="text-align:left;">
-1.0.4
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-5
 </td>
 <td style="text-align:right;">
 0
@@ -706,70 +579,6 @@ FactoMineR
 </tr>
 <tr>
 <td style="text-align:left;">
-gridGraphics
-</td>
-<td style="text-align:left;">
-0.1-5
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-phaseR
-</td>
-<td style="text-align:left;">
-1.3
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 betategarch
 </td>
 <td style="text-align:left;">
@@ -834,38 +643,6 @@ tempdisagg
 </tr>
 <tr>
 <td style="text-align:left;">
-mvtnorm
-</td>
-<td style="text-align:left;">
-0.9-7
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 brainR
 </td>
 <td style="text-align:left;">
@@ -898,38 +675,6 @@ brainR
 </tr>
 <tr>
 <td style="text-align:left;">
-qmethod
-</td>
-<td style="text-align:left;">
-1.3.0
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-0
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 stringdist
 </td>
 <td style="text-align:left;">
@@ -952,6 +697,262 @@ stringdist
 </td>
 <td style="text-align:right;">
 1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phaseR
+</td>
+<td style="text-align:left;">
+1.3
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MVN
+</td>
+<td style="text-align:left;">
+3.8
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+gridGraphics
+</td>
+<td style="text-align:left;">
+0.1-5
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+VSURF
+</td>
+<td style="text-align:left;">
+1.0.2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mldr
+</td>
+<td style="text-align:left;">
+0.2.51
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Peptides
+</td>
+<td style="text-align:left;">
+1.0.4
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mvtnorm
+</td>
+<td style="text-align:left;">
+0.9-7
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+qmethod
+</td>
+<td style="text-align:left;">
+1.3.0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
 </td>
 <td style="text-align:right;">
 1
@@ -1027,89 +1028,24 @@ ggmap
 </tbody>
 </table>
 </div>
-<strong>Reproducibility scale</strong><br />
-As shown in table below, most packages have same reproducibility scale in each version. Some are less reproducible in current version than in the old.
-<table class="table table-striped" style="font-size: 11px; width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:right;">
-old.reproducibility
-</th>
-<th style="text-align:right;">
-new.reproducibility
-</th>
-<th style="text-align:right;">
-n
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-8
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-2
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-5
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-2
-</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Issues count</strong></p>
-<p><img src="book_files/figure-html/unnamed-chunk-9-1.svg" width="672" /></p>
-<p>We compared if new versions of packages have more or less issues of each type than the old ones. Only for few articles these counts differ, but this data suggests negative impact of active development on reproducibility.</p>
+<p><strong>Reproducibility scale</strong><br />
+As shown in table below, most packages have same reproducibility scale in each version. Some are less reproducible in current version than in the old.</p>
+<p><img src="book_files/figure-html/unnamed-chunk-8-1.svg" width="384" style="display: block; margin: auto;" /></p>
+<p><strong>Reproducibility issues count</strong></p>
+<p><img src="book_files/figure-html/unnamed-chunk-9-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<p>We compared if current versions of packages have more or less reproducibility issues of each type than the old ones. Only for few articles these counts differ, but this data suggests negative impact of active development on reproducibility.</p>
 <p><strong>Correlations with auxiliary variables</strong><br />
 <img src="book_files/figure-html/unnamed-chunk-10-1.svg" width="672" /></p>
-<p>This heatmap shows the correlation between reproducibility scale and issue count increase (new-old) with auxiliary variables. The reproducibility scale does not seem to be correlated with any of them. But there is a strong correlation between name issues count and number of lines added and removed since the publication date. Variables associated with popularity could impact on API changes. There are correlations with results, but results should not be analyzed alone, because when API issue occurs, then we cannot check results.</p>
+<p>This heatmap shows the correlation between reproducibility scale and issue count increase (current-old) with auxiliary variables. Cross means insignificant correlation using Pearson method (p-value &gt; 0.05).</p>
+<p>The reproducibility scale does not seem to be correlated with any of them. But there is a strong correlation between name issues count and number of lines added and removed since the publication date. Variables associated with popularity could impact on API changes. There are correlations with results, but results should not be analyzed alone, because when API issue occurs, then we cannot check results.</p>
 </div>
 <div id="summary-and-conclusions-5" class="section level3" number="1.7.5">
 <h3><span class="header-section-number">1.7.5</span> Summary and conclusions</h3>
+<p>Our analysis covered 18 packages in which we have found the most common reproducibility issues. Although the negative impact of active development is more common than positive most packages are not affected. We presented two interesting correlations that require further analysis due to the small number of articles. However, researchers involved in making reproducible research should keep in mind these guidelines:</p>
+<ul>
+<li>Doing a lot of changes it is easier to rename functions and variables. Most of them (changing letters case for instance) are not necessary but break the article.</li>
+<li>Some packages gain popularity and authors decide to change API. Rethinking it before publication could resolve this necessity.</li>
+</ul>
 
 </div>
 </div>
