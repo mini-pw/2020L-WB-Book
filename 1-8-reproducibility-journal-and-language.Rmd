@@ -4,7 +4,7 @@
 
 ### Abstract
 
-
+The aim of this article is to present differences in reproducing both code and results of papers from three popular journals: Journal of Machine Learning Research, Journal of Open Source Software, Journal of Statistical Software. Additionally, every journal has been split into two categories for Python and R articles respectively. Following we propose two general methods of scoring the reproducibility and based on them we mark several dozen articles. We have observed distinct traits of papers from each journal. R is shown to be the most reproducible language, moreover, the Journal of Open Source Software - a journal with least scientific credit received the highest marks in our comparison.
 
 ### Introduction and Motivation
 
@@ -25,13 +25,13 @@ There are no publications related to the reproducibility topic which compare dif
 
 We decided to focus on three journals: 
 
-* The Journal of Statistical Software    
-* The Journal of Machine Learning Research    
-* The Journal of Open Source Software    
+* The Journal of Statistical Software (JSTAT)      
+* The Journal of Machine Learning Research (JMLR)   
+* The Journal of Open Source Software (JOSS)     
 
 The Journal of Statistical Software and The Journal of Machine Learning Research are well known among scientists in the field of data science. The Journal of Open Source Software is relatively new, was established in 2016. 
 
-We choose articles randomly from the time frame 2015-present. From every journal we choose 10 articles, of which 5 are articles introducing an R package and 5 are introducing a Python library. We choose only articles having tests on their github repositories. For our metrics we test the following:
+We choose articles randomly from the time frame 2010-present. From every journal we choose around 10 articles, of which around 5 are articles introducing an R package and around 5 are introducing a Python library. We choose only articles having tests on their github repositories. For our metrics we test the following:
 
 * Tests on github provided by authors - for R packages `test_that` tests, for Python libraries `pytest` and `unittest` tests.    
 * Examples from the article - we test whether chunks of code included in the article produce the same results. Number of examples in an article varies a lot, in particular all the articles from Journal of Open Source Software do not have any examples.   
@@ -69,17 +69,20 @@ data <- read.csv(file = 'data/1-8-reproducibility-journal-and-language/results.c
 
 res1 <- data %>%
   group_by(Journal) %>%
-  summarise(StudentsMark = mean(StudentsMark), ReproducibilityValue = mean(ReproducibilityValue))
+  summarise(StudentsMark = mean(StudentsMark), ReproducibilityValue = mean(ReproducibilityValue)) %>% 
+  arrange(Journal)
 
 res2 <- data %>%
   group_by(Language) %>%
-  summarise(StudentsMark = mean(StudentsMark), ReproducibilityValue = mean(ReproducibilityValue))
+  summarise(StudentsMark = mean(StudentsMark), ReproducibilityValue = mean(ReproducibilityValue)) %>% 
+  arrange(Language)
 
 res3 <- data %>%
   group_by(Journal, StudentsMark) %>%
   summarise(Number = n()) %>%
   group_by(Journal) %>%
-  mutate(Percent = Number / sum(Number))
+  mutate(Percent = Number / sum(Number)) %>% 
+  arrange(Journal)
 res3$StudentsMark <- factor(res3$StudentsMark)
 res3$StudentsMark <- factor(res3$StudentsMark, levels = rev(levels(res3$StudentsMark)))
 
@@ -87,41 +90,62 @@ res4 <- data %>%
   group_by(Language, StudentsMark) %>%
   summarise(Number = n()) %>%
   group_by(Language) %>%
-  mutate(Percent = Number / sum(Number))
+  mutate(Percent = Number / sum(Number)) %>% 
+  arrange(Language)
 res4$StudentsMark <- factor(res4$StudentsMark)
 res4$StudentsMark <- factor(res4$StudentsMark, levels = rev(levels(res4$StudentsMark)))
+
+res5 <- data %>% 
+  mutate(Group = paste0(Journal, "-", Language)) %>% 
+  group_by(Group) %>%
+  summarise(StudentsMark = mean(StudentsMark), ReproducibilityValue = mean(ReproducibilityValue)) %>% 
+  arrange(Group)
+
+res6 <- data %>%
+  mutate(Group = paste0(Journal, "-", Language)) %>% 
+  group_by(Group, StudentsMark) %>%
+  summarise(Number = n()) %>%
+  group_by(Group) %>%
+  mutate(Percent = Number / sum(Number)) %>% 
+  arrange(Group)
+res6$StudentsMark <- factor(res6$StudentsMark)
+res6$StudentsMark <- factor(res6$StudentsMark, levels = rev(levels(res6$StudentsMark)))
 ```
 
 Results of reproducing all chosen articles are presented in the following table:
 
-| Title                                                                                           | Journal | Language | StudentsMark | ReproducibilityValue |
-|-------------------------------------------------------------------------------------------------|---------|----------|--------------|----------------------|
-| Autorank: A Python package for automated ranking of classifiers                                 | JOSS    | Python   | 4            | 0\.95                |
-| Beyond Tandem Analysis: Joint Dimension Reduction and Clustering in R                           | JSTAT   | R        | 5            | 1                    |
-| CoClust: A Python Package for Co\-Clustering                                                    | JSTAT   | Python   | 2            | 0\.3                 |
-| corr2D: Implementation of Two\-Dimensional Correlation Analysis in R                            | JSTAT   | R        | 4            | 1                    |
-| frailtyEM: An R Package for Estimating Semiparametric Shared Frailty Models                     | JSTAT   | R        | 4            | 0\.79                |
-| Graph Transliterator: A graph\-based transliteration tool                                       | JOSS    | Python   | 4            | 0\.93                |
-| iml: An R package for Interpretable Machine Learning                                            | JOSS    | R        | 5            | 1                    |
-| learningCurve: An implementation of Crawford's and Wright's learning curve production functions | JOSS    | R        | 5            | 1                    |
-| mimosa: A Modern Graphical User Interface for 2\-level Mixed Models                             | JOSS    | R        | 3            | 0\.67                |
-| mlr: Machine Learning in R                                                                      | JMLR    | R        | 4            | 0\.98                |
-| OpenEnsembles: A Python Resource for Ensemble Clustering                                        | JMLR    | Python   | 2            | 0\.78                |
-| origami: A Generalized Framework for Cross\-Validation in R                                     | JOSS    | R        | 5            | 1                    |
-| py\-pde: A Python package for solving partial differential equations                            | JOSS    | Python   | 2            | 0\.86                |
-| PyEscape: A narrow escape problem simulator packagefor Python                                   | JOSS    | Python   | 2            | 0\.8                 |
-| Pyglmnet: Python implementation of elastic\-net regularized generalized linear models           | JOSS    | Python   | 5            | 0\.98                |
-| pyParticleEst: A Python Framework for Particle\-Based Estimation Methods                        | JSTAT   | Python   | 3            | 0\.67                |
-| "PypeR, A Python Package for Using R in Python"                                                 | JSTAT   | Python   | 3            | 1                    |
-| "Rclean: A Tool for Writing Cleaner, More Transparent Code"                                     | JOSS    | R        | 5            | 1                    |
-| RLPy: A Value\-Function\-Based Reinforcement Learning Framework for Education and Research      | JMLR    | Python   | 2            | 0\.59                |
-| rmcfs: An R Package for Monte Carlo Feature Selection and Interdependency Discovery             | JSTAT   | R        | 2            | 0\.57                |
-| Seglearn: A Python Package for Learning Sequences and Time Series                               | JMLR    | Python   | 4            | 0\.88                |
-| tacmagic: Positron emission tomography analysis in R                                            | JOSS    | R        | 5            | 1                    |
-| TensorLy: Tensor Learning in Python                                                             | JMLR    | Python   | 3            | 1                    |
-| The flare Package for High Dimensional Linear Regression and Precision Matrix Estimation in R   | JMLR    | R        | 3            | 1                    |
-| The huge Package for High\-dimensional Undirected Graph Estimation in R                         | JMLR    | R        | 3            | 1                    |
-
+| Journal | Language | Title                                                                                                    | StudentsMark | ReproducibilityValue |
+|---------|----------|----------------------------------------------------------------------------------------------------------|--------------|----------------------|
+| JOSS    | Python   | Autorank: A Python package for automated ranking of classifiers                                          | 4            | 0\.95                |
+| JSTAT   | R        | Beyond Tandem Analysis: Joint Dimension Reduction and Clustering in R                                    | 5            | 1                    |
+| JSTAT   | Python   | CoClust: A Python Package for Co\-Clustering                                                             | 2            | 0\.3                 |
+| JSTAT   | R        | corr2D: Implementation of Two\-Dimensional Correlation Analysis in R                                     | 4            | 1                    |
+| JSTAT   | R        | frailtyEM: An R Package for Estimating Semiparametric Shared Frailty Models                              | 4            | 0\.79                |
+| JOSS    | Python   | Graph Transliterator: A graph\-based transliteration tool                                                | 4            | 0\.93                |
+| JMLR    | Python   | HyperTools: a Python Toolbox for Gaining Geometric Insights into High\-Dimensional Data                  | 5            | 0\.96                |
+| JOSS    | R        | iml: An R package for Interpretable Machine Learning                                                     | 5            | 1                    |
+| JOSS    | R        | learningCurve: An implementation of Crawford's and Wright's learning curve production functions          | 5            | 1                    |
+| JOSS    | R        | mimosa: A Modern Graphical User Interface for 2\-level Mixed Models                                      | 3            | 0\.67                |
+| JMLR    | R        | mlr: Machine Learning in R                                                                               | 4            | 0\.98                |
+| JMLR    | R        | Model\-based Boosting 2\.0                                                                               | 4            | 0\.95                |
+| JSTAT   | Python   | Natter: A Python Natural Image Statistics Toolbox                                                        | 2            | 0                    |
+| JSTAT   | R        | Network Coincidence Analysis: The netCoin R Package                                                      | 4            | 0\.91                |
+| JMLR    | Python   | OpenEnsembles: A Python Resource for Ensemble Clustering                                                 | 2            | 0\.78                |
+| JOSS    | R        | origami: A Generalized Framework for Cross\-Validation in R                                              | 5            | 1                    |
+| JOSS    | Python   | py\-pde: A Python package for solving partial differential equations                                     | 2            | 0\.86                |
+| JOSS    | Python   | PyEscape: A narrow escape problem simulator packagefor Python                                            | 2            | 0\.8                 |
+| JOSS    | Python   | Pyglmnet: Python implementation of elastic\-net regularized generalized linear models                    | 5            | 0\.98                |
+| JSTAT   | Python   | pyParticleEst: A Python Framework for Particle\-Based Estimation Methods                                 | 3            | 0\.67                |
+| JSTAT   | Python   | "PypeR, A Python Package for Using R in Python"                                                          | 3            | 1                    |
+| JOSS    | R        | "Rclean: A Tool for Writing Cleaner, More Transparent Code"                                              | 5            | 1                    |
+| JMLR    | Python   | RLPy: A Value\-Function\-Based Reinforcement Learning Framework for Education and Research               | 2            | 0\.59                |
+| JSTAT   | R        | rmcfs: An R Package for Monte Carlo Feature Selection and Interdependency Discovery                      | 2            | 0\.57                |
+| JMLR    | Python   | Seglearn: A Python Package for Learning Sequences and Time Series                                        | 4            | 0\.88                |
+| JSTAT   | Python   | Simulated Data for Linear Regression with Structured and Sparse Penalties: Introducing pylearn\-simulate | 2            | 0\.3                 |
+| JOSS    | R        | tacmagic: Positron emission tomography analysis in R                                                     | 5            | 1                    |
+| JMLR    | Python   | TensorLy: Tensor Learning in Python                                                                      | 3            | 1                    |
+| JMLR    | R        | The flare Package for High Dimensional Linear Regression and Precision Matrix Estimation in R            | 3            | 1                    |
+| JMLR    | R        | The huge Package for High\-dimensional Undirected Graph Estimation in R                                  | 3            | 1                    |
 
 
 To better present obtained results plots below show distribution of marks within each journal and language:
@@ -183,5 +207,48 @@ p
 
 Same as with 'Student's Mark' we can see that R articles had a better mean score and Journal of Open Source Software had the best mean score among the journals.
 
+
+We also examined similar statistics for 6 groups - every journal-language pair.
+
+
+```{r plot-mark-both-stacked, fig.cap="Distribution of 'Student's Mark' score of reproduced articles within each journal-language pair.", echo=FALSE}
+p <- ggplot(data = res6, aes(x = Group, y = Percent, fill = StudentsMark)) + 
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = colors)
+p
+```
+
+```{r plot-mark-both, fig.cap="Comparison of mean 'Student's Mark' score of reproduced articles between journal-language pairs.", echo=FALSE}
+p <- res5 %>% 
+  mutate(StudentsMark = StudentsMark - 2) %>% 
+  ggplot(aes(x = Group, y = StudentsMark)) + 
+  geom_bar(stat = "identity", fill = colors[3]) +
+  coord_cartesian(ylim = c(0, 3)) +
+  scale_y_continuous(breaks = 0:3, labels = 2:5)
+p
+```
+
+```{r plot-value-both, fig.cap="Comparison of mean 'Reproducibility Value' score of reproduced articles between journal-language pairs.", echo=FALSE}
+p <- ggplot(data = res5, aes(x = Group, y = ReproducibilityValue)) + 
+  geom_bar(stat = "identity", fill = colors[3]) +
+  ylim(0, 1)
+p
+```
+
+On these plots we can see that within each journal R always has a higher mean score than Python in both metrics. 
+On the other hand, the difference between languages within JMLR and JOSS is not as significant as in JSTAT.
+
 ### Summary and conclusions 
 
+In this article, we presented the differences between three scientific journals and two most popular data science programming languages in the context of the reproducibility of articles.
+Based on our research, we have to come to the following conclusions:
+
+* The Journal of Open Source Software has the highest score in both metrics. Articles from this journal are often published by professional developers in contrary to other journals dominated by theoretical scientists. That is why, in our opinion, the quality of code on JOSS could be higher. Similarly, the Journal of Machine Learning Research is occupied by people being more professional developers than the Journal of Statistical Software. This is because, as the names suggest, JMLR is connected more to machine learning and JSTAT to statistics. And this may be, from our point of view, why JSTAT scored the lowest in both metrics.
+
+* According to our research R is more reproducible than Python. The difference between these two languages in JMLR and JOSS is not as significant as in JSTAT. It is due to the fact that R is a language “made by statisticians for statisticians” and JSTAT articles are focused on statistics more than articles from other journals.
+
+* Some of the Python packages were created in Python2, which is no longer supported. This created many problems with reproducing them. 
+
+* Most of the articles from JOSS had specified requirements in contrast to the other two journals. This contributed to higher JOSS results.
+
+To sum up, our research suggests that articles published in JOSS and using R language are the most reproducible, but research conducted on a bigger sample is needed to confirm our results. What is more, a similar comparison of other journals and languages can be made. 
