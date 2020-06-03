@@ -5,7 +5,7 @@
 ### Abstract
 In this article we present and compare a number of interpretable, non-linear feature engineering techniques used to improve linear regression models performance on Cocrete compressive strength dataset. To assert their interpretability, we introduce a new metric for measuring feature importance, which uses derivatives of feature transformations to trace back original features' impact. As a result, we obtain a thorough comparison of transformation techniques on two black-box models - Random Forest and Support Vector Machine -  and three glass-box models - Decision Tree, Elastic Net, and linear regression - with the focus on the linear regression.
 
-### Introduction and Motivation
+### Introduction and Related Works
 
 Linear regression is one of the simplest and easiest to interpret of the predictive models. While it has already been thorougly analysed over the years, there remain some unsolved questions. One such question is how to transform the data features in order to maximize the model's effectiveness in predicting the new data. 
 
@@ -15,12 +15,11 @@ Many black box regression models use various kinds of feature engineering during
 
 To measure the improvement of used methods we will compare their performance metrics with black box models' as a ground truth. This will allow us to effectively measure which method brought the simple linear model closer to the black box. Moreover, we will take under consideration the improvement of black box model performance. Thanks to this, our article will not only present the methods for creating highly performant interpretable models, but also improvement of the results of black box model.
 
-### Related Work
-There exist many papers related to feature engineering. We will shortly present two of them.
+A similar research may be found in the following articles:
 
-One of these papers is "Enhancing Regression Models for Complex Systems Using Evolutionary Techniques for Feature Engineering" Patricia Arroba, José L. Risco-Martín, Marina Zapater, José M. Moya & José L. Ayala [@ETFFE]. This paper describes, how feature transformations in linear regression can be chosen based on the genetic algorithms.
+[@ETFFE] -  the authors present automatic transformations of features with a genetic approach. It provides a way to feature engineering without researcher's expertise.
 
-Another one is "Automatic feature engineering for regression models with machine learning: An evolutionary computation and statistics hybrid" Vinícius Veloso de Melo, Wolfgang Banzhaf [@VELOSODEMELO]. Similarly to the previous one, this paper tries to automate feature engineering using evolutionar computation to make a hybrid model - final model is simple linear regression while its features are found by more complex algorithm.
+[@VELOSODEMELO] - similarly to the previous article, this paper provides a way to automate feature engineering using evolutionary computation to make a hybrid model - the final model is simple linear regression, while its features are found by a more complex algorithm.
 
 ### Methodology
 
@@ -41,19 +40,23 @@ The four methods of feature transformation compared in the article include:
 
 #### Feature importance metric
 
+Feauture importance is a metric showing which predictors (columns) are the most important to the model's final prediction. The metric becomes more and more significant, because machine learning algorithms play an important role in almost any decision making process from banking to medical areas. A more precise description of Feature Importance may be found in [ref]. 
+
 The most natural feature importance metric for linear models such as linear regression and GLM are the absolute values of coefficients. Let $x_1, \dots, x_n$ denote the features (column vectors) and $\hat{y}$ denote the prediction. In linear models we have:
 $$c + \sum_{i=1}^n a_i \cdot x_i = \hat{y}$$
 where $c$ is a constant (intercept) and $a_i$ are the coefficients of regression. Formally, the Feature Importance mesaure value of the $i-$th feature ($FI_i$) measure is given as:
 $$FI_i = |a_i|$$
 We may also notice that:
 $$FI_i = \Big|\frac{\partial \hat{y_i}}{\partial x_i}\Big|$$
-We wish to generalize the above equation. Transforming the data in the dataset to improve the model's performance may be expressed as generating a new dataset, where each column is a function of all the features present in the original dataset. If the newdataset has $m$ features and the new prediction vector is given as $\dot{y}$, we then have:
+We wish to generalize the above equation and, in doing so, create a new Feature Importance mesaure applicable to transformed data which will be be able to provide Feature Importance of features before any transformations. Transforming the data in the dataset to improve the model's performance may be expressed as generating a new dataset, where each column is a function of all the features present in the original dataset. If the new dataset has $m$ features and the new prediction vector is given as $\dot{y}$, we then have:
 $$d + \sum_{i=1}^m b_i \cdot f_i (x_1, \dots, x_n) = \dot{y}$$
 where $d$ is the new intercept constant and $b_i$ are the coefficients of regression. We therefore may use the formula above to derive a new Feature Importance Measure (Derivative Feature Importance, $DFI$) as:
 $$DFI_{i, j} = \Big|\frac{\partial \dot{y_i}}{\partial x_{i, j}}\Big| = \Big|b_i \cdot \sum_{k=1}^m \frac{\partial f_k}{\partial x_{i, j}}\Big|$$
-The above measure is calculated separately for each observation $j$ in the dataset. However, due to the additive properties of derivatives, we may calculated Derivative Feature Importance of the $i$-th feature as:
+The above measure is calculated separately for each observation $j$ in the dataset - we will refer to it as local $DFI$. However, due to the additive properties of derivatives, we may calculated Derivative Feature Importance of the $i$-th feature as:
 $$DFI_i = \frac{1}{n}\sum_{j=1}^n DFI_{i, j}$$
-which is then a global measure of Feature Importance of the $i$-th feature.
+which is then a global measure of Feature Importance of the $i$-th feature (a global $DFI$).
+
+A question arises why such measure is necessary. Let us assume that we have columns $x$ and $y$ in our dataset. After the data transformation we may end up with a dataset containing columns such as $\sin{x}$, $x^2$ or even $\sqrt{x + y}$. Naturally, the new linear model's coefficients standing by the new features are unable to provide any information about the input variable's importance, as we cannot deduce the $x$'s importance knowing the importance of $\sqrt{x+y}$. However, the $DFI$ measure allows us to reverse the transformations and calculate the $x$'s and $y$'s Feature Importance if we know exactly what transformations were used, and that knowledge comes naturally from the sole process of feature engineering. We may therefore calculate a local $DFI$ for a chosen observation, which will tell us which input features were the most important in the prediction of the given sample, or we may take an average $DFI$ of all observations - the global $DFI$ - to calculate the overall importance of each feature.
 
 #### Dataset and model performance evaluation
 
@@ -64,15 +67,15 @@ We use standard and verified methods to compare results of the models. As the ta
 ### Results
 
 
-Note, that the transformations used in results section are only examples of the presented methods and various realisations may result in various final measures' values. Considerably, the trial-and-error approach may is quite individual and the results may differ depending on the experimentator. This non-automatic method should be treated as something that can be achieved after long time of tries.
+Note, that the transformations used in results section are only examples of the presented methods and various realisations may result in various final measures' values. Considerably, the trial-and-error approach is quite individual and the results may differ depending on the experimentator. This non-automatic method should be treated as something that can be achieved after numerous trials.
 
 #### Models' performance
 
  <center>
- ```{r mae3-5, echo=FALSE, fig.cap="MAE of the models after transformations", out.width = '70%'}
+ ```{r mae3-5, echo=FALSE, fig.cap="MAE of the DT, LR, GLM, optimized GLM, SVM and RF models on the plain *Concrete_Data* dataset and after transformations", out.width = '70%'}
 knitr::include_graphics("images/3-5-1.png")
 ```
- ```{r mse3-5, echo=FALSE, fig.cap="MSE of the models after transformations", out.width = '70%'}
+ ```{r mse3-5, echo=FALSE, fig.cap="MSE of the DT, LR, GLM, optimized GLM, SVM and RF models on the plain *Concrete_Data* dataset and after transformation", out.width = '70%'}
 knitr::include_graphics("images/3-5-2.png")
 ```
 
@@ -88,18 +91,18 @@ The remaining non-linear white-box model, namely the Decision Tree Regressor, se
 
 The comparison of Feature Imprortance values will be between permutational Feature Importance calculated on the black-box models - Random Forest and SVM and local and global Derivative Feature Importance calculated on the datasets after brute force transformations and after the Bayesian optimization. 
 
- ```{r fi3-5, echo=FALSE, fig.cap="Feature Importance of RFR and SVM", out.width = '49%', out.height = '49%', fig.show='hold'}
+ ```{r fi3-5, echo=FALSE, fig.cap="Feature Importance of RFR and SVM on the untransformed *Concrete_Data* dataset", out.width = '49%', out.height = '49%', fig.show='hold'}
 knitr::include_graphics(c("images/3-5-3.png", "images/3-5-4.png"))
 
 ```
- ```{r fi3-5bf, echo=FALSE, fig.cap="Local and global DFI on the dataset after brute force transformations", out.width = '49%', out.height = '49%', fig.show='hold'}
+ ```{r fi3-5bf, echo=FALSE, fig.cap="Local (obs. 573) and global DFI of optimized GLM model on the *Concrete_Data* dataset after brute force transformations", out.width = '49%', out.height = '49%', fig.show='hold'}
 knitr::include_graphics(c("images/3-5-bfl.png", "images/3-5-bfg.png"))
 ```
- ```{r fi3-5by, echo=FALSE, fig.cap="Local and global DFI on the dataset after Bayesian transformations", out.width = '49%', out.height = '49%', fig.show='hold'}
+ ```{r fi3-5by, echo=FALSE, fig.cap="Local (obs. 458) and global DFI of optimized GLM model on the *Concrete_Data* dataset after Bayesian transformations", out.width = '49%', out.height = '49%', fig.show='hold'}
 knitr::include_graphics(c("images/3-5-byl.png", "images/3-5-byg.png"))
 ```
 
-The figure 3.4 present permutational Feature Importance of the black-box models, and the figures 3.5 and 3.6 present $DFI$ values - for one observation and calculated globally, respectively. The local $DFI$ were calculated on the observations nr $573$ and $458$. We may notice high resemblance of the black-box Feature Importance to the local $DFI$ after Brute Force trtansformations, as well as similarities between all the Feature Importance calculations overall. The order of features in $DFI$ is not precisely equal to the order of feature after permutational Feature Importance of the black-boxes; however, the order still makes sense as far as we can say based on our little knowledge of materials. Moreover, the deviations of Feature Importance measures between various models is quite common in such research.
+The figure 3.3 present permutational Feature Importance of the black-box models, and the figures 3.4 and 3.5 present $DFI$ values - for one observation and calculated globally, respectively. The local $DFI$ were calculated on the observations nr $573$ and $458$. We may notice high resemblance of the black-box Feature Importance to the local $DFI$ after Brute Force trtansformations, as well as similarities between all the Feature Importance calculations overall. The order of features in $DFI$ is not precisely equal to the order of feature after permutational Feature Importance of the black-boxes; however, the order still makes sense as far as we can say based on our little knowledge of materials. Moreover, the deviations of Feature Importance measures between various models is quite common in such research.
 
 To summarize, although the deviations between black-box and glass-box models' Feature Importance are present, we conclude that $DFI$ may provide a new way of calculating Feature Importance for linear models. Its efficiency shall be further investigated in another research. When it comes the presented comparison, the majority of important variables were detected by the $DFI$ method.
 
