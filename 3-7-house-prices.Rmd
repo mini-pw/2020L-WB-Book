@@ -164,7 +164,7 @@ text_tbl <- text_tbl[c(3,4,5,2,1,6),]
 text_tbl$house_8L <- paste0(signif(text_tbl$house_8L, 3)/1000, "k")
 text_tbl$house_16H <- paste0(signif(text_tbl$house_16H, 3)/1000, "k")
 rownames(text_tbl) <- NULL
-kable(text_tbl, align=c('c', 'c', 'c'), caption="Comparison of the MAE score for all of the used models on test datasets. Green colour highlights white-box models, while the red colour is for black-box models.") %>%
+kable(text_tbl, align=c('c', 'c', 'c'), caption="Comparison of the MAE score for all of the used models on test datasets. Light colour highlights white-box models, while the dark colour is for black-box models.") %>%
   kable_styling("bordered", full_width = F) %>%
   column_spec(1, width = "20em", bold = F) %>%
   column_spec(2, width = "10em", bold = F) %>%
