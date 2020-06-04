@@ -21,6 +21,7 @@
   <meta name="twitter:description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="twitter:image" content="images/cover.png" />
 
+<meta name="author" content="" />
 
 
 <meta name="date" content="2020-06-04" />
@@ -32,7 +33,6 @@
   
 <link rel="prev" href="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html"/>
 <link rel="next" href="how-active-development-affects-reproducibility.html"/>
-<script src="libs/header-attrs/header-attrs.js"></script>
 <script src="libs/jquery/jquery.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
@@ -54,26 +54,25 @@
 
 
 <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -82,9 +81,9 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {   }
+  {  }
 @media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+a.sourceLine::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -117,7 +116,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="css\style.css" type="text/css" />
 </head>
 
 <body>
@@ -133,14 +132,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./"><h3>ML Case Studies</h3></a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
-<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
 <li class="chapter" data-level="" data-path="technical-setup.html"><a href="technical-setup.html"><i class="fa fa-check"></i>Technical Setup</a></li>
 </ul></li>
-<li class="chapter" data-level="1" data-path="reproducibility.html"><a href="reproducibility.html"><i class="fa fa-check"></i><b>1</b> Reproducibility of scientific papers</a>
-<ul>
-<li class="chapter" data-level="1.1" data-path="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html"><a href="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html"><i class="fa fa-check"></i><b>1.1</b> How to measure reproducibility? Classification of problems with reproducing scientific papers</a>
-<ul>
+<li class="chapter" data-level="1" data-path="reproducibility.html"><a href="reproducibility.html"><i class="fa fa-check"></i><b>1</b> Reproducibility of scientific papers</a><ul>
+<li class="chapter" data-level="1.1" data-path="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html"><a href="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html"><i class="fa fa-check"></i><b>1.1</b> How to measure reproducibility? Classification of problems with reproducing scientific papers</a><ul>
 <li class="chapter" data-level="1.1.1" data-path="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html"><a href="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html#abstract"><i class="fa fa-check"></i><b>1.1.1</b> Abstract</a></li>
 <li class="chapter" data-level="1.1.2" data-path="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html"><a href="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html#introduction"><i class="fa fa-check"></i><b>1.1.2</b> Introduction</a></li>
 <li class="chapter" data-level="1.1.3" data-path="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html"><a href="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html#related-work"><i class="fa fa-check"></i><b>1.1.3</b> Related Work</a></li>
@@ -148,8 +144,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.1.5" data-path="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html"><a href="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html#results"><i class="fa fa-check"></i><b>1.1.5</b> Results</a></li>
 <li class="chapter" data-level="1.1.6" data-path="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html"><a href="how-to-measure-reproducibility-classification-of-problems-with-reproducing-scientific-papers.html#summary-and-conclusions"><i class="fa fa-check"></i><b>1.1.6</b> Summary and conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html"><i class="fa fa-check"></i><b>1.2</b> Aging articles. How time affects reproducibility of scientific papers?</a>
-<ul>
+<li class="chapter" data-level="1.2" data-path="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html"><i class="fa fa-check"></i><b>1.2</b> Aging articles. How time affects reproducibility of scientific papers?</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html#abstract-1"><i class="fa fa-check"></i><b>1.2.1</b> Abstract</a></li>
 <li class="chapter" data-level="1.2.2" data-path="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html#introduction-1"><i class="fa fa-check"></i><b>1.2.2</b> Introduction</a></li>
 <li class="chapter" data-level="1.2.3" data-path="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html#codeextractor-package"><i class="fa fa-check"></i><b>1.2.3</b> CodeExtractoR package</a></li>
@@ -157,14 +152,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2.5" data-path="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html#results-1"><i class="fa fa-check"></i><b>1.2.5</b> Results</a></li>
 <li class="chapter" data-level="1.2.6" data-path="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html"><a href="aging-articles-how-time-affects-reproducibility-of-scientific-papers.html#summary-and-conclusions-1"><i class="fa fa-check"></i><b>1.2.6</b> Summary and conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html"><a href="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html"><i class="fa fa-check"></i><b>1.3</b> Ways to reproduce articles in terms of release date and magazine</a>
-<ul>
+<li class="chapter" data-level="1.3" data-path="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html"><a href="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html"><i class="fa fa-check"></i><b>1.3</b> Ways to reproduce articles in terms of release date and magazine</a><ul>
 <li class="chapter" data-level="1.3.1" data-path="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html"><a href="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html#abstract-2"><i class="fa fa-check"></i><b>1.3.1</b> Abstract</a></li>
 <li class="chapter" data-level="1.3.2" data-path="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html"><a href="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html#methodology-2"><i class="fa fa-check"></i><b>1.3.2</b> Methodology</a></li>
 <li class="chapter" data-level="1.3.3" data-path="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html"><a href="ways-to-reproduce-articles-in-terms-of-release-date-and-magazine.html#results-2"><i class="fa fa-check"></i><b>1.3.3</b> Results</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html"><a href="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html"><i class="fa fa-check"></i><b>1.4</b> Reproducibility of outdated articles about up-to-date R packages</a>
-<ul>
+<li class="chapter" data-level="1.4" data-path="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html"><a href="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html"><i class="fa fa-check"></i><b>1.4</b> Reproducibility of outdated articles about up-to-date R packages</a><ul>
 <li class="chapter" data-level="1.4.1" data-path="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html"><a href="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html#abstract-3"><i class="fa fa-check"></i><b>1.4.1</b> Abstract</a></li>
 <li class="chapter" data-level="1.4.2" data-path="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html"><a href="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html#introduction-and-motivation"><i class="fa fa-check"></i><b>1.4.2</b> Introduction and Motivation</a></li>
 <li class="chapter" data-level="1.4.3" data-path="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html"><a href="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html#related-work-1"><i class="fa fa-check"></i><b>1.4.3</b> Related Work</a></li>
@@ -172,8 +165,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.4.5" data-path="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html"><a href="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html#results-3"><i class="fa fa-check"></i><b>1.4.5</b> Results</a></li>
 <li class="chapter" data-level="1.4.6" data-path="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html"><a href="reproducibility-of-outdated-articles-about-up-to-date-r-packages.html#summary-and-conclusions-2"><i class="fa fa-check"></i><b>1.4.6</b> Summary and conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="correlation-between-reproducibility-of-research-papers-and-their-objective.html"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html"><i class="fa fa-check"></i><b>1.5</b> Correlation between reproducibility of research papers and their objective</a>
-<ul>
+<li class="chapter" data-level="1.5" data-path="correlation-between-reproducibility-of-research-papers-and-their-objective.html"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html"><i class="fa fa-check"></i><b>1.5</b> Correlation between reproducibility of research papers and their objective</a><ul>
 <li class="chapter" data-level="1.5.1" data-path="correlation-between-reproducibility-of-research-papers-and-their-objective.html"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#abstract-4"><i class="fa fa-check"></i><b>1.5.1</b> Abstract</a></li>
 <li class="chapter" data-level="1.5.2" data-path="correlation-between-reproducibility-of-research-papers-and-their-objective.html"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#introduction-and-motivation-1"><i class="fa fa-check"></i><b>1.5.2</b> Introduction and Motivation</a></li>
 <li class="chapter" data-level="1.5.3" data-path="correlation-between-reproducibility-of-research-papers-and-their-objective.html"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#related-work-2"><i class="fa fa-check"></i><b>1.5.3</b> Related Work</a></li>
@@ -181,16 +173,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.5.5" data-path="correlation-between-reproducibility-of-research-papers-and-their-objective.html"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#results-4"><i class="fa fa-check"></i><b>1.5.5</b> Results</a></li>
 <li class="chapter" data-level="1.5.6" data-path="correlation-between-reproducibility-of-research-papers-and-their-objective.html"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#summary-conclusions-and-encouragement"><i class="fa fa-check"></i><b>1.5.6</b> Summary, conclusions and encouragement</a></li>
 </ul></li>
-<li class="chapter" data-level="1.6" data-path="how-active-development-affects-reproducibility.html"><a href="how-active-development-affects-reproducibility.html"><i class="fa fa-check"></i><b>1.6</b> How active development affects reproducibility</a>
-<ul>
+<li class="chapter" data-level="1.6" data-path="how-active-development-affects-reproducibility.html"><a href="how-active-development-affects-reproducibility.html"><i class="fa fa-check"></i><b>1.6</b> How active development affects reproducibility</a><ul>
 <li class="chapter" data-level="1.6.1" data-path="how-active-development-affects-reproducibility.html"><a href="how-active-development-affects-reproducibility.html#abstract-5"><i class="fa fa-check"></i><b>1.6.1</b> Abstract</a></li>
 <li class="chapter" data-level="1.6.2" data-path="how-active-development-affects-reproducibility.html"><a href="how-active-development-affects-reproducibility.html#introduction-and-motivation-2"><i class="fa fa-check"></i><b>1.6.2</b> Introduction and Motivation</a></li>
 <li class="chapter" data-level="1.6.3" data-path="how-active-development-affects-reproducibility.html"><a href="how-active-development-affects-reproducibility.html#methodology-5"><i class="fa fa-check"></i><b>1.6.3</b> Methodology</a></li>
 <li class="chapter" data-level="1.6.4" data-path="how-active-development-affects-reproducibility.html"><a href="how-active-development-affects-reproducibility.html#results-5"><i class="fa fa-check"></i><b>1.6.4</b> Results</a></li>
 <li class="chapter" data-level="1.6.5" data-path="how-active-development-affects-reproducibility.html"><a href="how-active-development-affects-reproducibility.html#summary-and-conclusions-3"><i class="fa fa-check"></i><b>1.6.5</b> Summary and conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="1.7" data-path="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html"><a href="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html"><i class="fa fa-check"></i><b>1.7</b> Reproducibility differences of articles published in various journals and using R or Python language</a>
-<ul>
+<li class="chapter" data-level="1.7" data-path="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html"><a href="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html"><i class="fa fa-check"></i><b>1.7</b> Reproducibility differences of articles published in various journals and using R or Python language</a><ul>
 <li class="chapter" data-level="1.7.1" data-path="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html"><a href="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html#abstract-6"><i class="fa fa-check"></i><b>1.7.1</b> Abstract</a></li>
 <li class="chapter" data-level="1.7.2" data-path="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html"><a href="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html#introduction-and-motivation-3"><i class="fa fa-check"></i><b>1.7.2</b> Introduction and Motivation</a></li>
 <li class="chapter" data-level="1.7.3" data-path="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html"><a href="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html#methodology-6"><i class="fa fa-check"></i><b>1.7.3</b> Methodology</a></li>
@@ -198,10 +188,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.7.5" data-path="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html"><a href="reproducibility-differences-of-articles-published-in-various-journals-and-using-r-or-python-language.html#summary-and-conclusions-4"><i class="fa fa-check"></i><b>1.7.5</b> Summary and conclusions</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>2</b> Imputation</a>
-<ul>
-<li class="chapter" data-level="2.1" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html"><i class="fa fa-check"></i><b>2.1</b> Default imputation efficiency comparison</a>
-<ul>
+<li class="chapter" data-level="2" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>2</b> Imputation</a><ul>
+<li class="chapter" data-level="2.1" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html"><i class="fa fa-check"></i><b>2.1</b> Default imputation efficiency comparison</a><ul>
 <li class="chapter" data-level="2.1.1" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html#abstract-7"><i class="fa fa-check"></i><b>2.1.1</b> Abstract</a></li>
 <li class="chapter" data-level="2.1.2" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html#introduction-and-motivation-4"><i class="fa fa-check"></i><b>2.1.2</b> Introduction and Motivation</a></li>
 <li class="chapter" data-level="2.1.3" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html#related-work-3"><i class="fa fa-check"></i><b>2.1.3</b> Related Work</a></li>
@@ -209,39 +197,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.1.5" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html#results-7"><i class="fa fa-check"></i><b>2.1.5</b> Results</a></li>
 <li class="chapter" data-level="2.1.6" data-path="default-imputation-efficiency-comparison.html"><a href="default-imputation-efficiency-comparison.html#summary-and-conclusions-5"><i class="fa fa-check"></i><b>2.1.6</b> Summary and conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="the-hajada-imputation-test.html"><a href="the-hajada-imputation-test.html"><i class="fa fa-check"></i><b>2.2</b> The Hajada Imputation Test</a>
-<ul>
+<li class="chapter" data-level="2.2" data-path="the-hajada-imputation-test.html"><a href="the-hajada-imputation-test.html"><i class="fa fa-check"></i><b>2.2</b> The Hajada Imputation Test</a><ul>
 <li class="chapter" data-level="2.2.1" data-path="the-hajada-imputation-test.html"><a href="the-hajada-imputation-test.html#abstract-8"><i class="fa fa-check"></i><b>2.2.1</b> Abstract</a></li>
 <li class="chapter" data-level="2.2.2" data-path="the-hajada-imputation-test.html"><a href="the-hajada-imputation-test.html#introduction-and-motivation-5"><i class="fa fa-check"></i><b>2.2.2</b> Introduction and Motivation</a></li>
 <li class="chapter" data-level="2.2.3" data-path="the-hajada-imputation-test.html"><a href="the-hajada-imputation-test.html#methology"><i class="fa fa-check"></i><b>2.2.3</b> Methology</a></li>
 <li class="chapter" data-level="2.2.4" data-path="the-hajada-imputation-test.html"><a href="the-hajada-imputation-test.html#results-8"><i class="fa fa-check"></i><b>2.2.4</b> Results</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html"><a href="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html"><i class="fa fa-check"></i><b>2.3</b> Comparison of performance of data imputation methods in the context of their impact on the prediction efficiency of classification algorithms</a>
-<ul>
+<li class="chapter" data-level="2.3" data-path="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html"><a href="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html"><i class="fa fa-check"></i><b>2.3</b> Comparison of performance of data imputation methods in the context of their impact on the prediction efficiency of classification algorithms</a><ul>
 <li class="chapter" data-level="2.3.1" data-path="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html"><a href="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html#abstract-9"><i class="fa fa-check"></i><b>2.3.1</b> Abstract</a></li>
 <li class="chapter" data-level="2.3.2" data-path="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html"><a href="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html#introduction-and-motivation-6"><i class="fa fa-check"></i><b>2.3.2</b> Introduction and motivation</a></li>
 <li class="chapter" data-level="2.3.3" data-path="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html"><a href="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html#methodology-8"><i class="fa fa-check"></i><b>2.3.3</b> Methodology</a></li>
 <li class="chapter" data-level="2.3.4" data-path="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html"><a href="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html#results-9"><i class="fa fa-check"></i><b>2.3.4</b> Results</a></li>
 <li class="chapter" data-level="2.3.5" data-path="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html"><a href="comparison-of-performance-of-data-imputation-methods-in-the-context-of-their-impact-on-the-prediction-efficiency-of-classification-algorithms.html#summary-and-conclusions-7"><i class="fa fa-check"></i><b>2.3.5</b> Summary and conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="various-data-imputation-techniques-in-r.html"><a href="various-data-imputation-techniques-in-r.html"><i class="fa fa-check"></i><b>2.4</b> Various data imputation techniques in R</a>
-<ul>
+<li class="chapter" data-level="2.4" data-path="various-data-imputation-techniques-in-r.html"><a href="various-data-imputation-techniques-in-r.html"><i class="fa fa-check"></i><b>2.4</b> Various data imputation techniques in R</a><ul>
 <li class="chapter" data-level="2.4.1" data-path="various-data-imputation-techniques-in-r.html"><a href="various-data-imputation-techniques-in-r.html#abstract-10"><i class="fa fa-check"></i><b>2.4.1</b> Abstract</a></li>
 <li class="chapter" data-level="2.4.2" data-path="various-data-imputation-techniques-in-r.html"><a href="various-data-imputation-techniques-in-r.html#introduction-and-motivation-7"><i class="fa fa-check"></i><b>2.4.2</b> Introduction and motivation</a></li>
 <li class="chapter" data-level="2.4.3" data-path="various-data-imputation-techniques-in-r.html"><a href="various-data-imputation-techniques-in-r.html#methodology-9"><i class="fa fa-check"></i><b>2.4.3</b> Methodology</a></li>
 <li class="chapter" data-level="2.4.4" data-path="various-data-imputation-techniques-in-r.html"><a href="various-data-imputation-techniques-in-r.html#results-10"><i class="fa fa-check"></i><b>2.4.4</b> Results</a></li>
 <li class="chapter" data-level="2.4.5" data-path="various-data-imputation-techniques-in-r.html"><a href="various-data-imputation-techniques-in-r.html#summary-and-conclusions-8"><i class="fa fa-check"></i><b>2.4.5</b> Summary and conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="imputation-techniques-comparison-in-r-programming-language.html"><a href="imputation-techniques-comparison-in-r-programming-language.html"><i class="fa fa-check"></i><b>2.5</b> Imputation techniques’ comparison in R programming language</a>
-<ul>
+<li class="chapter" data-level="2.5" data-path="imputation-techniques-comparison-in-r-programming-language.html"><a href="imputation-techniques-comparison-in-r-programming-language.html"><i class="fa fa-check"></i><b>2.5</b> Imputation techniques’ comparison in R programming language</a><ul>
 <li class="chapter" data-level="2.5.1" data-path="imputation-techniques-comparison-in-r-programming-language.html"><a href="imputation-techniques-comparison-in-r-programming-language.html#abstract-11"><i class="fa fa-check"></i><b>2.5.1</b> Abstract</a></li>
 <li class="chapter" data-level="2.5.2" data-path="imputation-techniques-comparison-in-r-programming-language.html"><a href="imputation-techniques-comparison-in-r-programming-language.html#introduction-motivation"><i class="fa fa-check"></i><b>2.5.2</b> Introduction &amp; Motivation</a></li>
 <li class="chapter" data-level="2.5.3" data-path="imputation-techniques-comparison-in-r-programming-language.html"><a href="imputation-techniques-comparison-in-r-programming-language.html#methodology-10"><i class="fa fa-check"></i><b>2.5.3</b> Methodology</a></li>
 <li class="chapter" data-level="2.5.4" data-path="imputation-techniques-comparison-in-r-programming-language.html"><a href="imputation-techniques-comparison-in-r-programming-language.html#results-11"><i class="fa fa-check"></i><b>2.5.4</b> Results</a></li>
 <li class="chapter" data-level="2.5.5" data-path="imputation-techniques-comparison-in-r-programming-language.html"><a href="imputation-techniques-comparison-in-r-programming-language.html#conclusions"><i class="fa fa-check"></i><b>2.5.5</b> Conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="how-imputation-techniques-interact-with-machine-learning-algorithms.html"><a href="how-imputation-techniques-interact-with-machine-learning-algorithms.html"><i class="fa fa-check"></i><b>2.6</b> How imputation techniques interact with machine learning algorithms</a>
-<ul>
+<li class="chapter" data-level="2.6" data-path="how-imputation-techniques-interact-with-machine-learning-algorithms.html"><a href="how-imputation-techniques-interact-with-machine-learning-algorithms.html"><i class="fa fa-check"></i><b>2.6</b> How imputation techniques interact with machine learning algorithms</a><ul>
 <li class="chapter" data-level="2.6.1" data-path="how-imputation-techniques-interact-with-machine-learning-algorithms.html"><a href="how-imputation-techniques-interact-with-machine-learning-algorithms.html#abstract-12"><i class="fa fa-check"></i><b>2.6.1</b> Abstract</a></li>
 <li class="chapter" data-level="2.6.2" data-path="how-imputation-techniques-interact-with-machine-learning-algorithms.html"><a href="how-imputation-techniques-interact-with-machine-learning-algorithms.html#introduction-and-motivation-8"><i class="fa fa-check"></i><b>2.6.2</b> Introduction and Motivation</a></li>
 <li class="chapter" data-level="2.6.3" data-path="how-imputation-techniques-interact-with-machine-learning-algorithms.html"><a href="how-imputation-techniques-interact-with-machine-learning-algorithms.html#methodology-11"><i class="fa fa-check"></i><b>2.6.3</b> Methodology</a></li>
@@ -249,10 +232,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.6.5" data-path="how-imputation-techniques-interact-with-machine-learning-algorithms.html"><a href="how-imputation-techniques-interact-with-machine-learning-algorithms.html#summary-and-conclusions-9"><i class="fa fa-check"></i><b>2.6.5</b> Summary and conclusions</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="interpretability.html"><a href="interpretability.html"><i class="fa fa-check"></i><b>3</b> Interpretability</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html"><a href="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html"><i class="fa fa-check"></i><b>3.1</b> Building an explainable model for ordinal classification on Eucalyptus dataset. Meeting black box model performance levels.</a>
-<ul>
+<li class="chapter" data-level="3" data-path="interpretability.html"><a href="interpretability.html"><i class="fa fa-check"></i><b>3</b> Interpretability</a><ul>
+<li class="chapter" data-level="3.1" data-path="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html"><a href="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html"><i class="fa fa-check"></i><b>3.1</b> Building an explainable model for ordinal classification on Eucalyptus dataset. Meeting black box model performance levels.</a><ul>
 <li class="chapter" data-level="3.1.1" data-path="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html"><a href="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html#abstract-13"><i class="fa fa-check"></i><b>3.1.1</b> Abstract</a></li>
 <li class="chapter" data-level="3.1.2" data-path="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html"><a href="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html#introduction-and-motivation-9"><i class="fa fa-check"></i><b>3.1.2</b> 1. Introduction and Motivation</a></li>
 <li class="chapter" data-level="3.1.3" data-path="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html"><a href="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html#related-work-4"><i class="fa fa-check"></i><b>3.1.3</b> 2. Related Work</a></li>
@@ -262,8 +243,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1.7" data-path="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html"><a href="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html#summary-and-conclusions-10"><i class="fa fa-check"></i><b>3.1.7</b> 6. Summary and conclusions</a></li>
 <li class="chapter" data-level="3.1.8" data-path="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html"><a href="building-an-explainable-model-for-ordinal-classification-on-eucalyptus-dataset-meeting-black-box-model-performance-levels-.html#references-1"><i class="fa fa-check"></i><b>3.1.8</b> 7. References</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="predicting-code-defects-using-interpretable-static-measures-.html"><a href="predicting-code-defects-using-interpretable-static-measures-.html"><i class="fa fa-check"></i><b>3.2</b> Predicting code defects using interpretable static measures.</a>
-<ul>
+<li class="chapter" data-level="3.2" data-path="predicting-code-defects-using-interpretable-static-measures-.html"><a href="predicting-code-defects-using-interpretable-static-measures-.html"><i class="fa fa-check"></i><b>3.2</b> Predicting code defects using interpretable static measures.</a><ul>
 <li class="chapter" data-level="3.2.1" data-path="predicting-code-defects-using-interpretable-static-measures-.html"><a href="predicting-code-defects-using-interpretable-static-measures-.html#abstract-14"><i class="fa fa-check"></i><b>3.2.1</b> Abstract</a></li>
 <li class="chapter" data-level="3.2.2" data-path="predicting-code-defects-using-interpretable-static-measures-.html"><a href="predicting-code-defects-using-interpretable-static-measures-.html#introduction-and-motivation-10"><i class="fa fa-check"></i><b>3.2.2</b> Introduction and Motivation</a></li>
 <li class="chapter" data-level="3.2.3" data-path="predicting-code-defects-using-interpretable-static-measures-.html"><a href="predicting-code-defects-using-interpretable-static-measures-.html#dataset"><i class="fa fa-check"></i><b>3.2.3</b> Dataset</a></li>
@@ -271,8 +251,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.5" data-path="predicting-code-defects-using-interpretable-static-measures-.html"><a href="predicting-code-defects-using-interpretable-static-measures-.html#results-14"><i class="fa fa-check"></i><b>3.2.5</b> Results</a></li>
 <li class="chapter" data-level="3.2.6" data-path="predicting-code-defects-using-interpretable-static-measures-.html"><a href="predicting-code-defects-using-interpretable-static-measures-.html#summary-and-conclusions-11"><i class="fa fa-check"></i><b>3.2.6</b> Summary and conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html"><a href="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html"><i class="fa fa-check"></i><b>3.3</b> Using interpretable Machine Learning models in the Higgs boson detection.</a>
-<ul>
+<li class="chapter" data-level="3.3" data-path="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html"><a href="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html"><i class="fa fa-check"></i><b>3.3</b> Using interpretable Machine Learning models in the Higgs boson detection.</a><ul>
 <li class="chapter" data-level="3.3.1" data-path="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html"><a href="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html#abstract-15"><i class="fa fa-check"></i><b>3.3.1</b> Abstract</a></li>
 <li class="chapter" data-level="3.3.2" data-path="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html"><a href="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html#introduction-and-motivation-11"><i class="fa fa-check"></i><b>3.3.2</b> Introduction and Motivation</a></li>
 <li class="chapter" data-level="3.3.3" data-path="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html"><a href="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html#related-work-5"><i class="fa fa-check"></i><b>3.3.3</b> Related Work</a></li>
@@ -280,8 +259,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.5" data-path="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html"><a href="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html#results-15"><i class="fa fa-check"></i><b>3.3.5</b> Results</a></li>
 <li class="chapter" data-level="3.3.6" data-path="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html"><a href="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html#summary-and-conclusions-12"><i class="fa fa-check"></i><b>3.3.6</b> Summary and conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="can-automated-regression-beat-linear-model.html"><a href="can-automated-regression-beat-linear-model.html"><i class="fa fa-check"></i><b>3.4</b> Can Automated Regression beat linear model?</a>
-<ul>
+<li class="chapter" data-level="3.4" data-path="can-automated-regression-beat-linear-model.html"><a href="can-automated-regression-beat-linear-model.html"><i class="fa fa-check"></i><b>3.4</b> Can Automated Regression beat linear model?</a><ul>
 <li class="chapter" data-level="3.4.1" data-path="can-automated-regression-beat-linear-model.html"><a href="can-automated-regression-beat-linear-model.html#abstract-16"><i class="fa fa-check"></i><b>3.4.1</b> Abstract</a></li>
 <li class="chapter" data-level="3.4.2" data-path="can-automated-regression-beat-linear-model.html"><a href="can-automated-regression-beat-linear-model.html#introduction-and-motivation-12"><i class="fa fa-check"></i><b>3.4.2</b> Introduction and Motivation</a></li>
 <li class="chapter" data-level="3.4.3" data-path="can-automated-regression-beat-linear-model.html"><a href="can-automated-regression-beat-linear-model.html#data-1"><i class="fa fa-check"></i><b>3.4.3</b> Data</a></li>
@@ -289,24 +267,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4.5" data-path="can-automated-regression-beat-linear-model.html"><a href="can-automated-regression-beat-linear-model.html#results-16"><i class="fa fa-check"></i><b>3.4.5</b> Results</a></li>
 <li class="chapter" data-level="3.4.6" data-path="can-automated-regression-beat-linear-model.html"><a href="can-automated-regression-beat-linear-model.html#summary-and-conclusions-13"><i class="fa fa-check"></i><b>3.4.6</b> Summary and conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="3.5" data-path="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"><a href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"><i class="fa fa-check"></i><b>3.5</b> Interpretable, non-linear feature engineering techniques for linear regression models - exploration on concrete compressive strength dataset with a new feature importance metric.</a>
-<ul>
+<li class="chapter" data-level="3.5" data-path="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"><a href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"><i class="fa fa-check"></i><b>3.5</b> Interpretable, non-linear feature engineering techniques for linear regression models - exploration on concrete compressive strength dataset with a new feature importance metric.</a><ul>
 <li class="chapter" data-level="3.5.1" data-path="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"><a href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html#abstract-17"><i class="fa fa-check"></i><b>3.5.1</b> Abstract</a></li>
 <li class="chapter" data-level="3.5.2" data-path="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"><a href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html#introduction-and-related-works"><i class="fa fa-check"></i><b>3.5.2</b> Introduction and Related Works</a></li>
 <li class="chapter" data-level="3.5.3" data-path="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"><a href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html#methodology-16"><i class="fa fa-check"></i><b>3.5.3</b> Methodology</a></li>
 <li class="chapter" data-level="3.5.4" data-path="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"><a href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html#results-17"><i class="fa fa-check"></i><b>3.5.4</b> Results</a></li>
 <li class="chapter" data-level="3.5.5" data-path="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"><a href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html#summary-and-conclusions-14"><i class="fa fa-check"></i><b>3.5.5</b> Summary and conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="3.6" data-path="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html"><a href="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html"><i class="fa fa-check"></i><b>3.6</b> Surpassing black box model’s performance on unbalanced data with an interpretable one using advanced feature engineering</a>
-<ul>
+<li class="chapter" data-level="3.6" data-path="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html"><a href="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html"><i class="fa fa-check"></i><b>3.6</b> Surpassing black box model’s performance on unbalanced data with an interpretable one using advanced feature engineering</a><ul>
 <li class="chapter" data-level="3.6.1" data-path="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html"><a href="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html#abstract-18"><i class="fa fa-check"></i><b>3.6.1</b> Abstract</a></li>
 <li class="chapter" data-level="3.6.2" data-path="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html"><a href="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html#introduction-and-motivation-13"><i class="fa fa-check"></i><b>3.6.2</b> Introduction and Motivation</a></li>
 <li class="chapter" data-level="3.6.3" data-path="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html"><a href="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html#data-2"><i class="fa fa-check"></i><b>3.6.3</b> Data</a></li>
 <li class="chapter" data-level="3.6.4" data-path="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html"><a href="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html#related-work-6"><i class="fa fa-check"></i><b>3.6.4</b> Related work</a></li>
 <li class="chapter" data-level="3.6.5" data-path="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html"><a href="surpassing-black-box-models-performance-on-unbalanced-data-with-an-interpretable-one-using-advanced-feature-engineering.html#methodology-17"><i class="fa fa-check"></i><b>3.6.5</b> Methodology</a></li>
 </ul></li>
-<li class="chapter" data-level="3.7" data-path="which-neighbours-affected-house-prices-in-the-90s.html"><a href="which-neighbours-affected-house-prices-in-the-90s.html"><i class="fa fa-check"></i><b>3.7</b> Which Neighbours Affected House Prices in the ’90s?</a>
-<ul>
+<li class="chapter" data-level="3.7" data-path="which-neighbours-affected-house-prices-in-the-90s.html"><a href="which-neighbours-affected-house-prices-in-the-90s.html"><i class="fa fa-check"></i><b>3.7</b> Which Neighbours Affected House Prices in the ’90s?</a><ul>
 <li class="chapter" data-level="3.7.1" data-path="which-neighbours-affected-house-prices-in-the-90s.html"><a href="which-neighbours-affected-house-prices-in-the-90s.html#abstract-19"><i class="fa fa-check"></i><b>3.7.1</b> Abstract</a></li>
 <li class="chapter" data-level="3.7.2" data-path="which-neighbours-affected-house-prices-in-the-90s.html"><a href="which-neighbours-affected-house-prices-in-the-90s.html#introduction-2"><i class="fa fa-check"></i><b>3.7.2</b> Introduction</a></li>
 <li class="chapter" data-level="3.7.3" data-path="which-neighbours-affected-house-prices-in-the-90s.html"><a href="which-neighbours-affected-house-prices-in-the-90s.html#related-work-7"><i class="fa fa-check"></i><b>3.7.3</b> Related Work</a></li>
@@ -315,8 +290,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.7.6" data-path="which-neighbours-affected-house-prices-in-the-90s.html"><a href="which-neighbours-affected-house-prices-in-the-90s.html#results-18"><i class="fa fa-check"></i><b>3.7.6</b> Results</a></li>
 <li class="chapter" data-level="3.7.7" data-path="which-neighbours-affected-house-prices-in-the-90s.html"><a href="which-neighbours-affected-house-prices-in-the-90s.html#conclusions-1"><i class="fa fa-check"></i><b>3.7.7</b> Conclusions</a></li>
 </ul></li>
-<li class="chapter" data-level="3.8" data-path="explainable-computer-vision-with-embeddings-and-knn-classifier.html"><a href="explainable-computer-vision-with-embeddings-and-knn-classifier.html"><i class="fa fa-check"></i><b>3.8</b> Explainable Computer Vision with embeddings and KNN classifier</a>
-<ul>
+<li class="chapter" data-level="3.8" data-path="explainable-computer-vision-with-embeddings-and-knn-classifier.html"><a href="explainable-computer-vision-with-embeddings-and-knn-classifier.html"><i class="fa fa-check"></i><b>3.8</b> Explainable Computer Vision with embeddings and KNN classifier</a><ul>
 <li class="chapter" data-level="3.8.1" data-path="explainable-computer-vision-with-embeddings-and-knn-classifier.html"><a href="explainable-computer-vision-with-embeddings-and-knn-classifier.html#abstract-20"><i class="fa fa-check"></i><b>3.8.1</b> Abstract</a></li>
 <li class="chapter" data-level="3.8.2" data-path="explainable-computer-vision-with-embeddings-and-knn-classifier.html"><a href="explainable-computer-vision-with-embeddings-and-knn-classifier.html#introduction-3"><i class="fa fa-check"></i><b>3.8.2</b> 3.8.1 Introduction</a></li>
 <li class="chapter" data-level="3.8.3" data-path="explainable-computer-vision-with-embeddings-and-knn-classifier.html"><a href="explainable-computer-vision-with-embeddings-and-knn-classifier.html#data-4"><i class="fa fa-check"></i><b>3.8.3</b> 3.8.2 Data</a></li>
@@ -351,14 +325,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="correlation-between-reproducibility-of-research-papers-and-their-objective" class="section level2" number="1.5">
+<div id="correlation-between-reproducibility-of-research-papers-and-their-objective" class="section level2">
 <h2><span class="header-section-number">1.5</span> Correlation between reproducibility of research papers and their objective</h2>
 <p><em>Authors: Przemysław Chojecki, Kacper Staroń, Jakub Szypuła (Warsaw University of Technology)</em></p>
-<div id="abstract-4" class="section level3" number="1.5.1">
+<div id="abstract-4" class="section level3">
 <h3><span class="header-section-number">1.5.1</span> Abstract</h3>
 <p>Reproducibility is a quality of research crucial for modern science. But is perfect reproducibility an ultimate requirement for every element of scientific process to be valid? Not necessarily, it is possible that important factor in this case will be purpose of given part of research. In this article we will attempt to provide a system of analyzing reproducibility of scientific papers involving mainly the purpose of theirs elements and search for dependencies between those variables.</p>
 </div>
-<div id="introduction-and-motivation-1" class="section level3" number="1.5.2">
+<div id="introduction-and-motivation-1" class="section level3">
 <h3><span class="header-section-number">1.5.2</span> Introduction and Motivation</h3>
 <p>It is common knowledge that reproducibility is a way for science to evolve. It is the heart of the scientific method to revisit pre-existing measurements and to try to reproduce its results. However, the term „reproducibility” itself, as well it is crucial to the scientific methodology, it can be also universal at the expense of unambiguousness and usability.<br />
 For the purpose of this paper we will have recourse to the definition introduced by ACM:<br />
@@ -367,18 +341,18 @@ This particular definition ilustrates perfectly how in the course of establishin
 In the following chapters we will attempt to perform an analysis of reproducibility of the papers submitted to the RJournal, regarding especially presumed objectives of enclosed auxilliary computations and artifacts (i. e. code chunks) in overarching structure of a given paper.<br />
 </p>
 </div>
-<div id="related-work-2" class="section level3" number="1.5.3">
+<div id="related-work-2" class="section level3">
 <h3><span class="header-section-number">1.5.3</span> Related Work</h3>
 <p>Although there are many research papers related to this article, the following three could be perceived as a “basis” for our study.<br />
-1. Daniel Mendez, Daniel Graziotin, Stefan Wagner, and Heidi Seibold provides a definition of reproducibility this article uses, and distinguishes it from replicability<span class="citation">(Fern’andez et al. <a href="#ref-Mendez2019defRepr" role="doc-biblioref">2019</a>)</span>.<br />
-2. Steven N. Goodman, Daniele Fanelli and John P. A. Ioannidis defines multiple interpretations of reproducibility. It further divides and classifies reproducibility, and provides a basis on how one can do it<span class="citation">(Goodman, Fanelli, and Ioannidis <a href="#ref-Goodman341ps12" role="doc-biblioref">2016</a><a href="#ref-Goodman341ps12" role="doc-biblioref">a</a>)</span>.<br />
+1. Daniel Mendez, Daniel Graziotin, Stefan Wagner, and Heidi Seibold provides a definition of reproducibility this article uses, and distinguishes it from replicability<span class="citation">(Fern’andez et al. <a href="#ref-Mendez2019defRepr">2019</a>)</span>.<br />
+2. Steven N. Goodman, Daniele Fanelli and John P. A. Ioannidis defines multiple interpretations of reproducibility. It further divides and classifies reproducibility, and provides a basis on how one can do it<span class="citation">(Goodman, Fanelli, and Ioannidis <a href="#ref-Goodman341ps12">2016</a><a href="#ref-Goodman341ps12">a</a>)</span>.<br />
 </p>
 <p>In their search the authors have not encountered other research papers that study the aspect of reproducibility this article focuses on. If said papers do not actually exist, then this article could provide insights on previously unexamined aspects of reproducibility.<br />
 </p>
 </div>
-<div id="methodology-4" class="section level3" number="1.5.4">
+<div id="methodology-4" class="section level3">
 <h3><span class="header-section-number">1.5.4</span> Methodology</h3>
-<div id="general-approach" class="section level4" number="1.5.4.1">
+<div id="general-approach" class="section level4">
 <h4><span class="header-section-number">1.5.4.1</span> General approach</h4>
 <p>The methodology presented in the following section is a direct consequence of how we approach scientific article as an experience devised by an author for the reader. Our focus is to determine, how author alter this experience by using code chunks instead of plain text. In other words, we ask a question “Why have the authors used the <code>R</code> code?”
 Assumption that execution of enclosed code is an integral part of said experience and by extension code chunks supposed to be reproducible for reader to percept the article as intended seems to be reasonable.
@@ -392,10 +366,10 @@ We have gathered the code chunks into groups and considered a three degree of pu
 Then we have produced our measure of reproducibility, which is also detailed later.<br />
 </p>
 </div>
-<div id="objectives" class="section level4" number="1.5.4.2">
+<div id="objectives" class="section level4">
 <h4><span class="header-section-number">1.5.4.2</span> Objectives</h4>
 <p>Since this article is centred around objectives, our understanding of them is of utmost importance. That is why we divided them into three categories, further divided into classes. We described them in detail in the sections below. To limit our individual biases in assessing what the intended objective is, we referred to relevant paragraphs in the original research paper. It has to be noted, that an object (let it be an article, a group of chunks or a chunk) can have more than one objective.</p>
-<div id="main-objectives" class="section level5" number="1.5.4.2.1">
+<div id="main-objectives" class="section level5">
 <h5><span class="header-section-number">1.5.4.2.1</span> Main Objectives</h5>
 <p>Both code chunks by themselves and performed computations corresponding with them can provide wide variety of information. However we can identify and describe reasons why the programming language is present in general in a given paper. All code chunks serve together as a vital element supporting narration of the article and its objective usually can be identified with main objective of narration in article as a whole.</p>
 <p>We systematized main objectives and grouped them into the following general objectives:</p>
@@ -408,7 +382,7 @@ Then we have produced our measure of reproducibility, which is also detailed lat
 <li>error identification - recognising and presenting error in existing package, possibly submit alternative solution covering mentioned error</li>
 </ul>
 </div>
-<div id="intermediate-objectives" class="section level5" number="1.5.4.2.2">
+<div id="intermediate-objectives" class="section level5">
 <h5><span class="header-section-number">1.5.4.2.2</span> Intermediate Objectives</h5>
 <p>Since code chunks in research papers seldom appear on their own, but rather are part of a larger group of chunks serving a certain purpose. For instance, let there be three chunks, named A, B, and C. Let A load data from an external source, B modifies the data and extract a subset of it, and let C generate a plot, based on the data obtained from the two previous chunks. While each chunk has its own distinct objective, together they have at least common one - in this example this is generating a plot. Plot generated by A, B and C can be used to compare between performance of various functions. These chunk group’s objectives we define as intermediate objectives.</p>
 <p>We systematized intermediate objectives and grouped them into the following general objectives:</p>
@@ -424,7 +398,7 @@ Then we have produced our measure of reproducibility, which is also detailed lat
 <li>possible error - description of a possible error one can encounter and how one can solve it.</li>
 </ul>
 </div>
-<div id="chunk-objectives" class="section level5" number="1.5.4.2.3">
+<div id="chunk-objectives" class="section level5">
 <h5><span class="header-section-number">1.5.4.2.3</span> Chunk Objectives</h5>
 <p>Each chunk has a role - it serves one or more purposes, which we define as chunk objectives.</p>
 <p>We systematized chunk objectives and grouped them into the following general objectives:</p>
@@ -449,7 +423,7 @@ Then we have produced our measure of reproducibility, which is also detailed lat
 </ul>
 </div>
 </div>
-<div id="reproducibility-1" class="section level4" number="1.5.4.3">
+<div id="reproducibility-1" class="section level4">
 <h4><span class="header-section-number">1.5.4.3</span> Reproducibility</h4>
 <p>The sole purpose of this paper is to explore interactions between purposes of code chunks usage and reproducibility aberrations. That requires a system of classification of reproducibility.
 We provide simple categorization of forms of reproducibility into the 6 types. This classification system shall serve as a tool for initial phase of our analysis, thus it is not directly involving purpose of discussed code at this stage.</p>
@@ -462,10 +436,10 @@ We provide simple categorization of forms of reproducibility into the 6 types. T
 <li>-1 - missing point of reference - article does not provide (or vaguely provides) expected performence and determining reproducilibity is impossible</li>
 </ul>
 </div>
-<div id="tables-description" class="section level4" number="1.5.4.4">
+<div id="tables-description" class="section level4">
 <h4><span class="header-section-number">1.5.4.4</span> Tables description</h4>
 <p>For analysis purposes we have gathered data from randomly selected scientific papers in <code>The R Journal</code> and arranged them into 3 distinct tables stored in 3 .csv files.</p>
-<div id="table-of-articles" class="section level5" number="1.5.4.4.1">
+<div id="table-of-articles" class="section level5">
 <h5><span class="header-section-number">1.5.4.4.1</span> Table of articles</h5>
 <p>Every row represents one article contains information about sum of lengths of the code chunks in given article and its general purpose, one-hot encoded (6 categories).</p>
 <table>
@@ -503,7 +477,7 @@ We provide simple categorization of forms of reproducibility into the 6 types. T
 </tbody>
 </table>
 </div>
-<div id="table-of-groups" class="section level5" number="1.5.4.4.2">
+<div id="table-of-groups" class="section level5">
 <h5><span class="header-section-number">1.5.4.4.2</span> Table of groups</h5>
 <p>Every row represents one group of chunks and cointains information about sum of lengths of the code chunks in given group and its general purpose, one-hot encoded (9 categories).</p>
 <table>
@@ -541,7 +515,7 @@ We provide simple categorization of forms of reproducibility into the 6 types. T
 </tbody>
 </table>
 </div>
-<div id="table-of-chunks" class="section level5" number="1.5.4.4.3">
+<div id="table-of-chunks" class="section level5">
 <h5><span class="header-section-number">1.5.4.4.3</span> Table of chunks</h5>
 <p>Every row represents one chunk and contains information its length, reproducibility and its general purpose, one-hot encoded (17 categories).</p>
 <table>
@@ -579,7 +553,7 @@ We provide simple categorization of forms of reproducibility into the 6 types. T
 </tbody>
 </table>
 </div>
-<div id="length-assessment" class="section level5" number="1.5.4.4.4">
+<div id="length-assessment" class="section level5">
 <h5><span class="header-section-number">1.5.4.4.4</span> Length assessment</h5>
 <p>To objectively determine a length of code we have decided to count it according to the following rules:<br />
 * ignore all empty and commented lines<br />
@@ -590,62 +564,62 @@ We provide simple categorization of forms of reproducibility into the 6 types. T
 </div>
 </div>
 </div>
-<div id="results-4" class="section level3" number="1.5.5">
+<div id="results-4" class="section level3">
 <h3><span class="header-section-number">1.5.5</span> Results</h3>
 <p>In this section, we perform a basic analysis of the data we have gathered during our study.</p>
-<div id="preliminary-analysis" class="section level4" number="1.5.5.1">
+<div id="preliminary-analysis" class="section level4">
 <h4><span class="header-section-number">1.5.5.1</span> Preliminary analysis</h4>
 <p>The data can be loaded by:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb2-1"></a>art &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./1-6-files/articles.csv&quot;</span>)</span>
-<span id="cb2-2"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb2-2"></a>chnk &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./1-6-files/chunks.csv&quot;</span>)</span>
-<span id="cb2-3"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb2-3"></a>grp &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./1-6-files/groups.csv&quot;</span>)</span>
-<span id="cb2-4"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb2-4"></a></span>
-<span id="cb2-5"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb2-5"></a><span class="kw">library</span>(dplyr)</span>
-<span id="cb2-6"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb2-6"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb2-7"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb2-7"></a><span class="kw">library</span>(reshape2)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">art &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./1-6-files/articles.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb2-2" title="2">chnk &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./1-6-files/chunks.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb2-3" title="3">grp &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./1-6-files/groups.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb2-4" title="4"></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="kw">library</span>(reshape2)</a></code></pre></div>
 <p>Frequency of every reproducibility score can be obtained by:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb3-1"></a><span class="co"># frequency of every reproducibility score</span></span>
-<span id="cb3-2"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb3-2"></a>chnk <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(reproducibility.scale) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">table</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># frequency of every reproducibility score</span></a>
+<a class="sourceLine" id="cb3-2" title="2">chnk <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(reproducibility.scale) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">table</span>()</a></code></pre></div>
 <pre><code>## .
 ##  -1   0   1   2   3   4   5 
 ##  33   1 194  45  11  13  41</code></pre>
 <p>As we can see, most chunks were fully reproducible, with total areproducibility being the second most common occurence.
 What further can be analysed is how reproducible is each objective, how often it occurs and the total length of each objective (i.e. sum of length in lines of all chunks containing specific objective). This analysis can be achieved by the following code:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-1"></a><span class="co"># mean reproduciblity scale score for reach objective</span></span>
-<span id="cb5-2"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-2"></a>mean_repr &lt;-<span class="st"> </span>chnk[<span class="op">-</span><span class="dv">1</span>,] <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb5-3"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-3"></a><span class="st">  </span><span class="kw">sapply</span>(<span class="cf">function</span>(x){x<span class="op">*</span>chnk[<span class="op">-</span><span class="dv">1</span>,]<span class="op">$</span>reproducibility.scale}) <span class="op">%&gt;%</span><span class="st"> </span>data.frame <span class="op">%&gt;%</span></span>
-<span id="cb5-4"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-4"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>reproducibility.scale, <span class="op">-</span>length)</span>
-<span id="cb5-5"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-5"></a>mean_repr[mean_repr<span class="op">==</span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></span>
-<span id="cb5-6"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-6"></a>mean_repr[mean_repr<span class="op">==-</span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></span>
-<span id="cb5-7"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-7"></a>mean_repr &lt;-<span class="st"> </span><span class="kw">summarize_if</span>(mean_repr, is.numeric, mean, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span>melt</span>
-<span id="cb5-8"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-8"></a><span class="kw">colnames</span>(mean_repr)[<span class="dv">2</span>] &lt;-<span class="st"> &quot;mean_repr_score&quot;</span></span>
-<span id="cb5-9"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-9"></a></span>
-<span id="cb5-10"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-10"></a><span class="co"># length for every objective</span></span>
-<span id="cb5-11"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-11"></a>licznik &lt;-<span class="st"> </span>chnk <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>length, <span class="op">-</span>reproducibility.scale) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise_all</span>(sum) <span class="op">%&gt;%</span><span class="st"> </span>melt</span>
-<span id="cb5-12"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-12"></a>tot_length &lt;-<span class="st"> </span>chnk <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>reproducibility.scale) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">melt</span>(<span class="dt">id.vars =</span> <span class="st">&quot;length&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb5-13"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-13"></a><span class="st">  </span><span class="kw">filter</span>(value) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>value) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(variable) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">total_length =</span> <span class="kw">sum</span>(length))</span>
-<span id="cb5-14"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-14"></a>mean_repr &lt;-<span class="st"> </span><span class="kw">inner_join</span>(<span class="kw">inner_join</span>(tot_length, licznik), mean_repr, <span class="dt">by =</span> <span class="st">&quot;variable&quot;</span>)</span>
-<span id="cb5-15"><a href="correlation-between-reproducibility-of-research-papers-and-their-objective.html#cb5-15"></a><span class="kw">arrange</span>(mean_repr, mean_repr_score)</span></code></pre></div>
-<pre><code>## [90m# A tibble: 17 x 4[39m
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># mean reproduciblity scale score for reach objective</span></a>
+<a class="sourceLine" id="cb5-2" title="2">mean_repr &lt;-<span class="st"> </span>chnk[<span class="op">-</span><span class="dv">1</span>,] <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="st">  </span><span class="kw">sapply</span>(<span class="cf">function</span>(x){x<span class="op">*</span>chnk[<span class="op">-</span><span class="dv">1</span>,]<span class="op">$</span>reproducibility.scale}) <span class="op">%&gt;%</span><span class="st"> </span>data.frame <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>reproducibility.scale, <span class="op">-</span>length)</a>
+<a class="sourceLine" id="cb5-5" title="5">mean_repr[mean_repr<span class="op">==</span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb5-6" title="6">mean_repr[mean_repr<span class="op">==-</span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb5-7" title="7">mean_repr &lt;-<span class="st"> </span><span class="kw">summarize_if</span>(mean_repr, is.numeric, mean, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span>melt</a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="kw">colnames</span>(mean_repr)[<span class="dv">2</span>] &lt;-<span class="st"> &quot;mean_repr_score&quot;</span></a>
+<a class="sourceLine" id="cb5-9" title="9"></a>
+<a class="sourceLine" id="cb5-10" title="10"><span class="co"># length for every objective</span></a>
+<a class="sourceLine" id="cb5-11" title="11">licznik &lt;-<span class="st"> </span>chnk <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>length, <span class="op">-</span>reproducibility.scale) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise_all</span>(sum) <span class="op">%&gt;%</span><span class="st"> </span>melt</a>
+<a class="sourceLine" id="cb5-12" title="12">tot_length &lt;-<span class="st"> </span>chnk <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>reproducibility.scale) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">melt</span>(<span class="dt">id.vars =</span> <span class="st">&quot;length&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-13" title="13"><span class="st">  </span><span class="kw">filter</span>(value) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>value) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(variable) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">total_length =</span> <span class="kw">sum</span>(length))</a>
+<a class="sourceLine" id="cb5-14" title="14">mean_repr &lt;-<span class="st"> </span><span class="kw">inner_join</span>(<span class="kw">inner_join</span>(tot_length, licznik), mean_repr, <span class="dt">by =</span> <span class="st">&quot;variable&quot;</span>)</a>
+<a class="sourceLine" id="cb5-15" title="15"><span class="kw">arrange</span>(mean_repr, mean_repr_score)</a></code></pre></div>
+<pre><code>## # A tibble: 17 x 4
 ##    variable          total_length value mean_repr_score
-##    [3m[90m&lt;fct&gt;[39m[23m                    [3m[90m&lt;int&gt;[39m[23m [3m[90m&lt;int&gt;[39m[23m           [3m[90m&lt;dbl&gt;[39m[23m
-## [90m 1[39m results.processi…            5     4            1   
-## [90m 2[39m presentation.of.…          174    74            1.21
-## [90m 3[39m foreign.error               34     6            1.33
-## [90m 4[39m data.exploration            43    13            1.42
-## [90m 5[39m data.preparation           365    59            1.43
-## [90m 6[39m solving.a.problem          247    40            1.44
-## [90m 7[39m erroneous.action             7     3            1.5 
-## [90m 8[39m empirical.proof             78    19            1.68
-## [90m 9[39m instruction..pac…          513   124            1.70
-## [90m10[39m instruction                264    35            1.76
-## [90m11[39m data.modification           98    23            1.83
-## [90m12[39m comparison.to.fo…           42     7            1.86
-## [90m13[39m functional.examp…          456   129            2.26
-## [90m14[39m plot                       247    60            2.36
-## [90m15[39m aesthethic.examp…          182    41            2.46
-## [90m16[39m generating.files            64    19            2.83
-## [90m17[39m uncallable.code             74    21          [31mNaN[39m</code></pre>
+##    &lt;fct&gt;                    &lt;int&gt; &lt;int&gt;           &lt;dbl&gt;
+##  1 results.processi~            5     4            1   
+##  2 presentation.of.~          174    74            1.21
+##  3 foreign.error               34     6            1.33
+##  4 data.exploration            43    13            1.42
+##  5 data.preparation           365    59            1.43
+##  6 solving.a.problem          247    40            1.44
+##  7 erroneous.action             7     3            1.5 
+##  8 empirical.proof             78    19            1.68
+##  9 instruction..pac~          513   124            1.70
+## 10 instruction                264    35            1.76
+## 11 data.modification           98    23            1.83
+## 12 comparison.to.fo~           42     7            1.86
+## 13 functional.examp~          456   129            2.26
+## 14 plot                       247    60            2.36
+## 15 aesthethic.examp~          182    41            2.46
+## 16 generating.files            64    19            2.83
+## 17 uncallable.code             74    21          NaN</code></pre>
 <p>As it is shown, objectives vary in their mean reproducibility score with examples scoring worse than instructions and results presentation better than plots.</p>
 <p>On the following plot higher the value of variable - worst level of reproducibility. Exact values should not be interpreted as continuous variable, legitimite information can be obtained by analyzing order of categories sorted with regard to their avarage reproducibility score.</p>
 <p><img src="1-6-files/reprodukowalnosc_celu_chunki.png" alt="text" /><br />
@@ -654,24 +628,24 @@ What further can be analysed is how reproducible is each objective, how often it
 Moreover, both <code>aesthetic example</code> and <code>functional example</code> values are almost the highest, what may indicate that in general authors put relatively low effort into them, since their perfect reproducibility may not be essential to the article as a whole.
 During our analysis <code>result processing</code> chunks were encountered only <span class="math inline">\(4\)</span> times and all of them were reproducible, which in our opinion is not a basis for stating any meanigful conclusions.</p>
 </div>
-<div id="frequency-of-objectives" class="section level4" number="1.5.5.2">
+<div id="frequency-of-objectives" class="section level4">
 <h4><span class="header-section-number">1.5.5.2</span> Frequency of objectives</h4>
 <p>Next, we will visualize the frequency of occurences of every objective, for every category.</p>
 <div class="figure">
-<img src="1-6-files/chunk_freq.png" alt="" />
+<img src="1-6-files/chunk_freq.png" alt="text" />
 <p class="caption">text</p>
 </div>
 <div class="figure">
-<img src="1-6-files/group_freq.png" alt="" />
+<img src="1-6-files/group_freq.png" alt="text" />
 <p class="caption">text</p>
 </div>
 <div class="figure">
-<img src="1-6-files/art_freq.png" alt="" />
+<img src="1-6-files/art_freq.png" alt="text" />
 <p class="caption">text</p>
 </div>
 <p>After the objectives are sorted with regard to their frequency, one can see that they appear to be similar to 1/x function plot. It indicates that certain objectives are far more frequent than others, while the less popular ones remain at similar levels of frequency.</p>
 </div>
-<div id="average-length" class="section level4" number="1.5.5.3">
+<div id="average-length" class="section level4">
 <h4><span class="header-section-number">1.5.5.3</span> Average length</h4>
 <p>Average length of a code chunk with a specific objective:</p>
 <p><img src="1-6-files/srednia_dlugosc_celu_chunki.png" alt="text" /><br />
@@ -689,7 +663,7 @@ During our analysis <code>result processing</code> chunks were encountered only 
 <p>Clearly <code>error identifaction</code> articles include the gratest amount of code, probably for the same reasons as <code>porownanie.metod</code> in the group objectives. It can be space and timeconsuming to showcase the solution to a problem with a package, without a package and point out precisely the difference between them.<br />
 </p>
 </div>
-<div id="objectives-correlations-matrices" class="section level4" number="1.5.5.4">
+<div id="objectives-correlations-matrices" class="section level4">
 <h4><span class="header-section-number">1.5.5.4</span> Objectives correlations matrices</h4>
 <p>Two important conclusions can be drawn from the correlation matrix. First - there is no strong correlation between individual objectives, which may imply that the objectives proposed by us do not overlap heavily. Second - correlation between the reproducibility score and individual objectives is also not that high. Because of that we cannot be certain whether there is a clear link between reproducibility score and objective of any given chunk. However, after closer inspection of the following matrices, we can formulate few additional general observations.</p>
 <p><img src="1-6-files/korelacje_celu_chunki2.png" alt="text" /><br />
@@ -708,7 +682,7 @@ On featured main objectives correalation matrix we can observe how:
 </p>
 </div>
 </div>
-<div id="summary-conclusions-and-encouragement" class="section level3" number="1.5.6">
+<div id="summary-conclusions-and-encouragement" class="section level3">
 <h3><span class="header-section-number">1.5.6</span> Summary, conclusions and encouragement</h3>
 <p>For purpose of research described in this article we developed an intuitive system of objectives classifaction of singular code chunks, groups of chunks and whole scientific papers concerning development of programming languageges (in this case - <code>R</code>). Initial analysis of the data acquired by using mentioned system may imply that lists of objectives proposed by us do not overlap heavily and therefore they indeed can be used as valid scientific method.
 To sum up the effects of applying this method for a selection of the scientific articles from <code>The R Journal</code>, correlation between the reproducibility score and individual objectives is not significantly high. It may indicate that dataset considered in this paper is simply not extensive enough. We sincerely encourage readers to perform their own analysis on wide variety of scientific articles not covered in this paper, preprocessed using developed system.</p>
