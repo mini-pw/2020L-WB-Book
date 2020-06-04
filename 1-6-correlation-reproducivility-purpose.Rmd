@@ -252,7 +252,7 @@ Clearly `error identifaction` articles include the gratest amount of code, proba
 Two important conclusions can be drawn from the correlation matrix. First - there is no strong correlation between individual objectives, which may imply that the objectives proposed by us do not overlap heavily. Second - correlation between the reproducibility score and individual objectives is also not that high. Because of that we cannot be certain whether there is a clear link between reproducibility score and objective of any given chunk. However, after closer inspection of the following matrices, we can formulate few additional general observations.
 
 
-![text](./1-6-files/korelacje_celu_chunki.png)
+![text](./1-6-files/korelacje_celu_chunki2.png)
 \
 On featured chunks objectives correalation matrix we can observe how:
 * There is a positive correlation between `comparison to foreign work` and `empirical proof`. However it is rather an effect of a small amount of data. There were only $7$ instances of `comparison to foreign work` and $4$ of them are also `empirical proof`.
