@@ -32,17 +32,17 @@ The four methods of feature transformation compared in the article include:
 
 1. By-hand-transformations - through a trial-and-error approach we derive feature transformations that allow the linear regression models to yield better results. We use our expertise and experience with previous datasets to get possibly best transformations which are available though such process. They include taking the features to up to third power, taking logarithm, sinus, cosinus or square root of the features.
 
-2. Brute Force method - this method of data transformation generates huge amount of additional features being transformations of the existing features. We allow taking each feature up to the third power, taking sinus and cosinus of each feature and additionaly a product of each pair of features. The resulting dataset has 69 variables including the target (in comparison with 9 variables in the beginning).
+2. Brute Force method - this method of data transformation generates huge amount of additional features being transformations of the existing features. We allow taking each feature up to the third power, taking sinus and cosinus of each feature and additionaly a product of each pair of features. The resulting dataset has 68 variables including the target (in comparison with 9 variables in the beginning).
 
-3. Bayesian Optimization method [@BO] - we treat the task of finding optimal data transformation as an optimization problem. We restrict the number of transformations and their type - we create one additional feature for each feature present in the dataset being its $x$-th power, where $x$ is calculated through the process of Bayesian optimization. It allows us to keep the dimension of the dataset relatively small while improving the model's performance. We allowed the exponents to be chosen from interval $(1, 4]$.
+3. Bayesian Optimization method [@BO] - we treat the task of finding optimal data transformation as an optimization problem. We restrict the number of transformations and their type - we create one additional feature for each feature present in the dataset being its $x$-th power, where $x$ is calculated through the process of Bayesian optimization. It allows us to keep the dimension of the dataset relatively small while improving the model's performance. We allowed the exponents to be chosen from interval $(1, 4]$. We will refer to these transformations as bayesian transformations.
 
-4. One of our ideas is to use Genetic Programming (GP) to find the best feature transformations. Our goal is to find a set of simple feature transformations (not necessarily unary) that will significantly boost the ordinary linear regression model performance. We will create a set of simple operations such as adding, multiplying, taking a second power, taking logarithm and so on. Each transformation is based only on these operations and specified input variables. Each genetic program tries to minimize MSE of predicting the target, thus trying to save as much information as possible in a single output variable constructed on a subset of all the input features. We will use a variation of the genetic algorithms to create an operation tree minimizing our goal. Before we fit the final model, that is the ordinary linear regression, first we select the variables to transform. The resulting linear regression is calculated on the transformed and selected variables at the very end. To summarize, each operation tree calculates one variable, but this variable may not be included at the end. To avoid strong correlation we decided to use similar trick to the one used in random forest models. Each GP is trained only on some subset of all variables. Bootstraping seems also to be an effective idea, however, we did not implement it. In the case of small number of features in the data, such as in our case, one can consider using all possible subsets of variables of fixed size. Otherwise, they can be chosen on random. This process results in a number of output variables, so we choose the final transformed features using LASSO regression or BIC. This method should find much better solutions without extending dimensionality too much nor generating too complex transformations. The general idea is to automate feature enginnering done traditionally by hand. Another advantage is control of the model's complexity. We can stimulate how the operation trees are made, e.g. how the operations set looks like. There is also a possibilty of reducing or increasing complexity at will. Modification of this idea is to add a regularization term decreasing survival probability with increasing complexity. At the end, the model could also make a feature selection in the same way - then one of possible operations in the set would be dropping.
+4. One of our ideas is to use Genetic Programming (GP) to find the best feature transformations. Our goal is to find a set of simple feature transformations (not necessarily unary) that will significantly boost the ordinary linear regression model performance. We will create a set of simple operations such as adding, multiplying, taking a second power, taking logarithm and so on. Each transformation is based only on these operations and specified input variables. Each genetic program tries to minimize MSE of predicting the target, thus trying to save as much information as possible in a single output variable constructed on a subset of all the input features. We will use a variation of the genetic algorithms to create an operation tree minimizing our goal. Before we fit the final model, that is the ordinary linear regression, first we select the variables to transform. The resulting linear regression is calculated on the transformed and selected variables at the very end. To summarize, each operation tree calculates one variable, but this variable may not be included at the end. To avoid strong correlation we decided to use similar trick to the one used in random forest models. Each GP is trained only on some subset of all variables. Bootstraping seems also to be an effective idea, however, we did not implement it. In the case of small number of features in the data, such as in our case, one can consider using all possible subsets of variables of fixed size. Otherwise, they can be chosen on random. This process results in a number of output variables, so we choose the final transformed features using LASSO regression or BIC. This method should find much better solutions without extending dimensionality too much nor generating too complex transformations. The general idea is to automate feature enginnering done traditionally by hand. Another advantage is control of the model's complexity. We can stimulate how the operation trees are made, e.g. how the operations set looks like. There is also a possibilty of reducing or increasing complexity at will. Modification of this idea is to add a regularization term decreasing survival probability with increasing complexity. At the end, the model could also make a feature selection in the same way - then one of possible operations in the set would be dropping. We will refer to these transformations as genetic transformations.
 
 #### Feature importance metric
 
-Feauture importance is a metric showing which predictors (columns) are the most important to the model's final prediction. The metric becomes more and more significant, because machine learning algorithms play an important role in almost any decision making process from banking to medical areas. A more precise description of Feature Importance may be found in [@DALEX]. 
+Feauture importance is a metric indicating which predictors (columns) are the most important to the model's final prediction. The metric becomes more and more significant, as machine learning algorithms play more vital role in almost any decision making process from banking to medical areas. A more precise description of Feature Importance may be found in [@DALEX]. 
 
-The most natural feature importance metric for linear models such as linear regression and GLM are the absolute values of coefficients. Let $x_1, \dots, x_n$ denote the features (column vectors) and $\hat{y}$ denote the prediction. In linear models we have:
+The most natural feature importance metric for linear models, such as linear regression and GLM, are the absolute values of coefficients. Let $x_1, \dots, x_n$ denote the features (column vectors) and $\hat{y}$ denote the prediction. In linear models we have:
 $$c + \sum_{i=1}^n a_i \cdot x_i = \hat{y}$$
 where $c$ is a constant (intercept) and $a_i$ are the coefficients of regression. Formally, the Feature Importance mesaure value of the $i-$th feature ($FI_i$) measure is given as:
 $$FI_i = |a_i|$$
@@ -56,7 +56,7 @@ The above measure is calculated separately for each observation $j$ in the datas
 $$DFI_i = \frac{1}{n}\sum_{j=1}^n DFI_{i, j}$$
 which is then a global measure of Feature Importance of the $i$-th feature (a global $DFI$).
 
-A question arises why such measure is necessary. Let us assume that we have columns $x$ and $y$ in our dataset. After the data transformation we may end up with a dataset containing columns such as $\sin{x}$, $x^2$ or even $\sqrt{x + y}$. Naturally, the new linear model's coefficients standing by the new features are unable to provide any information about the input variable's importance, as we cannot deduce the $x$'s importance knowing the importance of $\sqrt{x+y}$. However, the $DFI$ measure allows us to reverse the transformations and calculate the $x$'s and $y$'s Feature Importance if we know exactly what transformations were used, and that knowledge comes naturally from the sole process of feature engineering. We may therefore calculate a local $DFI$ for a chosen observation, which will tell us which input features were the most important in the prediction of the given sample, or we may take an average $DFI$ of all observations - the global $DFI$ - to calculate the overall importance of each feature.
+A question arises why such measure is necessary. Let us assume that we have columns $x$ and $y$ in our dataset. After the data transformation we may end up with a dataset containing columns such as $\sin{x}$, $x^2$ or even $\sqrt{x + y}$. Naturally, the new linear model's coefficients standing by the new features are unable to provide any information about the input variable's importance, as we cannot deduce the $x$'s importance knowing the importance of $\sqrt{x+y}$. However, the $DFI$ measure allows us to reverse the transformations and calculate the $x$'s and $y$'s Feature Importance if we know exactly what transformations were used, and that knowledge comes naturally from the sole process of feature engineering. We may therefore calculate a local $DFI$ for a chosen observation - which will tell us which input features were the most important in the prediction of the given sample - or we may take an average $DFI$ of all observations - the global $DFI$ - to calculate the overall importance of each feature.
 
 #### Dataset and model performance evaluation
 
@@ -66,6 +66,55 @@ We use standard and verified methods to compare results of the models. As the ta
 
 ### Results
 
+#### Transformed dataset 
+
+First we wish to present explicitly the datasets acquired with the transformations and the plain data as a reference:
+
+The plain *Concrete_data* dataset containes features $\text{Cement}$, $\text{Slag}$, $\text{Ash}$, $\text{Water}$, $\text{Superplasticizer}$, $\text{CoarseAggregate}$, $\text{FineAggregate}$, $\text{Age}$ and the target compressive strength shortened to $\text{CS}$.
+
+The dataset after by-hand transformations contains the columns:
+
++ $\log(\text{Age})$
++ $\sin{\Big(2\pi\frac{\text{Water}}{\max{\text{Water}}}\Big)}$
++ $\sin^2{\Big(2\pi\frac{\text{Water}}{\max{\text{Water}}}\Big)}$
++ $\text{FineAggregate}^2$
++ $\text{Superplasticizer}^2$
++ $\frac{\text{Ash}}{\text{Cement}}$
++ $\text{FineAggregate}^2 \cdot \text{Cement}$
++ features $\text{Cement}$, $\text{Slag}$, $\text{Ash}$, $\text{Water}$, $\text{CoarseAggregate}$ from the plain dataset.
+  
+The dataset after brute force transformations contains the columns:
+
++ all the features from the plain dataset,
++ Second power of each feature from the plain dataset,
++ Third power of each feature from the plain dataset,
++ Sinus of each feature from the plain dataset,
++ Cosinus of each feature from the plain dataset,
++ Multiplication of each pair of distinct features from the plain dataset.
+  
+The dataset after bayesian transformations contains the columns:
+
++ all the features from the plain dataset,
++ $\text{Cement}^{1.166}$
++ $\text{Slag}^{3.120}$
++ $\text{Ash}^{3.161}$
++ $\text{Water}^{3.657}$
++ $\text{Superplasticizer}^{1.110}$
++ $\text{CoarseAggregate}^{2.182}$
++ $\text{FineAggregate}^{1.789}$
++ $\text{Age}^{1.100}$
+  
+The dataset after genetic transformations contains the columns:
+
++ $\sqrt{2\cdot \text{Cement}}+\text{Superplasticizer}$
++ $\sqrt{\text{Superplasticizer}\cdot\text{Age}+\text{CoarseAggregate}+\text{Age}}$
++ $\sqrt{2\cdot \text{Age}} + \sqrt{\text{Age} + \text{FineAggregate}}$
++ $\sqrt{\log(\text{Cement}+\text{Slag})}$
++ $\sqrt{\text{Cement}+\text{Superplasticizer}}+\sqrt{\text{Cement}+\text{Slag}}$
++ $\sqrt{\text{FineAggregate}} + \sqrt{\text{Superplasticizer}\cdot \text{Age}}$
++ $\sqrt{\text{Cement} + \text{Slag} + \text{CoarseAggregate}}$
++ $\text{Superplasticizer}+\sqrt{\text{CoarseAggregate}-\text{Ash}}$
+  
 
 Note, that the transformations used in results section are only examples of the presented methods and various realisations may result in various final measures' values. Considerably, the trial-and-error approach is quite individual and the results may differ depending on the experimentator. This non-automatic method should be treated as something that can be achieved after numerous trials.
 
@@ -83,13 +132,13 @@ knitr::include_graphics("images/3-5-2.png")
 
 The plots presented above show the values of MAE and MSE achieved by each model on the datasets after the mentioned transformations. We may observe that the linear models have significantly reduced their error values after the transformations, while the brute force method yielded best results. However, brute force method generates much more features increasing the resulting dimension of the dataset, thus increasing the time complexity and reducing the interpretability.
 
-The three remaining methods, that is: the Bayesian optimization, the trial-and-error method and the genetic modifications - provided much improvement in comparison with the models' performance on the plain dataset as well. In this case the final space has much lower dimension. Bayesian optimization results in 16 features, the trial-and-error in 14 features and the genetic modifications result in 8 features, in comparison to 69 features after brute force transformations. All of these methods have very similar quality of predictions, considering both MAE and MSE.
+The three remaining methods, that is: the Bayesian optimization, the trial-and-error method and the genetic modifications - provided much improvement in comparison with the models' performance on the plain dataset as well. In this case the final space has much lower dimension. Bayesian optimization results in 17 features, the trial-and-error in 13 features and the genetic modifications result in 9 features, in comparison to 68 features after brute force transformations (all numbers include the target variable). All of these methods have very similar quality of predictions, considering both MAE and MSE.
 
-The remaining non-linear white-box model, namely the Decision Tree Regressor, seems to be rather unaffected by any transformations of the dataset. In comparison, both black the boxes: Random Forest and SVM with gaussian kernel, are strongly influenced, though is hard to say when black box's prediction quality increases and when decreases.
+The remaining non-linear white-box model, namely the Decision Tree Regressor, seems to be rather unaffected by any transformations of the dataset. In comparison, both black the boxes: Random Forest and SVM with gaussian kernel, are strongly influenced, though it is hard to say when black box's prediction quality increases and when decreases.
 
 #### Feature Importance comparison
 
-The comparison of Feature Imprortance values will be between permutational Feature Importance calculated on the black-box models - Random Forest and SVM and local and global Derivative Feature Importance calculated on the datasets after brute force transformations and after the Bayesian optimization. 
+We present the comparison of Feature Imprortance values between permutational Feature Importance calculated on the black-box models - Random Forest and SVM and the local and global Derivative Feature Importance calculated on the datasets after brute force transformations and after the Bayesian optimization. 
 
  ```{r fi3-5, echo=FALSE, fig.cap="Feature Importance of RFR and SVM on the untransformed *Concrete_Data* dataset", out.width = '49%', out.height = '49%', fig.show='hold'}
 knitr::include_graphics(c("images/3-5-3.png", "images/3-5-4.png"))
