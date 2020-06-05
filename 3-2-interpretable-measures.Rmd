@@ -120,8 +120,8 @@ Since at the beginning `rpart` had the AUC value of $0.5$, firstly we tuned its 
 
 Then as step 1a-1c we tried 3 basic transformations of data as normalization of all columns, outlier reduction and logarithm of nearly all columns (without one hot encoded source). As we can see the best improvement was achieved by using outliers reduction so in step 2a we tried to add normalization to that and in step 2b we tried to reduce outliers after applying logarithm. Only outliers reduction and normalization were good enough to be used in the following experiments.
 
-Next we used discretization of some columns. Unfortunately, any of the gain-ratio method from `funModeling` (3a) and `rSAFE` (3b) made statistically important better result. Using partial dependency plot on the black-box model do not show that there is variable which can be discretized.
-<!-- plot -->
+Next we used discretization of some columns. Unfortunately, any of the gain-ratio method from `funModeling` (3a) and `rSAFE` (3b) did not make statistically important better result. Using partial dependency plot on the black-box model do not show that there is variable which can be discretized.
+![](3-2-graphs/pdp_basic_Z_ranger.png)
 
 Then we tried to create new measures based on basic Halstead measures. We selected best measures by `DALEX` variable importance on one of two learners: ranger or `rpart`. Then on we test the models after adding the best 10 measures to the dataset, but the results were not promising except from the logistic regression in 4a.
 
@@ -131,11 +131,11 @@ Use of the `SMOTE` algorithm gave a huge improvement especially in decision tree
 
 ![](images/3-2-rpart_result.png)
 
-The graph shows the improvement of the AUC compared to the difference between the original black-box model and the white-box model. $0$ represents the result of the `rpart`, $100$ represents the result of the `ranger`.
+The graph shows the improvement of the AUC compared to the difference between the original black-box model and the white-box model. $0$ represents the result of the `rpart` model, $100$ represents the result of the `ranger` model.
 
 Since we achieved the main goal and created the interpretable model that is better than black-box the way to achieve that is not satisfying. The most improvement was from just hiperparameters tuning of decision tree and oversampling minority class but addition of new synthetical data to the minority class is not very well method of improving model. The thing we really trusted that can make improvement was the Healstead and McCabe's measures but any of it do not give any improvement in the model. So we can conclude that hypothesis of both of them are wrong. Propably the features proposed in original data sets are not sufficient in this problem because there is hardly any improvement with manipulation of this features. The most informative measure is just a number of code lines. Other possibility is that the code scrapers to create data had some mistakes and that conlude the low quality of data.
 
-We visualize the best model based on `SMOTE`. Since we use decision tree and in the last model do not created any new measures so it is interpretable model. It is obvious how it works and why it predicts results, because we can show decision points. Unfortunately this model is not very trivial. Its depth is usually around 6 nodes and in total it have around 50 nodes. That is why we do not include it in the article - it will not be visible. The created plot is on our github.
+We visualize the best model based on `SMOTE`. Since we use the decision tree and in the last model do not create any new measures so it is an interpretable model. It is obvious how it works and why it predicts results, because we can show the decision points. Unfortunately this model is not very trivial. Its depth is usually around 6 nodes and in total it have around 50 nodes. That is why we do not include it in the article - it will not be readible. The created plot is on our github.
 <!-- add github link? -->
 
 
