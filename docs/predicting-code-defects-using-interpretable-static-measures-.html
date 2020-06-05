@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-06-04" />
+<meta name="date" content="2020-06-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -520,8 +520,8 @@ A model with thousands of variables is not well interpretable, so we need to sel
 <p>Table 1: AUC in white-box models. Each row describes one of the operation that we apply in order to obtain improvement and results of individual models. The first column indicates the order in which we used these transformations. The letters “a, b, c” indicate that we used different transformations with “backtracking”, i.e. we applied them parallel to the same model as they are similar. The last column informs if we decided to keep the change or reject it.</p>
 <p>Since at the beginning <code>rpart</code> had the AUC value of <span class="math inline">\(0.5\)</span>, firstly we tuned its hyperparameters and there was significant improvement in result.</p>
 <p>Then as step 1a-1c we tried 3 basic transformations of data as normalization of all columns, outlier reduction and logarithm of nearly all columns (without one hot encoded source). As we can see the best improvement was achieved by using outliers reduction so in step 2a we tried to add normalization to that and in step 2b we tried to reduce outliers after applying logarithm. Only outliers reduction and normalization were good enough to be used in the following experiments.</p>
-<p>Next we used discretization of some columns. Unfortunately, any of the gain-ratio method from <code>funModeling</code> (3a) and <code>rSAFE</code> (3b) made statistically important better result. Using partial dependency plot on the black-box model do not show that there is variable which can be discretized.
-<!-- plot --></p>
+<p>Next we used discretization of some columns. Unfortunately, any of the gain-ratio method from <code>funModeling</code> (3a) and <code>rSAFE</code> (3b) did not make statistically important better result. Using partial dependency plot on the black-box model do not show that there is variable which can be discretized.
+<img src="3-2-graphs/pdp_basic_Z_ranger.png" /></p>
 <p>Then we tried to create new measures based on basic Halstead measures. We selected best measures by <code>DALEX</code> variable importance on one of two learners: ranger or <code>rpart</code>. Then on we test the models after adding the best 10 measures to the dataset, but the results were not promising except from the logistic regression in 4a.</p>
 <p>Use of the <code>SMOTE</code> algorithm gave a huge improvement especially in decision tree and the best result is in dataset with only outliers reduction and normalization without any new features.</p>
 </div>
