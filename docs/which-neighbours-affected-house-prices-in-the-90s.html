@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-06-04" />
+<meta name="date" content="2020-06-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -535,11 +535,11 @@ The comprehensive description of used data can be found in <span class="citation
 <p>In this section, we are going to focus on developing the best white-box model, which provides interpretability of features. Throughout this case study, we use the Mean Absolute Error (MAE) measure to evaluate the model performance, because we focus on the residuals while the mean of absolute values of residuals is the easiest to interpret.</p>
 <div id="exploratory-data-analysis" class="section level4" number="3.7.5.1">
 <h4><span class="header-section-number">3.7.5.1</span> Exploratory Data Analysis</h4>
-<p>Performing the Exploratory Data Analysis highlighted multiple vital issues with the data. Firstly, Figure <a href="which-neighbours-affected-house-prices-in-the-90s.html#fig:3-7-eda">3.6</a> presents the immerse skewness of the target, which usually leads to harder modelling. However, we decided not to transform the price variable because this might provide less interpretability in the end. Secondly, there are 46 data points with unnaturally looking target value. We suspect that the target value of 500001 is artificially made, so we removed these outliers. Finally, there are six percentage and two count variables, which indicates that there are not many possibilities for feature engineering.</p>
+<p>Performing the Exploratory Data Analysis highlighted multiple vital issues with the data. Firstly, Figure <a href="which-neighbours-affected-house-prices-in-the-90s.html#fig:3-7-eda">3.7</a> presents the immerse skewness of the target, which usually leads to harder modelling. However, we decided not to transform the price variable because this might provide less interpretability in the end. Secondly, there are 46 data points with unnaturally looking target value. We suspect that the target value of 500001 is artificially made, so we removed these outliers. Finally, there are six percentage and two count variables, which indicates that there are not many possibilities for feature engineering.</p>
 <div class="figure" style="text-align: center"><span id="fig:3-7-eda"></span>
 <img src="images/3-7-eda.png" alt="(L) Histogram of the target values shows that the distribution is very skewed. (R) Exemplary variable correlation with the target shows that there are few data points with the same, unnaturally high target value." width="800" />
 <p class="caption">
-FIGURE 3.6: (L) Histogram of the target values shows that the distribution is very skewed. (R) Exemplary variable correlation with the target shows that there are few data points with the same, unnaturally high target value.
+FIGURE 3.7: (L) Histogram of the target values shows that the distribution is very skewed. (R) Exemplary variable correlation with the target shows that there are few data points with the same, unnaturally high target value.
 </p>
 </div>
 <p>It is also worth noting that there are no missing values and the dataset has over 22k data points which allow us to reliably split the data into train and test subsets using the 2:1 ratio.
@@ -555,7 +555,7 @@ Throughout this case study, we use the Mean Absolute Error (MAE) measure to eval
 The divide-and-conquer idea has many computer science applications, e.g. in sorting algorithms, natural language processing, or parallel computing.
 We decided to make use of its core principles in constructing the method for fitting the enhanced white-box model.
 The final result is multiple tree models combined which decisions are easily interpretable.</p>
-<p>The proposed algorithm presented in Figure <a href="which-neighbours-affected-house-prices-in-the-90s.html#fig:3-7-algorithm">3.7</a> is:</p>
+<p>The proposed algorithm presented in Figure <a href="which-neighbours-affected-house-prices-in-the-90s.html#fig:3-7-algorithm">3.8</a> is:</p>
 <ol style="list-style-type: decimal">
 <li>Divide the target variable with <code>k</code> middle points into <code>k+1</code> groups.</li>
 <li>Fit a black-box classifier on train data which predicts the belonging to the <code>i-th</code> group.</li>
@@ -566,7 +566,7 @@ The final result is multiple tree models combined which decisions are easily int
 <div class="figure" style="text-align: center"><span id="fig:3-7-algorithm"></span>
 <img src="images/3-7-algorithm.png" alt="Following the steps 1-5 presented in the diagram, the divide-and-conquer algorithm is used to construct an enhanced white-box model. Such a stacked model consists of the black-box classifier and white-box estimators." width="800" />
 <p class="caption">
-FIGURE 3.7: Following the steps 1-5 presented in the diagram, the divide-and-conquer algorithm is used to construct an enhanced white-box model. Such a stacked model consists of the black-box classifier and white-box estimators.
+FIGURE 3.8: Following the steps 1-5 presented in the diagram, the divide-and-conquer algorithm is used to construct an enhanced white-box model. Such a stacked model consists of the black-box classifier and white-box estimators.
 </p>
 </div>
 <p>The final product is a stacked model with one classifier and <code>k+1</code> estimators. The exact models are for engineers to choose. It is worth noting that the unsupervised clustering method might be used instead of the classification model.</p>
@@ -583,37 +583,37 @@ FIGURE 3.7: Following the steps 1-5 presented in the diagram, the divide-and-con
 <li><code>cp = 0.001</code> - lower complexity helps with the skewed target</li>
 <li><code>minbucket = 1% of the training data</code> - more filled tree leaves adds up to higher interpretability</li>
 </ul>
-<p>Figure <a href="which-neighbours-affected-house-prices-in-the-90s.html#fig:3-7-tree1">3.8</a> depicts the tree that estimates cheaper houses, while Figure <a href="which-neighbours-affected-house-prices-in-the-90s.html#fig:3-7-tree2">3.9</a> presents the tree that estimates more expensive houses.</p>
+<p>Figure <a href="which-neighbours-affected-house-prices-in-the-90s.html#fig:3-7-tree1">3.9</a> depicts the tree that estimates cheaper houses, while Figure <a href="which-neighbours-affected-house-prices-in-the-90s.html#fig:3-7-tree2">3.10</a> presents the tree that estimates more expensive houses.</p>
 <div class="figure" style="text-align: center"><span id="fig:3-7-tree1"></span>
 <img src="images/3-7-tree-cheap.svg" alt="The tree that estimates cheaper houses. Part of the stacked model." width="800" />
 <p class="caption">
-FIGURE 3.8: The tree that estimates cheaper houses. Part of the stacked model.
+FIGURE 3.9: The tree that estimates cheaper houses. Part of the stacked model.
 </p>
 </div>
 <div class="figure" style="text-align: center"><span id="fig:3-7-tree2"></span>
 <img src="images/3-7-tree-rich.svg" alt="The tree that estimates more expensive houses. Part of the stacked model." width="800" />
 <p class="caption">
-FIGURE 3.9: The tree that estimates more expensive houses. Part of the stacked model.
+FIGURE 3.10: The tree that estimates more expensive houses. Part of the stacked model.
 </p>
 </div>
-<p>Interpreting the stacked model presented in Figures <a href="which-neighbours-affected-house-prices-in-the-90s.html#fig:3-7-tree1">3.8</a> &amp; <a href="which-neighbours-affected-house-prices-in-the-90s.html#fig:3-7-tree2">3.9</a> leads to multiple conclusions. Firstly, we can observe the noticeable impact of features like the total number of households or the average number of rooms on the median price of the house in the region, which is compliant with basic intuitions. It is also evident that the bigger percentage of people between 25-64 years of age the higher the prices.</p>
+<p>Interpreting the stacked model presented in Figures <a href="which-neighbours-affected-house-prices-in-the-90s.html#fig:3-7-tree1">3.9</a> &amp; <a href="which-neighbours-affected-house-prices-in-the-90s.html#fig:3-7-tree2">3.10</a> leads to multiple conclusions. Firstly, we can observe the noticeable impact of features like the total number of households or the average number of rooms on the median price of the house in the region, which is compliant with basic intuitions. It is also evident that the bigger percentage of people between 25-64 years of age the higher the prices.</p>
 <p>Finally, we can observe the impact of critical features. The percentage of people which are of Asian or Pacific Islander race divides the prices in an opposing direction to the percentage of households with black Householder. The corresponding tree splits showcase which neighbours, and in what manner, affected house prices in the ’90s. Whether it is a correlation or causality is a valid debate that could be further investigated.</p>
 </div>
 <div id="comparison-of-the-residuals" class="section level4" number="3.7.6.2">
 <h4><span class="header-section-number">3.7.6.2</span> Comparison of the residuals</h4>
 <p>In this section, we compare our stacked model with baseline <em>ranger</em> and <em>rpart</em> models, respectively referred to as black-box and white-box. Our solution achieves competitive performance with interpretable features.</p>
-<p>The main idea behind the divide-and-conquer technique was to minimize the maximum value of the absolute residuals, which reassures that no significant errors will happen. Such an approach may inevitably lead to minimizing the sum of the absolute residual values (MAE). In Figure <a href="which-neighbours-affected-house-prices-in-the-90s.html#fig:3-7-boxplot">3.10</a>, we can see that the targets mentioned above were indeed met. The stacked model not only has the lowest maximum error value but also has the best performance on average, as the red dot highlights the MAE score.</p>
+<p>The main idea behind the divide-and-conquer technique was to minimize the maximum value of the absolute residuals, which reassures that no significant errors will happen. Such an approach may inevitably lead to minimizing the sum of the absolute residual values (MAE). In Figure <a href="which-neighbours-affected-house-prices-in-the-90s.html#fig:3-7-boxplot">3.11</a>, we can see that the targets mentioned above were indeed met. The stacked model not only has the lowest maximum error value but also has the best performance on average, as the red dot highlights the MAE score.</p>
 <div class="figure" style="text-align: center"><span id="fig:3-7-boxplot"></span>
 <img src="images/3-7-boxplot.png" alt="Boxplots of residuals for the stacked model compared to black-box and white-box models. The plot is divided for cheaper and more expensive houses. The red dot highlights the MAE score." width="800" />
 <p class="caption">
-FIGURE 3.10: Boxplots of residuals for the stacked model compared to black-box and white-box models. The plot is divided for cheaper and more expensive houses. The red dot highlights the MAE score.
+FIGURE 3.11: Boxplots of residuals for the stacked model compared to black-box and white-box models. The plot is divided for cheaper and more expensive houses. The red dot highlights the MAE score.
 </p>
 </div>
-<p>Figure <a href="which-neighbours-affected-house-prices-in-the-90s.html#fig:3-7-density">3.11</a> presents a more in-depth analysis of model residuals. In the top, we can observe that the black-box model has the lowest absolute residual mode (tip of the distribution), but the stacked model lays more in the centre (base of the distribution), which leads to more even spread of residuals. In the bottom, we can observe that the black-box model tends to undervalue house prices, while our model overestimates them. Looking at the height of the tip of the distribution and its shape, we can conclude that the stacked model provides more reliable estimations.</p>
+<p>Figure <a href="which-neighbours-affected-house-prices-in-the-90s.html#fig:3-7-density">3.12</a> presents a more in-depth analysis of model residuals. In the top, we can observe that the black-box model has the lowest absolute residual mode (tip of the distribution), but the stacked model lays more in the centre (base of the distribution), which leads to more even spread of residuals. In the bottom, we can observe that the black-box model tends to undervalue house prices, while our model overestimates them. Looking at the height of the tip of the distribution and its shape, we can conclude that the stacked model provides more reliable estimations.</p>
 <div class="figure" style="text-align: center"><span id="fig:3-7-density"></span>
 <img src="images/3-7-density.png" alt="Density of residuals for the stacked model compared to black-box and white-box models. The plot is divided for cheaper and more expensive houses." width="800" />
 <p class="caption">
-FIGURE 3.11: Density of residuals for the stacked model compared to black-box and white-box models. The plot is divided for cheaper and more expensive houses.
+FIGURE 3.12: Density of residuals for the stacked model compared to black-box and white-box models. The plot is divided for cheaper and more expensive houses.
 </p>
 </div>
 </div>
