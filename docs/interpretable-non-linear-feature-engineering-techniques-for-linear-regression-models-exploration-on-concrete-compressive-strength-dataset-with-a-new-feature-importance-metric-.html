@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-06-04" />
+<meta name="date" content="2020-06-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -462,13 +462,13 @@ which is then a global measure of Feature Importance of the <span class="math in
 <div class="figure"><span id="fig:mae3-5"></span>
 <img src="images/3-5-1.png" alt="MAE of the DT, LR, GLM, optimized GLM, SVM and RF models on the plain *Concrete_Data* dataset and after transformations" width="70%" />
 <p class="caption">
-FIGURE 3.1: MAE of the DT, LR, GLM, optimized GLM, SVM and RF models on the plain <em>Concrete_Data</em> dataset and after transformations
+FIGURE 3.2: MAE of the DT, LR, GLM, optimized GLM, SVM and RF models on the plain <em>Concrete_Data</em> dataset and after transformations
 </p>
 </div>
 <div class="figure"><span id="fig:mse3-5"></span>
 <img src="images/3-5-2.png" alt="MSE of the DT, LR, GLM, optimized GLM, SVM and RF models on the plain *Concrete_Data* dataset and after transformation" width="70%" />
 <p class="caption">
-FIGURE 3.2: MSE of the DT, LR, GLM, optimized GLM, SVM and RF models on the plain <em>Concrete_Data</em> dataset and after transformation
+FIGURE 3.3: MSE of the DT, LR, GLM, optimized GLM, SVM and RF models on the plain <em>Concrete_Data</em> dataset and after transformation
 </p>
 </div>
 </center>
@@ -482,19 +482,19 @@ FIGURE 3.2: MSE of the DT, LR, GLM, optimized GLM, SVM and RF models on the plai
 <div class="figure"><span id="fig:fi3-5"></span>
 <img src="images/3-5-3.png" alt="Feature Importance of RFR and SVM on the untransformed *Concrete_Data* dataset" width="49%" height="49%" /><img src="images/3-5-4.png" alt="Feature Importance of RFR and SVM on the untransformed *Concrete_Data* dataset" width="49%" height="49%" />
 <p class="caption">
-FIGURE 3.3: Feature Importance of RFR and SVM on the untransformed <em>Concrete_Data</em> dataset
+FIGURE 3.4: Feature Importance of RFR and SVM on the untransformed <em>Concrete_Data</em> dataset
 </p>
 </div>
 <div class="figure"><span id="fig:fi3-5bf"></span>
 <img src="images/3-5-bfl.png" alt="Local (obs. 573) and global DFI of optimized GLM model on the *Concrete_Data* dataset after brute force transformations" width="49%" height="49%" /><img src="images/3-5-bfg.png" alt="Local (obs. 573) and global DFI of optimized GLM model on the *Concrete_Data* dataset after brute force transformations" width="49%" height="49%" />
 <p class="caption">
-FIGURE 3.4: Local (obs. 573) and global DFI of optimized GLM model on the <em>Concrete_Data</em> dataset after brute force transformations
+FIGURE 3.5: Local (obs. 573) and global DFI of optimized GLM model on the <em>Concrete_Data</em> dataset after brute force transformations
 </p>
 </div>
 <div class="figure"><span id="fig:fi3-5by"></span>
 <img src="images/3-5-byl.png" alt="Local (obs. 458) and global DFI of optimized GLM model on the *Concrete_Data* dataset after Bayesian transformations" width="49%" height="49%" /><img src="images/3-5-byg.png" alt="Local (obs. 458) and global DFI of optimized GLM model on the *Concrete_Data* dataset after Bayesian transformations" width="49%" height="49%" />
 <p class="caption">
-FIGURE 3.5: Local (obs. 458) and global DFI of optimized GLM model on the <em>Concrete_Data</em> dataset after Bayesian transformations
+FIGURE 3.6: Local (obs. 458) and global DFI of optimized GLM model on the <em>Concrete_Data</em> dataset after Bayesian transformations
 </p>
 </div>
 <p>The figure 3.3 present permutational Feature Importance of the black-box models, and the figures 3.4 and 3.5 present <span class="math inline">\(DFI\)</span> values - for one observation and calculated globally, respectively. The local <span class="math inline">\(DFI\)</span> were calculated on the observations nr <span class="math inline">\(573\)</span> and <span class="math inline">\(458\)</span>. We may notice high resemblance of the black-box Feature Importance to the local <span class="math inline">\(DFI\)</span> after Brute Force trtansformations, as well as similarities between all the Feature Importance calculations overall. The order of features in <span class="math inline">\(DFI\)</span> is not precisely equal to the order of feature after permutational Feature Importance of the black-boxes; however, the order still makes sense as far as we can say based on our little knowledge of materials. Moreover, the deviations of Feature Importance measures between various models is quite common in such research.</p>

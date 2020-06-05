@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-06-04" />
+<meta name="date" content="2020-06-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -356,14 +356,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>Authors: Bartłomiej Granat, Szymon Maksymiuk, (Warsaw University of Technology)</em></p>
 <div id="abstract-16" class="section level3" number="3.4.1">
 <h3><span class="header-section-number">3.4.1</span> Abstract</h3>
+<p><em>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ultricies blandit tellus imperdiet iaculis. Vestibulum et orci elementum, fermentum dui at, varius quam. Fusce mattis nisi id fringilla ultrices. Pellentesque ornare, lacus sed tempus dapibus, risus tellus tempor tellus, id egestas dolor sapien eget lectus. Morbi bibendum vehicula nunc, sed convallis quam porta a. Phasellus scelerisque dui ex, ut pharetra sapien tempor sed. Phasellus vitae ultricies ante, sed dictum orci. Nullam maximus nunc in augue efficitur, id hendrerit mi efficitur.Maecenas a lobortis est. Morbi a imperdiet neque, ut elementum diam. Praesent viverra mi id nibh cursus, sed pulvinar mi posuere. Vivamus cursus enim quis augue ultrices, sed elementum erat volutpat. Sed vitae turpis nec augue mattis facilisis quis sed nunc. Nam tincidunt risus et accumsan laoreet. Praesent iaculis neque dui, a auctor diam laoreet ut. Integer mattis ipsum sed nisi iaculis laoreet. Nullam ante purus, commodo a vehicula quis.</em></p>
 </div>
 <div id="introduction-and-motivation-12" class="section level3" number="3.4.2">
 <h3><span class="header-section-number">3.4.2</span> Introduction and Motivation</h3>
-<p>Health-related problems have been a topic of multiple papers throughout the years and machine learning brought some new methods to modern medicine.[Potrzebna cytacja jakiegoś medycznego papieru]. We care so much about our lives that every single algorithm and method eventually gets tested on some medical data.</p>
-<p>What is unique about health data is that black-box models are completely useless in this subject. Almost always doctors know whether a patient is sick or not. What is important to them is the reason why he is sick. That’s why explainable machine learning is the key to make all of us healthier. However XAI methods are not very well defined yet and they lack strong statistical background like tests, etc. That caused strong opposition of Explainable Machine Learning to rise<span class="citation">(Rudin <a href="#ref-Rudin2019" role="doc-biblioref">2019</a>)</span>. Unfortunately making a good explainable model for health data might be close to impossible. Medical problems of all kinds can be very unique, complex, or completely random. That’s why researchers spend numerous hours on improving their explainable models and that’s why we decided to test our approach on <code>liver disorders</code> dataset with help. We will try to improve linear model results with the help of AutoML black-box model.</p>
-<p>There is a big discussion in the scientific world about “what does it mean for a model to be interpretable?”<span class="citation">(Lipton <a href="#ref-Lipton" role="doc-biblioref">2016</a>)</span>. Unfortunately there is no clear answer to that question and often it is necessary to clearly specify what is supposed to be meant as interpretable. In this paper we assume that the model is interpretable if it is possible to explicitly track down what contributed to model answer and to do it in a finite time. It means that all transformation of variables or even concatenations are possible ass soon as a used type of model is simply structured like a linear model is. However, we understand other’s opinions and we will present also results with only simple transformations and without controversial concatenations.</p>
-<p>The <code>liver-disorders</code> dataset is well known in the field of machine learning[cytacja do tego artykułu o tym ddataset] and that’s exactly the reason why we chose it. It is described in the next chapter. Our goal was to find a relatively clean dataset with many models already done by other researchers. Another advantage is the availability of the dataset. It is published on the OpenML repository and therefore everyone can give a shot to that problem. We don’t want to show that properly cleaned data gives better results but to achieve, an explainable model found after a complex analysis that we want to test.</p>
-<p>In this paper we do a case study on <code>liver disorders</code> dataset and want to prove that by using automated regression it is possible to build an easy to understand prediction that outperforms black-box models on the real dataset and at the same time achieve similar results to other researchers. By automated regression we understand a process when we search through space of aviable dataset transformation and try to find the one for which linear regression model is best using earlier defined loss function.</p>
+<p>Health-related problems have been a topic of multiple papers throughout the years and machine learning brought some new methods to modern medicine.<span class="citation">(Obermeyer and Emanuel <a href="#ref-Obermeyer2016" role="doc-biblioref">2016</a>)</span>, <span class="citation">(“Ascent of Machine Learning in Medicine” <a href="#ref-mednature" role="doc-biblioref">2019</a>)</span>. We care so much about our lives that every single algorithm and method eventually gets tested on some medical data.</p>
+<p>What is unique about health data is that black-box models are completely useless in this subject. Almost always doctors know whether a patient is sick or not. What is important to them is the reason why he is sick. That’s why explainable machine learning is the key to make all of us healthier. However XAI methods are not very well defined yet and they lack strong statistical background like tests, etc. That caused strong opposition of Explainable Machine Learning to rise<span class="citation">(Rudin <a href="#ref-Rudin2019" role="doc-biblioref">2019</a>)</span>. Unfortunately making a good explainable model for health data might be close to impossible. Medical problems of all kinds can be very unique, complex, or completely random. That’s why researchers spend numerous hours on improving their explainable models and that’s why we decided to test our approach on <code>liver disorders</code> dataset with help. We will try to improve the linear model results with the help of the AutoML black-box model.</p>
+<p>There is a big discussion in the scientific world about “what does it mean for a model to be interpretable?”<span class="citation">(Lipton <a href="#ref-Lipton" role="doc-biblioref">2016</a>)</span>. Unfortunately there is no clear answer to that question and often it is necessary to specify what is supposed to be meant as interpretable. In this paper we assume that the model is interpretable if it is possible to explicitly track down what contributed to model answer and to do it in a finite time. It means that all transformation of variables or even concatenations are possible as soon as a used type of model is simply structured like a linear model is. However, we understand other’s opinions and we will present also results with only simple transformations and without controversial concatenations.</p>
+<p>The <code>liver-disorders</code> dataset is well known in the field of machine learning<span class="citation">(McDermott and Forsyth <a href="#ref-liverdisorder" role="doc-biblioref">2016</a>)</span> and that’s exactly the reason why we chose it. It is described in the next chapter. Our goal was to find a relatively clean dataset with many models already done by other researchers. Another advantage is the availability of the dataset. It is published on the OpenML repository and therefore everyone can give a shot to that problem. We don’t want to show that properly cleaned data gives better results but to achieve, an explainable model found after a complex analysis that we want to test.</p>
+<p>In this paper we do a case study on <code>liver disorders</code> dataset and want to prove that by using automated regression it is possible to build an easy to understand prediction that outperforms black-box models on the real dataset and at the same time achieve similar results to other researchers. By automated regression we understand a process when we search through space of available dataset transformation and try to find the one for which linear regression model is best using earlier defined loss function.</p>
 </div>
 <div id="data-1" class="section level3" number="3.4.3">
 <h3><span class="header-section-number">3.4.3</span> Data</h3>
@@ -404,24 +405,134 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Multiplication of pair of features.</li>
 </ul></li>
 </ul>
-<p>Obviously, XAI related methods are conducted using AutoML baseline Model. We’ve decided to omit data imputation as an element of valid transformations set because liver-disorders dataset does not meet with the problem of missing values.</p>
+<p>Obviously, XAI related methods are conducted using AutoML baseline Model. We’ve decided to omit data imputation as an element of valid transformations set because the liver-disorders dataset does not meet with the problem of missing values.</p>
 <p>The optimization process is conducted based on Bayesian Optimization and the backtracing idea. Each main element of the domain of valid transformations is one step in the process of creation <span class="math inline">\(G_{AR}\)</span> function. Within each step, Bayesian optimization will be used to find the best transformation for the given level. During further steps, if any of transformation did not improve model, ie. <span class="math inline">\(L\)</span> function was only growing, the algorithm takes second, the third, etc. solution from previous steps according to backtracking idea. If for no one of <span class="math inline">\(k\)</span> such iterations, where k is known parameter, a better solution is found, step is omitted.</p>
 </div>
 <div id="results-16" class="section level3" number="3.4.5">
 <h3><span class="header-section-number">3.4.5</span> Results</h3>
+<p>Dataset was split on the train and test dataset, and that split will be the same for all experiments covered in this section. To begin with we need to introduce the AutoML model that was used as a goal to beat. H2O AutoML<span class="citation">(H2O.ai <a href="#ref-H2OAutoML" role="doc-biblioref">2017</a>)</span> was used to find the best black-box solution over the provided training dataset. As interpretation R-squared coefficient of determination is not the same for linear models and black-box, we will present a comparison of the found solution to the AutoML model using only <span class="math inline">\(L_{0}\)</span> measure. Table 1 shows parameters of the back-box model which appears to be Gradient Boosting Machine.</p>
+<table>
+<caption>Parameters of Gradient Boosting Machine which is a black-box H2O AutoML Model. RMSE calculated using the test dataset.</caption>
+<thead>
+<tr class="header">
+<th align="center">Num. of trees</th>
+<th align="center">Max depth</th>
+<th align="center">Min depth</th>
+<th align="center">Min leaves</th>
+<th align="center">Max leaves</th>
+<th align="center">Test RMSE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">30</td>
+<td align="center">8</td>
+<td align="center">6</td>
+<td align="center">12</td>
+<td align="center">18</td>
+<td align="center">2.73</td>
+</tr>
+</tbody>
+</table>
+<p>After each step of the procedure shown in 3.4.5 we would like to present the score best model had achieved. In this way we can make an assumption about what action is the most crucial for a given dataset. As was mentioned before, to face the problem of interpretability and what does it mean, there will be four final models presented. For each approach, ie. with and without feature concatenation step, two models are found using both <span class="math inline">\(L_{R}\)</span> and <span class="math inline">\(L_{0}\)</span> measures.</p>
+<p>Despite multiple approaches, all of them share some common properties. First of all, it turns up that the linear model with all features as active predictors scores 2.68 RMSE and 0.17 R-squared. It means we are already on the level of the black-box model. What is worrisome though, is a small fraction of variance explained by the model. Therefore, the goal of our further research is to beat the black-box even more. Next, XAI permutation feature importance <span class="citation">(Fisher, Rudin, and Dominici <a href="#ref-pfi" role="doc-biblioref">2018</a>)</span> selected 3 features that may be insignificant. Due to that fact and relatively small dataset we were able to check all combinations of including them into the model and what’s interesting, different features were chosen depending on whether <span class="math inline">\(L_{0}\)</span> or <span class="math inline">\(L_{R}\)</span> measures were used. About the second step, polynomial transformation, including the Box-Cox transformation of the target value, made the model fit to data way worse. As a result the only transformation that indeed improved both loss function was log-transformation and discrete transformation using the SAFE method<span class="citation">(Gosiewska et al. <a href="#ref-gosiewska2019safe" role="doc-biblioref">2019</a>)</span>.</p>
+<table>
+<caption>Exact results after each step for both loss functions. In all columns beside R squared value of Root Mean Square Error over test dataset is shown.</caption>
+<thead>
+<tr class="header">
+<th align="center">Model</th>
+<th align="center">Baseline</th>
+<th align="center">Stage 1</th>
+<th align="center">Stage 2</th>
+<th align="center">Stage 3</th>
+<th align="center">Stage 4</th>
+<th align="center">Black-Box</th>
+<th align="center">R squared</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><span class="math inline">\(L_{0}\)</span> | With concat.</td>
+<td align="center">2.680</td>
+<td align="center">2.660</td>
+<td align="center">2.613</td>
+<td align="center">2.594</td>
+<td align="center">2.533</td>
+<td align="center">2.727</td>
+<td align="center">0.193</td>
+</tr>
+<tr class="even">
+<td align="center"><span class="math inline">\(L_{R}\)</span> | With concat.</td>
+<td align="center">2.680</td>
+<td align="center">2.660</td>
+<td align="center">2.613</td>
+<td align="center">2.670</td>
+<td align="center">2.734</td>
+<td align="center">2.727</td>
+<td align="center">0.231</td>
+</tr>
+<tr class="odd">
+<td align="center"><span class="math inline">\(L_{0}\)</span> | Without concat.</td>
+<td align="center">2.680</td>
+<td align="center">2.660</td>
+<td align="center">2.613</td>
+<td align="center">2.594</td>
+<td align="center">-</td>
+<td align="center">2.727</td>
+<td align="center">0.171</td>
+</tr>
+<tr class="even">
+<td align="center"><span class="math inline">\(L_{R}\)</span> | Without concat.</td>
+<td align="center">2.680</td>
+<td align="center">2.660</td>
+<td align="center">2.613</td>
+<td align="center">2.670</td>
+<td align="center">-</td>
+<td align="center">2.727</td>
+<td align="center">0.193</td>
+</tr>
+</tbody>
+</table>
+<p>Figure 1 shows how each step contributed to the final output. For the model described by the red line which is supposed to reach the lowest possible value of RMSE we can spot that the most significant is the last step, which is the concatenation of features. It lowers RMSE in comparison to the previous step by 0.06 which is the highest witnessed growth. The model found a very sophisticated variable which is the multiplication of discretized <em>alkphos</em> and <em>sgot</em>. One the contrary final RMSE score of model shown using a blue line, which used concatenations of features with a <span class="math inline">\(L_{R}\)</span> loss function was slightly higher than AutoML one and way higher than the result of the most model. The inspection of each step shows that although the first two steps were very similar, after the third and fourth R squared coefficient inflated with the cost of higher RMSE. It means that the model explains more variance of the plain, but returns worse predictions on the average.</p>
+<div class="figure"><span id="fig:unnamed-chunk-14"></span>
+<img src="images/3-4-results.png" alt="RMSE of models according to the phase of training. The orange line indicates Root Mean Square Error of the black-box model. The dashed vertical line shows a cutoff point for models without concatenation of features."  />
+<p class="caption">
+FIGURE 3.1: RMSE of models according to the phase of training. The orange line indicates Root Mean Square Error of the black-box model. The dashed vertical line shows a cutoff point for models without concatenation of features.
+</p>
+</div>
 </div>
 <div id="summary-and-conclusions-13" class="section level3" number="3.4.6">
 <h3><span class="header-section-number">3.4.6</span> Summary and conclusions</h3>
+<p>To summarize all, feature selection and feature transformation steps can be conducted with maintaining a balance between better RMSE and R squared. Moreover, the results are very similar no matter what loss function was used. Things are getting a bit more complicated when we start to discretize variables or, optionally, to merge them. In that cause better coefficient of determination is not being followed up by better Room Mean Square Error. However, we consider proposed <span class="math inline">\(L_{R}\)</span> loss functions as promising, and are looking forward to improving its behavior in the future making the border between its elements smoother.</p>
+<p>Automated Regression turned up to be successful for the given task. We were able to significantly improve the model and beat black-box and are more than happy looking at the result. One of the advantages of the proposed method is flexibility. Putting harsher constraints on a set of allowed transformations does not cause any problems. It was shown when we had to stop the training stage after three out of four steps in order to obtain more interpretable results. The effectiveness of the proposed method is the highest for small and medium-sized datasets, but we look forward to a large datasets extension.</p>
 
 </div>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
+<div id="ref-mednature">
+<p>“Ascent of Machine Learning in Medicine.” 2019. <em>Nature Materials</em> 18 (5): 407–7. <a href="https://doi.org/10.1038/s41563-019-0360-1">https://doi.org/10.1038/s41563-019-0360-1</a>.</p>
+</div>
 <div id="ref-3-7-houseprices-tree">
 <p>Fan, Gang-Zhi, Seow Eng Ong, and Hian Koh. 2006. “Determinants of House Price: A Decision Tree Approach.” <em>Urban Studies</em> 43 (November): 2301–16. <a href="https://doi.org/10.1080/00420980600990928">https://doi.org/10.1080/00420980600990928</a>.</p>
 </div>
+<div id="ref-pfi">
+<p>Fisher, Aaron, Cynthia Rudin, and Francesca Dominici. 2018. “All Models are Wrong, but Many are Useful: Learning a Variable’s Importance by Studying an Entire Class of Prediction Models Simultaneously.” <em>arXiv E-Prints</em>, January, arXiv:1801.01489. <a href="http://arxiv.org/abs/1801.01489">http://arxiv.org/abs/1801.01489</a>.</p>
+</div>
+<div id="ref-gosiewska2019safe">
+<p>Gosiewska, Alicja, Aleksandra Gacek, Piotr Lubon, and Przemyslaw Biecek. 2019. “SAFE Ml: Surrogate Assisted Feature Extraction for Model Learning.” <a href="http://arxiv.org/abs/1902.11035">http://arxiv.org/abs/1902.11035</a>.</p>
+</div>
+<div id="ref-H2OAutoML">
+<p>H2O.ai. 2017. <em>H2O Automl</em>. <a href="http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html">http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html</a>.</p>
+</div>
 <div id="ref-Lipton">
 <p>Lipton, Zachary Chase. 2016. “The Mythos of Model Interpretability.” <em>CoRR</em> abs/1606.03490. <a href="http://arxiv.org/abs/1606.03490">http://arxiv.org/abs/1606.03490</a>.</p>
+</div>
+<div id="ref-liverdisorder">
+<p>McDermott, James, and Richard S. Forsyth. 2016. “Diagnosing a Disorder in a Classification Benchmark.” <em>Pattern Recognition Letters</em> 73: 41–43. <a href="https://doi.org/https://doi.org/10.1016/j.patrec.2016.01.004">https://doi.org/https://doi.org/10.1016/j.patrec.2016.01.004</a>.</p>
+</div>
+<div id="ref-Obermeyer2016">
+<p>Obermeyer, Ziad, and Ezekiel J. Emanuel. 2016. “Predicting the Future - Big Data, Machine Learning, and Clinical Medicine.” <em>The New England Journal of Medicine</em> 375 (13): 1216–9. <a href="https://doi.org/10.1056/NEJMp1606181">https://doi.org/10.1056/NEJMp1606181</a>.</p>
 </div>
 <div id="ref-Rudin2019">
 <p>Rudin, Cynthia. 2019. “Stop Explaining Black Box Machine Learning Models for High Stakes Decisions and Use Interpretable Models Instead.” <em>Nature Machine Intelligence</em> 1 (5): 206–15. <a href="https://doi.org/10.1038/s42256-019-0048-x">https://doi.org/10.1038/s42256-019-0048-x</a>.</p>
