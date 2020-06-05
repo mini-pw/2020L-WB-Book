@@ -1,0 +1,15 @@
+"data_nr";"data_name";"nr_instances";"nr_features";"nr_missing";"procent_missing"
+"1018";"ipums_la_99-small";8844;56;34843;0,07
+"1590";"adult";48842;13;6465;0,01
+"188";"eucalyptus";736;16;455;0,04
+"23381";"dresses-sales";500;13;955;0,15
+"27";"colic";368;20;1199;0,16
+"29";"credit-approval";690;16;67;0,01
+"38";"sick";3772;28;2293;0,02
+"4";"labor";57;17;326;0,34
+"40536";"SpeedDating";8378;123;18570;0,02
+"41278";"stem-okcupid";45907;20;139693;0,15
+"55";"hepatitis";155;20;167;0,05
+"56";"vote";435;17;392;0,05
+"6332";"cylinder-bands";540;34;999;0,05
+"944";"echoMonths";130;10;97;0,07

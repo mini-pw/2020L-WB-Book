@@ -1,9 +1,10 @@
-## Correlation between reproducibility of components of research papers and their purpose
+## Correlation between reproducibility of research papers and their objective
 
 *Authors: Przemysław Chojecki, Kacper Staroń, Jakub Szypuła (Warsaw University of Technology)*
 
 ### Abstract
 
+Reproducibility is a quality of research crucial for modern science. But is perfect reproducibility an ultimate requirement for every element of scientific process to be valid? Not necessarily, it is possible that important factor in this case will be purpose of given part of research. In this article we will attempt to provide a system of analyzing reproducibility of scientific papers involving mainly the purpose of theirs elements and search for dependencies between those variables.
 
 ### Introduction and Motivation
 It is common knowledge that reproducibility is a way for science to evolve. It is the heart of the scientific method to revisit pre-existing measurements and to try to reproduce its results. However, the term „reproducibility” itself, as well it is crucial to the scientific methodology, it can be also universal at the expense of unambiguousness and usability. \
@@ -98,40 +99,183 @@ We systematized chunk objectives and grouped them into the following general obj
 The sole purpose of this paper is to explore interactions between purposes of code chunks usage and reproducibility aberrations. That requires a system of classification of reproducibility.
 We provide simple categorization of forms of reproducibility into the 6 types. This classification system shall serve as a tool for initial phase of our analysis, thus it is not directly involving purpose of discussed code at this stage. 
 
-* 1. perfect reproducibility - code perform flawlessly and after initial configuration precise output is recreated
-* 2. margin of error - after initial configuration code provides output matching expectations within acceptable margin of error (f.e. difference in rounded decimals, default parameters of generated graphics)
-* 3. editorial correction - code requires minor corrections to be executable and viable due to editorial error or changes in naming conventions
-* 4. environment setup - code to execute properly requires major and time-consuming setup and environment changes or may be not able to provide expected results at all
-* 5. unreproducible - code undoubtedly cannot be reproduced (f.e. due to unavailable data, unavailable package, unsupported fatal error) 
-* -1. missing point of reference - article does not provide (or vaguely provides) expected performence and determining reproducilibity is impossible
+* 1 - perfect reproducibility - code perform flawlessly and after initial configuration precise output is recreated
+* 2 - margin of error - after initial configuration code provides output matching expectations within acceptable margin of error (f.e. difference in rounded decimals, default parameters of generated graphics)
+* 3 - editorial correction - code requires minor corrections to be executable and viable due to editorial error or changes in naming conventions
+* 4 - environment setup - code to execute properly requires major and time-consuming setup and environment changes or may be not able to provide expected results at all
+* 5 - unreproducible - code undoubtedly cannot be reproduced (f.e. due to unavailable data, unavailable package, unsupported fatal error) 
+* -1 - missing point of reference - article does not provide (or vaguely provides) expected performence and determining reproducilibity is impossible
 
 
 #### Tables description
-For analysis purposes, we have put our work into tables. The one can see the small part of them here: \
+For analysis purposes we have gathered data from randomly selected scientific papers in `The R Journal` and arranged them into 3 distinct tables stored in 3 .csv files. 
 
-```{r, eval=TRUE, cache=TRUE, include=FALSE}
-# tu bedzie wczytanie 
+##### Table of articles
+Every row represents one article contains information about sum of lengths of the code chunks in given article and its general purpose, one-hot encoded (6 categories).
 
-print("")
-```
 
-##### 1.Table of articles
-Every row represents one article. Every article has a column of an individual number, a sum of lengths of chunks of code, and information about purposes of articles. \
+| length | package overview | object construction |  ...  | error identification |
+|--------|------------------|---------------------|-------|----------------------|
+| 15     | TRUE             | FALSE               |  ...  | FALSE                |
+| 2      | TRUE             | TRUE                |  ...  | FALSE                |
+| 9      | TRUE             | FALSE               |  ...  | FALSE                |
 
-##### 2.Table of groups
-Every row represents one group of chunks. Every group has a column of an individual number, a sum of lengths of chunks of code, and information about purposes of the group. \
 
-##### 3.Table of chunks
-Every row represents one chunk. Every chunk has a column of an individual number, its length of code, its reproducibility, and information about purposes of code. \
+##### Table of groups
+Every row represents one group of chunks and cointains information about sum of lengths of the code chunks in given group and its general purpose, one-hot encoded (9 categories). 
+
+| length | package usage | practical use |  ...  | possible error |
+|--------|---------------|---------------|-------|----------------|
+| 15     | TRUE          | FALSE         |  ...  | FALSE          |
+| 2      | TRUE          | TRUE          |  ...  | FALSE          |
+| 9      | TRUE          | FALSE         |  ...  | FALSE          |
+
+
+##### Table of chunks
+Every row represents one chunk and contains information its length, reproducibility and its general purpose, one-hot encoded (17 categories). 
+
+| length | reproducibility scale | aesthethic example |  ...  | empirical proof |
+|--------|-----------------------|--------------------|-------|-----------------|
+| 5      | 2                     | FALSE              |  ...  | FALSE           |
+| 5      | 2                     | FALSE              |  ...  | FALSE           |
+| 5      | 4                     | FALSE              |  ...  | FALSE           |
 
 ##### Length assessment
-To objectively determine a length of code we have decided to count it with such rules: \
-* skip all empty and commented lines \
-* skip assignments, unless it contains the execution of a function \
-* skip executions of functions `library` and `data` \
-* skip lines with only technical meaning, i.e. `}` \
+To objectively determine a length of code we have decided to count it according to the following rules: \
+* ignore all empty and commented lines \
+* ignore assignments, unless it contains the execution of a function \
+* ignore executions of functions `library` and `data` \
+* ignore lines containing only parenthesis \
 
 ### Results
+In this section, we perform a basic analysis of the data we have gathered during our study.
+
+#### Preliminary analysis
+
+The data can be loaded by:
+
+```{r, eval=TRUE, cache=TRUE, include=TRUE}
+art <- read.csv("./1-6-files/articles.csv")
+chnk <- read.csv("./1-6-files/chunks.csv")
+grp <- read.csv("./1-6-files/groups.csv")
+
+library(dplyr)
+library(ggplot2)
+library(reshape2)
+```
+
+Frequency of every reproducibility score can be obtained by:
+
+```{r, eval=TRUE, cache=TRUE, include=TRUE,  warning=FALSE, message=FALSE}
+# frequency of every reproducibility score
+chnk %>% pull(reproducibility.scale) %>% table()
+```
+
+As we can see, most chunks were fully reproducible, with total areproducibility being the second most common occurence. 
+ What further can be analysed is how reproducible is each objective, how often it occurs and the total length of each objective (i.e. sum of length in lines of all chunks containing specific objective). This analysis can be achieved by the following code:
+
+```{r, eval=TRUE, cache=TRUE, include=TRUE, warning=FALSE, message=FALSE}
+# mean reproduciblity scale score for reach objective
+mean_repr <- chnk[-1,] %>% 
+  sapply(function(x){x*chnk[-1,]$reproducibility.scale}) %>% data.frame %>%
+  select(-reproducibility.scale, -length)
+mean_repr[mean_repr==0] <- NA
+mean_repr[mean_repr==-1] <- NA
+mean_repr <- summarize_if(mean_repr, is.numeric, mean, na.rm = TRUE) %>% melt
+colnames(mean_repr)[2] <- "mean_repr_score"
+
+# length for every objective
+licznik <- chnk %>% select(-length, -reproducibility.scale) %>% summarise_all(sum) %>% melt
+tot_length <- chnk %>% select(-reproducibility.scale) %>% melt(id.vars = "length") %>%
+  filter(value) %>% select(-value) %>% group_by(variable) %>% summarise(total_length = sum(length))
+mean_repr <- inner_join(inner_join(tot_length, licznik), mean_repr, by = "variable")
+arrange(mean_repr, mean_repr_score)
+```
+
+As it is shown, objectives vary in their mean reproducibility score with examples scoring worse than instructions and results presentation better than plots. 
 
 
-### Summary and conclusions 
+On the following plot higher the value of variable - worst level of reproducibility. Exact values should not be interpreted as continuous variable, legitimite information can be obtained by analyzing order of categories sorted with regard to their avarage reproducibility score.
+
+![text](./1-6-files/reprodukowalnosc_celu_chunki.png)
+\
+
+On this plot we can observe difference in values of `plot` and `presentation of results`. Clearly `plot` is more likely to be irreproducible than a showcase of results in any other way 
+Moreover, both `aesthetic example` and `functional example` values are almost the highest, what may indicate that in general authors put relatively low effort into them, since their perfect reproducibility may not be essential to the article as a whole.
+During our analysis `result processing` chunks were encountered only $4$ times and all of them were reproducible, which in our opinion is not a basis for stating any meanigful conclusions.
+
+
+#### Frequency of objectives
+
+Next, we will visualize the frequency of occurences of every objective, for every category.
+
+![text](./1-6-files/chunk_freq.png)
+
+![text](./1-6-files/group_freq.png)
+
+![text](./1-6-files/art_freq.png)
+
+
+
+After the objectives are sorted with regard to their frequency, one can see that they appear to be similar to 1/x function plot. It indicates that certain objectives are far more frequent than others, while the less popular ones remain at similar levels of frequency.
+
+
+#### Average length
+
+Average length of a code chunk with a specific objective:
+
+![text](./1-6-files/srednia_dlugosc_celu_chunki.png)
+\
+
+`erroneous action` generally requiring a small amount of code suggests that standard aproach to this objective is simply execution of one line of code, just to trigger the error. \
+
+
+Average length of a group of chunks with a specific objective:
+
+![text](./1-6-files/srednia_dlugosc_celu_grupy.png)
+\
+
+The code for `method comparison` has to show a solution offered by a described package as well as how to approach such a problem with other sources. What is more, the author has to show the differences between them, which as we can see usually requires additional lines of code. \
+
+
+Average length of all of the code chunks in an article with a specific objective:
+
+![text](./1-6-files/srednia_dlugosc_celu_artykoly.png)
+\
+
+Clearly `error identifaction` articles include the gratest amount of code, probably for the same reasons as `porownanie.metod` in the group objectives. It can be space and timeconsuming to showcase the solution to a problem with a package, without a package and point out precisely the difference between them. \
+
+
+#### Objectives correlations matrices
+
+
+Two important conclusions can be drawn from the correlation matrix. First - there is no strong correlation between individual objectives, which may imply that the objectives proposed by us do not overlap heavily. Second - correlation between the reproducibility score and individual objectives is also not that high. Because of that we cannot be certain whether there is a clear link between reproducibility score and objective of any given chunk. However, after closer inspection of the following matrices, we can formulate few additional general observations.
+
+
+![text](./1-6-files/korelacje_celu_chunki2.png)
+\
+On featured chunks objectives correalation matrix we can observe how:
+* There is a positive correlation between `comparison to foreign work` and `empirical proof`. However it is rather an effect of a small amount of data. There were only $7$ instances of `comparison to foreign work` and $4$ of them are also `empirical proof`.
+* We found no correlation between `erroneous action` and `comparison to foreign work`. When an author shows a problem in someone's code or package, he does not compare it to his own. He would rather show it in the next chunk.
+
+
+
+![text](./1-6-files/korelacje_celu_grupy.png)
+\
+On featured intermediate objectives correalation matrix we can observe how:
+* It is less likely to find a group that is both dzialanie.pakietu and przygotowanie.danych. It is because in the preparation of data most of the code is in plain `R` or other popular libraries and not in the one shown in the paper. \
+* There is a big negative correlation between dzialanie.pakietu and prezentowanie.specyfikacji. When there is a code that is prezentowanie.specyfikacji, it is mostly a theoretical approach, while the dzialanie.pakietu underscore the practical approach. \
+
+
+
+![text](./1-6-files/korelacje_celu_artykoly.png)
+\
+On featured main objectives correalation matrix we can observe how:
+* All of the researched article present a package, therefore the correlation is not defined for it. \
+* Articles serving as an introduction to the topic are also implementing additional features. \
+
+
+### Summary, conclusions and encouragement
+For purpose of research described in this article we developed an intuitive system of objectives classifaction of singular code chunks, groups of chunks and whole scientific papers concerning development of programming languageges (in this case - `R`). Initial analysis of the data acquired by using mentioned system may imply that lists of objectives proposed by us do not overlap heavily and therefore they indeed can be used as valid scientific method. 
+To sum up the effects of applying this method for a selection of the scientific articles from `The R Journal`, correlation between the reproducibility score and individual objectives is not significantly high. It may indicate that dataset considered in this paper is simply not extensive enough. We sincerely encourage readers to perform their own analysis on wide variety of scientific articles not covered in this paper, preprocessed using developed system.
+
