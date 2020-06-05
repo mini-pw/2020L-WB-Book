@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3.4 Can Automated Regression beat linear model? | ML Case Studies</title>
+  <title>3.8 Explainable Computer Vision with embedding and k-NN classifier | ML Case Studies</title>
   <meta name="description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3.4 Can Automated Regression beat linear model? | ML Case Studies" />
+  <meta property="og:title" content="3.8 Explainable Computer Vision with embedding and k-NN classifier | ML Case Studies" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="images/cover.png" />
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3.4 Can Automated Regression beat linear model? | ML Case Studies" />
+  <meta name="twitter:title" content="3.8 Explainable Computer Vision with embedding and k-NN classifier | ML Case Studies" />
   
   <meta name="twitter:description" content="Case studies for reproducibility, imputation, and interpretability" />
   <meta name="twitter:image" content="images/cover.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html"/>
-<link rel="next" href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html"/>
+<link rel="prev" href="which-neighbours-affected-house-prices-in-the-90s.html"/>
+<link rel="next" href="acknowledgements.html"/>
 <script src="libs/header-attrs/header-attrs.js"></script>
 <script src="libs/jquery/jquery.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
@@ -347,200 +347,359 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="can-automated-regression-beat-linear-model" class="section level2" number="3.4">
-<h2><span class="header-section-number">3.4</span> Can Automated Regression beat linear model?</h2>
-<p><em>Authors: Bartłomiej Granat, Szymon Maksymiuk, (Warsaw University of Technology)</em></p>
-<div id="abstract-16" class="section level3" number="3.4.1">
-<h3><span class="header-section-number">3.4.1</span> Abstract</h3>
-<p><em>Health care is a subject everyone is familiar with, therefore it is clear we want to constantly improve our knowledge about appliances of today’s science in medicine. TBD</em></p>
+<div id="explainable-computer-vision-with-embedding-and-k-nn-classifier" class="section level2" number="3.8" style="text-align: justify">
+<h2><span class="header-section-number">3.8</span> Explainable Computer Vision with embedding and k-NN classifier</h2>
+<p><em>Authors: Olaf Werner, Bogdan Jastrzębski (Warsaw University of Technology)</em></p>
+<div id="abstract-20" class="section level3" number="3.8.1">
+<h3><span class="header-section-number">3.8.1</span> Abstract</h3>
+<p><strong><em>Interpretability of machine learning models become in recent years even more important. The need for it raised a wave of criticism towards deep neural networks (DNNs), as they are not interpretable. However, DNN can give much better results than other classifiers for different tasks, e.g. image recognition, and therefore there is a trade-off between interpretability and robustness. In this work, we investigate further the idea of Deep k-Nearest Neighbors (DkNN), simplifying the previous algorithm. We present an easy augmentation technique of k-NN classifier, that can significantly boost its performance in image recognition using autoencoders or other unsupervised learning algorithms. We obtain a classifier that is interpretable in a sense, that we can provide explanatory training set observations and at the same time much more robust. This technique, however, as presented here, produced worse results than a convolutional neural network, and therefore there is still a room for improvement.</em></strong></p>
+<hr />
 </div>
-<div id="introduction-and-motivation-12" class="section level3" number="3.4.2">
-<h3><span class="header-section-number">3.4.2</span> Introduction and Motivation</h3>
-<p>Health-related problems have been a topic of multiple papers throughout the years and machine learning brought some new methods to modern medicine.<span class="citation">(Obermeyer and Emanuel <a href="#ref-Obermeyer2016" role="doc-biblioref">2016</a>)</span>, <span class="citation">(“Ascent of Machine Learning in Medicine” <a href="#ref-mednature" role="doc-biblioref">2019</a>)</span>. We care so much about our lives that every single algorithm and method eventually gets tested on some medical data.</p>
-<p>What is unique about health data is that black-box models are completely useless in this subject. Almost always doctors know whether a patient is sick or not. What is important to them is the reason why he is sick. That’s why explainable machine learning is the key to make all of us healthier. However XAI methods are not very well defined yet and they lack strong statistical background like tests, etc. That caused strong opposition of Explainable Machine Learning to rise<span class="citation">(Rudin <a href="#ref-Rudin2019" role="doc-biblioref">2019</a>)</span>. Unfortunately making a good explainable model for health data might be close to impossible. Medical problems of all kinds can be very unique, complex, or completely random. That’s why researchers spend numerous hours on improving their explainable models and that’s why we decided to test our approach on <code>liver disorders</code> dataset with help. We will try to improve the linear model results with the help of the AutoML black-box model.</p>
-<p>There is a big discussion in the scientific world about “what does it mean for a model to be interpretable?”<span class="citation">(Lipton <a href="#ref-Lipton" role="doc-biblioref">2016</a>)</span>. Unfortunately there is no clear answer to that question and often it is necessary to specify what is supposed to be meant as interpretable. In this paper we assume that the model is interpretable if it is possible to explicitly track down what contributed to model answer and to do it in a finite time. It means that all transformation of variables or even concatenations are possible as soon as a used type of model is simply structured like a linear model is. However, we understand other’s opinions and we will present also results with only simple transformations and without controversial concatenations.</p>
-<p>The <code>liver-disorders</code> dataset is well known in the field of machine learning<span class="citation">(McDermott and Forsyth <a href="#ref-liverdisorder" role="doc-biblioref">2016</a>)</span> and that’s exactly the reason why we chose it. It is described in the next chapter. Our goal was to find a relatively clean dataset with many models already done by other researchers. Another advantage is the availability of the dataset. It is published on the OpenML repository and therefore everyone can give a shot to that problem. We don’t want to show that properly cleaned data gives better results but to achieve, an explainable model found after a complex analysis that we want to test.</p>
-<p>In this paper we do a case study on <code>liver disorders</code> dataset and want to prove that by using automated regression it is possible to build an easy to understand prediction that outperforms black-box models on the real dataset and at the same time achieve similar results to other researchers. By automated regression we understand a process when we search through space of available dataset transformation and try to find the one for which linear regression model is best using earlier defined loss function.</p>
+<div id="introduction-3" class="section level3" number="3.8.2">
+<h3><span class="header-section-number">3.8.2</span> Introduction</h3>
+<p>Artificial neural networks are widely used in computer vision. Convolutional neural networks [3], in particular, can achieve very high performance on this task and surpass other popular classifiers like SVM, logistic regression, and decision trees. However, the increase in performance is associated with a loss of interpretability. Artificial neural networks are infamous for their complexity and lack of interpretability and are often criticized for it.</p>
+<p>K-nearest neighbours classifier (k-NN) one of the simplest classification algorithms, yet it is interpretable and highly complex. The idea behind it is simple. To predict the class of a new observation, e.g. an image, we calculate the measure of similarity between it and all observations in collected training data. Then we find an arbitrarily chosen number of the most similar observations. We base our prediction on their labels.</p>
+<p>There are several problems with k-NN. Its prediction depends on the choice of the mentioned measure of similarity. The optimal measure can be very complex and non-trivial. Let’s take the problem of image recognition as our example. Two images that represent the same object on a different background can have the majority of the values of pixels different. A measure that treats each pixel independently, e.g. euclidean distance, would lead to an incorrect conclusion, that those images display very different objects.
+The second problem with the k-NN is that it scales poorly with the size of the training dataset, as every time we make a prediction, we must measure the similarity between a new observation and all observations in our training dataset, which can become very time-consuming.</p>
+<p>Interpretability of the k-NN classifier is in two things: interpretability of the measure of similarity we use and in that, with each prediction, we can provide the most similar observations from the training data set used to make the prediction. We argue that the latter is more important and that we can still call a model interpretable if the measure of similarity is not.</p>
+<p>The idea is not new. It has been previously investigated by Nicolas Papernot and Patrick McDaniel from Pennsylvania State University [6]. In our approach, we simplify their algorithm. We propose to use data embedding techniques to produce more meaningful spaces, where the use of p-norms as similarity measures is more justified. In this article, we will show that it is possible to increase significantly the performance of the k-NN using this technique.</p>
+<hr />
 </div>
-<div id="data-1" class="section level3" number="3.4.3">
-<h3><span class="header-section-number">3.4.3</span> Data</h3>
-<p>The dataset we use to test our hypothesis is a well-known <code>liver-disorders</code> first created by ‘BUPA Medical Research Ltd.’ containing a single male patient as a row. The data consists of 5 features which are the results of blood tests a physician might use to inform diagnosis. There is no ground truth in the data set relating to the presence or absence of a disorder. The target feature is attribute drinks, which are numerical. Some of the researchers tend to split the patients into 2 groups: 0 - patients that drink less than 3 half-pint equivalents of alcoholic beverages per day and 1 - patients that drink more or equal to 3 and focus on a classification problem.</p>
-<p>All of the features are numerical. The data is available for 345 patients and contains 0 missing values.</p>
-<p>The dataset consists of 7 attributes:</p>
+<div id="methodology-18" class="section level3" number="3.8.3">
+<h3><span class="header-section-number">3.8.3</span> Methodology</h3>
+<p>The simplest and one of the most robust classifiers is k-NN. It doesn’t generalize information, instead, it saves training dataset and during prediction, it finds the most similar historical observations and predicts the label of a new observation based on their labels. However, it not only can’t distinguish important features from not important ones but also to find more complex interactions between variables.</p>
+<p>One of the simplest, yet very robust classification algorithms is k-NN. It does not generalize knowledge, instead, it finds the most similar observations from the training data set to new observation and predicts its class based on theirs. However, it’s not only unable to distinguish important from irrelevant features, but also find interactions between variables.</p>
+<p>A way to improve classification results with the k-NN algorithm is to determine a better measure of similarity than the p-norm. In this paper, we propose a measure of similarity of the following form:</p>
+<p><span class="math display">\[ dist(x,y) := \| Emb(x) - Emb(y) \|_p \]</span></p>
+<p>where <span class="math inline">\(Emb: \mathbb{R}^n \rightarrow \mathbb{R}^m\)</span>, <span class="math inline">\(\mathbb{R}^n\)</span> is the space of observations and <span class="math inline">\(\mathbb{R}^m\)</span> is the space of embedding (n &gt; m).
+Note, that <span class="math inline">\(dist\)</span> is not a metric.</p>
+<p>An embedding can be done made in various ways. In this article, we will explore different embedding techniques, including:</p>
+<ul>
+<li><p>SVD embedding</p></li>
+<li><p>Convolutional Autoencoder</p></li>
+<li><p>K-means embedding</p></li>
+</ul>
+<hr />
+<div id="data-4" class="section level4" number="3.8.3.1">
+<h4><span class="header-section-number">3.8.3.1</span> Data</h4>
+<p>To present our results, we are going to use the data set <a href="https://www.openml.org/d/40996">Fashion-Mnist</a>. Fashion-MNIST is a dataset of Zalando’s article images, consisting of a training set of 60,000 examples and a test set of 10,000 examples. Each example is a 28x28 grayscale image, associated with a label from 10 classes. We have the following classes :</p>
+<ul>
+<li><p>T-shirt/top</p></li>
+<li><p>Trouser</p></li>
+<li><p>Pullover</p></li>
+<li><p>Dress</p></li>
+<li><p>Coat</p></li>
+<li><p>Sandal</p></li>
+<li><p>Shirt</p></li>
+<li><p>Sneaker</p></li>
+<li><p>Bag</p></li>
+<li><p>Ankle boot.</p></li>
+</ul>
+<hr />
+</div>
+<div id="autoenconders-and-embedding" class="section level4" number="3.8.3.2">
+<h4><span class="header-section-number">3.8.3.2</span> Autoenconders and Embedding</h4>
+<p>In the theory of information and statistics, we distinguish data from information. Data is a carrier of information. Information is something in data, that is meaningful to us. For instance, consider two highly correlated random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. Knowing the value of one gives us great knowledge of the value of the other. Hence, if we have prior knowledge about the way in which those variables are connected: <span class="math inline">\(2X + 3 \approx Y\)</span>, there is little difference between knowing the value of one of them: <span class="math inline">\(X = 23.3454\)</span>, and both values:<span class="math inline">\(X = 23.3454, Y = 48.9877\)</span>, because we can roughly guess value of one based on the other: <span class="math inline">\(X = 23.3454, 2X + 3 \approx Y \models Y \approx 49.6908\)</span>. The relation between variables can be very complex. We still lose some information though.</p>
+<p>In statistics and machine learning, we try to represent data in a meaningful way, in that sense, representation gives us a lot of information in very little data. In other words, we try to find a way to compress data. One way to do so is to use autoencoders. An autoencoder is a parametric function composed of two parts: the encoder part and the decoder part.</p>
+<p><span class="math display">\[Autoenc = Decoder \circ Encoder\]</span></p>
+<p>where <span class="math inline">\(Encoder: \mathbb{R}^n \rightarrow \mathbb{R}^m\)</span>, <span class="math inline">\(Decoder: \mathbb{R}^m \rightarrow \mathbb{R}^n\)</span> and <span class="math inline">\(n&gt;m\)</span>.
+We want our autoencoder to compress and decompress data i.e. firstly shrink data to some representation and then recreate observation based on this low-dimensional representation. We want our recreated data to be as close to original observation as possible, for instance in mean square error (MSE):</p>
+<p><span class="math display">\[min_\theta \frac{1}{n}\sum_{i=1}^{n}\|(Decoder_\theta \circ Encoder_\theta)(x_i)-x_i \|^2\]</span></p>
+</div>
+<div id="the-use-of-standard-interpretable-models-in-computer-vision" class="section level4" number="3.8.3.3">
+<h4><span class="header-section-number">3.8.3.3</span> The use of standard interpretable models in computer vision</h4>
+<p>We often think of logistic regression or decision tree classifiers as being interpretable. Their interpretability, however, relies strongly on the interpretability of observation features. When features are hardly interpretable, the information that a particular feature has been used is meaningless. For instance, if we know, that at some point the classifier makes a choice based on the age of the patient, it is a piece of meaningful information. On the other hand, if we know, that at some point the classifier makes a choice based on one of a million pixels, this information might be meaningless to us. It gives very little explanation, why a particular pixel has been used.</p>
+<p>In this section, we will explore the use of standard interpretable models and we will try to argue, that they are not useful when it comes to computer vision.</p>
+<hr />
+<div class="figure">
+<img src="images/3-8-LOGREG.png" alt="" />
+<p class="caption"><b>Fig. 1: An example of logistic regression weights:</b> In the picture we can see a visualisation of the weights of linear regression model (bright pixel values mean large weight and dark - small). This picture shows, that it is impossible to interpret those weights.</p>
+</div>
+<div id="logistic-regression" class="section level5" number="3.8.3.3.1">
+<h5><span class="header-section-number">3.8.3.3.1</span> Logistic Regression</h5>
+<p>Logistic regression[1] is a basic classification model. We get the probability of belonging to a given class by:</p>
+<p><span class="math display">\[{\displaystyle p={\frac {e^{\beta _{0}+\beta _{1}x_{1}+...+\beta _{n}x_{n}}}{e^{\beta _{0}+\beta _{1}x_{1}+...+\beta _{n}x_{n}}+1}}}\]</span></p>
+<p>where <span class="math inline">\(\beta _{0},\beta _{1},...,\beta _{n}\)</span> are coefficients of logistic regression. We obtain coefficients using gradient descent. Because we have multiple labels, we train 10 different logistic regression models and use softmax function to normalize probabilities of belonging to any particular class.
+We then visualize coefficients as images with bright spots indicating that they are important. The result is depicted in fig 1. As you can see, it doesn’t convey the information about, how does the model make a prediction. This shows, that linear regression might not be useful for interpretation in image recognition.</p>
+<hr />
+</div>
+<div id="decision-trees" class="section level5" number="3.8.3.3.2">
+<h5><span class="header-section-number">3.8.3.3.2</span> Decision Trees</h5>
+<p>Decision trees are very useful classifiers that can be interpreted, however, they are suitable when we have very few meaningful dimensions. The tree that at a time makes a choice based on individual pixels is not a good classifier and it’s explanation provides little knowledge about, why the selected pixels have been chosen. Therefore, we will not examine the use of this class of classifiers.</p>
+<hr />
+</div>
+</div>
+<div id="our-approach" class="section level4" number="3.8.3.4">
+<h4><span class="header-section-number">3.8.3.4</span> Our Approach</h4>
+<p>In this section we will show an alternative to logistic regression and decision trees, that is more interpretable and at the same time can obtain significantly better results.</p>
+<hr />
+<div id="the-k-nn-classifier" class="section level5" number="3.8.3.4.1">
+<h5><span class="header-section-number">3.8.3.4.1</span> The k-NN Classifier</h5>
+<p>k-NN (k nearest neighbours) is a classifier, that doesn’t generalize data. Instead, we keep the training dataset, and every time we make a prediction, we calculate the distance (for instance euclidean distance) between our new observation and all observations in the training dataset to find k nearest. Prediction is based on their labels.</p>
+<p>k-NN is a robust classifier, that copes with highly nonlinear data. It’s also interpretable because we can always show k nearest neighbours, which are an explanation by themselves. It, however, is not flawless. It for instance poorly scales with the size of the training dataset, while at the same time it needs, at least in some domains, a very big training dataset, as it doesn’t generalize any information.</p>
+<p>We can significantly improve its performance by introducing complex similarity functions. If the similarity function is interpretable, we obtain a highly interpretable classifier. If not, we get semi interpretable classifier, where we cannot tell, why observations are similar according to the model, however, we can at least show similar training set examples, based on which prediction has been made.</p>
+<p>This complex distance functions can be made in many different ways. In this paper, we explore functions of a form</p>
+<p><span class="math display">\[dist(Img1, Img2) = d_e(Emb(Img1), Emb(Img2))\]</span></p>
+<p>where <span class="math inline">\(d_e\)</span> is the euclidean distance, so we simply compute the euclidean distance between embeddings of images. The scheme of our augmented k-NN classifier is displayed in fig. 1. As we can see, a new image firstly gets embedded and then a standard classification with k-NN is made. This type of architecture allows us to create a robust and interpretable classifier.</p>
+<div class="figure">
+<img src="images/3-8-KNNMODEL_1.png" alt="" />
+<p class="caption"><b>Fig. 2: The k-NN Classifier Architecture:</b> In the picture we can see the k-NN classifier architecture. Firstly an image get’s embedded by the embedder and then, combined with embedded training dataset, form prediction via k-NN.</p>
+</div>
+<hr />
+</div>
+<div id="embedding-techniques" class="section level5" number="3.8.3.4.2">
+<h5><span class="header-section-number">3.8.3.4.2</span> Embedding techniques</h5>
+<p>In this section, we will explore different embedding techniques and their potential use.</p>
+<hr />
+<div id="k-means" class="section level6" number="3.8.3.4.2.1">
+<h6><span class="header-section-number">3.8.3.4.2.1</span> K-means</h6>
+<p>We use the K-means algorithm [2] (also known as the Lloyd algorithm) to find subclasses in every class.
+Algorithm:</p>
 <ol style="list-style-type: decimal">
-<li>mcv - mean corpuscular volume</li>
-<li>alkphos - alkaline phosphatase</li>
-<li>sgpt - alanine aminotransferase</li>
-<li>sgot - aspartate aminotransferase</li>
-<li>gammagt - gamma-glutamyl transpeptidase</li>
-<li>drinks - number of half-pint equivalents of alcoholic beverages drunk per day</li>
-<li>selector - field created by the BUPA researchers to split the data into train/test sets</li>
+<li><p>Initiate a number of random centroids</p></li>
+<li><p>For every observation find the nearest centroid</p></li>
+<li><p>Calculate the average of observations in every group found in point 2</p></li>
+<li><p>These averages become new centroids</p></li>
+<li><p>Repeat points 2 to 4 until all new centroids are at the distance less than <span class="math inline">\(\epsilon\)</span> from old centroids</p></li>
 </ol>
-<p>For further readings on the dataset and misunderstandings related to the selector column incorrectly treated as target refer to: “McDermott &amp; Forsyth 2016, Diagnosing a disorder in a classification benchmark, Pattern Recognition Letters, Volume 73.”</p>
+<p>We use euclidean distance. Prediction for every new observation is simply class of nearest centroid. The algorithm is even more interpretable because we can visualize centroids as images. Thanks to using K-means to find subclasses our images are not blurry. Also because the number of all subclasses is much lower than the number of records in data set using k-NN only on centroids is much faster. Consider the dataset showed in fig. 3 a). In fact, a good subset of the training data set is enough to create a very good classifier. For instance, 5 points depicted on fig. 3 b), approximate sufficiently training data distribution. Notice, that we, in fact, don’t have to choose particular observations. We can instead choose points in observation space that are similar to observations. This is what the k-means algorithm does and so, we can obtain good training data approximation using k-means. An example of a centroid image is showed in fig. 4.</p>
+<div class="figure">
+<img src="images/3-8-KMEANS_ALL.png" alt="" />
+<p class="caption"><b>Fig 3: K-means embedding example.</b> In the picture a) we can see original set and in the picture b) - the same set with it’s representation</p>
 </div>
-<div id="methodology-15" class="section level3" number="3.4.4">
-<h3><span class="header-section-number">3.4.4</span> Methodology</h3>
-<p>AutoMl Model <span class="math inline">\(M_{aml}\)</span> and the dataset <span class="math inline">\(D\)</span> that consists of <span class="math inline">\(D_{X} = X\)</span> which is set of independent variables and <span class="math inline">\(D_{y} = y\)</span> - dependent variable (ie. target). We assume that <span class="math inline">\(M_{aml}\)</span> is an unknown function <span class="math inline">\(M_{aml}: \mathbb{R}^{p} \to \mathbb{R}\)</span>, where p is a snumber of features in the <span class="math inline">\(D\)</span> Dataset, that satisfies <span class="math inline">\(y = M_{aml}(X) + \epsilon\)</span> where <span class="math inline">\(\epsilon\)</span> is an error vector. Automated regression constructs known vector function <span class="math display">\[G_{AR} : \mathbb{R}^{n \times p} \to \mathbb{R}^{n \times p_{1}}\]</span> where <span class="math inline">\(n\)</span> is a number of observations, that satisfies <span class="math display">\[y = G_{AR}(X)\beta + \epsilon\]</span> thus it is linear regression model fitted for transformated data. <span class="math inline">\(p_{1}\)</span> does not have to equal <span class="math inline">\(p\)</span> since we allow conncatenations of variables.</p>
-<p>To find <span class="math inline">\(G_{AR}\)</span> we have to put some constraints. First of all we want it to minimize loss function one of two loss functions <span class="math inline">\(L: \mathbb{R}^{n} \to \mathbb{R}\)</span>. First of them is <span class="math display">\[L_{R} : \frac{\sqrt{\sum_{i=1}^{n}(y_{i}-\hat{y_{i}})^{2}}\sum_{i=1}^{n}(y_{i}-\bar{y_{i}})^{2}}{\sum_{i=1}^{n}(\hat{y_{i}}-\bar{y_{i}})^{2}}\]</span> which can be interpreted as Root Mean Square Error divided by the R-squred coefficient of determination. R-squared stands as measure of variance explained by the model <span class="citation">(Fan, Ong, and Koh <a href="#ref-3-7-houseprices-tree" role="doc-biblioref">2006</a>)</span> and therfore may be usefull to find best explanation of interactions met in the data. Obviously high coefficient does not always mean excelent model, furthermore even low values of it not alwyays inform us about uselessness of found fit. Therefore minimization will be prefromed independetly using second mesure as well <span class="math display">\[L_{0} : \sqrt{\sum_{i=1}^{n}(y_{i}-\hat{y_{i}})^{2}}\]</span> which is Root of the Mean Squared Error (RMSE). One top of that we also put constrains on domain of valid transformations of particular variables. For given dataset, described in the previous paragraphs we decided to use:</p>
+<div class="figure">
+<img src="images/3-8-KLAPEK.png" alt="" />
+<p class="caption"><b>Fig 4: An example of a centroid image</b>. A centroid in observation space is just an image. Here we can see, that this centroid is close to the “shoes cluster”.</p>
+</div>
+<hr />
+</div>
+<div id="svd" class="section level6" number="3.8.3.4.2.2">
+<h6><span class="header-section-number">3.8.3.4.2.2</span> SVD</h6>
+<p>SVD is a standard method of dimensionality reduction [4]. It is rewriting <span class="math inline">\(m\times n\)</span> matrix
+<span class="math inline">\(M\)</span> as <span class="math inline">\(U\Sigma V^T\)</span> where <span class="math inline">\(U\)</span> is <span class="math inline">\(m\times m\)</span> orthonormal matrix, <span class="math inline">\(V^T\)</span> is <span class="math inline">\(n\times n\)</span> orthonormal matrix
+and <span class="math inline">\(\Sigma\)</span> is <span class="math inline">\(m\times n\)</span> rectangular diagonal matrix with non-negative real numbers on the diagonal.
+We assume that singular values of <span class="math inline">\(\Sigma\)</span> are in descending order. Now by taking the first columns of <span class="math inline">\(V^T\)</span> we
+get vectors that are the most relevant. Let <span class="math inline">\(V_n\)</span> be a matrix, whose columns are <span class="math inline">\(V\)</span> columns with n greatest eigenvalues. Such a matrix is a linear transformation matrix, that turns observations into their embedding. It can be shown, that <span class="math inline">\(V_n\)</span> is the best transformation in <span class="math inline">\(L_2\)</span> norm sense. The SVD autoencoder scheme is depicted in fig. 5. Visualisation of an eigenvector, an image from dataset and the same image with an eigenvector used as a filter is showed in the picture 6.</p>
+<div class="figure">
+<img src="images/3-8-SVDAUTOENC_1.png" alt="" />
+<p class="caption"><b>Fig. 5: SVD autoencoder diagram:</b> In this picture we can see SVD autoencoder diagram.</p>
+</div>
+<div class="figure">
+<img src="images/3-8-HIDDEN_All.png" alt="" />
+<p class="caption"><b>Fig. 6: Most important eigenvector</b>. In the picture a) we can see an eigenvector, b) an image from dataset and in c) two images combined using a) as a filter and b) as a background. Because there in the picture c) there is still great bright area (intersection of a) and c) is significant), value in representation associated with this eigenvector will be larger.</p>
+</div>
+<hr />
+</div>
+<div id="convolutional-autoencoder" class="section level6" number="3.8.3.4.2.3">
+<h6><span class="header-section-number">3.8.3.4.2.3</span> Convolutional Autoencoder</h6>
+<p>We can create a semi-interpretable model by training a convolutional autoencoder and then creating a k-NN classifier on pre-trained embedding. As mentioned previously, it has several advantages over k-NN, because it uses <span class="math inline">\(L^2\)</span> distance in more meaningful space. Embedder is not interpretable, but our classifier can at least show us historical observations, that had an impact on prediction, which sometimes is good enough, especially when it can be easily seen why two images are similar and we only want a computer to do humans work. For instance, if we provide 5 images of shoe that caused that our image of the shoe has been interpreted as shoe, we maybe don’t know, why those images are similar according to our classifier, however, we can see, that they are similar, so a further explanation of a model is not required. This model, again, is not fully interpretable.</p>
+<p>Our implementation of convolutional autoencoder consists of the following layers:</p>
 <ul>
-<li>Feature selection
+<li>Conv2d:
 <ul>
-<li>XAI feature Importance</li>
+<li>Input Channels: 1</li>
+<li>Output Channels: 50</li>
+<li>filter size: 5</li>
 </ul></li>
-<li>Continuous transformation
+<li>Conv2d:
 <ul>
-<li>Polynomial transformation</li>
-<li>Lograthmic transformation</li>
+<li>Input Channels: 50</li>
+<li>Output Channels: 50</li>
+<li>filter size: 5</li>
 </ul></li>
-<li>Discrete transformation
+<li>Conv2d:
 <ul>
-<li>SAFE method</li>
+<li>Input Channels: 50</li>
+<li>Output Channels: 10</li>
+<li>filter size: 5</li>
 </ul></li>
-<li>Feature concatenation
+<li>Conv2d:
 <ul>
-<li>Multiplication of pair of features.</li>
+<li>Input Channels: 10</li>
+<li>Output Channels: 10</li>
+<li>filter size: 5</li>
+</ul></li>
+<li>Conv2d:
+<ul>
+<li>Input Channels: 10</li>
+<li>Output Channels: 1</li>
+<li>filter size: 5</li>
+</ul></li>
+<li>Conv2d:
+<ul>
+<li>Input Channels: 1</li>
+<li>Output Channels: 10</li>
+<li>filter size: 5</li>
+</ul></li>
+<li>Conv2d:
+<ul>
+<li>Input Channels: 10</li>
+<li>Output Channels: 10</li>
+<li>filter size: 5</li>
+</ul></li>
+<li>Conv2d:
+<ul>
+<li>Input Channels: 10</li>
+<li>Output Channels: 50</li>
+<li>filter size: 5</li>
+</ul></li>
+<li>Conv2d:
+<ul>
+<li>Input Channels: 50</li>
+<li>Output Channels: 50</li>
+<li>filter size: 5</li>
+</ul></li>
+<li>Conv2d:
+<ul>
+<li>Input Channels: 50</li>
+<li>Output Channels: 1</li>
+<li>filter size: 5</li>
 </ul></li>
 </ul>
-<p>Obviously, XAI related methods are conducted using AutoML baseline Model. We’ve decided to omit data imputation as an element of valid transformations set because the liver-disorders dataset does not meet with the problem of missing values.</p>
-<p>The optimization process is conducted based on Bayesian Optimization and the backtracing idea. Each main element of the domain of valid transformations is one step in the process of creation <span class="math inline">\(G_{AR}\)</span> function. Within each step, Bayesian optimization will be used to find the best transformation for the given level. During further steps, if any of transformation did not improve model, ie. <span class="math inline">\(L\)</span> function was only growing, the algorithm takes second, the third, etc. solution from previous steps according to backtracking idea. If for no one of <span class="math inline">\(k\)</span> such iterations, where k is known parameter, a better solution is found, step is omitted.</p>
+<p>along with pooling and unpooling between.</p>
+<div class="figure">
+<img src="images/3-8-CONVAUTOENC_1.png" alt="" />
+<p class="caption"><b>Fig. 10: Architecture of the convolutional autoencoder:</b> composed of several convolution layers.</p>
 </div>
-<div id="results-16" class="section level3" number="3.4.5">
-<h3><span class="header-section-number">3.4.5</span> Results</h3>
-<p>Dataset was split on the train and test dataset, and that split will be the same for all experiments covered in this section. To begin with we need to introduce the AutoML model that was used as a goal to beat. H2O AutoML<span class="citation">(H2O.ai <a href="#ref-H2OAutoML" role="doc-biblioref">2017</a>)</span> was used to find the best black-box solution over the provided training dataset. As interpretation R-squared coefficient of determination is not the same for linear models and black-box, we will present a comparison of the found solution to the AutoML model using only <span class="math inline">\(L_{0}\)</span> measure. Table below shows parameters of the back-box model which appears to be Gradient Boosting Machine.</p>
+<hr />
+</div>
+</div>
+</div>
+<div id="black-box-convolutional-neural-networks" class="section level4" number="3.8.3.5">
+<h4><span class="header-section-number">3.8.3.5</span> Black-Box Convolutional Neural Networks</h4>
+<p>The classical approach in computer vision is to use convolutional neural networks [3].
+A standard artificial neural network sees all variables as being independent of each other. It doesn’t capture the same patterns across image space, nor
+it recognizes, that two pixels next to each other are somehow related. Shifted
+image is something completely different to a standard neural network from it’s original.
+Therefore, ANN won’t produce good results. There is, however, a smarter approach that can cope with those problems: convolutional neural networks.</p>
+<p>A convolutional neural network is an artificial neural network, that tries to capture spacial dependencies between variables, for instance, dimensions of pixels that are close to each other.
+It does that via introducing convolution. The easiest interpretation of what a convolutional neural network is doing is that instead of training big network that uses all variables (in our case all pixels), we train smaller transformation with a smaller number of variables (a smaller subset of pixels close to each other), that we use in many different places on the image. In some sense, we train filters. Every filter produces a corresponding so-called “channel”. After the first layer, we can continue filtering channels using convolutional layers. We place a dense layer (or a number of them) at the end and its result is our prediction. For further reading, please see [3].</p>
+<p>Having a very good performance, they are impossible to explain. There are some techniques of visualizing filters [8], however more complex networks are generally uninterpretable. Along with standard artificial neural network, we will use it as an instance of robust classifier for comparing results. Our implementation of convolutional neural networks consist of the following layers:</p>
+<ul>
+<li>Conv 2d:
+<ul>
+<li>Input Channels: 1</li>
+<li>Output Channels: 50</li>
+<li>filter size: 5</li>
+</ul></li>
+<li>Max Pool:
+<ul>
+<li>Size: 2</li>
+</ul></li>
+<li>Conv 2d:
+<ul>
+<li>Input Channels: 50</li>
+<li>Output Channels: 70</li>
+<li>filter size: 5</li>
+</ul></li>
+<li>Max Pool:
+<ul>
+<li>Size: 2</li>
+</ul></li>
+<li>Conv 2d:
+<ul>
+<li>Input Channels: 70</li>
+<li>Output Channels: 100</li>
+<li>filter size: 5</li>
+</ul></li>
+<li>Max Pool:
+<ul>
+<li>Size: 2</li>
+</ul></li>
+<li>Conv 2d:
+<ul>
+<li>Input Channels: 100</li>
+<li>Output Channels: 150</li>
+<li>filter size: 5</li>
+</ul></li>
+<li>Linear:
+<ul>
+<li>Input_size: 1350</li>
+<li>Output_size: 500</li>
+</ul></li>
+<li>Linear:
+<ul>
+<li>Input_size: 200</li>
+<li>Output_size: 10</li>
+</ul></li>
+</ul>
+<p>Here’s architecture’s visualization:</p>
+<div class="figure">
+<img src="images/3-8-BlackBoxCONV_1.png" alt="" />
+<p class="caption"><b>Fig. 11: The architecture of the Convolutional classifier:</b> there are two section to this classifier. The first is convolutional layers section and the second is dense layers section.</p>
+</div>
+<hr />
+</div>
+</div>
+<div id="results-19" class="section level3" number="3.8.4">
+<h3><span class="header-section-number">3.8.4</span> Results</h3>
+<p><img src="book_files/figure-html/unnamed-chunk-15-1.svg" width="672" /></p>
 <table>
-<caption>Parameters of Gradient Boosting Machine which is a black-box H2O AutoML Model. RMSE calculated using the test dataset.</caption>
 <thead>
 <tr class="header">
-<th align="center">Num. of trees</th>
-<th align="center">Max depth</th>
-<th align="center">Min depth</th>
-<th align="center">Min leaves</th>
-<th align="center">Max leaves</th>
-<th align="center">Test RMSE</th>
+<th>Model</th>
+<th>ACC</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">30</td>
-<td align="center">8</td>
-<td align="center">6</td>
-<td align="center">12</td>
-<td align="center">18</td>
-<td align="center">2.73</td>
+<td>Black-Box Convolutional</td>
+<td>0.941</td>
+</tr>
+<tr class="even">
+<td>k-NN Convolutional</td>
+<td>0.923</td>
+</tr>
+<tr class="odd">
+<td>k-NN base</td>
+<td>0.8606</td>
+</tr>
+<tr class="even">
+<td>k-NN K-means</td>
+<td>0.8512</td>
+</tr>
+<tr class="odd">
+<td>Logistic regression</td>
+<td>0.847</td>
+</tr>
+<tr class="even">
+<td>k-NN SVD</td>
+<td>0.8001</td>
 </tr>
 </tbody>
 </table>
-<p>After each step of the procedure shown in 3.4.5 we would like to present the score best model had achieved. In this way we can make an assumption about what action is the most crucial for a given dataset. As was mentioned before, to face the problem of interpretability and what does it mean, there will be four final models presented. For each approach, ie. with and without feature concatenation step, two models are found using both <span class="math inline">\(L_{R}\)</span> and <span class="math inline">\(L_{0}\)</span> measures.</p>
-<p>Despite multiple approaches, all of them share some common properties. First of all, it turns up that the linear model with all features as active predictors scores 2.68 RMSE and 0.17 R-squared. It means we are already on the level of the black-box model. What is worrisome though, is a small fraction of variance explained by the model. Therefore, the goal of our further research is to beat the black-box even more. Next, XAI permutation feature importance <span class="citation">(Fisher, Rudin, and Dominici <a href="#ref-pfi" role="doc-biblioref">2018</a>)</span> selected 3 features that may be insignificant. Due to that fact and relatively small dataset we were able to check all combinations of including them into the model and what’s interesting, different features were chosen depending on whether <span class="math inline">\(L_{0}\)</span> or <span class="math inline">\(L_{R}\)</span> measures were used. About the second step, polynomial transformation, including the Box-Cox transformation of the target value, made the model fit to data way worse. As a result the only transformation that indeed improved both loss function was log-transformation and discrete transformation using the SAFE method<span class="citation">(Gosiewska et al. <a href="#ref-gosiewska2019safe" role="doc-biblioref">2019</a>)</span>.</p>
-<table>
-<caption>Exact results after each step for both loss functions. In all columns beside R squared value of Root Mean Square Error over test dataset is shown.</caption>
-<thead>
-<tr class="header">
-<th align="center">Model</th>
-<th align="center">Baseline</th>
-<th align="center">Stage 1</th>
-<th align="center">Stage 2</th>
-<th align="center">Stage 3</th>
-<th align="center">Stage 4</th>
-<th align="center">Black-Box</th>
-<th align="center">R squared</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><span class="math inline">\(L_{0}\)</span> | With concat.</td>
-<td align="center">2.680</td>
-<td align="center">2.660</td>
-<td align="center">2.613</td>
-<td align="center">2.594</td>
-<td align="center">2.533</td>
-<td align="center">2.727</td>
-<td align="center">0.193</td>
-</tr>
-<tr class="even">
-<td align="center"><span class="math inline">\(L_{R}\)</span> | With concat.</td>
-<td align="center">2.680</td>
-<td align="center">2.660</td>
-<td align="center">2.613</td>
-<td align="center">2.670</td>
-<td align="center">2.734</td>
-<td align="center">2.727</td>
-<td align="center">0.231</td>
-</tr>
-<tr class="odd">
-<td align="center"><span class="math inline">\(L_{0}\)</span> | Without concat.</td>
-<td align="center">2.680</td>
-<td align="center">2.660</td>
-<td align="center">2.613</td>
-<td align="center">2.594</td>
-<td align="center">-</td>
-<td align="center">2.727</td>
-<td align="center">0.171</td>
-</tr>
-<tr class="even">
-<td align="center"><span class="math inline">\(L_{R}\)</span> | Without concat.</td>
-<td align="center">2.680</td>
-<td align="center">2.660</td>
-<td align="center">2.613</td>
-<td align="center">2.670</td>
-<td align="center">-</td>
-<td align="center">2.727</td>
-<td align="center">0.193</td>
-</tr>
-</tbody>
-</table>
-<p>Figure 3.1 shows how each step contributed to the final output. For the model described by the red line which is supposed to reach the lowest possible value of RMSE we can spot that the most significant is the last step, which is the concatenation of features. It lowers RMSE in comparison to the previous step by 0.06 which is the highest witnessed growth. The model found a very sophisticated variable which is the multiplication of discretized <em>alkphos</em> and <em>sgot</em>. One the contrary final RMSE score of model shown using a blue line, which used concatenations of features with a <span class="math inline">\(L_{R}\)</span> loss function was slightly higher than AutoML one and way higher than the result of the most model. The inspection of each step shows that although the first two steps were very similar, after the third and fourth R squared coefficient inflated with the cost of higher RMSE. It means that the model explains more variance of the plain, but returns worse predictions on the average.</p>
-<div class="figure"><span id="fig:unnamed-chunk-14"></span>
-<img src="images/3-4-results.png" alt="RMSE of models according to the phase of training. The orange line indicates Root Mean Square Error of the black-box model. The dashed vertical line shows a cutoff point for models without concatenation of features."  />
-<p class="caption">
-FIGURE 3.1: RMSE of models according to the phase of training. The orange line indicates Root Mean Square Error of the black-box model. The dashed vertical line shows a cutoff point for models without concatenation of features.
-</p>
+<p>We use accuracy because classes are balanced and any measure which accounts for similarities between classes (for example classifying Sandal as Ankle boot is worth more than classifying Sandal as Bag) seemed arbitrary to us.</p>
+<p>As expected Convolutional Neural Network is by far the best model here. However, we still achieved something. While using embedders such as K-means and SVD resulted in worse results, the accuracy was not that much worse and we reduced dimensionality at least a thousand folds, which resulted in much faster calculations. Using Convolutional embedder got us second-best results and while it is semi interpretable it is still better than base K-NN and Logistic regression which turned out to be not interpretable.</p>
+</div>
+<div id="conclusions-2" class="section level3" number="3.8.5">
+<h3><span class="header-section-number">3.8.5</span> Conclusions</h3>
+<p>In this article, we proposed an easy way of getting interpretable computer vision using convolutional embedder. While it is not fully interpretable, explanations are not made post factum as in traditional neural networks and it is achieving better results than less robust classifiers.</p>
+<p>It may be possible to get even better results if we carefully search hyperparameter space: for example, tested more architectures of convolutional autoencoder and distance functions.</p>
 </div>
 </div>
-<div id="summary-and-conclusions-13" class="section level3" number="3.4.6">
-<h3><span class="header-section-number">3.4.6</span> Summary and conclusions</h3>
-<p>To summarize all, feature selection and feature transformation steps can be conducted with maintaining a balance between better RMSE and R squared. Moreover, the results are very similar no matter what loss function was used. Things are getting a bit more complicated when we start to discretize variables or, optionally, to merge them. In that cause better coefficient of determination is not being followed up by better Room Mean Square Error. However, we consider proposed <span class="math inline">\(L_{R}\)</span> loss functions as promising, and are looking forward to improving its behavior in the future making the border between its elements smoother.</p>
-<p>Automated Regression turned up to be successful for the given task. We were able to significantly improve the model and beat black-box and are more than happy looking at the result. One of the advantages of the proposed method is flexibility. Putting harsher constraints on a set of allowed transformations does not cause any problems. It was shown when we had to stop the training stage after three out of four steps in order to obtain more interpretable results. The effectiveness of the proposed method is the highest for small and medium-sized datasets, but we look forward to a large datasets extension.</p>
+<div id="bibliography" class="section level3" number="3.8.6">
+<h3><span class="header-section-number">3.8.6</span> Bibliography</h3>
+<ol style="list-style-type: decimal">
+<li>Park, Hyeoun-Ae. “An Introduction to Logistic Regression: From Basic Concepts to Interpretation with Particular Attention to Nursing Domain”, College of Nursing and System Biomedical Informatics National Core Research Center, Seoul National University, Seoul, Korea, 2013. Accessed at <a href="https://pdfs.semanticscholar.org/3305/2b1d2363aee3ad290612109dcea0aed2a89e.pdf?fbclid=IwAR2AEWs_oTJsGldDkTNdu5oDuwqMRG9URpYFTYg4ONEdxUSTbXS2AntHLNM" class="uri">https://pdfs.semanticscholar.org/3305/2b1d2363aee3ad290612109dcea0aed2a89e.pdf?fbclid=IwAR2AEWs_oTJsGldDkTNdu5oDuwqMRG9URpYFTYg4ONEdxUSTbXS2AntHLNM</a></li>
+<li>Huda Hamdan Ali, Lubna Emad Kadhum. “K-Means Clustering Algorithm Applications in Data Mining and Pattern Recognition”, International Journal of Science and Research (IJSR), 2015. Accessed at <a href="https://pdfs.semanticscholar.org/a430/da239982e691638b7193ac1947da8d0d241b.pdf?fbclid=IwAR33LLbo0m9qcyayoI3qj1tJsnB8YzYehzFK7VUGz4tkH_IlATvhknPKOuk" class="uri">https://pdfs.semanticscholar.org/a430/da239982e691638b7193ac1947da8d0d241b.pdf?fbclid=IwAR33LLbo0m9qcyayoI3qj1tJsnB8YzYehzFK7VUGz4tkH_IlATvhknPKOuk</a></li>
+<li>Keiron O’Shea1, Ryan Nash. “An Introduction to Convolutional Neural Networks”, Department of Computer Science, Aberystwyth University, Ceredigion, SY23 3DB, 2015. Accessed at <a href="https://www.researchgate.net/publication/285164623_An_Introduction_to_Convolutional_Neural_Networks?fbclid=IwAR35OQjrXNAm5549CX0-LkkdjppnNZIlnKfnFkHUcHsUZ_G-wdYDZ0v6SVY" class="uri">https://www.researchgate.net/publication/285164623_An_Introduction_to_Convolutional_Neural_Networks?fbclid=IwAR35OQjrXNAm5549CX0-LkkdjppnNZIlnKfnFkHUcHsUZ_G-wdYDZ0v6SVY</a></li>
+<li>Carla D. Martin, Mason A. Porter. “The Extraordinary SVD”. Accessed at <a href="https://people.maths.ox.ac.uk/porterm/papers/s4.pdf?fbclid=IwAR2rC7ho-hLqtyR0eY5KqlYV_DbaKk7KcyE9PtT4hx1MkbXtnG04fe71uEo" class="uri">https://people.maths.ox.ac.uk/porterm/papers/s4.pdf?fbclid=IwAR2rC7ho-hLqtyR0eY5KqlYV_DbaKk7KcyE9PtT4hx1MkbXtnG04fe71uEo</a></li>
+<li>Gongde Guo, Hui Wang, David Bell, Yaxin Bi, Kieran Greer. “KNN Model-Based Approach in Classification”, School of Computing and Mathematics, University of Ulster. Accessed at <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.2.815&amp;rep=rep1&amp;type=pdf&amp;fbclid=IwAR0qK9dIhhmuj4-0V98Tn6dKzjKvivmfmucJVjDqV319eW_BJfWkt92Cy5E" class="uri">http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.2.815&amp;rep=rep1&amp;type=pdf&amp;fbclid=IwAR0qK9dIhhmuj4-0V98Tn6dKzjKvivmfmucJVjDqV319eW_BJfWkt92Cy5E</a></li>
+<li>Nicolas Papernot, Patrick McDaniel. “Deep k-Nearest Neighbors: Towards Confident, Interpretable and Robust Deep Learning”, Department of Computer Science and Engineering, Pennsylvania State University, 2018. Accessed at <a href="https://arxiv.org/pdf/1803.04765.pdf?fbclid=IwAR2D5gqQf9SL0xRWBctEVrUCL9uUiIf9lZrpPN83YZYbiCGdLAlMlhhaVns" class="uri">https://arxiv.org/pdf/1803.04765.pdf?fbclid=IwAR2D5gqQf9SL0xRWBctEVrUCL9uUiIf9lZrpPN83YZYbiCGdLAlMlhhaVns</a></li>
+<li>Dor Bank, Noam Koenigstein, Raja Giryes. “Autoencoders”, 2020. Accessed at <a href="https://arxiv.org/pdf/2003.05991.pdf" class="uri">https://arxiv.org/pdf/2003.05991.pdf</a></li>
+<li>D. Erhan, Y. Bengio, A. Courville, and P. Vincent. “Visualizing higher layer features of a deep network”, University of Montreal, vol. 1341,
+no. 3, p. 1, 2009.</li>
+</ol>
 
 </div>
-</div>
-<h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-mednature">
-<p>“Ascent of Machine Learning in Medicine.” 2019. <em>Nature Materials</em> 18 (5): 407–7. <a href="https://doi.org/10.1038/s41563-019-0360-1">https://doi.org/10.1038/s41563-019-0360-1</a>.</p>
-</div>
-<div id="ref-3-7-houseprices-tree">
-<p>Fan, Gang-Zhi, Seow Eng Ong, and Hian Koh. 2006. “Determinants of House Price: A Decision Tree Approach.” <em>Urban Studies</em> 43 (November): 2301–16. <a href="https://doi.org/10.1080/00420980600990928">https://doi.org/10.1080/00420980600990928</a>.</p>
-</div>
-<div id="ref-pfi">
-<p>Fisher, Aaron, Cynthia Rudin, and Francesca Dominici. 2018. “All Models are Wrong, but Many are Useful: Learning a Variable’s Importance by Studying an Entire Class of Prediction Models Simultaneously.” <em>arXiv E-Prints</em>, January, arXiv:1801.01489. <a href="http://arxiv.org/abs/1801.01489">http://arxiv.org/abs/1801.01489</a>.</p>
-</div>
-<div id="ref-gosiewska2019safe">
-<p>Gosiewska, Alicja, Aleksandra Gacek, Piotr Lubon, and Przemyslaw Biecek. 2019. “SAFE Ml: Surrogate Assisted Feature Extraction for Model Learning.” <a href="http://arxiv.org/abs/1902.11035">http://arxiv.org/abs/1902.11035</a>.</p>
-</div>
-<div id="ref-H2OAutoML">
-<p>H2O.ai. 2017. <em>H2O Automl</em>. <a href="http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html">http://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html</a>.</p>
-</div>
-<div id="ref-Lipton">
-<p>Lipton, Zachary Chase. 2016. “The Mythos of Model Interpretability.” <em>CoRR</em> abs/1606.03490. <a href="http://arxiv.org/abs/1606.03490">http://arxiv.org/abs/1606.03490</a>.</p>
-</div>
-<div id="ref-liverdisorder">
-<p>McDermott, James, and Richard S. Forsyth. 2016. “Diagnosing a Disorder in a Classification Benchmark.” <em>Pattern Recognition Letters</em> 73: 41–43. <a href="https://doi.org/https://doi.org/10.1016/j.patrec.2016.01.004">https://doi.org/https://doi.org/10.1016/j.patrec.2016.01.004</a>.</p>
-</div>
-<div id="ref-Obermeyer2016">
-<p>Obermeyer, Ziad, and Ezekiel J. Emanuel. 2016. “Predicting the Future - Big Data, Machine Learning, and Clinical Medicine.” <em>The New England Journal of Medicine</em> 375 (13): 1216–9. <a href="https://doi.org/10.1056/NEJMp1606181">https://doi.org/10.1056/NEJMp1606181</a>.</p>
-</div>
-<div id="ref-Rudin2019">
-<p>Rudin, Cynthia. 2019. “Stop Explaining Black Box Machine Learning Models for High Stakes Decisions and Use Interpretable Models Instead.” <em>Nature Machine Intelligence</em> 1 (5): 206–15. <a href="https://doi.org/10.1038/s42256-019-0048-x">https://doi.org/10.1038/s42256-019-0048-x</a>.</p>
-</div>
-</div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="using-interpretable-machine-learning-models-in-the-higgs-boson-detection-.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="interpretable-non-linear-feature-engineering-techniques-for-linear-regression-models-exploration-on-concrete-compressive-strength-dataset-with-a-new-feature-importance-metric-.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="which-neighbours-affected-house-prices-in-the-90s.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="acknowledgements.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook/js/app.min.js"></script>
@@ -571,7 +730,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/3-4-Can-automated-regression-beat-AutoML.Rmd",
+"link": "https://github.com/mini-pw/2020L-WB-Book/edit/master/3-8-computer-vision.Rmd",
 "text": "Edit"
 },
 "history": {
