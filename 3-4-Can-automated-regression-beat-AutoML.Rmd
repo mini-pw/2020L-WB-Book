@@ -4,13 +4,13 @@
 
 ### Abstract
 
-*Health care is a subject everyone is familiar with, therefore it is clear we want to constantly improve our knowledge about appliances of today's science in medicine. TBD*
+*Health care is a subject everyone is familiar with, therefore it is clear we want to constantly improve our knowledge about appliances of today's science in medicine. However there is a strong believe that models built for that purpose should be intepratable one, like lienar models are. The goal of this paper is to combine knowledge about linear models, with possibilities of black-box to creat a interpretable model noone will argue with. We propose a solution called Automated Regression, that will create a linear model based on given black-box using Explainable Aritifical Inetligance methods and standard feature engineering. Whole process is divided by steps and fully automated to allow fast and smooth technique of creating decent linear models.*
 
 ### Introduction and Motivation
 
 Health-related problems have been a topic of multiple papers throughout the years and machine learning brought some new methods to modern medicine.[@Obermeyer2016], [@mednature]. We care so much about our lives that every single algorithm and method eventually gets tested on some medical data.
 
-What is unique about health data is that black-box models are completely useless in this subject. Almost always doctors know whether a patient is sick or not. What is important to them is the reason why he is sick. That's why explainable machine learning is the key to make all of us healthier. However XAI methods are not very well defined yet and they lack strong statistical background like tests, etc. That caused strong opposition of Explainable Machine Learning to rise[@Rudin2019]. Unfortunately making a good explainable model for health data might be close to impossible. Medical problems of all kinds can be very unique, complex, or completely random. That's why researchers spend numerous hours on improving their explainable models and that's why we decided to test our approach on `liver disorders` dataset with help. We will try to improve the linear model results with the help of the AutoML black-box model.
+What is unique about health data is that it requires caution to use black-box models with them, as the process that stays behind its decision is unclear. They were attempts to explain such models[@medicinexai], but some people do not agree with that approach. Almost always doctors know whether a patient is sick or not. What is important to them is the reason why he is sick. That's why explainable machine learning is the key to make all of us healthier. However XAI methods are not very well defined yet and they lack strong statistical background like tests, etc. That caused strong opposition of Explainable Machine Learning to rise[@Rudin2019]. Unfortunately making a good explainable model for health data might be close to impossible. Medical problems of all kinds can be very unique, complex, or completely random. That's why researchers spend numerous hours on improving their explainable models and that's why we decided to test our approach on `liver disorders` dataset with help. We will try to improve the linear model results with the help of the AutoML black-box model.
 
 There is a big discussion in the scientific world about "what does it mean for a model to be interpretable?"[@Lipton]. Unfortunately there is no clear answer to that question and often it is necessary to specify what is supposed to be meant as interpretable. In this paper we assume that the model is interpretable if it is possible to explicitly track down what contributed to model answer and to do it in a finite time. It means that all transformation of variables or even concatenations are possible as soon as a used type of model is simply structured like a linear model is. However, we understand other's opinions and we will present also results with only simple transformations and without controversial concatenations.
 
@@ -43,14 +43,14 @@ AutoMl Model $M_{aml}$ and the dataset $D$ that consists of $D_{X} = X$ which is
 
 To find $G_{AR}$ we have to put some constraints. First of all we want it to minimize loss function one of two loss functions $L: \mathbb{R}^{n} \to \mathbb{R}$. First of them is $$L_{R} : \frac{\sqrt{\sum_{i=1}^{n}(y_{i}-\hat{y_{i}})^{2}}\sum_{i=1}^{n}(y_{i}-\bar{y_{i}})^{2}}{\sum_{i=1}^{n}(\hat{y_{i}}-\bar{y_{i}})^{2}}$$ which can be interpreted as Root Mean Square Error divided by the R-squred coefficient of determination. R-squared stands as measure of variance explained by the model [@3-7-houseprices-tree] and therfore may be usefull to find best explanation of interactions met in the data. Obviously high coefficient does not always mean excelent model, furthermore even low values of it not alwyays inform us about uselessness of found fit. Therefore minimization will be prefromed independetly using second mesure as well $$L_{0} : \sqrt{\sum_{i=1}^{n}(y_{i}-\hat{y_{i}})^{2}}$$ which is Root of the Mean Squared Error (RMSE). One top of that we also put constrains on domain of valid transformations of particular variables. For given dataset, described in the previous paragraphs we decided to use:
 
-* Feature selection
+* Stage 1: Feature selection
   + XAI feature Importance
-* Continuous transformation
+* Stage 2: Continuous transformation
   + Polynomial transformation 
   + Lograthmic transformation
-* Discrete transformation
+* Stage 3: Discrete transformation
   + SAFE method
-* Feature concatenation
+* Stage 4: Feature concatenation
   + Multiplication of pair of features.
 
 
@@ -87,6 +87,24 @@ Figure 3.1 shows how each step contributed to the final output. For the model de
 knitr::include_graphics("images/3-4-results.png")
 
 ```
+
+The output of $G_{AR}$ function ie. the variables that are presnt in our model:
+
+* $L_{R}$ loss function
+  + $\text{SAFE(log(sgot))}$
+  + $\text{SAFE(log(gammagt))}$
+  + $\text{SAFE(sgpt)}$
+  + $\text{SAFE(alkphos)}$
+  + $\text{mcv}$
+  + $\text{(SAFE(alkphos)}:\text{mcv)}$
+* $L_{0}$ loss function
+  + $\text{SAFE(sgpt)}$
+  + $\text{log(sgot)}$
+  + $\text{alkphos}$
+  + $\text{log(gammagt)}$
+  + $\text{mcv}$
+  + $\text{(log(gammagt)}:\text{mcv)}$
+
 
 ### Summary and conclusions 
 
