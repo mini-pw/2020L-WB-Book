@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-06-11" />
+<meta name="date" content="2020-06-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -359,12 +359,15 @@ Its prediction effectiveness is assessed by F1 measure (also called F1 score) to
 </div>
 <div id="introduction-and-motivation-8" class="section level3" number="2.6.2">
 <h3><span class="header-section-number">2.6.2</span> Introduction and Motivation</h3>
-<p>Missing data occurring in datasets is a common and sometimes difficult problem. Many real-world datasets, such as, for instance, medical records, are often incomplete. Unfortunately, in the field of machine learning, this is an issue which must be handled because many algorithms cannot work with missing values. Therefore, dealing with them is an important part of reprocessing data in the machine learning process.
-One way to do it is “omission” - removing observations or variables with at least one missing value. However, this strategy is frequently inappropriate because we can lose some important data or significantly reduce it if the percentage of missing values is high.
+<p>Missing data occurring in datasets is a common and sometimes difficult problem. Many real-world datasets, such as, for instance, medical records, are often incomplete. Unfortunately, in the field of machine learning, this is an issue which must be handled because many algorithms cannot work with missing values. Therefore, dealing with them is an important part of reprocessing data in the machine learning process.<br />
+</p>
+<p>The first important step is to identify the missing data pattern (or mechanism). We commonly distinguish 3, according to <span class="citation">Donald B. Rubin (<a href="#ref-Rubin" role="doc-biblioref">1976</a>)</span> : Missing Completely at Random (MCAR), Missing at Random (MAR) and Missing Not at Random (MNAR), however, we will not focus on them in this study.<br />
+</p>
+<p>One way of getting rid of missing data is “omission” - removing observations or variables with at least one missing value. However, this strategy is frequently inappropriate because we can lose some important data or significantly reduce it if the percentage of missing values is high.
 Fortunately, imputation serves the need better. By definition, imputation is a process of replacing missing data with substituted values. We can distinguish 2 types of imputation. First one is single imputation - we the information from only one variable to impute missing values.
-It includes the basic methods such as imputing with mean or mode, which are fast and easy to implement, however they do not guarantee a very good performance. The second one is multiple imputations, in which we impute many values (perform imputation many times), leading to creating many complete datasets. This type includes more sophisticated strategies for instance the ones using tree-based models, which usually result in better models, but enhance the algorithm’s complexity and computational time.
-Before choosing an imputation approach, it is also important to identify the missing data pattern (or mechanism). We commonly distinguish 3, according to <span class="citation">Donald B. Rubin (<a href="#ref-Rubin" role="doc-biblioref">1976</a>)</span> : Missing Completely at Random (MCAR), Missing at Random (MAR) and Missing Not at Random (MNAR), however, we will not focus on them in this study.
-For the R language, there are implemented multiple imputations techniques in many different packages. It is often hard to choose the best approach. Our goal is to examine how these methods perform on different datasets and how they interact with different classification algorithms.</p>
+It includes the basic methods such as imputing with mean or mode, which are fast and easy to implement, however they do not guarantee a very good performance. The second one is multiple imputations, in which we impute many values (perform imputation many times), leading to creating many complete datasets. This type includes more sophisticated strategies for instance the ones using tree-based models, which usually result in better models, but enhance the algorithm’s complexity and computational time.<br />
+</p>
+<p>For the R language, there are implemented multiple imputations techniques in many different packages. It is often hard to choose the best approach. Our goal is to examine how these methods perform on different datasets and how they interact with different classification algorithms.</p>
 </div>
 <div id="methodology-11" class="section level3" number="2.6.3">
 <h3><span class="header-section-number">2.6.3</span> Methodology</h3>
@@ -536,13 +539,8 @@ An object is classified by a majority vote of its neighbours, being assigned to 
 </ul>
 <p>After the training stage, the time has come to check how selected imputations and algorithms interact with each other. Again, for each - in this case - test set and every imputation all five classifiers listed above make a prediction. Assessing their performance is outlined in the next paragraph.</p>
 </div>
-<div id="implementation-and-model-evaluation" class="section level4" number="2.6.3.4">
-<h4><span class="header-section-number">2.6.3.4</span> Implementation and model evaluation</h4>
-<p>To conduct the experiment two functions were written:</p>
-<ul>
-<li><p><strong>save_files()</strong> - takes a dataset, divides it into the train and test datasets, imputes them in 5 ways described above and saves the imputed datasets into files</p></li>
-<li><p><strong>imputations_performance()</strong> - takes dataset name and classification algorithm returns performance of each dataset imputation combined with the given algorithm</p></li>
-</ul>
+<div id="model-evaluation-1" class="section level4" number="2.6.3.4">
+<h4><span class="header-section-number">2.6.3.4</span> Model evaluation</h4>
 <p>The performance of algorithms is evaluated using <strong>F1 Measure</strong> - the harmonic mean of the precision and recall.</p>
 <p><span class="math display">\[F_1=2*\frac{precision*recall}{precision+recall}\]</span></p>
 <p>Due to that measure, a ranking of imputations for each dataset is created. Imputations are given ranks from 1 to 5:</p>
@@ -552,135 +550,140 @@ An object is classified by a majority vote of its neighbours, being assigned to 
 </ul>
 <p>The overall measure of the imputation performance is a mean of its ranks from all datasets.</p>
 </div>
+<div id="summary-of-the-process" class="section level4" number="2.6.3.5">
+<h4><span class="header-section-number">2.6.3.5</span> Summary of the process</h4>
+<p>Before entering the results section, let’s summarise the work that has been done up to this stage.
+Firstly, all datasets were simply preprocessed (if needed) to make the imputation easier. Next, each of them was split into train and test dataset. The ratio was 80 to 20, the same for all datasets, with the same random seed. Each train and test set was imputed separately, with 5 different methods. Then, on each train set 5 different classification models were trained and following, the prediction was made on test sets. Finally, each combination of a test set, imputation method and classification algorithm was assessed by F1 score and proposed ranking.</p>
+</div>
 </div>
 <div id="results-12" class="section level3" number="2.6.4">
 <h3><span class="header-section-number">2.6.4</span> Results</h3>
-<p>A missing value <code>NA</code> in the results table implicates, either that an imputation failed on this particular dataset, leaving missing values in it (when there are a few of them in a column), or that the model didn’t manage to perform on the entire dataset, no matter what imputation (when there is a full row of missing values).</p>
+<p>A missing value <code>NA</code> in the results table implicates, either that an imputation failed on this particular dataset, leaving missing values in it (when there are a few of them in a column), or that the model didn’t manage to perform on the entire dataset, no matter what imputation (when there is a full row of missing values). Additionally, for each dataset, the best result is bolded.</p>
 <div id="results-of-rpart-classification-algorithm" class="section level4" number="2.6.4.1">
 <h4><span class="header-section-number">2.6.4.1</span> Results of Rpart classification algorithm</h4>
 <table>
 <thead>
 <tr class="header">
 <th align="left">Dataset</th>
-<th align="right">Insert.mean</th>
-<th align="right">Mice_pmm</th>
-<th align="right">VIM_knn</th>
-<th align="right">VIM_hotdeck</th>
-<th align="right">softImpute</th>
+<th align="left">Insert.mean</th>
+<th align="left">Mice_pmm</th>
+<th align="left">VIM_knn</th>
+<th align="left">VIM_hotdeck</th>
+<th align="left">softImpute</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">ipums_la_99-small</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 </tr>
 <tr class="even">
 <td align="left">adult</td>
-<td align="right">0.9029</td>
-<td align="right">0.9029</td>
-<td align="right">0.9029</td>
-<td align="right">0.9029</td>
-<td align="right">0.9029</td>
+<td align="left"><strong>0.902948166</strong></td>
+<td align="left"><strong>0.902948166</strong></td>
+<td align="left"><strong>0.902948166</strong></td>
+<td align="left"><strong>0.902948166</strong></td>
+<td align="left"><strong>0.902948166</strong></td>
 </tr>
 <tr class="odd">
 <td align="left">eucalyptus</td>
-<td align="right">0.8814</td>
-<td align="right">0.9061</td>
-<td align="right">0.7927</td>
-<td align="right">0.8750</td>
-<td align="right">0.8950</td>
+<td align="left">0.881355932</td>
+<td align="left"><strong>0.906077348</strong></td>
+<td align="left">0.792682927</td>
+<td align="left">0.875</td>
+<td align="left">0.895027624</td>
 </tr>
 <tr class="even">
 <td align="left">dresses-sales</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 </tr>
 <tr class="odd">
 <td align="left">colic</td>
-<td align="right">0.7568</td>
-<td align="right">0.6667</td>
-<td align="right">0.6667</td>
-<td align="right">0.7317</td>
-<td align="right">0.7568</td>
+<td align="left"><strong>0.756756757</strong></td>
+<td align="left">0.666666667</td>
+<td align="left">0.666666667</td>
+<td align="left">0.731707317</td>
+<td align="left"><strong>0.756756757</strong></td>
 </tr>
 <tr class="even">
 <td align="left">credit-approval</td>
-<td align="right">0.8857</td>
-<td align="right">0.8857</td>
-<td align="right">0.8857</td>
-<td align="right">0.8857</td>
-<td align="right">0.8857</td>
+<td align="left"><strong>0.885714286</strong></td>
+<td align="left"><strong>0.885714286</strong></td>
+<td align="left"><strong>0.885714286</strong></td>
+<td align="left"><strong>0.885714286</strong></td>
+<td align="left"><strong>0.885714286</strong></td>
 </tr>
 <tr class="odd">
 <td align="left">sick</td>
-<td align="right">0.9852</td>
-<td align="right">0.9838</td>
-<td align="right">0.9866</td>
-<td align="right">0.9887</td>
-<td align="right">0.9901</td>
+<td align="left">0.985221675</td>
+<td align="left">0.983791402</td>
+<td align="left">0.98659139</td>
+<td align="left">0.988732394</td>
+<td align="left"><strong>0.990126939</strong></td>
 </tr>
 <tr class="even">
 <td align="left">labor</td>
-<td align="right">0.7500</td>
-<td align="right">0.3333</td>
-<td align="right">0.6667</td>
-<td align="right">0.7500</td>
-<td align="right">0.4286</td>
+<td align="left"><strong>0.75</strong></td>
+<td align="left">0.333333333</td>
+<td align="left">0.666666667</td>
+<td align="left"><strong>0.75</strong></td>
+<td align="left">0.428571429</td>
 </tr>
 <tr class="odd">
 <td align="left">SpeedDating</td>
-<td align="right">1.0000</td>
-<td align="right">1.0000</td>
-<td align="right">1.0000</td>
-<td align="right">1.0000</td>
-<td align="right">1.0000</td>
+<td align="left"><strong>1</strong></td>
+<td align="left"><strong>1</strong></td>
+<td align="left"><strong>1</strong></td>
+<td align="left"><strong>1</strong></td>
+<td align="left"><strong>1</strong></td>
 </tr>
 <tr class="even">
 <td align="left">stem-okcupid</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 </tr>
 <tr class="odd">
 <td align="left">hepatitis</td>
-<td align="right">0.4000</td>
-<td align="right">0.5000</td>
-<td align="right">0.6667</td>
-<td align="right">0.4000</td>
-<td align="right">0.4444</td>
+<td align="left">0.4</td>
+<td align="left">0.5</td>
+<td align="left"><strong>0.666666667</strong></td>
+<td align="left">0.4</td>
+<td align="left">0.444444444</td>
 </tr>
 <tr class="even">
 <td align="left">vote</td>
-<td align="right">0.9649</td>
-<td align="right">0.9655</td>
-<td align="right">0.9649</td>
-<td align="right">0.9655</td>
-<td align="right">0.9649</td>
+<td align="left">0.964912281</td>
+<td align="left"><strong>0.965517241</strong></td>
+<td align="left">0.964912281</td>
+<td align="left"><strong>0.965517241</strong></td>
+<td align="left">0.964912281</td>
 </tr>
 <tr class="odd">
 <td align="left">cylinder-bands</td>
-<td align="right">0.7324</td>
-<td align="right">0.7222</td>
-<td align="right">0.7324</td>
-<td align="right">0.7324</td>
-<td align="right">0.7324</td>
+<td align="left"><strong>0.732394366</strong></td>
+<td align="left">0.722222222</td>
+<td align="left"><strong>0.732394366</strong></td>
+<td align="left"><strong>0.732394366</strong></td>
+<td align="left"><strong>0.732394366</strong></td>
 </tr>
 <tr class="even">
 <td align="left">echoMonths</td>
-<td align="right">0.7742</td>
-<td align="right">0.8125</td>
-<td align="right">0.7742</td>
-<td align="right">0.7742</td>
-<td align="right">0.7742</td>
+<td align="left">0.774193548</td>
+<td align="left"><strong>0.8125</strong></td>
+<td align="left">0.774193548</td>
+<td align="left">0.774193548</td>
+<td align="left">0.774193548</td>
 </tr>
 </tbody>
 </table>
@@ -697,125 +700,125 @@ An object is classified by a majority vote of its neighbours, being assigned to 
 <thead>
 <tr class="header">
 <th align="left">Dataset</th>
-<th align="right">Insert.mean</th>
-<th align="right">Mice_pmm</th>
-<th align="right">VIM_knn</th>
-<th align="right">VIM_hotdeck</th>
-<th align="right">softImpute</th>
+<th align="left">Insert.mean</th>
+<th align="left">Mice_pmm</th>
+<th align="left">VIM_knn</th>
+<th align="left">VIM_hotdeck</th>
+<th align="left">softImpute</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">ipums_la_99-small</td>
-<td align="right">0.1247</td>
-<td align="right">0.1259</td>
-<td align="right">0.1264</td>
-<td align="right">0.1239</td>
-<td align="right">0.1247</td>
+<td align="left">0.124716553</td>
+<td align="left">0.125930166</td>
+<td align="left"><strong>0.126364159</strong></td>
+<td align="left">0.123873874</td>
+<td align="left">0.124716553</td>
 </tr>
 <tr class="even">
 <td align="left">adult</td>
-<td align="right">0.8866</td>
-<td align="right">0.8871</td>
-<td align="right">0.8872</td>
-<td align="right">0.8872</td>
-<td align="right">0.8866</td>
+<td align="left">0.886622751</td>
+<td align="left">0.887071207</td>
+<td align="left"><strong>0.887224726</strong></td>
+<td align="left">0.887184688</td>
+<td align="left">0.886622751</td>
 </tr>
 <tr class="odd">
 <td align="left">eucalyptus</td>
-<td align="right">0.8634</td>
-<td align="right">0.8743</td>
-<td align="right">0.8865</td>
-<td align="right">0.8743</td>
-<td align="right">0.8681</td>
+<td align="left">0.863387978</td>
+<td align="left">0.87431694</td>
+<td align="left"><strong>0.886486486</strong></td>
+<td align="left">0.87431694</td>
+<td align="left">0.868131868</td>
 </tr>
 <tr class="even">
 <td align="left">dresses-sales</td>
-<td align="right">0.6720</td>
-<td align="right">0.6667</td>
-<td align="right">0.6984</td>
-<td align="right">0.6452</td>
-<td align="right">0.7040</td>
+<td align="left">0.672</td>
+<td align="left">0.666666667</td>
+<td align="left">0.698412698</td>
+<td align="left">0.64516129</td>
+<td align="left"><strong>0.704</strong></td>
 </tr>
 <tr class="odd">
 <td align="left">colic</td>
-<td align="right">0.5185</td>
-<td align="right">0.4651</td>
-<td align="right">0.5283</td>
-<td align="right">0.5652</td>
-<td align="right">0.5283</td>
+<td align="left">0.518518519</td>
+<td align="left">0.465116279</td>
+<td align="left">0.528301887</td>
+<td align="left"><strong>0.565217391</strong></td>
+<td align="left">0.528301887</td>
 </tr>
 <tr class="even">
 <td align="left">credit-approval</td>
-<td align="right">0.7871</td>
-<td align="right">0.7871</td>
-<td align="right">0.7871</td>
-<td align="right">0.7871</td>
-<td align="right">0.7871</td>
+<td align="left"><strong>0.787096774</strong></td>
+<td align="left"><strong>0.787096774</strong></td>
+<td align="left"><strong>0.787096774</strong></td>
+<td align="left"><strong>0.787096774</strong></td>
+<td align="left"><strong>0.787096774</strong></td>
 </tr>
 <tr class="odd">
 <td align="left">sick</td>
-<td align="right">0.9475</td>
-<td align="right">0.9452</td>
-<td align="right">0.9475</td>
-<td align="right">0.9452</td>
-<td align="right">0.9431</td>
+<td align="left"><strong>0.947521866</strong></td>
+<td align="left">0.945215486</td>
+<td align="left"><strong>0.947521866</strong></td>
+<td align="left">0.945215486</td>
+<td align="left">0.943065693</td>
 </tr>
 <tr class="even">
 <td align="left">labor</td>
-<td align="right">0.6667</td>
-<td align="right">0.8000</td>
-<td align="right">0.4286</td>
-<td align="right">1.0000</td>
-<td align="right">1.0000</td>
+<td align="left">0.666666667</td>
+<td align="left">0.8</td>
+<td align="left">0.428571429</td>
+<td align="left"><strong>1</strong></td>
+<td align="left"><strong>1</strong></td>
 </tr>
 <tr class="odd">
 <td align="left">SpeedDating</td>
-<td align="right">0.8863</td>
-<td align="right">0.8850</td>
-<td align="right">0.8869</td>
-<td align="right">0.8876</td>
-<td align="right">0.8863</td>
+<td align="left">0.886345699</td>
+<td align="left">0.885025682</td>
+<td align="left">0.886874261</td>
+<td align="left"><strong>0.887573964</strong></td>
+<td align="left">0.886345699</td>
 </tr>
 <tr class="even">
 <td align="left">stem-okcupid</td>
-<td align="right">0.8443</td>
-<td align="right">0.8575</td>
-<td align="right">0.8432</td>
-<td align="right">0.8571</td>
-<td align="right">0.8443</td>
+<td align="left">0.844271413</td>
+<td align="left"><strong>0.857510671</strong></td>
+<td align="left">0.843214943</td>
+<td align="left">0.857085048</td>
+<td align="left">0.844330112</td>
 </tr>
 <tr class="odd">
 <td align="left">hepatitis</td>
-<td align="right">0.6000</td>
-<td align="right">0.6000</td>
-<td align="right">0.6000</td>
-<td align="right">0.5455</td>
-<td align="right">0.6000</td>
+<td align="left"><strong>0.6</strong></td>
+<td align="left"><strong>0.6</strong></td>
+<td align="left"><strong>0.6</strong></td>
+<td align="left">0.545454545</td>
+<td align="left"><strong>0.6</strong></td>
 </tr>
 <tr class="even">
 <td align="left">vote</td>
-<td align="right">0.9153</td>
-<td align="right">0.9153</td>
-<td align="right">0.9231</td>
-<td align="right">0.9153</td>
-<td align="right">0.9153</td>
+<td align="left">0.915254237</td>
+<td align="left">0.915254237</td>
+<td align="left"><strong>0.923076923</strong></td>
+<td align="left">0.915254237</td>
+<td align="left">0.915254237</td>
 </tr>
 <tr class="odd">
 <td align="left">cylinder-bands</td>
-<td align="right">0.5647</td>
-<td align="right">0.3846</td>
-<td align="right">0.5714</td>
-<td align="right">0.5429</td>
-<td align="right">0.5517</td>
+<td align="left">0.564705882</td>
+<td align="left">0.384615385</td>
+<td align="left"><strong>0.571428571</strong></td>
+<td align="left">0.542857143</td>
+<td align="left">0.551724138</td>
 </tr>
 <tr class="even">
 <td align="left">echoMonths</td>
-<td align="right">0.8649</td>
-<td align="right">0.8235</td>
-<td align="right">0.8000</td>
-<td align="right">0.7879</td>
-<td align="right">0.8333</td>
+<td align="left"><strong>0.864864865</strong></td>
+<td align="left">0.823529412</td>
+<td align="left">0.8</td>
+<td align="left">0.787878788</td>
+<td align="left">0.833333333</td>
 </tr>
 </tbody>
 </table>
@@ -832,125 +835,125 @@ The F1 measure values vary a lot more than in the Rpart model, from around 0.12 
 <thead>
 <tr class="header">
 <th align="left">Dataset</th>
-<th align="right">Insert.mean</th>
-<th align="right">Mice_pmm</th>
-<th align="right">VIM_knn</th>
-<th align="right">VIM_hotdeck</th>
-<th align="right">softImpute</th>
+<th align="left">Insert.mean</th>
+<th align="left">Mice_pmm</th>
+<th align="left">VIM_knn</th>
+<th align="left">VIM_hotdeck</th>
+<th align="left">softImpute</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">ipums_la_99-small</td>
-<td align="right">0.1846</td>
-<td align="right">0.1562</td>
-<td align="right">0.1417</td>
-<td align="right">0.1550</td>
-<td align="right">0.1562</td>
+<td align="left"><strong>0.184615385</strong></td>
+<td align="left">0.15625</td>
+<td align="left">0.141732283</td>
+<td align="left">0.15503876</td>
+<td align="left">0.15625</td>
 </tr>
 <tr class="even">
 <td align="left">adult</td>
-<td align="right">0.9148</td>
-<td align="right">0.9158</td>
-<td align="right">0.9157</td>
-<td align="right">0.9157</td>
-<td align="right">0.9152</td>
+<td align="left">0.914816997</td>
+<td align="left"><strong>0.915805988</strong></td>
+<td align="left">0.915746127</td>
+<td align="left">0.915681536</td>
+<td align="left">0.915209847</td>
 </tr>
 <tr class="odd">
 <td align="left">eucalyptus</td>
-<td align="right">0.9081</td>
-<td align="right">0.9081</td>
-<td align="right">0.9180</td>
-<td align="right">0.9081</td>
-<td align="right">0.9022</td>
+<td align="left">0.908108108</td>
+<td align="left">0.908108108</td>
+<td align="left"><strong>0.918032787</strong></td>
+<td align="left">0.908108108</td>
+<td align="left">0.902173913</td>
 </tr>
 <tr class="even">
 <td align="left">dresses-sales</td>
-<td align="right">0.7576</td>
-<td align="right">0.7154</td>
-<td align="right">0.7231</td>
-<td align="right">0.7231</td>
-<td align="right">0.7634</td>
+<td align="left">0.757575758</td>
+<td align="left">0.715447154</td>
+<td align="left">0.723076923</td>
+<td align="left">0.723076923</td>
+<td align="left"><strong>0.763358779</strong></td>
 </tr>
 <tr class="odd">
 <td align="left">colic</td>
-<td align="right">0.6667</td>
-<td align="right">0.6875</td>
-<td align="right">0.7647</td>
-<td align="right">0.6667</td>
-<td align="right">0.6111</td>
+<td align="left">0.666666667</td>
+<td align="left">0.6875</td>
+<td align="left"><strong>0.764705882</strong></td>
+<td align="left">0.666666667</td>
+<td align="left">0.611111111</td>
 </tr>
 <tr class="even">
 <td align="left">credit-approval</td>
-<td align="right">0.8811</td>
-<td align="right">NA</td>
-<td align="right">0.8811</td>
-<td align="right">0.8873</td>
-<td align="right">0.8811</td>
+<td align="left">0.881118881</td>
+<td align="left">NA</td>
+<td align="left">0.881118881</td>
+<td align="left"><strong>0.887323944</strong></td>
+<td align="left">0.881118881</td>
 </tr>
 <tr class="odd">
 <td align="left">sick</td>
-<td align="right">0.9860</td>
-<td align="right">0.9853</td>
-<td align="right">0.9867</td>
-<td align="right">0.9853</td>
-<td align="right">0.9860</td>
+<td align="left">0.985974755</td>
+<td align="left">0.985283812</td>
+<td align="left"><strong>0.986666667</strong></td>
+<td align="left">0.985283812</td>
+<td align="left">0.985974755</td>
 </tr>
 <tr class="even">
 <td align="left">labor</td>
-<td align="right">0.8571</td>
-<td align="right">NA</td>
-<td align="right">0.8571</td>
-<td align="right">0.8571</td>
-<td align="right">0.8571</td>
+<td align="left"><strong>0.857142857</strong></td>
+<td align="left">NA</td>
+<td align="left"><strong>0.857142857</strong></td>
+<td align="left"><strong>0.857142857</strong></td>
+<td align="left"><strong>0.857142857</strong></td>
 </tr>
 <tr class="odd">
 <td align="left">SpeedDating</td>
-<td align="right">0.9957</td>
-<td align="right">0.9954</td>
-<td align="right">0.9964</td>
-<td align="right">0.9954</td>
-<td align="right">0.9957</td>
+<td align="left">0.995732575</td>
+<td align="left">0.995378599</td>
+<td align="left"><strong>0.996441281</strong></td>
+<td align="left">0.995378599</td>
+<td align="left">0.995732575</td>
 </tr>
 <tr class="even">
 <td align="left">stem-okcupid</td>
-<td align="right">0.8849</td>
-<td align="right">0.8852</td>
-<td align="right">0.8895</td>
-<td align="right">0.8848</td>
-<td align="right">0.8834</td>
+<td align="left">0.884918881</td>
+<td align="left">0.885217391</td>
+<td align="left"><strong>0.889460816</strong></td>
+<td align="left">0.884813185</td>
+<td align="left">0.883368102</td>
 </tr>
 <tr class="odd">
 <td align="left">hepatitis</td>
-<td align="right">0.6667</td>
-<td align="right">0.6667</td>
-<td align="right">0.7500</td>
-<td align="right">0.5000</td>
-<td align="right">0.4444</td>
+<td align="left">0.666666667</td>
+<td align="left">0.666666667</td>
+<td align="left"><strong>0.75</strong></td>
+<td align="left">0.5</td>
+<td align="left">0.444444444</td>
 </tr>
 <tr class="even">
 <td align="left">vote</td>
-<td align="right">0.9744</td>
-<td align="right">0.9828</td>
-<td align="right">0.9739</td>
-<td align="right">0.9655</td>
-<td align="right">0.9744</td>
+<td align="left">0.974358974</td>
+<td align="left"><strong>0.982758621</strong></td>
+<td align="left">0.973913043</td>
+<td align="left">0.965517241</td>
+<td align="left">0.974358974</td>
 </tr>
 <tr class="odd">
 <td align="left">cylinder-bands</td>
-<td align="right">0.7761</td>
-<td align="right">NA</td>
-<td align="right">0.7941</td>
-<td align="right">0.8000</td>
-<td align="right">0.7647</td>
+<td align="left">0.776119403</td>
+<td align="left">NA</td>
+<td align="left">0.794117647</td>
+<td align="left"><strong>0.8</strong></td>
+<td align="left">0.764705882</td>
 </tr>
 <tr class="even">
 <td align="left">echoMonths</td>
-<td align="right">0.8125</td>
-<td align="right">NA</td>
-<td align="right">0.7500</td>
-<td align="right">0.8125</td>
-<td align="right">0.7879</td>
+<td align="left"><strong>0.8125</strong></td>
+<td align="left">NA</td>
+<td align="left">0.75</td>
+<td align="left"><strong>0.8125</strong></td>
+<td align="left">0.787878788</td>
 </tr>
 </tbody>
 </table>
@@ -967,125 +970,125 @@ The other F1 measure values are mostly between 0.6 and 0.99, with some outliers 
 <thead>
 <tr class="header">
 <th align="left">Dataset</th>
-<th align="right">Insert.mean</th>
-<th align="right">Mice_pmm</th>
-<th align="right">VIM_knn</th>
-<th align="right">VIM_hotdeck</th>
-<th align="right">softImpute</th>
+<th align="left">Insert.mean</th>
+<th align="left">Mice_pmm</th>
+<th align="left">VIM_knn</th>
+<th align="left">VIM_hotdeck</th>
+<th align="left">softImpute</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">ipums_la_99-small</td>
-<td align="right">0.2857</td>
-<td align="right">0.3171</td>
-<td align="right">0.2907</td>
-<td align="right">0.2400</td>
-<td align="right">0.2857</td>
+<td align="left">0.285714286</td>
+<td align="left"><strong>0.317073171</strong></td>
+<td align="left">0.290697674</td>
+<td align="left">0.24</td>
+<td align="left">0.285714286</td>
 </tr>
 <tr class="even">
 <td align="left">adult</td>
-<td align="right">0.8974</td>
-<td align="right">0.8982</td>
-<td align="right">0.8987</td>
-<td align="right">0.8985</td>
-<td align="right">0.8974</td>
+<td align="left">0.89739403</td>
+<td align="left">0.898241042</td>
+<td align="left"><strong>0.898669797</strong></td>
+<td align="left">0.898456328</td>
+<td align="left">0.89739403</td>
 </tr>
 <tr class="odd">
 <td align="left">eucalyptus</td>
-<td align="right">0.9000</td>
-<td align="right">0.9050</td>
-<td align="right">0.8939</td>
-<td align="right">0.8939</td>
-<td align="right">0.9061</td>
+<td align="left">0.9</td>
+<td align="left">0.905027933</td>
+<td align="left">0.893854749</td>
+<td align="left">0.893854749</td>
+<td align="left"><strong>0.906077348</strong></td>
 </tr>
 <tr class="even">
 <td align="left">dresses-sales</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 </tr>
 <tr class="odd">
 <td align="left">colic</td>
-<td align="right">0.5714</td>
-<td align="right">0.4571</td>
-<td align="right">0.6341</td>
-<td align="right">0.6341</td>
-<td align="right">0.6111</td>
+<td align="left">0.571428571</td>
+<td align="left">0.457142857</td>
+<td align="left"><strong>0.634146341</strong></td>
+<td align="left"><strong>0.634146341</strong></td>
+<td align="left">0.611111111</td>
 </tr>
 <tr class="even">
 <td align="left">credit-approval</td>
-<td align="right">0.8741</td>
-<td align="right">NA</td>
-<td align="right">0.8741</td>
-<td align="right">0.8722</td>
-<td align="right">0.8593</td>
+<td align="left"><strong>0.874074074</strong></td>
+<td align="left">NA</td>
+<td align="left"><strong>0.874074074</strong></td>
+<td align="left">0.872180451</td>
+<td align="left">0.859259259</td>
 </tr>
 <tr class="odd">
 <td align="left">sick</td>
-<td align="right">0.9769</td>
-<td align="right">0.9770</td>
-<td align="right">0.9783</td>
-<td align="right">0.9763</td>
-<td align="right">0.9769</td>
+<td align="left">0.976939203</td>
+<td align="left">0.977003484</td>
+<td align="left"><strong>0.978336827</strong></td>
+<td align="left">0.97632312</td>
+<td align="left">0.976906928</td>
 </tr>
 <tr class="even">
 <td align="left">labor</td>
-<td align="right">1.0000</td>
-<td align="right">NA</td>
-<td align="right">0.8000</td>
-<td align="right">1.0000</td>
-<td align="right">0.8571</td>
+<td align="left"><strong>1</strong></td>
+<td align="left">NA</td>
+<td align="left">0.8</td>
+<td align="left"><strong>1</strong></td>
+<td align="left">0.857142857</td>
 </tr>
 <tr class="odd">
 <td align="left">SpeedDating</td>
-<td align="right">0.9950</td>
-<td align="right">0.9954</td>
-<td align="right">0.9950</td>
-<td align="right">0.9939</td>
-<td align="right">0.9950</td>
+<td align="left">0.994992847</td>
+<td align="left"><strong>0.995352163</strong></td>
+<td align="left">0.994992847</td>
+<td align="left">0.99391771</td>
+<td align="left">0.994992847</td>
 </tr>
 <tr class="even">
 <td align="left">stem-okcupid</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
 </tr>
 <tr class="odd">
 <td align="left">hepatitis</td>
-<td align="right">0.6000</td>
-<td align="right">0.6000</td>
-<td align="right">0.5455</td>
-<td align="right">0.5455</td>
-<td align="right">0.6000</td>
+<td align="left"><strong>0.6</strong></td>
+<td align="left"><strong>0.6</strong></td>
+<td align="left">0.545454545</td>
+<td align="left">0.545454545</td>
+<td align="left"><strong>0.6</strong></td>
 </tr>
 <tr class="even">
 <td align="left">vote</td>
-<td align="right">0.9649</td>
-<td align="right">0.9649</td>
-<td align="right">0.9649</td>
-<td align="right">0.9649</td>
-<td align="right">0.9649</td>
+<td align="left"><strong>0.964912281</strong></td>
+<td align="left"><strong>0.964912281</strong></td>
+<td align="left"><strong>0.964912281</strong></td>
+<td align="left"><strong>0.964912281</strong></td>
+<td align="left"><strong>0.964912281</strong></td>
 </tr>
 <tr class="odd">
 <td align="left">cylinder-bands</td>
-<td align="right">0.6479</td>
-<td align="right">NA</td>
-<td align="right">0.6765</td>
-<td align="right">0.6377</td>
-<td align="right">0.6377</td>
+<td align="left">0.647887324</td>
+<td align="left">NA</td>
+<td align="left"><strong>0.676470588</strong></td>
+<td align="left">0.637681159</td>
+<td align="left">0.637681159</td>
 </tr>
 <tr class="even">
 <td align="left">echoMonths</td>
-<td align="right">0.8649</td>
-<td align="right">NA</td>
-<td align="right">0.8649</td>
-<td align="right">0.8649</td>
-<td align="right">0.8649</td>
+<td align="left"><strong>0.864864865</strong></td>
+<td align="left">NA</td>
+<td align="left"><strong>0.864864865</strong></td>
+<td align="left"><strong>0.864864865</strong></td>
+<td align="left"><strong>0.864864865</strong></td>
 </tr>
 </tbody>
 </table>
@@ -1102,125 +1105,125 @@ The F1 score values are mostly between 0.6 and 0.99, with some outliers like the
 <thead>
 <tr class="header">
 <th align="left">Dataset</th>
-<th align="right">Insert.mean</th>
-<th align="right">Mice_pmm</th>
-<th align="right">VIM_knn</th>
-<th align="right">VIM_hotdeck</th>
-<th align="right">softImpute</th>
+<th align="left">Insert.mean</th>
+<th align="left">Mice_pmm</th>
+<th align="left">VIM_knn</th>
+<th align="left">VIM_hotdeck</th>
+<th align="left">softImpute</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">ipums_la_99-small</td>
-<td align="right">0.2209</td>
-<td align="right">0.2013</td>
-<td align="right">0.2424</td>
-<td align="right">0.2099</td>
-<td align="right">0.2209</td>
+<td align="left">0.220858896</td>
+<td align="left">0.201257862</td>
+<td align="left"><strong>0.242424242</strong></td>
+<td align="left">0.209876543</td>
+<td align="left">0.220858896</td>
 </tr>
 <tr class="even">
 <td align="left">adult</td>
-<td align="right">0.8872</td>
-<td align="right">0.8887</td>
-<td align="right">0.8886</td>
-<td align="right">0.8899</td>
-<td align="right">0.8872</td>
+<td align="left">0.88715382</td>
+<td align="left">0.888652671</td>
+<td align="left">0.888593105</td>
+<td align="left"><strong>0.889863159</strong></td>
+<td align="left">0.88715382</td>
 </tr>
 <tr class="odd">
 <td align="left">eucalyptus</td>
-<td align="right">0.8571</td>
-<td align="right">0.8523</td>
-<td align="right">0.8523</td>
-<td align="right">0.8571</td>
-<td align="right">0.8571</td>
+<td align="left"><strong>0.857142857</strong></td>
+<td align="left">0.852272727</td>
+<td align="left">0.852272727</td>
+<td align="left"><strong>0.857142857</strong></td>
+<td align="left"><strong>0.857142857</strong></td>
 </tr>
 <tr class="even">
 <td align="left">dresses-sales</td>
-<td align="right">0.7421</td>
-<td align="right">0.7421</td>
-<td align="right">0.7421</td>
-<td align="right">0.7421</td>
-<td align="right">0.7133</td>
+<td align="left"><strong>0.742138365</strong></td>
+<td align="left"><strong>0.742138365</strong></td>
+<td align="left"><strong>0.742138365</strong></td>
+<td align="left"><strong>0.742138365</strong></td>
+<td align="left">0.713286713</td>
 </tr>
 <tr class="odd">
 <td align="left">colic</td>
-<td align="right">0.5652</td>
-<td align="right">0.5714</td>
-<td align="right">0.6047</td>
-<td align="right">0.5778</td>
-<td align="right">0.5106</td>
+<td align="left">0.565217391</td>
+<td align="left">0.571428571</td>
+<td align="left"><strong>0.604651163</strong></td>
+<td align="left">0.577777778</td>
+<td align="left">0.510638298</td>
 </tr>
 <tr class="even">
 <td align="left">credit-approval</td>
-<td align="right">0.8511</td>
-<td align="right">NA</td>
-<td align="right">0.8511</td>
-<td align="right">0.8511</td>
-<td align="right">0.8429</td>
+<td align="left"><strong>0.85106383</strong></td>
+<td align="left">NA</td>
+<td align="left"><strong>0.85106383</strong></td>
+<td align="left"><strong>0.85106383</strong></td>
+<td align="left">0.842857143</td>
 </tr>
 <tr class="odd">
 <td align="left">sick</td>
-<td align="right">0.9798</td>
-<td align="right">0.9784</td>
-<td align="right">0.9798</td>
-<td align="right">0.9784</td>
-<td align="right">0.9784</td>
+<td align="left">0.979762736</td>
+<td align="left">0.978397213</td>
+<td align="left"><strong>0.979790941</strong></td>
+<td align="left">0.978427279</td>
+<td align="left">0.978427279</td>
 </tr>
 <tr class="even">
 <td align="left">labor</td>
-<td align="right">0.6667</td>
-<td align="right">NA</td>
-<td align="right">0.8571</td>
-<td align="right">0.8000</td>
-<td align="right">1.0000</td>
+<td align="left">0.666666667</td>
+<td align="left">NA</td>
+<td align="left">0.857142857</td>
+<td align="left">0.8</td>
+<td align="left"><strong>1</strong></td>
 </tr>
 <tr class="odd">
 <td align="left">SpeedDating</td>
-<td align="right">0.9142</td>
-<td align="right">0.9156</td>
-<td align="right">0.9160</td>
-<td align="right">0.9146</td>
-<td align="right">0.9145</td>
+<td align="left">0.914166085</td>
+<td align="left">0.915620642</td>
+<td align="left"><strong>0.915998606</strong></td>
+<td align="left">0.914642609</td>
+<td align="left">0.91454482</td>
 </tr>
 <tr class="even">
 <td align="left">stem-okcupid</td>
-<td align="right">0.8831</td>
-<td align="right">0.8831</td>
-<td align="right">0.8831</td>
-<td align="right">0.8831</td>
-<td align="right">0.8831</td>
+<td align="left"><strong>0.883104245</strong></td>
+<td align="left"><strong>0.883104245</strong></td>
+<td align="left"><strong>0.883104245</strong></td>
+<td align="left"><strong>0.883104245</strong></td>
+<td align="left"><strong>0.883104245</strong></td>
 </tr>
 <tr class="odd">
 <td align="left">hepatitis</td>
-<td align="right">0.6667</td>
-<td align="right">0.8571</td>
-<td align="right">0.6667</td>
-<td align="right">0.6667</td>
-<td align="right">0.6667</td>
+<td align="left">0.666666667</td>
+<td align="left"><strong>0.857142857</strong></td>
+<td align="left">0.666666667</td>
+<td align="left">0.666666667</td>
+<td align="left">0.666666667</td>
 </tr>
 <tr class="even">
 <td align="left">vote</td>
-<td align="right">0.9492</td>
-<td align="right">0.9565</td>
-<td align="right">0.9483</td>
-<td align="right">0.9573</td>
-<td align="right">0.9492</td>
+<td align="left">0.949152542</td>
+<td align="left">0.956521739</td>
+<td align="left">0.948275862</td>
+<td align="left"><strong>0.957264957</strong></td>
+<td align="left">0.949152542</td>
 </tr>
 <tr class="odd">
 <td align="left">cylinder-bands</td>
-<td align="right">0.7632</td>
-<td align="right">NA</td>
-<td align="right">0.6849</td>
-<td align="right">0.6761</td>
-<td align="right">0.7838</td>
+<td align="left">0.763157895</td>
+<td align="left">NA</td>
+<td align="left">0.684931507</td>
+<td align="left">0.676056338</td>
+<td align="left"><strong>0.783783784</strong></td>
 </tr>
 <tr class="even">
 <td align="left">echoMonths</td>
-<td align="right">0.7778</td>
-<td align="right">NA</td>
-<td align="right">0.7647</td>
-<td align="right">0.7879</td>
-<td align="right">0.7778</td>
+<td align="left">0.777777778</td>
+<td align="left">NA</td>
+<td align="left">0.764705882</td>
+<td align="left"><strong>0.787878788</strong></td>
+<td align="left">0.777777778</td>
 </tr>
 </tbody>
 </table>

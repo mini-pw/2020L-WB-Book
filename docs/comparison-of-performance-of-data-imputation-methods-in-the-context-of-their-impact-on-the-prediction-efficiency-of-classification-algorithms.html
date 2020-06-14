@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-06-11" />
+<meta name="date" content="2020-06-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -386,43 +386,75 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="results-9" class="section level3" number="2.3.4">
 <h3><span class="header-section-number">2.3.4</span> Results</h3>
-<p>Raw results were processed and assessed in the following way.</p>
-<p>Imputation times were compared in correspondence to each imputation method and dataset. Times logarithms had to be used instead of raw data, due to high differences. (Figure 1)</p>
-<p>Raw measures were compared in correspondence to each imputation method, classification algorithm, and dataset. (Figure 2)</p>
-<p>Rankings of measures were compared in correspondence to each imputation method, classification algorithm, and dataset. Each imputation method/classification algorithm combination was ranked three times on every dataset, once for each of the three used measures. The given combination gets a 1 if it gives the best result on a dataset, and a 6 if it gives the worst one. Then, such rankings were visualized through multiple boxplots with mean and median ranking calculated and marked on them. (Figure 3)</p>
+<div id="results-processing" class="section level4" number="2.3.4.1">
+<h4><span class="header-section-number">2.3.4.1</span> Results processing</h4>
+<p>It should be mentioned once again, that any differences in results are only due to a change of either the imputation method, the classification algorithm, or the dataset. Divisions into train and test sets for a given dataset were always identical. Because of that, even small scores differences should be taken into consideration. Another important fact is that we took into consideration only datasets on which all of the imputation methods worked, so that all of them may be compared fairly.</p>
+<p>Raw results were processed and assessed in the following way:</p>
+<ul>
+<li><p>Imputation times were compared in correspondence to each imputation method and dataset. Times logarithms had to be used instead of raw data, due to high differences. (Figure 1)</p></li>
+<li><p>Raw measures were compared in correspondence to each imputation method, classification algorithm, and dataset. (Figure 2)</p></li>
+<li><p>Rankings of measures were compared in correspondence to each imputation method, classification algorithm, and dataset. Each imputation method/classification algorithm combination was ranked three times on every dataset, once for each of the three used measures. The given combination gets a 1 if it gives the best result on a dataset, and a 6 if it gives the worst one. Then, such rankings were visualized through multiple boxplots with mean and median ranking calculated and marked on them. (Figure 3)</p></li>
+</ul>
 <p>Moreover, as it was already mentioned before, cross-validation scores were merged in a specialized report used for checking process correctness, that is available here - <a href="https://github.com/PlentyCoups/WB-article-extras/blob/master/report.html" class="uri">https://github.com/PlentyCoups/WB-article-extras/blob/master/report.html</a>.</p>
-<p>It should be mentioned once again, that any differences in results are only due to a change of either the imputation method, the classification algorithm, or the dataset. Divisions into train and test sets for a given dataset were always identical. Because of that, even small scores differences should be taken into consideration.</p>
-<p>Another important fact is that we took into consideration only datasets on which all of the imputation methods worked, so that all of them may be compared fairly.</p>
+</div>
+<div id="results-visualization" class="section level4" number="2.3.4.2">
+<h4><span class="header-section-number">2.3.4.2</span> Results visualization</h4>
 <p>Below figures are best to be viewed with a slight zoom.</p>
-<div class="figure">
-<img src="images/2-3-times_plot.png" alt="" />
-<p class="caption">Figure 1: Imputation times</p>
-</div>
-<p>Upper plot:</p>
-<p>Imputation times for each imputation method are aggregated and visualized using boxplots. Vertical axis is scaled using logarithm base 10.</p>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"><img src="images/2-3-times_plot.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><em>Figure 1: Imputation times<br><br>Upper plot:<br>Imputation times for each imputation method are aggregated and visualized using boxplots.<br>Vertical axis is scaled using logarithm base 10.<br><br>Lower plot:<br>Imputation times for each imputation method/dataset combination are visualized using scatter plots.<br>Dots’ colors represent imputation methods, datasets are mapped to horizontal axis.</em></td>
+</tr>
+</tbody>
+</table>
 <p>The fastest method is basic (median/mode), followed by softImpute and VIM hotdeck. VIM knn and missRanger methods were much slower, and mice method was the slowest, achieving longest imputation time recorded during the experiment - 9 hours.</p>
-<p>Lower plot:</p>
-<p>Imputation times for each imputation method/dataset combination are visualized using scatter plots. Dots’ colors represent imputation methods, datasets are mapped to horizontal axis.</p>
 <p>Datasets cylinder-bands, SpeedDating and adult took the most CPU time to impute. Longest times recorder during the experiment were those achieved by mice, often followed by missRanger.</p>
-<div class="figure">
-<img src="images/2-3-measures_plot.png" alt="" />
-<p class="caption">Figure 2: Raw scores</p>
-</div>
-<p>Classification performance assesed with three measures is visualized for four classification algorithms using scatter plots.</p>
-<p>Major horizontal axis represents classification algorithms. Major vertical axis represents measures. Minor horizontal axes represent datasets. Minor vertical axes represent measures’ values. Dots’ colors represent imputation methods.</p>
+<p><br><br></p>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"><img src="images/2-3-measures_plot.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><em>Figure 2: Raw scores<br><br>Classification performance assesed with three measures is visualized for four classification algorithms using scatter plots.<br><br>Major horizontal axis represents classification algorithms. Major vertical axis represents measures. Minor horizontal axes represent datasets. Minor vertical axes represent measures’ values.<br>Dots’ colors represent imputation methods.</em></td>
+</tr>
+</tbody>
+</table>
 <p>For some datasets imputation method impact is negligible, and for others it is well visible. MCC is on average lower than AUC and BACC, it seems to be a more ‘strict’ measure. For some datasets choice of classification algorithm does not matter, and for others it is noticeably meaningful.</p>
 <p>For all datasets it is possible to choose at least one imputation method/classification algorithm combination for which results are acceptable, but some datasets prooved to be overall harder.</p>
-<div class="figure">
-<img src="images/2-3-rankings_plot.png" alt="" />
-<p class="caption">Figure 3: Scores rankings</p>
-</div>
-<p>Classification performance assesed with three measures’ rankings is aggregated and visualized for four classification algorithms using boxplots.</p>
-<p>Major horizontal axis represents classification algorithms. Major vertical axis represents measures. Minor horizontal axes represent imputation methods. Minor vertical axes represent measures’ rankings.</p>
-<p>Single red dot represents given imputation method/classification algorithm ranking by given measure on single datasets. Ten datasets for each imputation method/classification algorithm give ten dots for each boxplot.</p>
-<p>Black lines represent median ranking and red lines represent mean ranking with labeled value.</p>
+<p><br><br></p>
+<table>
+<colgroup>
+<col width="100%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"><img src="images/2-3-rankings_plot.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><em>Figure 3: Scores rankings<br><br>Classification performance assesed with three measures’ rankings is aggregated and visualized for four classification algorithms using boxplots.<br><br>Major horizontal axis represents classification algorithms. Major vertical axis represents measures. Minor horizontal axes represent imputation methods. Minor vertical axes represent measures’ rankings.<br><br>Single red dot represents given imputation method/classification algorithm ranking by given measure on single datasets. Ten datasets for each imputation method/classification algorithm give ten dots for each boxplot.<br><br>Black lines represent median ranking and red lines represent mean ranking with labeled value.</em></td>
+</tr>
+</tbody>
+</table>
 <p>For all three measures best rankings were achieved by basic (median/mode)/kNN combination. For Naive Bayes, Ranger Random Forests, XGBoost algorithms lowest rankings were achieved using missRanger imputation method, with quite low variance of results.</p>
 <p>The imputer that turned out to be globally the worst (and also the slowest) was the one from mice package.</p>
 <p>The most important observation is that almost all imputation method/classification algorithm combinations ended first for some dataset.</p>
+</div>
 </div>
 <div id="summary-and-conclusions-7" class="section level3" number="2.3.5">
 <h3><span class="header-section-number">2.3.5</span> Summary and conclusions</h3>
