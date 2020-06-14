@@ -9,16 +9,13 @@ Reproducibility is a quality of research crucial for modern science. But is perf
 ### Introduction and Motivation
 It is common knowledge that reproducibility is a way for science to evolve. It is the heart of the scientific method to revisit pre-existing measurements and to try to reproduce its results. However, the term „reproducibility” itself, as well it is crucial to the scientific methodology, it can be also universal at the expense of unambiguousness and usability. \
 For the purpose of this paper we will have recourse to the definition introduced by ACM:\
-Reproducibility -  The measurement can be obtained with stated precision by a different team, a different measuring system, in a different location on multiple trials. For computational experiments, this means that an independent group can obtain the same resultusing artefacts which they develop completely independently.\
-This particular definition ilustrates perfectly how in the course of establishing the meaning of term „Reproducibility”, the level of importance of auxiliary measurements and settings of the experiment to the overall results is omitted. It is notably significant misconception especially in the experiments from the field of computional science, when reproducing or even maintaining precise operating conditions is usually impossible.\
-In the following chapters we will attempt to perform an analysis of reproducibility of the papers submitted to the RJournal, regarding especially presumed objectives of enclosed auxilliary computations and artifacts (i. e. code chunks) in overarching structure of a given paper.\
-
-
+"*Reproducibility -  The measurement can be obtained with stated precision by a different team, a different measuring system, in a different location on multiple trials. For computational experiments, this means that an independent group can obtain the same result using artefacts which they develop completely independently*".\
+This particular definition illustrates perfectly how in the course of establishing the meaning of term „Reproducibility”, the level of importance of auxiliary measurements and settings of the experiment to the overall results is omitted. It is notably significant misconception, especially in the experiments from the field of  computational science, when reproducing or even maintaining precise operating conditions is usually impossible.\
+In the following chapters we will attempt to perform an analysis of reproducibility of the papers submitted to the RJournal, regarding especially presumed objectives of enclosed auxiliary computations and artifacts (i. e. code chunks) in overarching structure of a given paper.\
 ### Related Work
 Although there are many research papers related to this article, the following three could be perceived as a "basis" for our study. \
-1. Daniel Mendez, Daniel Graziotin, Stefan Wagner, and Heidi Seibold provides a definition of reproducibility this article uses, and distinguishes it from replicability[@Mendez2019defRepr]. \
-2. Steven N. Goodman, Daniele Fanelli and John P. A. Ioannidis defines multiple interpretations of reproducibility. It further divides and classifies reproducibility, and provides a basis on how one can do it[@Goodman341ps12]. \
-
+1. [@Mendez2019defRepr] provide a definition of reproducibility this article uses, and distinguish it from replicability. \
+2. [@Goodman341ps12] define multiple interpretations of reproducibility. It further divides and classifies reproducibility, and provides a basis on how one can do it. \
 In their search the authors have not encountered other research papers that study the aspect of reproducibility this article focuses on. If said papers do not actually exist, then this article could provide insights on previously unexamined aspects of reproducibility.\
 
 
