@@ -49,55 +49,47 @@ The following diagram may also help to visualize our methodology - https://githu
 
 ### Results
 
-Raw results were processed and assessed in the following way.
+#### Results processing
 
-Imputation times were compared in correspondence to each imputation method and dataset. Times logarithms had to be used instead of raw data, due to high differences. (Figure 1)
+It should be mentioned once again, that any differences in results are only due to a change of either the imputation method, the classification algorithm, or the dataset. Divisions into train and test sets for a given dataset were always identical. Because of that, even small scores differences should be taken into consideration. Another important fact is that we took into consideration only datasets on which all of the imputation methods worked, so that all of them may be compared fairly.
 
-Raw measures were compared in correspondence to each imputation method, classification algorithm, and dataset. (Figure 2)
+Raw results were processed and assessed in the following way:
 
-Rankings of measures were compared in correspondence to each imputation method, classification algorithm, and dataset. Each imputation method/classification algorithm combination was ranked three times on every dataset, once for each of the three used measures. The given combination gets a 1 if it gives the best result on a dataset, and a 6 if it gives the worst one. Then, such rankings were visualized through multiple boxplots with mean and median ranking calculated and marked on them. (Figure 3)
+* Imputation times were compared in correspondence to each imputation method and dataset. Times logarithms had to be used instead of raw data, due to high differences. (Figure 1)
+
+* Raw measures were compared in correspondence to each imputation method, classification algorithm, and dataset. (Figure 2)
+
+* Rankings of measures were compared in correspondence to each imputation method, classification algorithm, and dataset. Each imputation method/classification algorithm combination was ranked three times on every dataset, once for each of the three used measures. The given combination gets a 1 if it gives the best result on a dataset, and a 6 if it gives the worst one. Then, such rankings were visualized through multiple boxplots with mean and median ranking calculated and marked on them. (Figure 3)
 
 Moreover, as it was already mentioned before, cross-validation scores were merged in a specialized report used for checking process correctness, that is available here - https://github.com/PlentyCoups/WB-article-extras/blob/master/report.html.
 
-It should be mentioned once again, that any differences in results are only due to a change of either the imputation method, the classification algorithm, or the dataset. Divisions into train and test sets for a given dataset were always identical. Because of that, even small scores differences should be taken into consideration.
-
-Another important fact is that we took into consideration only datasets on which all of the imputation methods worked, so that all of them may be compared fairly.
+#### Results visualization
 
 Below figures are best to be viewed with a slight zoom.
 
-![Figure 1: Imputation times](./images/2-3-times_plot.png)
+| ![](./images/2-3-times_plot.png) |
+|:--| 
+|*Figure 1: Imputation times<br><br>Upper plot:<br>Imputation times for each imputation method are aggregated and visualized using boxplots.<br>Vertical axis is scaled using logarithm base 10.<br><br>Lower plot:<br>Imputation times for each imputation method/dataset combination are visualized using scatter plots.<br>Dots' colors represent imputation methods, datasets are mapped to horizontal axis.* |
 
-Upper plot: 
-
-Imputation times for each imputation method are aggregated and visualized using boxplots. Vertical axis is scaled using logarithm base 10.
-
-The fastest method is basic (median/mode), followed by softImpute and VIM hotdeck. VIM knn and missRanger methods were much slower, and mice method was the slowest, achieving longest imputation time recorded during the experiment - 9 hours. 
-
-Lower plot:
-
-Imputation times for each imputation method/dataset combination are visualized using scatter plots. Dots' colors represent imputation methods, datasets are mapped to horizontal axis.
+The fastest method is basic (median/mode), followed by softImpute and VIM hotdeck. VIM knn and missRanger methods were much slower, and mice method was the slowest, achieving longest imputation time recorded during the experiment - 9 hours.
 
 Datasets cylinder-bands, SpeedDating and adult took the most CPU time to impute. Longest times recorder during the experiment were those achieved by mice, often followed by missRanger.
 
-![Figure 2: Raw scores](./images/2-3-measures_plot.png)
+<br><br>
 
-Classification performance assesed with three measures is visualized for four classification algorithms using scatter plots.
-
-Major horizontal axis represents classification algorithms. Major vertical axis represents measures. Minor horizontal axes represent datasets. Minor vertical axes represent measures' values. Dots' colors represent imputation methods.
+| ![](./images/2-3-measures_plot.png) |
+|:--|
+| *Figure 2: Raw scores<br><br>Classification performance assesed with three measures is visualized for four classification algorithms using scatter plots.<br><br>Major horizontal axis represents classification algorithms. Major vertical axis represents measures. Minor horizontal axes represent datasets. Minor vertical axes represent measures' values.<br>Dots' colors represent imputation methods.*|
 
 For some datasets imputation method impact is negligible, and for others it is well visible. MCC is on average lower than AUC and BACC, it seems to be a more 'strict' measure. For some datasets choice of classification algorithm does not matter, and for others it is noticeably meaningful.
 
 For all datasets it is possible to choose at least one imputation method/classification algorithm combination for which results are acceptable, but some datasets prooved to be overall harder.
 
-![Figure 3: Scores rankings](./images/2-3-rankings_plot.png)
+<br><br>
 
-Classification performance assesed with three measures' rankings is aggregated and visualized for four classification algorithms using boxplots.
-
-Major horizontal axis represents classification algorithms. Major vertical axis represents measures. Minor horizontal axes represent imputation methods. Minor vertical axes represent measures' rankings.
-
-Single red dot represents given imputation method/classification algorithm ranking by given measure on single datasets. Ten datasets for each imputation method/classification algorithm give ten dots for each boxplot. 
-
-Black lines represent median ranking and red lines represent mean ranking with labeled value.
+| ![](./images/2-3-rankings_plot.png) |
+|:--|
+| *Figure 3: Scores rankings<br><br>Classification performance assesed with three measures' rankings is aggregated and visualized for four classification algorithms using boxplots.<br><br>Major horizontal axis represents classification algorithms. Major vertical axis represents measures. Minor horizontal axes represent imputation methods. Minor vertical axes represent measures' rankings.<br><br>Single red dot represents given imputation method/classification algorithm ranking by given measure on single datasets. Ten datasets for each imputation method/classification algorithm give ten dots for each boxplot.<br><br>Black lines represent median ranking and red lines represent mean ranking with labeled value.* |
 
 For all three measures best rankings were achieved by basic (median/mode)/kNN combination. For Naive Bayes, Ranger Random Forests, XGBoost algorithms lowest rankings were achieved using missRanger imputation method, with quite low variance of results.
 
