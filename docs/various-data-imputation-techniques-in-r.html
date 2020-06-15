@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-06-14" />
+<meta name="date" content="2020-06-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -405,21 +405,14 @@ When data are missing not at random, the missingness is related to the character
 <h4><span class="header-section-number">2.4.3.2</span> Data Imputation</h4>
 <p>Clean data sets were split into two data sets, training and testing, in proportion <span class="math inline">\(1/4\)</span> respectively. This split was performed randomly and only once for every data set. It means, every imputation technique used the same split. Imputation was performed separately for train and test sets. Before split, we also removed the target column to avoid using it in imputation. For our study, we decided to choose five packages designed for missing data imputation in the R language and one self-implemented basic technique:</p>
 <ul>
-<li><strong>Mode and median</strong>: Simple technique of filling missing values with mode (for categorical variables) and median (for continuous variables) of complete values in a variable. Implemented with basic R language functions.</li>
-<li><strong>mice</strong><span class="citation">(van Buuren and Groothuis-Oudshoorn <a href="#ref-2_4_mice2011" role="doc-biblioref">2011</a><a href="#ref-2_4_mice2011" role="doc-biblioref">b</a>)</span>: Package allows to perform multivariate imputation by chained equations (MICE), which is a type of multiple imputation. The method is based on Fully Conditional Specification, where each incomplete variable is imputed by a separate model.</li>
+<li><strong>Mode and median</strong>: Simple technique of filling missing values with mode (for categorical variables) and median (for continuous variables) of complete values in a variable. Implemented with basic R language functions. Is a very simple method and it is used as a base result for more complex algorithms to compare.</li>
+<li><strong>mice</strong><span class="citation">(van Buuren and Groothuis-Oudshoorn <a href="#ref-2_4_mice2011" role="doc-biblioref">2011</a><a href="#ref-2_4_mice2011" role="doc-biblioref">b</a>)</span>: Package allows to perform multivariate imputation by chained equations (MICE), which is a type of multiple imputation. The method is based on Fully Conditional Specification, where each incomplete variable is imputed by a separate model. Imputation method from mice package don’t require any form of help, because they can impute numeric and categorical features.</li>
 <li><strong>missMDA</strong><span class="citation">(Josse and Husson <a href="#ref-2_4_missMDA2016" role="doc-biblioref">2016</a>)</span>: Package for multiple missing values imputation. Data sets are imputed with the principal component method, regularized iterative FAMD algorithm (factorial analysis for mixed data). Firstly estimation of the number of dimensions for factorial analysis is essential.</li>
-<li><strong>missFOREST</strong><span class="citation">(Stekhoven and Buehlmann <a href="#ref-2_4_missForest2012" role="doc-biblioref">2012</a><a href="#ref-2_4_missForest2012" role="doc-biblioref">b</a>)</span>: Package can be used for imputation with predictions of the random forest model, trained on complete observations. The package works on data with complex interactions and non-linear relations. Enables parallel calculations.</li>
-<li><strong>softImpute</strong><span class="citation">(Hastie and Mazumder <a href="#ref-2_4_R-softImpute" role="doc-biblioref">2015</a><a href="#ref-2_4_R-softImpute" role="doc-biblioref">b</a>)</span>: Package for matrix imputation with nuclear-norm regularization. The algorithm works like EM, solving an optimization problem using a soft-thresholded SVD algorithm. Works only with continuous variables.</li>
-<li><strong>VIM</strong><span class="citation">(Kowarik and Templ <a href="#ref-2_4_VIM2016" role="doc-biblioref">2016</a><a href="#ref-2_4_VIM2016" role="doc-biblioref">c</a>)</span>: Package for visualization and imputation of missing values. It offers iterative robust model-based imputation (IRMI). In each iteration, one variable is used as a response variable and the remaining variables as the regressors.</li>
+<li><strong>missFOREST</strong><span class="citation">(Stekhoven and Buehlmann <a href="#ref-2_4_missForest2012" role="doc-biblioref">2012</a><a href="#ref-2_4_missForest2012" role="doc-biblioref">b</a>)</span>: Package can be used for imputation with predictions of the random forest model, trained on complete observations. The package works on data with complex interactions and non-linear relations. Enables parallel calculations. Algorithm can be used on both numeric and categorical features and is capable of performing imputation without any help of other methods.</li>
+<li><strong>softImpute</strong><span class="citation">(Hastie and Mazumder <a href="#ref-2_4_R-softImpute" role="doc-biblioref">2015</a><a href="#ref-2_4_R-softImpute" role="doc-biblioref">b</a>)</span>: Package for matrix imputation with nuclear-norm regularization. The algorithm works like EM, solving an optimization problem using a soft-thresholded SVD algorithm. Works only with continuous variables. SoftImpute package works only with numeric features. To compare it with other algorithms on the same data, we use softImpute for numeric variables and mode for categorical variables. Alternatively, it is possible to use softImpute for numeric features and different algorithms for categorical variables, but we decided that this approach may lead to unreliable results.</li>
+<li><strong>VIM</strong><span class="citation">(Kowarik and Templ <a href="#ref-2_4_VIM2016" role="doc-biblioref">2016</a><a href="#ref-2_4_VIM2016" role="doc-biblioref">c</a>)</span>: Package for visualization and imputation of missing values. It offers iterative robust model-based imputation (IRMI). In each iteration, one variable is used as a response variable and the remaining variables as the regressors. This method additionally creates new columns with information whether the observation was imputed or not. We decided to do not use these columns, because other methods do not create them.</li>
 </ul>
-<p>First, we use median/mode imputation, which is a very simple method and it is used as a base result for more complex algorithms to compare.
-Imputation method from mice package don’t require any form of help, because they can impute numeric and categorical features.
-SoftImpute package works only with numeric features. To compare it with other algorithms on the same data, we use softImpute for numeric variables and mode for categorical variables. Alternatively, it is possible to use softImpute for numeric features and different algorithms for categorical variables, but we decided that this approach may lead to unreliable results.
-MissForest algorithm can be used on both numeric and categorical features and is capable of performing imputation without any help of other methods.
-Imputation method from Mice package also can be run on all types of data.
-Iterative Robust Model-Based Imputation method from VIM package can impute all types of data. This method additionally creates new columns with information whether the observation was imputed or not. We decided to do not use these columns, because other methods do not create them.
-The last method which we covered is missMDA which also can be used to impute numeric and categorical features.
-After imputation, we add back target variable to both sets. All methods work on the same parameters for all data sets. Not all methods were able to impute all 14 data sets. This fact will be taken into account in the subsequent analysis of the results.</p>
+<p>After imputation, we add back target variable to both sets. All methods work on the same parameters for all data sets. Not all methods were able to impute all 14 data sets. This fact will be taken into account in the subsequent analysis of the results.</p>
 </div>
 <div id="model-traing" class="section level4" number="2.4.3.3">
 <h4><span class="header-section-number">2.4.3.3</span> Model traing</h4>
@@ -428,9 +421,17 @@ After imputation, we add back target variable to both sets. All methods work on 
 <li>Extreme Gradient Boosting,</li>
 <li>Random Forest,</li>
 <li>Support Vector Machines,</li>
-<li>Linear Regression</li>
+<li>Logistic Regression</li>
 </ul>
-<p>All methods were implemented in <strong>mlr</strong> package <span class="citation">(Bischl et al. <a href="#ref-2_4_mlr" role="doc-biblioref">2016</a><a href="#ref-2_4_mlr" role="doc-biblioref">b</a>)</span>. For hyperparameters tuning, we also used methods from the same package. For all data sets, four classifiers were trained and tuned on the same train sets. To select parameters we used Grid Search. We will not focus on this part of the experiment. The most important part of this step is that every model training was carried out the same way. This means that differences in results can be caused only by the influence of previously used imputation technique.</p>
+<p>All methods were implemented in <strong>mlr</strong> package <span class="citation">(Bischl, Lang, et al. <a href="#ref-2_4_mlr" role="doc-biblioref">2016</a><a href="#ref-2_4_mlr" role="doc-biblioref">b</a>)</span>. For hyperparameters tuning, we also used methods from the same package. For all data sets, four classifiers were trained and tuned on the same train sets. To select parameters we used Grid Search. For all algorithms selected parameters were tuned (more information about parameters in package description):</p>
+<ul>
+<li>XGB (etc, gamma, max_depth, subsample)<br />
+</li>
+<li>Random Forest (num.trees, min.node.size)</li>
+<li>SVM (gamma)</li>
+<li>Logistic Regression (alpha, nlambda)</li>
+</ul>
+<p>We will not focus on this part of the experiment. The most important part of this step is that every model training was carried out the same way. This means that differences in results can be caused only by the influence of previously used imputation technique.</p>
 </div>
 <div id="model-evaluation" class="section level4" number="2.4.3.4">
 <h4><span class="header-section-number">2.4.3.4</span> Model evaluation</h4>
@@ -439,13 +440,14 @@ After imputation, we add back target variable to both sets. All methods work on 
 </div>
 <div id="results-10" class="section level3" number="2.4.4">
 <h3><span class="header-section-number">2.4.4</span> Results</h3>
-<p>After the long and tedious process of data imputation, it is finally time to evaluate our methods of imputation. Methods were trained and tested on 14 data sets and evaluated strictly using 2 methods mentioned earlier. Before score analysis, it is worth mentioning that all algorithms were tested with optimal parameters, so the score should be quite meaningful. The table below presents average metrics achieved by models, depending on the imputation method. As described earlier, we decided to use two measures of algorithm effectiveness:</p>
+<p>After the long and tedious process of data imputation, it is finally time to evaluate our methods of imputation. Methods were trained and tested on 14 data sets and evaluated strictly using 2 methods mentioned earlier. Before score analysis, it is worth mentioning that all algorithms were tested with optimal parameters, so the score should be quite meaningful. The <em>Table 1</em> below presents average metrics achieved by models, depending on the imputation method. As described earlier, we decided to use two measures of algorithm effectiveness:</p>
 <ul>
 <li>F1 score</li>
 <li>Accuracy</li>
 </ul>
 <p>These two measures complement each other well because they allow us to measure well the effectiveness of our imputations and algorithms, on both balanced and unbalanced sets.</p>
 <table>
+<caption>Table 1</caption>
 <thead>
 <tr class="header">
 <th align="left">Method</th>
@@ -455,8 +457,8 @@ After imputation, we add back target variable to both sets. All methods work on 
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">median</td>
-<td align="right">0.83</td>
+<td align="left">softImpute</td>
+<td align="right">0.86</td>
 <td align="right">0.75</td>
 </tr>
 <tr class="even">
@@ -470,19 +472,19 @@ After imputation, we add back target variable to both sets. All methods work on 
 <td align="right">0.74</td>
 </tr>
 <tr class="even">
-<td align="left">missmda</td>
-<td align="right">0.82</td>
-<td align="right">0.80</td>
-</tr>
-<tr class="odd">
-<td align="left">softimpute</td>
-<td align="right">0.86</td>
-<td align="right">0.75</td>
-</tr>
-<tr class="even">
 <td align="left">VIM</td>
 <td align="right">0.85</td>
 <td align="right">0.76</td>
+</tr>
+<tr class="odd">
+<td align="left">median</td>
+<td align="right">0.83</td>
+<td align="right">0.75</td>
+</tr>
+<tr class="even">
+<td align="left">missmda</td>
+<td align="right">0.82</td>
+<td align="right">0.80</td>
 </tr>
 </tbody>
 </table>
@@ -490,15 +492,16 @@ After imputation, we add back target variable to both sets. All methods work on 
 First of all, we can think about the median/mode imputation as kind of baseline method. Surprisingly it seems to perform quite well, among the others, often quite sophisticated methods. ML models based on it achieved over 80% of accuracy on average. However, it is hard to decide whether it is a high score or not, because we are only able to compare algorithms between the others. To say anything more meaningful about our methods we shall look at the distribution of the scores to make a better analysis of performance.</p>
 <div id="distributions-of-scores" class="section level5" number="2.4.4.0.1">
 <h5><span class="header-section-number">2.4.4.0.1</span> Distributions of scores</h5>
-<p><img src="images/2-4-0.png" /><img src="images/2-4-1.png" /></p>
-<p>Taking a brief look at the distributions of accuracy score, it seems quite unclear which algorithm performs the best. All medians seem to be approximately on the same level and also the first and third quartile, of almost all scores distributions, have the same value. Only missMDA is a bit lower than the others, but this is too early to derive any conclusions.<br />
+<p><img src="images/2-4-0.png" style="width:50.0%" /><img src="images/2-4-1.png" style="width:50.0%" /></p>
+<p>Taking a brief look at the distributions of accuracy score (<em>Figure 1</em>), it seems quite unclear which algorithm performs the best. All medians seem to be approximately on the same level and also the first and third quartile, of almost all scores distributions, have the same value. Only missMDA is a bit lower than the others, but this is too early to derive any conclusions.<br />
 </p>
-<p>F1 scores give us much more information. The first thing that becomes apparent after looking at that plot is the fact that we do have some very low values for every type of imputation. However, this is simply because some of our data sets were very small, saw neither of our algorithms was able to achieve recall above 0. Besides from that, once again scores of all algorithms were quite close to each other. It is also worth noting that not all algorithms managed to perform imputations on all data sets. For this reason, the analysis of only the means and distributions alone may not be fully objective. To create a fair comparison, we decided to use two different methods of comparing and classifying these algorithms, so that we will be able to choose our winner.</p>
+<p>F1 scores (<em>Figure 2</em>) give us much more information. The first thing that becomes apparent after looking at that plot is the fact that we do have some very low values for every type of imputation. However, this is simply because some of our data sets were very small, saw neither of our algorithms was able to achieve recall above 0. Besides from that, once again scores of all algorithms were quite close to each other. It is also worth noting that not all algorithms managed to perform imputations on all data sets. For this reason, the analysis of only the means and distributions alone may not be fully objective. To create a fair comparison, we decided to use two different methods of comparing and classifying these algorithms, so that we will be able to choose our winner.</p>
 </div>
 <div id="medianmode-baseline-score" class="section level4" number="2.4.4.1">
 <h4><span class="header-section-number">2.4.4.1</span> Median/mode baseline score</h4>
-<p>To begin with, we decided to treat the median/mode as the basic form of imputation and we will compare it to all other methods. As a single measure of models, we understand the average F1 score made by all models on the specific imputation result. As a measure of imputation method, we calculate the difference between measure of models on its result to measure on mode/median result. Table below presents how much the average measure calculated for every imputation method differed from the median/mode.</p>
+<p>To begin with, we decided to treat the median/mode as the basic form of imputation and we will compare it to all other methods. As a single measure of models, we understand the average F1 score made by all models on the specific imputation result. As a measure of imputation method, we calculate difference between measure of models on its result to measure on mode/median result. Table below presents how much the average measure calculated for every imputation method differed from the median/mode.</p>
 <table>
+<caption>Table 2</caption>
 <thead>
 <tr class="header">
 <th align="left">Method</th>
@@ -507,7 +510,7 @@ First of all, we can think about the median/mode imputation as kind of baseline 
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">softimpute</td>
+<td align="left">softImpute</td>
 <td align="right">0.02</td>
 </tr>
 <tr class="even">
@@ -528,12 +531,13 @@ First of all, we can think about the median/mode imputation as kind of baseline 
 </tr>
 </tbody>
 </table>
-<p>Results achieved here are quite surprising. First of all the maximum gain in F1 score is only 0.02 and it is achieved by softImpute. But what can bewilder the most is the fact that only 2 out of 5 algorithms managed to perform better than the median/mode. Score achieved by SoftImpute may be in some way caused by the fact, that it is using mode imputation for categorical variables. For some data sets its imputation becomes very similar to mode/median, if there are many more categorical variables than numeric ones. These scores can raise questions about the whole purpose of using sophisticated algorithms, but of course, we are unable to say anything harsh about them yet. We can definitely note that we need to be we careful while using these algorithms, because they may lead to huge loss in scores, even up to -0.11, as here it is shown with missMDA. It is worth noting the order of the algorithms here, as we will use another method to compare the scores.</p>
+<p>Results achieved here (<em>Table 2</em>) are quite surprising. First of all the maximum gain in F1 score is only 0.02 and it is achieved by softImpute. But what can bewilder the most is the fact that only 2 out of 5 algorithms managed to perform better than the median/mode. Score achieved by SoftImpute may be in some way caused by the fact, that it is using mode imputation for categorical variables. For some data sets its imputation becomes very similar to mode/median, if there are many more categorical variables than numeric ones. These scores can raise questions about the whole purpose of using sophisticated algorithms, but of course, we are unable to say anything harsh about them yet. We can definitely note that we need to be we careful while using these algorithms, because they may lead to huge loss in scores, even up to -0.11, as here it is shown with missMDA. It is worth noting the order of the algorithms here, as we will use another method to compare the scores.</p>
 </div>
 <div id="second-approach" class="section level4" number="2.4.4.2">
 <h4><span class="header-section-number">2.4.4.2</span> Second approach</h4>
-<p>As a second approach, for each data set we decided to rank imputation methods according to the models scores, and then award points for each place. As a score of models for imputation method on the given data set, we understand as before the average F1 score made by all models on the imputation result. This approach allows us to give the lowest rank for the imputation methods which failed on a specific set and compare them fairly to others. As a result, we sum up all of the points and the final score is the sum of the points across all data sets. Of course, the method with the lowest amount of points wins.</p>
+<p>As a second approach, for each data set we decided to rank imputation methods according to the models scores, and then award points for each place. As a score of models for imputation method on the given data set, we understand as before the average F1 score made by all models on the imputation result. The best rank is 1 and it is given to the imputation method which had the highest average of models’ F1 scores. As a result, we sum up all of the points and the final score is the sum of the points across all data sets. Of course, the method with the lowest amount of points wins. This approach allows us to give the worse (highest) rank for the imputation methods which failed on a specific set and compare them fairly to others.</p>
 <table>
+<caption>Table 3</caption>
 <thead>
 <tr class="header">
 <th align="left">Method</th>
@@ -542,7 +546,7 @@ First of all, we can think about the median/mode imputation as kind of baseline 
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">softimpute</td>
+<td align="left">softImpute</td>
 <td align="right">38</td>
 </tr>
 <tr class="even">
@@ -567,13 +571,15 @@ First of all, we can think about the median/mode imputation as kind of baseline 
 </tr>
 </tbody>
 </table>
-<p>Scores achieved here resemble these achieved before. The order is not the same, but the winner remains the same. Once again median/mode imputation managed to perform very well, outperforming many complicated algorithms. We can say that our scores are stable, so conclusions taken from these scores can be taken seriously.</p>
+<p>Scores achieved here (<em>Table 3</em>) resemble these achieved before. The order is not the same, but the winner remains the same. Once again median/mode imputation managed to perform very well, outperforming many complicated algorithms. We can say that our scores are stable, so conclusions taken from these scores can be taken seriously.</p>
 </div>
 <div id="times" class="section level4" number="2.4.4.3">
 <h4><span class="header-section-number">2.4.4.3</span> Times</h4>
 <p>As a final tool of comparing algorithms, we decided to compare times of imputation. Obviously, even the algorithm with the best score, but with awful imputation time is considered useless, so this is important to take that factor to final evaluation.</p>
-<p><img src="images/2-4-2.png" /></p>
-<p>As we can see times of imputations made by each algorithm can vary heavily. There is no point in creating rankings like we did to analyze scores achieved by algorithms, but it is simply worth noting that our previous winner - softImpute is very quick, its plot looks the same as the median/mode plot, which is quite an achievement.
+<center>
+<img src="images/2-4-2.png" style="width:50.0%" />
+</center>
+<p>As we can see (<em>Figure 3</em>) times of imputations made by each algorithm can vary heavily. There is no point in creating rankings like we did to analyze scores achieved by algorithms, but it is simply worth noting that our previous winner - softImpute is very quick, its plot looks the same as the median/mode plot, which is quite an achievement.
 On the other side, there is Mice, which times can reach very high values.</p>
 </div>
 </div>

@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-06-14" />
+<meta name="date" content="2020-06-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -352,23 +352,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="abstract-7" class="section level3" number="2.1.1">
 <h3><span class="header-section-number">2.1.1</span> Abstract</h3>
 <p>Imputation of missing values is one of the most common preprocessing steps when working with many real-life datasets.
-Most popular strategies are filling missing data with median or mode. They are easy to implement and fast to compute, but it is said that this naive approach might not lead to the best model performance. In contrast, more advanced procedures e.g. using tree-based models despite adding algorithmic complexity and computational costs to training procedure, are thought to be better in quality of imputation.<br />
-Using those more complex methods however, requires domain knowledge and time to tune or change hyperparameters of those methods. This step is sometimes omitted and more sophisticated methods do not reach their full potential. So is this leverage over simple imputation methods still significant for more complex methods with default parameters or maybe in this case simple imputation methods are not only faster but more efficient? In this article, we will try to answer this question. We will compare efficiency of 9 default imputation methods using 5 models trained on 11 classification datasets from OpenML repository and present imputations effect on 4 different measures of model performance: Area Under the Curve (AUC), geometric mean of sensitivity and specificity, Balanced Accuracy and Weighted TPR-TNR <span class="citation">(Jadhav <a href="#ref-2-1-weighted-tpr-tnr" role="doc-biblioref">2020</a>)</span>.</p>
+There are many ways to approach this task. The first one is to fill missing data with median/mean and mode and second is to use more sophisticated models to predict the missing value based on non-missing values. Using those more complex methods, however, requires domain knowledge and time to tune or change hyperparameters of those methods. This step is sometimes omitted and more sophisticated methods do not reach their full potential. So is this leverage over simple imputation methods still significant for more complex methods with default parameters or maybe in this case simple imputation methods are not only faster but more efficient? In this article, we will try to answer this question. We will be using different methods from popular packages but without changing or tuning their parameters. There will be 9 default imputation methods and we will test how their imputation affects score of 5 models trained on 11 classification datasets from OpenML repository. Finally, we check the effectiveness of the imputations measuring models performance on 4 different measures but focusing on one which is sensitive to class imbalance - Weighted TPR-TNR.</p>
 </div>
 <div id="introduction-and-motivation-4" class="section level3" number="2.1.2">
 <h3><span class="header-section-number">2.1.2</span> Introduction and Motivation</h3>
-<p>Data is becoming more and more useful and valuable in various industries. Companies started to gather data on a scale that has not been imagined before. But with more data comes more problems. One of them is missing values. Omitting observations affected by them is one way, but why doing it while the information that they posses might be still valuable? This is why imputation of missing values is essential when dealing with real life data. But there is various methods of imputation and for inexperienced user it might be confusing and hard to decide which one to use. It may be even harder to design metrics that allow comparing methods between them. Sometimes omitting rows or even removing columns and NA can give satisfying results but in the majority of time it is worse than simple imputation methods. For simple tasks mean/median and mode are fast and computationally efficient and can give good results. But they have no variance and because of that can give worse results on complex datasets than more robust methods. On the other hand, random forests and decision trees are in theory more accurate but it takes more valuable time for them to give an answer. Furthermore, parameter changing and tuning can be difficult and time consuming. Deciding which method is the best for an inexperienced user who will not be tuning hiperparameters is the purpose of this article. We are benchmarking methods that have different complexity from various packages along with simple imputation methods but without parameter tuning, so that casual users can benefit from it. The default methods from packages are easy to use and despite not living up to their potential they give more than acceptable results.</p>
+<p>Data is becoming more and more useful and valuable in various industries. Companies started to gather data on a scale that has not been imagined before. But with more data comes more problems. One of them is missing values. Omitting observations affected by them is one way, but why doing it while the information that they possess might be still valuable? This is why the imputation of missing values is essential when dealing with real-life data. But there are various methods of imputation and for an inexperienced user, it might be confusing and hard to decide which one to use. It may be even harder to design metrics that allow comparing methods between them. Sometimes omitting rows or even removing columns and NA can give satisfying results but the majority of the time, it is worse than simple imputation methods. For simple tasks mean/median and mode are fast and computationally efficient and can give good results. But they have no variance and because of that can give worse results on complex datasets than more robust methods. On the other hand, more complex models like for example random forests are in theory more advanced and despite adding algorithmic complexity and computational costs to training procedure, are thought to be better in quality of imputation. So models that had been trained on data that has been previously imputed with more complex methods are more likely to achieve higher performance scores.<br />
+Furthermore, parameter changing and tuning can be difficult and time-consuming. Deciding which method is the best for an inexperienced user who will not be tuning hyperparameters is the purpose of this article. We are benchmarking methods that have different complexity from various packages along with simple imputation methods but without parameter tuning, so that casual users can benefit from it. The default methods from packages are easy to use and despite not living up to their potential they might acceptable results.</p>
 </div>
 <div id="related-work-2" class="section level3" number="2.1.3">
 <h3><span class="header-section-number">2.1.3</span> Related Work</h3>
-<p>Missing data imputation is a challenging issue in machine learning (ML) and data mining. <span class="citation">(Little and Rubin <a href="#ref-2-1-little-rubin" role="doc-biblioref">2002</a>)</span> defined three main categories of missing values, but most more or less generic methods of imputation, which have been proposed in the last few decades, are suited for data from one of this category. Many programmers are actively creating and looking for new strategies of data imputation that enable creating the best ML model possible. They use various packages to visualize and impute missing data with different methods like knn or even different model for each feature with missing values <span class="citation">(Kowarik and Templ <a href="#ref-2-1-VIM" role="doc-biblioref">2016</a><a href="#ref-2-1-VIM" role="doc-biblioref">a</a>)</span>. Some methods form popular packages follow fully conditional specification approach where one variable with missing values becomes target variable <span class="citation">(van Buuren and Groothuis-Oudshoorn <a href="#ref-2-1-mice" role="doc-biblioref">2011</a><a href="#ref-2-1-mice" role="doc-biblioref">a</a>)</span>. To our knowledge there is not many available papers comparing different methods of imputations from different packages and measuring their efficiency on multiple models and datasets. The use of metric is crucial for this task because not all metrics are suitable for all datasets. <span class="citation">(Jadhav <a href="#ref-2-1-weighted-tpr-tnr" role="doc-biblioref">2020</a>)</span> presented a new metric for measuring the performance of ML models on imbalanced datasets, which according to the authors is the best overall metric available.</p>
+<p>Missing data imputation is a challenging issue in machine learning (ML) and data mining. <span class="citation">Little and Rubin (<a href="#ref-2-1-little-rubin" role="doc-biblioref">2002</a>)</span> defined three main categories of missing values, but most more or less generic methods of imputation, which have been proposed in the last few decades, are suited for data from one of this category. This category is called missing at random, in short MAR. This assumes that the fact that a value is missing is not dependent on other features of the data. So we want to avoid a situation when for example occurrence of missing values in feature <span class="math inline">\(X_i\)</span> is highly correlated with some values in feature <span class="math inline">\(X_j\)</span>.<br />
+Many programmers are actively creating and looking for new strategies of data imputation that enable creating the best ML model possible. They use various packages to visualize and impute missing data with different methods like knn (k-Nearest Neighbor) or even different model for each feature with missing values <span class="citation">(Kowarik and Templ <a href="#ref-2-1-VIM" role="doc-biblioref">2016</a><a href="#ref-2-1-VIM" role="doc-biblioref">a</a>)</span>. Some methods from popular packages follow a fully conditional specification approach where one variable with missing values becomes the target variable <span class="citation">(van Buuren and Groothuis-Oudshoorn <a href="#ref-2-1-mice" role="doc-biblioref">2011</a><a href="#ref-2-1-mice" role="doc-biblioref">a</a>)</span>. To our knowledge, there are not many available papers comparing different methods of imputations from different packages and measuring their efficiency on multiple models and datasets. The use of an appropriate metric is crucial for this task because not all metrics are suitable for all datasets. <span class="citation">Jadhav (<a href="#ref-2-1-weighted-tpr-tnr" role="doc-biblioref">2020</a>)</span> presented a new metric Weighted TPR-TNR for measuring the performance of ML models on imbalanced datasets, which according to the authors is the best overall metric available.</p>
 </div>
 <div id="methodology-7" class="section level3" number="2.1.4">
 <h3><span class="header-section-number">2.1.4</span> Methodology</h3>
+<p>In our article, we compare different methods of imputations - simple and advanced methods (from several R packages) - and measuring their efficiency on multiple models and classification datasets. This section of the article contains information about selected datasets, methods of imputations, ML algorithms, and metrics used to assess the quality of the classification after applying imputation to given datasets. Also, at the end of the section, the workflow of our experiment is briefly presented.</p>
 <hr />
 <div id="datasets" class="section level4" number="2.1.4.1">
 <h4><span class="header-section-number">2.1.4.1</span> <em>Datasets</em></h4>
-<p>The information about these datasets is given in the Table <a href="default-imputation-efficiency-comparison.html#tab:2-1-statistics-tab">2.1</a>. All of them belong to OpenML datasets.</p>
+<p>In the experiment, we used various OpenML datasets, some of them belong to OpenML100 repository (<span class="citation">(Bischl, Casalicchio, et al. <a href="#ref-2-1-OpenML100" role="doc-biblioref">2017</a>)</span>). Datasets have been selected so that they have missing values and datasets differ in the number of observations, features, and percentage of data missing. All these datasets were designed for the classification task. The information about these datasets is given in Table <a href="default-imputation-efficiency-comparison.html#tab:2-1-statistics-tab">2.1</a>.</p>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
 <span id="tab:2-1-statistics-tab">TABLE 2.1: </span>Datasets Information
@@ -582,46 +584,45 @@ echoMonths
 </tr>
 </tbody>
 </table>
-<p>Imbalance ratio is computed as follows <span class="math inline">\(imbalance\_{ratio} = n/p\)</span> where <span class="math inline">\(n\)</span> - negative class and <span class="math inline">\(p\)</span> - positive class</p>
+<p>Imbalance ratio is computed as follows <span class="math inline">\(imbalance\_{ratio} = n/p\)</span> where <span class="math inline">\(n\)</span> - negative class and <span class="math inline">\(p\)</span> - positive class.</p>
 <hr />
 </div>
 <div id="imputing-strategies" class="section level4" number="2.1.4.2">
 <h4><span class="header-section-number">2.1.4.2</span> <em>Imputing strategies</em></h4>
-<p>We analyzed nine different imputing strategies:</p>
+<p>We selected and analyzed nine different imputation strategies that are known and willingly used by programmers. Some of them belong to simple methods of imputation and others are more complex. A description of these methods is below.</p>
 <ol style="list-style-type: decimal">
-<li><em>remove columns</em> - removing columns with missing values</li>
-<li><em>random fill</em> - imputing with random values from given feature</li>
-<li><em>median and mode</em> - imputing with median (for numerical features) and mode (for categorical features)</li>
-<li><em>missForest</em> - imputing with Random Forests (using missForest package <span class="citation">(Stekhoven and Buehlmann <a href="#ref-2-1-missForest" role="doc-biblioref">2012</a><a href="#ref-2-1-missForest" role="doc-biblioref">a</a>)</span>)</li>
-<li><em>vim knn</em> - imputing with k-Nearest Neighbor Imputation based on a variation of the Gower Distance (using VIM package <span class="citation">(Kowarik and Templ <a href="#ref-2-1-VIM" role="doc-biblioref">2016</a><a href="#ref-2-1-VIM" role="doc-biblioref">a</a>)</span>)</li>
-<li><em>vim hotdeck</em> - imputing with sequential, random (within a domain) hot-deck algorithm (using VIM package)</li>
-<li><em>vim irmi</em> - imputing with Iterative Robust Model-Based Imputation (IRMI) (using VIM package)</li>
-<li><em>pmm (mice)</em> - imputing with Fully Conditional Specification and predictive mean matching (using mice package <span class="citation">(van Buuren and Groothuis-Oudshoorn <a href="#ref-2-1-mice" role="doc-biblioref">2011</a><a href="#ref-2-1-mice" role="doc-biblioref">a</a>)</span>)</li>
-<li><em>cart (mice)</em> - imputing with Fully Conditional Specification and classification and regression trees (using mice package)</li>
+<li><em>remove columns</em> - removing columns with any missing values from the dataset.</li>
+<li><em>random fill</em> - imputing with random values from the given feature.</li>
+<li><em>median and mode</em> - imputing with median (for numerical features) and mode (for categorical features) from the given feature.</li>
+<li><em>missForest</em> - imputing with Random Forests (using missForest package <span class="citation">(Stekhoven and Buehlmann <a href="#ref-2-1-missForest" role="doc-biblioref">2012</a><a href="#ref-2-1-missForest" role="doc-biblioref">a</a>)</span>). Function from this package builds a random forest model for each feature with missing values. Then it uses the model to predict the value of missing instances in the feature based on other features.</li>
+<li><em>vim knn</em> - imputing with k-Nearest Neighbor Imputation based on a variation of the Gower Distance (using VIM package <span class="citation">(Kowarik and Templ <a href="#ref-2-1-VIM" role="doc-biblioref">2016</a><a href="#ref-2-1-VIM" role="doc-biblioref">a</a>)</span>). An aggregation of the k values of the nearest neighbors is used as an imputed value.</li>
+<li><em>vim hotdeck</em> - imputing with sequential, random (within a domain) hot-deck algorithm (using VIM package). In this method, the dataset is sorted and missing values are imputed sequentially running through the dataset line (observation) by line (observation).</li>
+<li><em>vim irmi</em> - imputing with Iterative Robust Model-Based Imputation (IRMI) (using VIM package). In each step of the iteration (inner loop), one variable is used as a response variable and the remaining variables serve as the regressors. The procedure is repeated until the algorithm converges (outer loop).</li>
+<li><em>pmm (mice)</em> - imputing with Fully Conditional Specification and predictive mean matching (using mice package <span class="citation">(van Buuren and Groothuis-Oudshoorn <a href="#ref-2-1-mice" role="doc-biblioref">2011</a><a href="#ref-2-1-mice" role="doc-biblioref">a</a>)</span>). For each observation in a feature with missing values, this method finds observation (from available values) with the closest predictive mean to that feature. The observed value from this “match” is then used as an imputed value.</li>
+<li><em>cart (mice)</em> - imputing with Fully Conditional Specification and classification and regression trees (using mice package). CART models select a feature and find a split that achieves the most information gain. Splitting process is repeated until the maximum height is reached or branches have only samples from one class.</li>
 </ol>
-<p>The first three methods are self-explanatory and do not have any hyperparameters to tune. In contrast, algorithms provided in missForest, VIM and mice packages are complex and may require costly hyperparameters tuning. We used default implementations in our experiments, based on the assumption that additional complexity and more hyperparameters might create too steep learning curve for average data scientist.</p>
+<p>The first three methods will be called simple imputation methods. They are self-explanatory and do not have any hyperparameters to tune. In contrast, algorithms provided in missForest, VIM, and mice packages are complex and may require costly hyperparameters tuning. We used default implementations in our experiments, based on the assumption that additional complexity and more hyperparameters might create a too steep learning curve for an average data scientist.</p>
 <p>Since neither mlr nor caret package enables using custom imputing methods in modeling pipeline, the only way to avoid data leakage was to impute values separately for train and test datasets. This imposes a severe limitation on our imputation effectiveness, especially for small datasets, since information learned during imputing values in training data set cannot be used during test set imputation.</p>
 <hr />
 </div>
 <div id="classification-algorithms" class="section level4" number="2.1.4.3">
 <h4><span class="header-section-number">2.1.4.3</span> <em>Classification algorithms</em></h4>
-<p>All models were based on classifiers from caret package <span class="citation">(Kuhn <a href="#ref-2-1-caret" role="doc-biblioref">2008</a>)</span> with AUC being the summary metric that was used to select the optimal model. Our goal was to use classification models that are as different from each other as possible, to check if model complexity and flexibility have an impact on the effectiveness of imputation strategy.
+<p>All models were based on classifiers from the caret package <span class="citation">(Kuhn <a href="#ref-2-1-caret" role="doc-biblioref">2008</a>)</span> with AUC being the summary metric that was used to select the optimal model. Our goal was to use classification models that are as different from each other as possible, to check if model complexity and flexibility have an impact on the effectiveness of imputation strategy. The most effective imputation strategy should enable models to achieve the highest performance scores.
 Selected classification algorithms are listed below.</p>
 <ol style="list-style-type: decimal">
-<li>Bagged CART - simple classification trees with bootstrap aggregation. <em>treebag</em> builds multiple models from different subsets of data. At the end constructs a final aggregated and more accurate (according to chosen metric) model.</li>
-<li>Random Forest - very flexible, robust and popular algorithm, with no assumptions about data. Multiple classification trees trained on bagged data. For this article implementation called <em>ranger</em> will be used because of its lower computing time leverage.<br />
+<li>Bagged CART - simple classification trees with bootstrap aggregation. <em>treebag</em> builds multiple models from different subsets of data. At the end constructs a final aggregated and more accurate (according to the chosen metric) model.</li>
+<li>Random Forest - very flexible, robust, and popular algorithm, with no assumptions about data. Multiple classification trees trained on bagged data. For this article implementation called <em>ranger</em> will be used because of its lower computing time leverage.<br />
 </li>
-<li>Multivariate Adaptive Regression Spline - assumes that relation between features and response can be expressed by
-combining two linear models at certain cutoff point - can be regarded as a model with flexibility between linear and nonlinear models. Implementation called <em>earth</em> will be used.</li>
-<li>k-Nearest Neighbors - assumes that similar observations are close to each other in feature space, assumes very local impact of features. <em>knn</em> is simple algorithm and will be good benchmark for others.</li>
-<li>Naive Bayes - nonlinear model with assumption that all features are independent from each other. Pros of <em>nb</em> are: fast in training, easily interpretable, has little hyperparameters to tune.</li>
+<li>Multivariate Adaptive Regression Spline - assumes that relation between features and response can be expressed by combining two linear models at a certain cutoff point - can be regarded as a model with flexibility between linear and nonlinear models. Implementation called <em>earth</em> will be used.</li>
+<li>k-Nearest Neighbors - assumes that similar observations are close to each other in feature space, assumes a very local impact of features. <em>knn</em> is a simple algorithm and will be a good benchmark for others.</li>
+<li>Naive Bayes - nonlinear model with the assumption that all features are independent of each other. Pros of <em>nb</em> are: fast in training, easily interpretable, has little hyperparameters to tune.</li>
 </ol>
-<p>While some of these algorithms have multiple hyperparameters to tune it will not be covered in this article. Tuning for different data can be time-consuming especially when datasets are large and tuning them could mitigate the effect of data imputation. Based on this factor default implementations and parameters of those algorithms will be used. It might not get the best score in metrics but it will be fair for all the imputation methods. It can be argued that impact of imputation will be even more visible without parameter tuning. All algorithms will be trained and tested on the same data but some will be encoded.</p>
+<p>While some of these algorithms have multiple hyperparameters to tune it will not be covered in this article. Tuning for different data can be time-consuming especially when datasets are large and tuning them could mitigate the effect of data imputation. Based on this factor default implementations and parameters of those algorithms will be used. It might not get the best score in metrics but it will be fair for all the imputation methods. It can be argued that the impact of imputation will be even more visible without parameter tuning. All algorithms will be trained and tested on the same data but some will be encoded.</p>
 <hr />
 </div>
 <div id="metrics" class="section level4" number="2.1.4.4">
 <h4><span class="header-section-number">2.1.4.4</span> <em>Metrics</em></h4>
-<p>Having that caveat in mind, we performed the aforementioned imputing methods for 11 datasets from the OpenML repository. Since all datasets were binary classification problems and many of them were heavily imbalanced, we used 4 metrics to evaluate our models’ performance (see Table below).</p>
+<p>We performed the aforementioned imputing methods for 11 datasets from the OpenML repository. Since all datasets were designed for binary classification problems and many of them were heavily imbalanced, we used 4 metrics to evaluate our models’ performance (see Table below).</p>
 <table>
 <caption>Classifier Evaluation Measures</caption>
 <thead>
@@ -650,14 +651,14 @@ combining two linear models at certain cutoff point - can be regarded as a model
 </tbody>
 </table>
 <p>Area under ROC curve (AUC) is used as a general performance metrics, while the rest is used to specifically evaluate model performance on imbalanced data sets.<br />
-Accuracy measures how good model is in correctly predicting both positive and negative cases. If your dataset is imbalanced, then “regular” accuracy may not be enough (cost of misclassification of minority class instance is higher than for majority class instance). That is why we use Balanced Accuracy, which is the arithmetic mean of the TPR (Sensitivity) and FPR (Specificity).<br />
+Accuracy measures how a good model is incorrectly predicting both positive and negative cases. If your dataset is imbalanced, then “regular” accuracy may not be enough (cost of misclassification of minority class instance is higher than for majority class instance). That is why we use Balanced Accuracy, which is the arithmetic mean of the TPR (Sensitivity) and FPR (Specificity).<br />
 Geometric Mean (of Sensitivity and Specificity) is a metric that measures the balance between classification performances on both the majority and minority classes.<br />
-Weighted TPR-TNR is a very promising new single-valued measure for classification. It takes into account the imbalance ratio of the dataset and assign different weights to the TPR and TNR (where P is the total number of positive cases and N is the total number of negative cases).</p>
+Weighted TPR-TNR is a very promising new single-valued measure for classification. It takes into account the imbalance ratio of the dataset and assigns different weights to the TPR and TNR (where P is the total number of positive cases and N is the total number of negative cases).</p>
 <hr />
 </div>
 <div id="experiment" class="section level4" number="2.1.4.5">
 <h4><span class="header-section-number">2.1.4.5</span> <em>Experiment</em></h4>
-<p>To sum up, in the experiment we used 5 different classification algorithms and 11 different datasets to assess performance of the imputation of missing values using the previously described measures. The experiment workflow was presented in Figure <a href="default-imputation-efficiency-comparison.html#fig:2-1-workflow">2.1</a>.</p>
+<p>To sum up, in the experiment we used 5 different classification algorithms and 11 different datasets to assess the performance of the imputation of missing values using the previously described measures. The experiment workflow was presented in Figure <a href="default-imputation-efficiency-comparison.html#fig:2-1-workflow">2.1</a>.</p>
 <div class="figure" style="text-align: center"><span id="fig:2-1-workflow"></span>
 <img src="images/2-1-workflow.png" alt="Experiment workflow" width="800" />
 <p class="caption">
@@ -665,33 +666,32 @@ FIGURE 2.1: Experiment workflow
 </p>
 </div>
 <p>The caret package in R programming was used to conduct the experiment. Classification algorithms used in this experiment were: <em>ranger</em>, <em>earth</em>, <em>treebag</em>, <em>knn</em>, <em>nb</em> existing in function train() from this package.</p>
-<p>The procedure followed to assess performance of the imputation of missing values was as follows:</p>
+<p>The procedure followed to assess the performance of the imputation of missing values was as follows:</p>
 <ol style="list-style-type: decimal">
-<li>The dataset was divided into train and test subsets with split ratio 80/20.</li>
-<li>We imputed values separately in train and test datasets. This process was repeated for all nine different imputing strategies. Time of imputation was measured independently outside this workflow.</li>
+<li>The dataset was divided into train and test subsets with a split ratio of 80/20.</li>
+<li>We imputed values separately in train and test datasets. This process was repeated for all nine different imputing strategies. The time of imputation was measured independently outside this workflow.</li>
 <li>All imputed train and test datasets were used in five classification algorithms.</li>
 <li>Numerical variables were centered and scaled to mean 0 and standard deviation 1. For <em>knn</em> datasets were also encoded with one-hot encoding.</li>
 <li>The classifiers were built using transformed train datasets.</li>
-<li>The classification results were obtained using transformed test datasets.</li>
+<li>The classification results were obtained using a transformed test datasets.</li>
 </ol>
 <p>Before dividing into training and test subsets and building classifiers, seed equal to one was set.</p>
 </div>
 </div>
 <div id="results-7" class="section level3" number="2.1.5">
 <h3><span class="header-section-number">2.1.5</span> Results</h3>
-<p>Before analyzing results, three caveats:</p>
+<p>Before analyzing the results, three caveats:</p>
 <ol style="list-style-type: decimal">
 <li>some of our datasets were quite small, with 100 or so observations</li>
 <li>some of our datasets were heavily imbalanced</li>
-<li>some imputations methods did not coverage or generally impute data due to specificity of the dataset. This methods are:
+<li>some imputations methods did not cover or generally impute data due to the specificity of the dataset. These methods are:
 <ul>
-<li><em>remove columns</em> 3/11 failed</li>
-<li><em>pmm (mice)</em> 3/11 failed</li>
-<li><em>cart (mice)</em> 3/11 failed</li>
-<li><em>vim irmi</em> 5/11 failed</li>
+<li><p><em>remove columns</em> 3/11 failed (labor, vote, and colic datasets)</p></li>
+<li><p><em>pmm (mice)</em> and <em>cart (mice)</em> 3/11 failed (cylinder-bands, credit-approval, and labor datasets)</p></li>
+<li><p><em>vim irmi</em> 5/11 failed (all of the above)</p></li>
 </ul></li>
 </ol>
-<p>For <em>removing columns</em> explanation is simple. In some datasets missing values are in every column so after removing all columns model has no
+<p>For <em>removing columns</em> explanation is simple. In some datasets, missing values are in every column so after removing all columns model has no
 data to be trained on. For other methods, it is more complicated to explain. Apart from removing columns methods they did not throw an error and tried
 to imput the data but without success.</p>
 <p>While analyzing the results we are looking at two things:</p>
@@ -699,13 +699,13 @@ to imput the data but without success.</p>
 <li>for which imputation method the metrics have the best results</li>
 <li>time of imputation</li>
 </ol>
-<p>Especially for big datasets, using sophisticated imputation methods requires many hours or even days of computing which makes them inefficient. For that reason datasets with tens of thousands of observations were truncated to 5000.</p>
+<p>Especially for big datasets, sophisticated imputation methods required many hours or even days of computing. For that reason datasets with tens of thousands of observations were truncated to 5000 (refers to the adult dataset).</p>
 <hr />
 <div id="imputation-results" class="section level4" number="2.1.5.1">
 <h4><span class="header-section-number">2.1.5.1</span> <em>Imputation results</em></h4>
 <div id="mean-metrics" class="section level5" number="2.1.5.1.1">
 <h5><span class="header-section-number">2.1.5.1.1</span> <strong><em>Mean metrics</em></strong></h5>
-<p>With this first look at the results of imputations values of performance metrics will be taken into consideration (see Table <a href="default-imputation-efficiency-comparison.html#tab:2-1-mean-metrics-tab">2.2</a>). Note that in this experiment methods that failed to impute data will be omitted so the whole picture of efficiency among imputation metrics might be distorted. This issue will be addressed in the next section.</p>
+<p>With this first look at the results of imputations performance metric scores will be taken into consideration. In Table <a href="default-imputation-efficiency-comparison.html#tab:2-1-mean-metrics-tab">2.2</a> was presented this performance metrics ordered by Weighted TPR-TNR. Note that in this experiment methods that failed to impute data will be omitted so the whole picture of efficiency among imputation metrics might be distorted. This issue will be addressed in the next section.</p>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
 <span id="tab:2-1-mean-metrics-tab">TABLE 2.2: </span>Mean metrics for each model
@@ -732,19 +732,19 @@ Weighted TPR-TNR
 <tbody>
 <tr>
 <td style="text-align:left;">
-cart (mice)
+random fill
 </td>
 <td style="text-align:right;">
-0.8581
+0.8717
 </td>
 <td style="text-align:right;">
-0.7884
+0.8037
 </td>
 <td style="text-align:right;">
-0.7702
+0.7900
 </td>
 <td style="text-align:right;">
-0.7379
+0.7687
 </td>
 </tr>
 <tr>
@@ -766,6 +766,23 @@ median and mode
 </tr>
 <tr>
 <td style="text-align:left;">
+vim hotdeck
+</td>
+<td style="text-align:right;">
+0.8534
+</td>
+<td style="text-align:right;">
+0.7839
+</td>
+<td style="text-align:right;">
+0.7701
+</td>
+<td style="text-align:right;">
+0.7486
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 missForest
 </td>
 <td style="text-align:right;">
@@ -779,6 +796,40 @@ missForest
 </td>
 <td style="text-align:right;">
 0.7453
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+vim knn
+</td>
+<td style="text-align:right;">
+0.8667
+</td>
+<td style="text-align:right;">
+0.7771
+</td>
+<td style="text-align:right;">
+0.7563
+</td>
+<td style="text-align:right;">
+0.7445
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+cart (mice)
+</td>
+<td style="text-align:right;">
+0.8581
+</td>
+<td style="text-align:right;">
+0.7884
+</td>
+<td style="text-align:right;">
+0.7702
+</td>
+<td style="text-align:right;">
+0.7379
 </td>
 </tr>
 <tr>
@@ -800,19 +851,19 @@ pmm (mice)
 </tr>
 <tr>
 <td style="text-align:left;">
-random fill
+vim irmi
 </td>
 <td style="text-align:right;">
-0.8717
+0.8220
 </td>
 <td style="text-align:right;">
-0.8037
+0.7474
 </td>
 <td style="text-align:right;">
-0.7900
+0.7215
 </td>
 <td style="text-align:right;">
-0.7687
+0.6812
 </td>
 </tr>
 <tr>
@@ -832,64 +883,13 @@ remove columns
 0.5523
 </td>
 </tr>
-<tr>
-<td style="text-align:left;">
-vim hotdeck
-</td>
-<td style="text-align:right;">
-0.8534
-</td>
-<td style="text-align:right;">
-0.7839
-</td>
-<td style="text-align:right;">
-0.7701
-</td>
-<td style="text-align:right;">
-0.7486
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-vim irmi
-</td>
-<td style="text-align:right;">
-0.8220
-</td>
-<td style="text-align:right;">
-0.7474
-</td>
-<td style="text-align:right;">
-0.7215
-</td>
-<td style="text-align:right;">
-0.6812
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-vim knn
-</td>
-<td style="text-align:right;">
-0.8667
-</td>
-<td style="text-align:right;">
-0.7771
-</td>
-<td style="text-align:right;">
-0.7563
-</td>
-<td style="text-align:right;">
-0.7445
-</td>
-</tr>
 </tbody>
 </table>
-<p>As seen above <em>random fill</em> is the best imputation method in all metrics. Second in place in all metrics was <em>median and mode</em>. <em>cart (mice)</em> was third 2 times and <em>vim knn</em> with <em>vim hotdeck</em> were third each one time. Simple imputation methods were superior for these datasets. The worst idea seems to be removing columns and using irmi.</p>
+<p>As seen above <em>random fill</em> is the best imputation method in all metrics. Second in place in all metrics was <em>median and mode</em>. <em>cart (mice)</em> was third 2 times (GM and BACC) and <em>vim knn</em> with <em>vim hotdeck</em> were third each one time. Simple imputation methods were superior for these datasets. The worst idea seems to be removing columns and using irmi.</p>
 </div>
 <div id="ranking-of-results" class="section level5" number="2.1.5.1.2">
 <h5><span class="header-section-number">2.1.5.1.2</span> <strong><em>Ranking of results</em></strong></h5>
-<p>Each model has its specific features and might be thriving after applying different imputation methods. Seeing which method was the best (and the worst) for each model should give a more wide perspective. For creating ranking only Weighted TPR-TNR will be taken into consideration. This is because this metric takes into account the imbalance ratio of the datasets and thanks to it equal evaluation for all datasets will be ensured. Rank feature here is average of ranks from all datasets so if some imputation was second in the metric it would be given rank 2. If two imputations had the same values in the metric they would both have the same rank. If the imputation method failed to impute it was assigned last rank. Top 3 best imputations was presented in the Table <a href="default-imputation-efficiency-comparison.html#tab:2-1-ranking-best-tab">2.3</a>.</p>
+<p>Each model has its specific features and might be thriving after applying different imputation methods. Seeing which method was the best (and the worst) for each model should give a more wide perspective. For creating ranking only Weighted TPR-TNR will be taken into consideration. This is because this metric takes into account the imbalance ratio of the datasets and thanks to its equal evaluation for all datasets will be ensured. Rank feature here is average of ranks from all datasets so if some imputation was second in the metric it would be given rank 2. If two imputations had the same values in the metric they would both have the same rank. If the imputation method failed to impute it was assigned the last rank. Top 3 best imputations was presented in Table <a href="default-imputation-efficiency-comparison.html#tab:2-1-ranking-best-tab">2.3</a>.</p>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
 <span id="tab:2-1-ranking-best-tab">TABLE 2.3: </span>Top 3 best imputations for each model
@@ -984,7 +984,7 @@ missForest
 </tbody>
 </table>
 <p>Random fill is the best in 3 out of 5 models. For ranger and knn the best are VIM knn and missForest respectively. In our top 3 ranking also appears median and mode and two mice methods - pmm and cart.</p>
-<p>Now let’s see the top 3 worst imputations in the Table <a href="default-imputation-efficiency-comparison.html#tab:2-1-ranking-worst-tab">2.4</a>.</p>
+<p>Now let’s see the top 3 worst imputations in Table <a href="default-imputation-efficiency-comparison.html#tab:2-1-ranking-worst-tab">2.4</a>.</p>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
 <span id="tab:2-1-ranking-worst-tab">TABLE 2.4: </span>Top 3 worst imputations for each model
@@ -1078,32 +1078,32 @@ remove columns
 </tr>
 </tbody>
 </table>
-<p>Removing columns is the worst choice when imputing data, which is not surprising. It removes vital information from data resulting in significantly worse performance. Second from the end is almost for all models vim irmi.</p>
-<p>Visualization in the Figure <a href="default-imputation-efficiency-comparison.html#fig:2-1-ranking">2.2</a> shows the mean rank of imputation methods for each model. Average was measured on 11 datasets. The more mean rank of the method is closer to 1 the better. Some trends and stability of methods are visible.</p>
+<p>Removing columns is the worst choice when imputing data, which is not surprising. It removes vital information from data resulting in significantly worse performance. Second, from the end is almost for all models vim irmi.</p>
+<p>Visualization in Figure <a href="default-imputation-efficiency-comparison.html#fig:2-1-ranking">2.2</a> shows the mean rank of imputation methods for each model. Ranks are a great way to visualize how effective the imputation really is. They are not sensitive to the dataset, the best rank will always be one, unlike some performance measure that might be significantly different between datasets. The average was measured on 11 datasets. The higher the rank, the better. Some trends and stability of methods are visible.</p>
 <div class="figure" style="text-align: center"><span id="fig:2-1-ranking"></span>
 <img src="images/2-1-ranks.png" alt="Average rank plot" width="800" />
 <p class="caption">
 FIGURE 2.2: Average rank plot
 </p>
 </div>
-<p><em>Random fill</em> is the best method. It was the best for three models and second-best for one model. <em>Median and mode</em> and <em>missForest</em> were also really good for all models. The worst without a doubt is <em>removing columns</em>. Some methods are really good for certain models but vary bad for others (for example <em>pmm (mice)</em>) in contrary to <em>random fill</em> and <em>median and mode</em> which were equally good for all models.</p>
+<p><em>Random fill</em> is the best method. It was the best for three models and the second-best for one model. <em>Median and mode</em> and <em>missForest</em> were also really good for all models. The worst without a doubt is <em>removing columns</em>. Some methods are really good for certain models but very bad for others (for example <em>pmm (mice)</em>) in contrary to <em>random fill</em> and <em>median and mode</em> which were equally good for all models but not the best for knn and ranger.</p>
 </div>
 <div id="similarity-of-imputations" class="section level5" number="2.1.5.1.3">
 <h5><span class="header-section-number">2.1.5.1.3</span> <strong><em>Similarity of imputations</em></strong></h5>
-<p>To see how similar are imputations to each other we used biplot. Biplot is using PCA to reduce the dimensionality of the data in our case of results. If imputation names are close to each other, it means that they produce similar results. If arrows are close to each other metric values are correlated. Data came from our imputation results for all models without NA values. Then for each imputation data was averaged and processed by PCA (see Figure <a href="default-imputation-efficiency-comparison.html#fig:2-1-pca">2.3</a>).</p>
+<p>To see how similar are imputations to each other we used biplot. Biplot is using PCA to reduce the dimensionality of the data in our case of results. If imputation names are close to each other, it means that they produce similar results. The closer the arrows are to each other the more metrics values are correlated. Data came from our imputation results for all models without NA values. Then for each imputation data was averaged and processed by PCA (see Figure <a href="default-imputation-efficiency-comparison.html#fig:2-1-pca">2.3</a>).</p>
 <div class="figure" style="text-align: center"><span id="fig:2-1-pca"></span>
 <img src="images/2-1-PCA.png" alt="Rank biplot" width="800" />
 <p class="caption">
 FIGURE 2.3: Rank biplot
 </p>
 </div>
-<p>Some imputation techniques seem to be distant from others. Mainly VIM’s irmi, remove columns, pmm and knn. Judging by the red arrows (loadings plot), there are similarities in ranks among treebag and earth models. Knn and ranger are not very correlated with ranks achieved by them.</p>
+<p>Some imputation techniques seem to be distant from others. Mainly VIM’s irmi, remove columns, pmm, and knn. Judging by the red arrows (loadings plot), there are similarities in ranks among treebag and earth models. Knn and ranger are not very correlated with ranks achieved by them.</p>
 <hr />
 </div>
 </div>
 <div id="imputation-time" class="section level4" number="2.1.5.2">
 <h4><span class="header-section-number">2.1.5.2</span> <em>Imputation time</em></h4>
-<p>In imputation not only results matter. While having small dataset imputation time is not something worth considering. But when having tens or hundreds of thousands of observations some more complex imputations might take really long time. In this case maximum samples in data is 5000 but differences are already visible. This experiment was repeated 10 times to ensure higher reliability of data.</p>
+<p>In imputation not only results matter. While having small dataset imputation time is not something worth considering. But when having tens or hundreds of thousands of observations some more complex imputations might take a really long time. In this case, maximum samples in data are 5000 but differences are already visible. This experiment was repeated 10 times to ensure higher reliability of data.</p>
 <div id="mean-time" class="section level5" number="2.1.5.2.1">
 <h5><span class="header-section-number">2.1.5.2.1</span> <strong><em>Mean time</em></strong></h5>
 <table class="table" style="margin-left: auto; margin-right: auto;">
@@ -1195,7 +1195,7 @@ cart (mice)
 </tr>
 </tbody>
 </table>
-<p>As one might predict, imputation with mean and mode removing columns or filling NA’s with random value are the fastest methods (see Table <a href="default-imputation-efficiency-comparison.html#tab:2-1-time-tab">2.5</a>). Imputations from VIM package also have small computation time. Imputing with missForest package or using predictive mean matching in mice package is more than 1000 times slower, whilst using cart instead of pmm in mice package additionally increases computation time more than threefold.</p>
+<p>As one might predict, imputation with mean and mode removing columns or filling NA’s with random value are the fastest methods (see Table <a href="default-imputation-efficiency-comparison.html#tab:2-1-time-tab">2.5</a>). Imputations from the VIM package also have small computation time. Imputing with missForest package or using predictive mean matching in mice package is more than 1000 times slower, whilst using cart instead of pmm in mice package additionally increases computation time more than threefold.</p>
 </div>
 <div id="distribution-of-time" class="section level5" number="2.1.5.2.2">
 <h5><span class="header-section-number">2.1.5.2.2</span> <strong><em>Distribution of time</em></strong></h5>
@@ -1205,7 +1205,7 @@ cart (mice)
 FIGURE 2.4: Time distribution
 </p>
 </div>
-<p>Imputation time is shown in the shape of boxplots (see Figure <a href="default-imputation-efficiency-comparison.html#fig:2-1-time">2.4</a>). Clear distinction between mice, missForest and VIM’ irmi packages functions which are significantly slower than other methods. On contrary here imputation time was taken into consideration even when NA’s were produced.</p>
+<p>Imputation time is shown in the shape of boxplots (see Figure <a href="default-imputation-efficiency-comparison.html#fig:2-1-time">2.4</a>). A clear distinction between mice, missForest, and VIM’ irmi packages functions which are significantly slower than other methods. On contrary here imputation time was taken into consideration even when NA’s were produced.</p>
 </div>
 <div id="influence-of-amount-of-na-on-time" class="section level5" number="2.1.5.2.3">
 <h5><span class="header-section-number">2.1.5.2.3</span> <strong><em>Influence of amount of NA on time</em></strong></h5>
@@ -1215,19 +1215,22 @@ FIGURE 2.4: Time distribution
 FIGURE 2.5: Number of NA and imputation time
 </p>
 </div>
-<p>The time needed to process NA’s is very volatile (see Figure <a href="default-imputation-efficiency-comparison.html#fig:2-1-influence-NA">2.5</a>). For simple imputation methods and VIM’s hotdeck time needed compared to the rest of the imputations seems to be constant. This plot was achieved by getting information from datasets and imputing ten times. Then the median was taken from times of dataset imputation. Fluctuations might be effect of different data types, number of factors, continuous variables distribution.</p>
+<p>The time needed to process NA’s is very volatile (see Figure <a href="default-imputation-efficiency-comparison.html#fig:2-1-influence-NA">2.5</a>). For simple imputation methods and VIM’s hotdeck time needed compared to the rest of the imputations seems to be constant. This plot was achieved by getting information from datasets and imputing ten times. Then the median was taken from times of dataset imputation. Fluctuations might be the effect of different data types, a number of factors, continuous variables distribution.</p>
 </div>
 </div>
 </div>
 <div id="summary-and-conclusions-5" class="section level3" number="2.1.6">
 <h3><span class="header-section-number">2.1.6</span> Summary and conclusions</h3>
-<p>Our experiments have unexpected results - it turns out that using naive strategy of imputing with random values resulted in models with the best performance. The reason of poor performance of more complex imputation methods might be the fact that we used default values of hyperparameters and some tuning may be required to show full potential of these methods. Some datasets were simple and small therefore potential imputation leverage could be insignificant. What we did prove was that simple imputation methods might still be valuable despite their apparent flaws. What was significant was the big overhead that simple imputations had in terms of results achieved in time. While having a big dataset with a limited number of missing values they might be the best solution because some methods use whole data to train it’s missing value imputation.<br />
-We might not ignore huge computational overhead that is the result of using complex computing methods. The point of this paper was to test those methods for inexperienced users and find the most valuable one for them. As for now considering both performance and time the best are <em>random fill</em>, <em>median and mode</em>. They achieve more than satisfying results, are reliable and work for every dataset. Judging by the results it is better to use simple imputation methods than more complex methods with default parameters from various packages.</p>
+<p>Our experiments have unexpected results - it turns out that using a naive strategy of imputing with random values resulted in models with the best performance. The reason for the poor performance of more complex imputation methods might be the fact that we used default values of hyperparameters and some tuning may be required to show the full potential of these methods. Some datasets were simple and small therefore potential imputation leverage could be insignificant. What we did prove was that simple imputation methods might still be valuable despite their apparent flaws. What was significant was the big overhead that simple imputations had in terms of results achieved in time. While having a big dataset with a limited number of missing values they might be the best solution because some methods use whole data to train it’s missing value imputation.<br />
+We might not ignore huge computational overhead that is the result of using complex computing methods. The point of this paper was to test those methods for inexperienced users and find the most valuable one for them. As for now considering both performance and time the best for most models are <em>random fill</em>, <em>median and mode</em>. They achieve more than satisfying results, are reliable and work for every dataset. Judging by the results it is better to use simple imputation methods than more complex methods with default parameters from various packages.</p>
 
 </div>
 </div>
 <h3>References</h3>
 <div id="refs" class="references">
+<div id="ref-2-1-OpenML100">
+<p>Bischl, Bernd, Giuseppe Casalicchio, Matthias Feurer, Frank Hutter, Michel Lang, Rafael Mantovani, Jan van Rijn, and Joaquin Vanschoren. 2017. “OpenML Benchmarking Suites and the Openml100,” August.</p>
+</div>
 <div id="ref-2-1-weighted-tpr-tnr">
 <p>Jadhav, Anil. 2020. “A Novel Weighted Tpr-Tnr Measure to Assess Performance of the Classifiers.” <em>Expert Systems with Applications</em> 152 (March): 113391. <a href="https://doi.org/10.1016/j.eswa.2020.113391">https://doi.org/10.1016/j.eswa.2020.113391</a>.</p>
 </div>
