@@ -3,19 +3,19 @@
 *Authors: Mateusz Bakala, Michal Pastuszka, Karol Pysiak (Warsaw University of Technology)*
 
 ### Abstract
-In this section we compare efficiency of explainable and black-box AI models in detection of the Higgs boson. Afterwards, we explore possible improvements to explainable models which might boost their accuracy to be on par with black-boxes, of which the most notable is R package called `rSAFE`. Lastly, we conclude that (((conclusion depends on results))).
+In this section we compare efficiency of explainable and black-box AI models in detection of the Higgs boson. Afterwards, we explore possible improvements to explainable models which might boost their accuracy to be on par with black-boxes, of which the most notable is R package called `rSAFE`. Lastly, we conclude that some improvement is possible, but limited without obscuring variables used to explain model.
 
 ### Introduction and Motivation
 ‘We fear that, which we do not understand’. This principle has often been used to portray artificial intelligence in popular culture. The notion that it is something beyond human comprehension became so common, that it started to affect the way we perceive computer algorithms. Because of that, it comes as no surprise that people become wary, hearing that the decisions which affect them directly were made by an AI.
 
 Machine Learning models, regardless of the algorithm used, are often treated as a black box that takes some data as an input and returns a prediction based on said data. This approach is most often seen from people who are unfamiliar with the methods used. In many fields, where the only concern is achieving results that are as accurate as possible, this is not a concern. There are however situations, where the risk of unpredictable or unjustified results is unacceptable. This includes uses in medical and judicial systems, where an incorrect decision may have severe consequences. Artificial intelligence could find plenty of uses in those areas, but it would require creating models, which make decisions based on a transparent set of rules. Those include algorithms such as decision trees and linear regression.
 
-That raises another problem. Such models often underperform in comparison to more advanced algorithms, notably artificial neural networks and ensemble based solutions, which are more capable at detecting nonlinearities and interactions in the data. Being able to achieve results comparable with said models, while retaining explainability would allow to increase the role of machine learning in fields where transparency is required. Furthermore, it would provide tools suitable for scientific analysis of relations between complex phenomena.
+That raises another problem. Such models often underperform in comparison to more advanced algorithms, notably artificial neural networks and ensemble based solutions, which are more capable at detecting nonlinearities and interactions in the data. Being able to achieve results comparable with said models, while retaining explainability would allow to increase the role of machine learning in fields where transparency is required. Furthermore, it would provide tools suitable for scientific analysis of relations between complex phenomena. Because of that, instead of using one of the popular medical datasets, we decided to test the viability of our approach on a set from a different field of science. The methods used will be tested on the Higgs dataset described later in the article.  
 
-The problem we study tackles methods of improving the predictions of simple models while retaining their transparency. In the rest of the paper we will describe methods of transforming the data to increase the quality of predictions. Most notably we will focus on a tool named rSAFE, which allows us to extract nonlinearities in the data, based on predictions of a so called ‘surrogate’ model.
+The problem we study tackles methods of improving the predictions of simple models while retaining their transparency. In the rest of the paper we will describe methods of transforming the data to increase the quality of predictions. Most notably we will focus on a tool named rSAFE [@gosiewska2019safe], which allows us to extract nonlinearities in the data, based on predictions of a so called ‘surrogate’ model. We will also try to improve predictions based on our knowledge about the data.
 
 ### Related Work
-https://arxiv.org/pdf/1402.4735.pdf -- Searching for Exotic Particles in High-Energy Physics with Deep Learning
+Our work is based on earlier one focused on feasibility of usage of neural networks in this very problem [@Baldi2014]. However, it only concentrates on this question, testing various sizes and architectures of neural networks, but not in the context of interpretability of machine learning models. Thus we built our analysis on what was already achieved.
 
 ### Methodology
 
@@ -52,15 +52,52 @@ For easily comparable results we will use exactly the same training and testing 
 
 ### Results
 
-(((initial scores)))
+Our original scores were as follows:
+
+| model   | Accuracy  | AUC       | MMCE      |
+|---------|-----------|-----------|-----------|
+| ranger  | 0.7220879 | 0.8004664 | 0.2779121 |
+| rpart   | 0.6531224 | 0.6703391 | 0.3468776 |
+| xgboost | 0.6781099 | 0.7387571 | 0.3218901 |
+| logreg  | 0.6410977 | 0.6823442 | 0.3589023 |
+
+We could not illustrate scores with all three measures at once, so we decided to use AUC in our barplots. It makes no difference, though, as every measures behaves similarly.
+
+![](images/3-3-score1.png)
 
 We noticed several patterns in data and modified features accordingly.
 
 Firstly, four jets are indistinguishable from each other, or at least we weren’t told they are. Thus our models should work equally well regardless of how we permute the order of jets in our data. However, this means that the coefficients should be equal, and that’s a serious limitation in our search space. Instead, we propose that each data point should be transformed to order jets by their $p_T$, transverse momentum.
 
-Another thing we noticed relates to jets’ b-tags. One thing is that they are categorical values with three levels, where $0$ means background process unrelated to bottom quarks and is usually written down as $-1$, highest value means signal process, described as $1$, and that value in between is probably something like ‘unknown’, especially given the fact that it is depicted by $0$. Another important remark is that at most two of jets for given collision have b-tag value other than ‘background process’, sometimes even none of them. With these points in mind, our proposition is to replace four b-tags columns with a set of ten columns, five per b-tag. Eight of them, four for each b-tag, would be logical vectors, determining whether given b-tag is present on given jet, denoted as `jetXb-tagY`, where `X` is between $1$ and $4$ and `Y` is either $1$ or $2$. Remaining two would be named `b-tagYdet`, with the same `Y` definition and also logical vector, where `TRUE` means that b-tag value is either ‘background process’ or ‘signal process’, while `FALSE` means, well, the opposite and is used to describe $1$, ‘unknown’ value. Note that in this proposition no b-tag can be safely marked by setting `FALSE` for all `jetXb-tagY` columns. Also, to avoid ambiguity, we propose that b-tags should be ordered by $p_T$ of their respective jets, that is, if there are two b-tags, then `jetXb-tag1` should be `TRUE` for that one jet marked with b-tag whose $p_T$ is higher of both.
+Another thing we noticed relates to jets’ b-tags. One thing is that they are categorical values with three levels, where $0$ means background process unrelated to bottom quarks and is usually written down as $-1$, highest value means signal process, described as $1$, and that value in between is probably something like ‘unknown’, especially given the fact that it is depicted by $0$. Another important remark is that at most two of jets for given collision have b-tag value other than ‘background process’, sometimes even none of them. With these points in mind, our proposition is to replace four b-tags columns with a set of six columns. Four of them would be logical vectors, determining whether b-tag is present on given jet, denoted as `jetXb.tag`, where `X` is between $1$ and $4$. Remaining two would be named `b.tagYdet`, where `Y` is either $1$ or $2$ and also logical vector, where `TRUE` means that b-tag value is either ‘background process’ or ‘signal process’, while `FALSE` means, well, the opposite and is used to describe $0$, ‘unknown’ value. Note that in this proposition no b-tag can be safely marked by setting `FALSE` for all `jetXb.tag` columns. To avoid ambiguity, we propose that b-tags should be ordered by $p_T$ of their respective jets, which would be achieved by default, as jets would be already ordered at this point.
 
+| model   | Accuracy  | AUC       | MMCE      |
+|---------|-----------|-----------|-----------|
+| ranger  | 0.7185489 | 0.7947530 | 0.2814511 |
+| rpart   | 0.6422300 | 0.6516345 | 0.3577700 |
+| xgboost | 0.6740201 | 0.7351031 | 0.3259799 |
+| logreg  | 0.6379972 | 0.6760226 | 0.3620028 |
+
+![](images/3-3-score2.png)
+
+Applied transformations did not produce favourable results. Actually, every model performed slightly worse. Because of that, we decided to apply an automated method of transforming data using the `rSafe` package. As the ranger model performed significantly better than the others, we used it as a surrogate model to create new transformations. After that, we tested our models using the complete resulting data set, including both original variables and their transformations. The results are presented in the table.
+
+| model  | Accuracy  | AUC       | MMCE      |
+|--------|-----------|-----------|-----------|
+| rpart  | 0.6488898 | 0.6705438 | 0.3511102 |
+| logreg | 0.6805985 | 0.7481106 | 0.3194015 |
+
+Although the scores of rpart dropped, we achieved a significant improvement in the performance of logistic  regression. It was still below the level of the ranger algorithm, but it managed to surpass xgboost. Increasing the number of variables lead, hovewer, to a decrease in interpretability. `rSAFE` includes a function, that selects the best subset of variables from it's resulting dataset. We applied it to our data and trained the models once again.
+
+| model  | Accuracy  | AUC       | MMCE      |
+|--------|-----------|-----------|-----------|
+| rpart  | 0.6366817 | 0.6593928 | 0.3633183 |
+| logreg | 0.6638212 | 0.7279496 | 0.3361788 |
+
+![](images/3-3-score3.png)
+
+As it turns out, removing variables lead to a decrease in scores. Logistic regression still performed better than on original data, but it no longer surpassed any of the blackbox models.
 
 ### Summary and conclusions
 
-
+Our study shows that popular explainable machine learning models are significantly behind their black-box counterparts on prediction accuracy. Unfortunately, the latter are not of much use for physicians. We suppose that achieving a score comparable to the best black-box models would involve generating a lot of artificial variables. However, it would have an unwelcome side effect of obscuring the data and hampering the explainability of the model. Thus, expert domain knowledge should be deemed necessary -- either this, or more effective XAI has to be developed.
