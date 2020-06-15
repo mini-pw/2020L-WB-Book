@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-06-14" />
+<meta name="date" content="2020-06-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -392,7 +392,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Selection of the best white-box model and final comparison with the black-box model.</p></li>
 </ol>
 <p>During the step 4. in some cases we decide to take a step back and use other similar transformation or other order of transformations if we suspect that it can yield a better result.</p>
-<p>We use <code>R</code> programming language and popular machine learning project management packages – <code>mlr</code> <span class="citation">(Bischl et al. <a href="#ref-mlr" role="doc-biblioref">2016</a><a href="#ref-mlr" role="doc-biblioref">c</a>)</span> and <code>drake</code> <span class="citation">(Landau <a href="#ref-drake" role="doc-biblioref">2018</a>)</span>.</p>
+<p>We use <code>R</code> programming language and popular machine learning project management packages – <code>mlr</code> <span class="citation">(Bischl, Lang, et al. <a href="#ref-mlr" role="doc-biblioref">2016</a><a href="#ref-mlr" role="doc-biblioref">c</a>)</span> and <code>drake</code> <span class="citation">(Landau <a href="#ref-drake" role="doc-biblioref">2018</a>)</span>.</p>
 <div id="data-exploration" class="section level4" number="3.2.4.1">
 <h4><span class="header-section-number">3.2.4.1</span> Data exploration</h4>
 <p>At this stage, we take a closer look at what the data looks like and we are analyzing their distributions, gaps, correlations and simple relationships.</p>
@@ -417,7 +417,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This is a key part of our work. In the iterative cycle we use different methods to improve the quality of the white-box models. After applying each of these methods, we check whether it has improved our score and possibly analyze the model, using statistical methods (residuals analysis) and explanatory machine learning (<code>DALEX</code> package <span class="citation">(Biecek <a href="#ref-DALEX" role="doc-biblioref">2018</a>)</span>), to draw indications of what should be done next.</p>
 <p>We are trying the following methods:</p>
 <ul>
-<li><strong>Tuning hyperparameters of models</strong> – Default hyperparameters for models are generally good, but in specific cases using specific hyperparameters may yield in better results, so we use model-based optimization for tuning those parameters <span class="citation">(Bischl et al. <a href="#ref-mlrmbo" role="doc-biblioref">2017</a>)</span>.</li>
+<li><strong>Tuning hyperparameters of models</strong> – Default hyperparameters for models are generally good, but in specific cases using specific hyperparameters may yield in better results, so we use model-based optimization for tuning those parameters <span class="citation">(Bischl, Richter, et al. <a href="#ref-mlrmbo" role="doc-biblioref">2017</a>)</span>.</li>
 <li><strong>Reducing outliers</strong> – For each variable a two-value vector that indicates the thresholds for which the values are considered as outliers is generated. Then all outliers are changed to the nearest value of obtained earlier vector.</li>
 <li><strong>Logarithmic and exponential transformations of individual variables</strong> – So that linear relationships can be better captured and to reduce the influence of outliers, we transform variables using exponential and polynomial functions.</li>
 <li><strong>Discretization of continuous features</strong> – Some variables do not have a linear effect on the response variable, even if they are transformed by simple functions like exponential function, sometimes there are clear thresholds – so we can replace the variable with indexes of individual segments. The <code>SAFE</code> algorithm helps with this <span class="citation">(Gosiewska et al. <a href="#ref-gosiewska2019safe" role="doc-biblioref">2019</a>)</span>.</li>
@@ -587,8 +587,7 @@ A model with thousands of variables is not well interpretable, so we need to sel
 <p class="caption">Figure 2: The graph shows the improvement of the AUC compared to the difference between the original black-box model and the white-box model. <span class="math inline">\(0\)</span> represents the result of the <code>rpart</code> model, <span class="math inline">\(100\)</span> represents the result of the <code>ranger</code> model.</p>
 </div>
 <p>Although we achieved the main goal and created the interpretable model that is better than the black-box the way to achieve that is not satisfying. The most improvement was gained from just hyperparameters tuning of decision tree and oversampling minority class, but the addition of new synthetical data to the minority class is not a questionable method of improving the model. The thing we really trusted that can make improvement was Halstead and McCabe’s measures but any of them do not give any improvement in the model. So we can conclude that the hypotheses of both of them are wrong. Probably the features proposed in original datasets are not sufficient in this problem because there is hardly any improvement with the manipulation of these features. The most informative measure is just a number of code lines. Another possibility is that the code scrapers to create data had some mistakes and that concludes the low quality of data.</p>
-<p>We visualize the best model based on <code>SMOTE</code>. Since we use the decision tree and in the last model do not create any new measures so it is an interpretable model. It is obvious how it works and why it predicts results because we can show the decision points. Unfortunately, this model is not very trivial. Its depth is usually around 6 nodes and in total it has around 50 nodes. That is why we do not include it in the article - it will not be readable. The created plot, as well as the code, can be found on the GitHub repository.
-<!-- add github link? --></p>
+<p>We visualize the best model based on <code>SMOTE</code>. Since we use the decision tree and in the last model do not create any new measures so it is an interpretable model. It is obvious how it works and why it predicts results because we can show the decision points. Unfortunately, this model is not very trivial. Its depth is usually around 6 nodes and in total it has around 50 nodes. That is why we do not include it in the article - it will not be readable. The created plot, as well as the code, can be found on the GitHub repository <span class="citation">(Bogucki, Makowski, and Rafacz <a href="#ref-WBTMDR2020" role="doc-biblioref">2020</a>)</span>.</p>
 
 </div>
 </div>
@@ -602,6 +601,9 @@ A model with thousands of variables is not well interpretable, so we need to sel
 </div>
 <div id="ref-mlrmbo">
 <p>Bischl, Bernd, Jakob Richter, Jakob Bossek, Daniel Horn, Janek Thomas, and Michel Lang. 2017. “MlrMBO: A Modular Framework for Model-Based Optimization of Expensive Black-Box Functions.” <em>arXiv Preprint arXiv:1703.03373</em>.</p>
+</div>
+<div id="ref-WBTMDR2020">
+<p>Bogucki, Wojciech, Tomasz Makowski, and Dominik Rafacz. 2020. “Feature-Engineering.” <em>GitHub Repository</em>. <a href="https://github.com/DominikRafacz/feature-engineering">https://github.com/DominikRafacz/feature-engineering</a>; GitHub.</p>
 </div>
 <div id="ref-fenton97">
 <p>Fenton, N. E., and S. L. Pfleeger. 1997. <em>Software Metrics: A Rigorous &amp; Practical Approach</em>. International Thompson Press.</p>
