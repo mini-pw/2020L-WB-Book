@@ -1,3 +1,6 @@
 # Reproducibility of scientific papers {#reproducibility}
 
-The analysis of reproducibility of tools-related scientific papers.
+This chapter contains a wide range of studies on the reproducibility of scientific articles.
+Each subsection is a self-contained paper answering a different research problem.
+
+Please, note that each subsection contains a work of different authors and therefore subsections may differ at some points, for example, definitions of reproducibility used in particular studies. 
