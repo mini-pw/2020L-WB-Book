@@ -3,7 +3,7 @@
 *Authors: Ngoc Anh Nguyen, Piotr Piątyszek, Marcin Łukaszyk (Warsaw University of Technology)*
 
 ### Abstract
-
+Researchers creating packages can keep them updated or abandon them. Our motivation was to examine how these two approaches impact the reproducibility of the scientific paper. Using ten different auxiliary variables like GitHub commits or stars count we tested which correlates with the most widespread classes of reproducibility issues we have found. As a result, we propose two guidelines for people designing packages.
 
 ### Introduction and Motivation
 The key quality in measuring the outcome of researches and experiments is whether results in a paper can be attained by a different research team, using the same methods. Results presented in scientific articles may sometimes seem revolutionary, but there is very little use if it was just a single case impossible to reproduce.  The closeness of agreement among repeated measurements of a variable made under the same operating conditions by different people, or over a period of time is what researches must bear in mind. @Peng1226 leading author of the commentary and an advocate for making research reproducible by others, insists reproducibility should be a minimal standard.
@@ -16,15 +16,110 @@ There are papers about using version control systems to provide reproducible res
 
 The main goal of our work is to measure the impact of the active development of packages on the reproducibility of scientific papers. Multiple authors [@rosenberg2020the; @kitzes2017practice] suggest using the version control system as a key feature in creating reproducible research. The second paper also provides evidence, that this is widely known. Git and GitHub were used in over 80% of cases. However, there are two kinds of using a version control system. An author can push software into the repository, to make it easily accessible and does not update it anymore. The second option is to keep the repository up-to-date and resolve users' issues. We have not found any research on how these two approaches impact reproducibility.
 
-### Related Work
-
-
 ### Methodology
+ 
+**Articles**  
+In our analysis, of reproducibility, we focused on articles introducing packages, that are actively developed on GitHub. Then we measure the reproducibility of an article using two versions of the package: current and the first after publication date to get the answer on the question, what if a package was never updated. In some cases, when it seems appropriate we used the last before publication. We selected 18 articles that were posted on R journal, that are on cran, are developed on GitHub, have code included to reproducibility, and doesn’t have too much impact on R environment.
 
+**Measures of reproducibility**  
+We measured how many examples aren’t reproducible using these two versions. We categorized articles into 3 types of reproducibility:  
+**1.** The article is reproducible, minor differences can happen (e.g. different formating).  
+**2.** There are differences in function names, other packages that the article uses don’t work but at least half of it works.  
+**3.** Everything that doesn’t match 1 or 2. It means that the article is not reproducible.  
+
+We have counted the three most common issues in each article:  
+**1. Names** - function or variable name has to be changed  
+**2. API** - way of using a function or their arguments has changed  
+**3. Result** - output differs  
+Using these we can compare specific issues in the current and old versions of the package.
+
+**Auxiliary variables**  
+To measure how a package is developed, we used several auxiliary variables from GitHub and CRAN collected on 2019-05-19:
+
+- number of stars
+- number of subscribers 
+- number of contributors
+- number of issues
+- number of open issues
+- added and deleted lines since the publication date
+- commits number since the publication date
+- using Continuous Integration
+- versions on CRAN since the publication date
 
 ### Results
+**Tested packages**  
+```{r , echo=FALSE, warning = FALSE, message = FALSE}
+library(kableExtra)
+library(dplyr)
+read.csv("./1-7-data/repro.csv") %>%
+  arrange(old.reproducibility, new.reproducibility) %>%
+  knitr::kable(caption = "Tested packages with measured reproducibility") %>%
+  kable_styling(font_size=10) %>%
+  scroll_box(width = "100%", box_css = "border: 0px;")
+```
 
+**Reproducibility scale**  
+As shown in table below, most packages have same reproducibility scale in each version. Some are less reproducible in current version than in the old.
+
+```{r, echo=FALSE, warning = FALSE, message = FALSE, fig.width=4, fig.height=4, fig.align="center"}
+library(kableExtra)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+read.csv("./1-7-data/repro.csv") %>%
+  mutate(old.reproducibility=as.character(old.reproducibility), new.reproducibility=as.character(new.reproducibility)) %>%
+  group_by(old.reproducibility, new.reproducibility) %>%
+  tally %>%
+  ungroup %>%
+  complete(old.reproducibility, new.reproducibility, fill=list(n=0)) %>%
+  ggplot(aes(x=old.reproducibility, y=new.reproducibility)) +
+    geom_point(aes(color=n, size=n)) +
+    geom_text(aes(size=(n+1)/2, label=n), color="black") +
+    scale_size_area(max_size=20) +
+    theme_minimal() +
+    theme(legend.position="none",
+          text = element_text(size=13),
+          axis.text.x=element_text(size=16),
+          axis.text.y=element_text(size=16),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank()) +
+    scale_color_gradient(high="#2f66a6", low="#c3dbe9") +
+    geom_tile(size=1, fill=NA, color="black") +
+    xlab("Reproducibility of the old version") +
+    ylab("Reproducibility of the current version")
+```
+
+**Reproducibility issues count**  
+
+```{r, echo=FALSE, warning = FALSE, message = FALSE, fig.align="center"}
+library(ggplot2)
+library(dplyr)
+read.csv("./1-7-data/issuescompare.csv") %>%
+  ggplot(aes(x=name, y=n, fill=as.factor(value))) +
+    geom_col() +
+    scale_fill_discrete("Issues count\nin current version\ncompared to old\nversion", labels = c("less", "same", "more")) +
+    xlab("Issue type") +
+    ylab("Issues count") +
+    scale_y_continuous(n.breaks=10)
+```
+
+We compared if current versions of packages have more or less reproducibility issues of each type than the old ones. Only for few articles these counts differ, but this data suggests negative impact of active development on reproducibility.
+
+**Correlations with auxiliary variables**  
+```{r, echo=FALSE, warning = FALSE, message = FALSE}
+library(corrplot)
+cordf <- read.csv("./1-7-data/corr.csv")
+testdf <- cor.mtest(cordf, method="pearson")
+corrplot(cor(cordf[,1:5], cordf[,-(1:5)]), p.mat=testdf$p[1:5, -(1:5)], tl.col="black", tl.srt=45, addCoef.col = "black", sig.level=0.05, insig="pch")
+```
+
+This heatmap shows the correlation between reproducibility scale and issue count increase (current-old) with auxiliary variables. Cross means insignificant correlation using Pearson method (p-value > 0.05).
+
+The reproducibility scale does not seem to be correlated with any of them. But there is a strong correlation between name issues count and number of lines added and removed since the publication date. Variables associated with popularity could impact on API changes. There are correlations with results, but results should not be analyzed alone, because when API issue occurs, then we cannot check results.
 
 ### Summary and conclusions 
+Our analysis covered 18 packages in which we have found the most common reproducibility issues. Although the negative impact of active development is more common than positive most packages are not affected. We presented two interesting correlations that require further analysis due to the small number of articles. However, researchers involved in making reproducible research should keep in mind these guidelines:
 
+* Doing a lot of changes it is easier to rename functions and variables. Most of them (changing letters case for instance) are not necessary but break the article.
+* Some packages gain popularity and authors decide to change API. Rethinking it before publication could resolve this necessity.
 

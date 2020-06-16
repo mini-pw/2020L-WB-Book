@@ -14,7 +14,26 @@ Over the years, several different definitions of reproducibility have been propo
 
 Although many articles focus on software or framework solutions for reproducibility problems, analysis of scientific papers reproducibility in the context of release date has, to the best of the authors’ knowledge, not been described before. The intention of such research is to find correlations between age of article and its reproducibility. Authors believe that finding these dependencies will allow to calculate the estimated life span of data science article. Furthermore, as replicability helps with applying proposed methods and tools, its approximated level might be helpful in estimating usefulness of every scientific article.  
 
+### CodeExtractoR package
 
+To examine sufficent number of articles, package _CodeExtractoR_ has been used. Its main functions - _extract_code_from_pdf()_ and _extract_code_from_html()_, automatically extract code snippets from pdf and html files into R files.
+```{r eval=FALSE, warning=FALSE, comment="Example of extract_code_from_html() funtion usage."}
+
+# install.packages("devtools")
+devtools::install_github("MrDomani/CodeExtractoR")
+library(CodeExtractoR)
+
+# Path to file
+path_file <- "filepath.html"
+  
+# Path to R file output
+output <- "output.R"
+
+# Extracting code
+extract_code_from_html(input_file = path_file, output_file = output, console_char = ">")
+
+```
+To extract code from pdf, API key to https://cloudconvert.com/ is required. 
 
 ### Methodology
 
@@ -45,10 +64,6 @@ Specific results are presented in _Table 1.1_, which shows the number of examine
 | SUM | 16  | 18  | 20  | 15  | 30  | 30  | 30  | 30  | 30  | 30  | 30  |
 <p>&nbsp;</p>
 
-To better illustrate obtained data, in _Figure 1.1_ we have split the results into two groups - the articles which have 0 or I class labeled as "Non-reproducible" and articles with grade II and III as "Reproducible". It is important to remember that from 2009 to 2012, the overall number of papers oscillated around 18 per year. After 2013, the number of researched articles was constant.
-
-<p>&nbsp;</p>
-
 ```{r echo=FALSE, fig.cap="Number of papers by publication year", warning=FALSE}
 library(ggplot2)
 wyniki <- as.data.frame(matrix(ncol = 4, nrow = 44))
@@ -76,24 +91,10 @@ wyniki$Type <- ifelse(wyniki$Class== "0" | wyniki$Class== "I", "Non-reproducible
 colors <- rep("black", 11)
 colors[5] <- "red"
 
-p1 <- ggplot(wyniki, aes(x = Year, y = Number, fill = Type)) +
-  geom_bar(position = "dodge", stat = "identity") +
-  facet_wrap(~Type) +
-  theme_minimal(base_size = 16) +
-  scale_fill_manual(values = c("#e41a1c", "#377eb8")) +
-  theme(legend.position = "none",
-        #axis.text.x = element_text(colour = colors)
-        )# +
-  #ggtitle("Number of papers by publication year")
-
-
-
-p1
-
 ```
 <p>&nbsp;</p>
 
-_Figure 1.2_ shows the results in the original 4-level scale. Although, the number of papers varies throughout the years in every reproducibility class, it is observable that intermediate ones - I and II, are less common in the oldest and newest papers. In addition, results in 2018 and 2019 are identical.
+_Figure 1.1_ shows the results in the original 4-level scale. Although, the number of papers varies throughout the years in every reproducibility class, it is observable that intermediate ones - I and II, are less common in the oldest and newest papers. In addition, results in 2018 and 2019 are identical. It is important to remember that from 2009 to 2012, the overall number of papers oscillated around 18 per year. After 2013, the number of researched articles was constant.
 
 <p>&nbsp;</p>
 ```{r echo=FALSE, fig.cap= "Number of papers by class and publication year", warning=FALSE}
@@ -114,7 +115,7 @@ p2
 ```
 <p>&nbsp;</p>
 
-After calculating the percentage of each class in a specific year ( _Figure 1.3_, _Figure 1.4_), it is observed, that in the two oldest examined years - 2009 and 2010 - a ratio of completely unreproducible papers (with 0 or I class ) is surprisingly low. Furthermore, papers with III class of reproducibility are nearly 40% of all articles in these years.
+After calculating the percentage of each class in a specific year ( _Figure 1.2_, _Figure 1.3_), it is observed, that in the two oldest examined years - 2009 and 2010 - a ratio of completely unreproducible papers (with 0 or I class ) is surprisingly low. Furthermore, papers with III class of reproducibility are nearly 40% of all articles in these years.
 
 <p>&nbsp;</p>
 ```{r, echo=FALSE, fig.cap= "Ratio of each class throughout years", warning=FALSE, message=FALSE }
@@ -162,7 +163,8 @@ p4
 
 <p>&nbsp;</p>
 
-### Conclusions
+### Summary and conclusions
 
-### Summary 
+This article has presented an analysis of scientific papers reproducibility in the context of publication date. As a part of this work, 280 articles from RJournal have been verified. Collected results show that even though recently published articles are more likely to be fully reproducible than older ones, time does not affect reproducibility as we could have expected. A higher ratio of complete reproducibility occurs only for papers from the last 2 years. In articles from 2009 – 2017 there is no evident correlation between reproducibility and year of publication. However, several patterns are possible to recognize. Firstly, except for the year 2016, in each year percentage of reproducible articles (class II or III) was higher than unreproducible ones (class 0 or I). Secondly, the proportion of fully reproducible articles seems to oscillate between 30% - 40%. Moreover, the earliest years have a similar or even lower ratio of complete irreproducibility than later ones. These unexpected observations might be explained by the fact that older packages appear to be less dependent on other libraries. Additionally, modern packages contain more complex and dedicated functions, therefore they are more vulnerable to changes.
+Undoubtedly, this paper does not cover all aspects of scientific articles obsolescence, however, we believe that the data we have collected might be a valuable starting point for further research.
 
