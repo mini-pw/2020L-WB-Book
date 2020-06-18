@@ -362,21 +362,70 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="data-2" class="section level3" number="3.6.3">
 <h3><span class="header-section-number">3.6.3</span> Data</h3>
 <p>The dataset used is the adult dataset from OpenML. The original data comes from UCI and was extracted by Barry Becker from the 1994 Census database. The task is to predict whether a given adult makes more than $50,000 a year based attributes such as:</p>
-<ul>
-<li><p>age,</p></li>
-<li><p>race,</p></li>
-<li><p>sex,</p></li>
-<li><p>education,</p></li>
-<li><p>native country,</p></li>
-<li><p>work class,</p></li>
-<li><p>weekly work hours,</p></li>
-<li><p>capital gain,</p></li>
-<li><p>capital loss,</p></li>
-<li><p>proximation for the demographic background of people,</p></li>
-<li><p>relationship,</p></li>
-<li><p>marital status,</p></li>
-<li><p>occupation.</p></li>
-</ul>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Median/Mode</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>age</td>
+<td>37</td>
+</tr>
+<tr class="even">
+<td>weekly work hours</td>
+<td>40</td>
+</tr>
+<tr class="odd">
+<td>capital gain</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>capital loss</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>fnlwgt</td>
+<td>178145</td>
+</tr>
+<tr class="even">
+<td>race</td>
+<td>white</td>
+</tr>
+<tr class="odd">
+<td>sex</td>
+<td>male</td>
+</tr>
+<tr class="even">
+<td>native country</td>
+<td>USA</td>
+</tr>
+<tr class="odd">
+<td>work class</td>
+<td>private</td>
+</tr>
+<tr class="even">
+<td>relationship</td>
+<td>husband</td>
+</tr>
+<tr class="odd">
+<td>martial status</td>
+<td>married</td>
+</tr>
+<tr class="even">
+<td>occupation</td>
+<td>other</td>
+</tr>
+<tr class="odd">
+<td>education</td>
+<td>high school graduate</td>
+</tr>
+</tbody>
+</table>
+<p>Table 3.6.1 - data introduction</p>
+<p>For numerical variables median is presented and for categorical it is mode. All variables expect fnlwgt, capital-gain and capital-loss are self explanatory. Fnlwgt is an approximation for the demographic background of the people which assigns similar weights to people with similar demographic characteristic. Capital gain (loss) is a rise (fall) in the value of a capital asset that gives it a higher (lower) worth than the purchase price. It concerns only business owners, which is why the median is zero.</p>
 <p>In the above mentioned dataset we can observe a problem with target class distribution which is vastly unbalanced. The ratio of positive and negative values is around one to four. The dataset has overall of more than forty eight thousand observations and fifteen features, some of which are scarce.</p>
 </div>
 <div id="related-work-5" class="section level3" number="3.6.4">
@@ -394,72 +443,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h5><span class="header-section-number">3.6.5.1.1</span> Distribution of numeric variables</h5>
 <div class="figure">
 <img src="images/3-6-1.png" alt="" />
-<p class="caption">Data distribution</p>
+<p class="caption">Figure 3.6.1 - data distribution</p>
 </div>
-<p>On this plot we can see the distribution of numeric variables. Some of them are normally distributed but there are also highly skewed variables such as capital-gain and capital-loss.</p>
-</div>
-<div id="correlation-plot-of-numeric-variables" class="section level5" number="3.6.5.1.2">
-<h5><span class="header-section-number">3.6.5.1.2</span> Correlation plot of numeric variables</h5>
-<div class="figure">
-<img src="images/3-6-2.png" alt="" />
-<p class="caption">Correlation</p>
-</div>
-<p>On this plot we can observe that the numeric variables have weak correlations with each other.</p>
-</div>
-<div id="density-of-observations-by-age-and-education" class="section level5" number="3.6.5.1.3">
-<h5><span class="header-section-number">3.6.5.1.3</span> Density of observations by age and education</h5>
-<div class="figure">
-<img src="images/3-6-3.png" alt="" />
-<p class="caption">Density</p>
-</div>
-<p>We can see the density of observations divided by age and education-num features. Education-num is a numeric variable that depicts the education level in an ordered way.</p>
-</div>
-<div id="level-of-education-by-target-class" class="section level5" number="3.6.5.1.4">
-<h5><span class="header-section-number">3.6.5.1.4</span> Level of education by target class</h5>
-<div class="figure">
-<img src="images/3-6-4.png" alt="" />
-<p class="caption">Education</p>
-</div>
-<p>We can observe that the highest rate of positive target class is for PHD and professors which does not surprise.</p>
-</div>
-<div id="work-class-by-target-class" class="section level5" number="3.6.5.1.5">
-<h5><span class="header-section-number">3.6.5.1.5</span> Work class by target class</h5>
-<div class="figure">
-<img src="images/3-6-5.png" alt="" />
-<p class="caption">Work class</p>
-</div>
-<p>The highest rate when divided by work class can be observed for self-employed people.</p>
-</div>
-<div id="age-by-target-class" class="section level5" number="3.6.5.1.6">
-<h5><span class="header-section-number">3.6.5.1.6</span> Age by target class</h5>
-<div class="figure">
-<img src="images/3-6-6.png" alt="" />
-<p class="caption">Age</p>
-</div>
-<p>The density of people earning more than $50000 is skewed toward the elderly.</p>
+<p>From the <em>figure 3.6.1</em> we can see the distribution of numeric variables. Some of them are normally distributed but there are also highly skewed variables such as capital-gain and capital-loss. From the age variable we can see that most of the data describes young people, which is consistent with the distribution of working people in most western countries. From further analysis we discovered that aged people tend to earn more than youth, so age is important for classification. Capital-gain and capital-loss are centered at zero and show little variation. For this reason they will be of lesser relevance for the model. From further analysis we discovered that education-num is highly correlated with target, higher educated individuals usually earn more than $50000. From observation density exploration it can be see that most of the people in the dataset are young with secondary education. Fnlwgt plot is right skewed, which will be dealt with during initial data preparation. From hours-per-week it can be observed that the most popular working time is 40 hours per week. From further analysis of the dataset it can be observed that only self-employed work class has a higher percentage of positive target value (earning more than $50000) than negative.</p>
+<p>Numeric variable are generally weakly correlated with each other, the highest dependance can be observed between hours-per-week and education. People with education greater than secondary tend to work more than 40 hours per week. Capital-gain is also correlated with education - the higher the education the bigger the capital-gain. The rest of numeric variables are independent of each other.</p>
 </div>
 </div>
 <div id="initial-data-preparation-1" class="section level4" number="3.6.5.2">
 <h4><span class="header-section-number">3.6.5.2</span> Initial Data Preparation</h4>
 <p>The main focus of this part is to analyze and input the missing data. The side tasks are handling outliers and transformation of skewed variables using logistic functions. A few most popular imputation methods will be compared. We are not only going to use basic aggregation functions like mean and mode but also other machine learning models and advance imputation methods like <span class="citation">(Stef van Buuren <a href="#ref-MICE" role="doc-biblioref">2011</a>)</span>. The results are going to be compared using a model that is robust to missing data which is a basic decision tree.</p>
-<div id="missing-data-by-feature" class="section level5" number="3.6.5.2.1">
-<h5><span class="header-section-number">3.6.5.2.1</span> Missing Data by Feature</h5>
-<div class="figure">
-<img src="images/3-6-7.png" alt="" />
-<p class="caption">Missing Data</p>
-</div>
-<p>Missing data can be observed in three columns. They account up to eight percent of data.</p>
-</div>
-<div id="missing-data-pattern" class="section level5" number="3.6.5.2.2">
-<h5><span class="header-section-number">3.6.5.2.2</span> Missing Data Pattern</h5>
+<div id="missing-data-pattern" class="section level5" number="3.6.5.2.1">
+<h5><span class="header-section-number">3.6.5.2.1</span> Missing Data Pattern</h5>
 <div class="figure">
 <img src="images/3-6-8.png" alt="" />
-<p class="caption">Missing Data Pattern</p>
+<p class="caption">Figure 3.6.2 - missing data pattern</p>
 </div>
-<p>The bottom figure shows relation between missing variables, when a certain variables is absent in correspondence to other.</p>
+<p>From the <em>figure 3.6.2</em> the bottom plot shows relation between missing variables, when a certain variables is absent in correspondence to other. The upper part of the figure depicts the missing data percentage. As it can be seen, it only concerns three columns. Columns of the bottom part presents a pattern in which the missing data occurs. Each column stands for one pattern, which describes records containing missing data in red color and complete ones in blue. For example the most popular ones are those in which there is no missing data. The second most popular pattern is one with missing values in columns occupation and work class. Missing data percentage is low, but imputation should improve the results a little bit.</p>
 </div>
-<div id="imputation-results-1" class="section level5" number="3.6.5.2.3">
-<h5><span class="header-section-number">3.6.5.2.3</span> Imputation Results</h5>
+<div id="imputation-results-1" class="section level5" number="3.6.5.2.2">
+<h5><span class="header-section-number">3.6.5.2.2</span> Imputation Results</h5>
 <table>
 <thead>
 <tr class="header">
@@ -496,28 +498,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<p>We can observe that the best results were achieved using KNN imputation so from now on this will be the used method.</p>
+<p>Table 3.6.2 - imputation results</p>
+<p>From <em>table 3.6.1</em> we can observe that the best results were achieved using KNN imputation so from now on this will be the used method.</p>
 </div>
-<div id="outliers" class="section level5" number="3.6.5.2.4">
-<h5><span class="header-section-number">3.6.5.2.4</span> Outliers</h5>
-<div class="figure">
-<img src="images/3-6-9.png" alt="" />
-<p class="caption">Missing Data</p>
-</div>
-<p>Some outliers can be observed in fnlwgt columns which is described as proximation for the demographic background of people. The data was cropped to 300000 value.</p>
-</div>
-<div id="skewness" class="section level5" number="3.6.5.2.5">
-<h5><span class="header-section-number">3.6.5.2.5</span> Skewness</h5>
-<div class="figure">
-<img src="images/3-6-10.png" alt="" />
-<p class="caption">Skewness of fnlwgt</p>
-</div>
-<p>The previously mentioned feature was also skewed. The solution for this problem was a basic logistic transformation.</p>
+<div id="skewness-transformation" class="section level5" number="3.6.5.2.3">
+<h5><span class="header-section-number">3.6.5.2.3</span> Skewness transformation</h5>
 <div class="figure">
 <img src="images/3-6-11.png" alt="" />
-<p class="caption">Transformation of fnlwgt</p>
+<p class="caption">Figure 3.6.3 - transformation of fnlwgt</p>
 </div>
-<p>The transformation was successful and the new feature has an appropriate distribution.</p>
+<p>Problem with skewness of fnlwgt distribution was presented in <em>figure 3.6.1</em>, to deal with it a simple logarithmic transformation was conducted. The transformation was successful and the new feature has an appropriate distribution. This is presented on <em>figure 3.6.3</em>.</p>
 </div>
 </div>
 <div id="feature-engineering-and-tuning" class="section level4" number="3.6.5.3">
@@ -527,9 +517,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h5><span class="header-section-number">3.6.5.3.1</span> First comparison of models</h5>
 <div class="figure">
 <img src="images/3-6-12.png" alt="" />
-<p class="caption">First results</p>
+<p class="caption">Figure 3.6.4 - first results</p>
 </div>
-<p>The best result was achieved by logistic regression which was surprising and shows how capable explainable models can be even on complex data, non of later modifications had any impact on the model so we decided to exclude it from further considerations. The next best explainable model ranked by AUPRC was <strong>KNN</strong> and <strong>Decision Tree</strong>. Due to the fact that logistic regression obtained a better result than black boxes at the very start, and the <strong>KNN</strong> model is not globally interpretable, we will focus on the decision tree, which is a popular and easily interpretable model. That is the reason why we are going to work mainly with this model and initially with KNN for comparison in our goal to achieve similar results to Black Box models using it, but our final model will be a decision tree. The best Black boxes were <strong>Random Forest</strong> and <strong>Adaboost</strong>, because of that in the later phase of our project we will depend on them to make our results better. During the Feature Engineering we will utilize strategies such as transforming and extracting features using the SAFE algorithm mentioned in the article above. Amongst other strategies we will use variable selection based on random forest feature importance and tuning models with Bayesian optimization - mlrMBO <span class="citation">(Bernd Bischl <a href="#ref-BO" role="doc-biblioref">2018</a>)</span> based on custom measure: AUPRC and not the typical AUC. Another interesting aspect that we are going to look into is changing the type of target to numeric and by doing so changing our task from classification to regression, surprisingly it improves our results.</p>
+<p>The comparison of models performance can be observed on <em>figure 3.6.4</em>. The best result was achieved by logistic regression which was surprising and shows how capable explainable models can be even on complex data, non of later modifications had any impact on the model so we decided to exclude it from further considerations. The next best explainable model ranked by AUPRC was <strong>KNN</strong> and <strong>Decision Tree</strong>. Due to the fact that logistic regression obtained a better result than black boxes at the very start, and the <strong>KNN</strong> model is not globally interpretable, we will focus on the decision tree, which is a popular and easily interpretable model. That is the reason why we are going to work mainly with this model and initially with KNN for comparison in our goal to achieve similar results to Black Box models using it, but our final model will be a decision tree. The best Black boxes were <strong>Random Forest</strong> and <strong>Adaboost</strong>, because of that in the later phase of our project we will depend on them to make our results better. During the Feature Engineering we will utilize strategies such as transforming and extracting features using the SAFE algorithm mentioned in the article above. Amongst other strategies we will use variable selection based on random forest feature importance and tuning models with Bayesian optimization - mlrMBO <span class="citation">(Bernd Bischl <a href="#ref-BO" role="doc-biblioref">2018</a>)</span> based on custom measure: AUPRC and not the typical AUC. Another interesting aspect that we are going to look into is changing the type of target to numeric and by doing so changing our task from classification to regression, surprisingly it improves our results.</p>
 </div>
 <div id="rsafe" class="section level5" number="3.6.5.3.2">
 <h5><span class="header-section-number">3.6.5.3.2</span> rSAFE</h5>
@@ -571,7 +561,8 @@ with the help of a surrogate model.</p>
 </tr>
 </tbody>
 </table>
-<p>From the above table it can be observed that this method gave us a significant improvement in terms of AUC and AUPRC. New variables that were extracted and chosen with penalty regularization are:</p>
+<p>Table 3.6.3 - Base models performance</p>
+<p>From <em>table 3.6.3</em> it can be observed that this method gave us a significant improvement in terms of AUC and AUPRC. New variables that were extracted and chosen with penalty regularization are:</p>
 <ul>
 <li>“age_new” - new levels: (-Inf, 32] and (32, Inf),</li>
 <li>“fnlwgt_new” - new levels: (-Inf, 11.70863] and (11.70863, Inf),</li>
@@ -602,6 +593,7 @@ with the help of a surrogate model.</p>
 </tr>
 </tbody>
 </table>
+<p>Table 3.6.4 - Model performance after change to regression</p>
 <p>In case of KNN there was no visible improvement.</p>
 </div>
 <div id="variable-selection" class="section level5" number="3.6.5.3.4">
@@ -627,6 +619,7 @@ with the help of a surrogate model.</p>
 </tr>
 </tbody>
 </table>
+<p>Table 3.6.5 - Model performance after variable selection</p>
 <p>The improvement is slight, but because of this operation we are using a less complicated model, so we decided to use it.</p>
 </div>
 <div id="tuning" class="section level5" number="3.6.5.3.5">
@@ -652,16 +645,17 @@ with the help of a surrogate model.</p>
 </tr>
 </tbody>
 </table>
-<p>Results achieved in this phase are really high, we managed to top those from black boxes and the logistic regression one.</p>
+<p>Table 3.6.6 - Model performance after tuning</p>
+<p>Results presented in <em>table 3.6.6</em> achieved in this phase are really high, we managed to top those from black boxes and the logistic regression one.</p>
 </div>
 </div>
 <div id="results-and-conclusion" class="section level4" number="3.6.5.4">
 <h4><span class="header-section-number">3.6.5.4</span> Results and conclusion</h4>
 <div class="figure">
 <img src="images/3-6-13.png" alt="" />
-<p class="caption">Differences between each stage</p>
+<p class="caption">Figure 3.6.5 - differences between each stage</p>
 </div>
-<p>From the above chart, we can see that thanks to our actions the performance of a fully interpretable model surpassed all basic black boxes and logistic regression, which from the start had really high results. It proves that it is possible to achieve comparable or even better results with interpretable models than black boxes even on unbalanced datasets, such as “adult”. It requires some work, but there are a lot of methods that make it possible to improve our performance. Some of them may be based on very well-functioning black box models. Probably in comparison with tuned black box model, we would achieve lesser results, but interpretable models have an advantage, people can understand why some choices were made and can be safely use when transparency and ease of understanding are needed. Using models such as logistic regression or decision trees make it possible. In this paper we showed that models built using these algorithms after some modifications are able to get similar results to such powerful models as random forest or adaboost, and even artificial deep neural networks.</p>
+<p>Summarizing the work on adult dataset, we were able to create an explainable decision tree surpassing any other model using various data preparation and tuning methods. We were not required to take any compromises concerning explainability to achieve the best performance. Methods used such as rSAFE, imputation, or hyperparameter tuning do not affect the interpretability. From <em>figure 3.6.5</em>, we can see that thanks to our actions the performance of a fully interpretable model surpassed all basic black boxes and logistic regression, which from the start had really high results. It proves that it is possible to achieve comparable or even better results with interpretable models than black boxes even on unbalanced datasets, such as “adult”. It requires some work, but there are a lot of methods that make it possible to improve our performance. Some of them may be based on very well-functioning black box models. Probably in comparison with tuned black box model, we would achieve lesser results, but interpretable models have an advantage, people can understand why some choices were made and can be safely use when transparency and ease of understanding are needed. Using models such as logistic regression or decision trees make it possible. In this paper we showed that models built using these algorithms after some modifications are able to get similar results comparable to such powerful models as random forest or adaboost, and even artificial deep neural networks.</p>
 
 </div>
 </div>
