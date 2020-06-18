@@ -57,9 +57,9 @@ In this part we have gotten accustomed with the dataset. We started with feature
 
 #####  Distribution of numeric variables
 
-![Figure 3.6.1 - data distribution](images/3-6-1.png)
+![Figure 3.6.1 - distribution of numeric variables from dataset](images/3-6-1.png)
 
-From the *figure 3.6.1* we can see the distribution of numeric variables. Some of them are normally distributed but there are also highly skewed variables such as capital-gain and capital-loss. From the age variable we can see that most of the data describes young people, which is consistent with the distribution of working people in most western countries. From further analysis we discovered that aged people tend to earn more than youth, so age is important for classification. Capital-gain and capital-loss are centered at zero and show little variation. For this reason they will be of lesser relevance for the model. From further analysis we discovered that education-num is highly correlated with target, higher educated individuals usually earn more than $50000. From observation density exploration it can be see that most of the people in the dataset are young with secondary education. Fnlwgt plot is right skewed, which will be dealt with during initial data preparation. From hours-per-week it can be observed that the most popular working time is 40 hours per week.  From further analysis of the dataset it can be observed that only self-employed work class has a higher percentage of positive target value (earning more than $50000) than negative.
+Some of the variables presented on *figure 3.6.1* are normally distributed but there are also highly skewed variables such as capital-gain and capital-loss. From the age variable we can see that most of the data describes young people, which is consistent with the distribution of working people in most western countries. From further analysis we discovered that aged people tend to earn more than youth, so age is important for classification. Capital-gain and capital-loss are centered at zero and show little variation. For this reason they will be of lesser relevance for the model. From further analysis we discovered that education-num is highly correlated with target, higher educated individuals usually earn more than $50000. From observation density exploration it can be see that most of the people in the dataset are young with secondary education. Fnlwgt plot is right skewed, which will be dealt with during initial data preparation. From hours-per-week it can be observed that the most popular working time is 40 hours per week.  From further analysis of the dataset it can be observed that only self-employed work class has a higher percentage of positive target value (earning more than $50000) than negative.
 
 Numeric variable are generally weakly correlated with each other, the highest dependance can be observed between hours-per-week and education. People with education greater than secondary tend to work more than 40 hours per week. Capital-gain is also correlated with education - the higher the education the bigger the capital-gain. The rest of numeric variables are independent of each other.
 
@@ -69,38 +69,26 @@ The main focus of this part is to analyze and input the missing data. The side t
 
 #####  Missing Data Pattern
 
-![Figure 3.6.2 - missing data pattern](images/3-6-8.png)
+![Figure 3.6.2 - missing data pattern. The bottom plot shows relation between missing variables, when a certain variables is absent in correspondence to other. The upper part of the figure depicts the missing data percentage.](images/3-6-8.png)
 
-From the *figure 3.6.2* the bottom plot shows relation between missing variables, when a certain variables is absent in correspondence to other. The upper part of the figure depicts the missing data percentage. As it can be seen, it only concerns three columns. Columns of the bottom part presents a pattern in which the missing data occurs. Each column stands for one pattern, which describes records containing missing data in red color and complete ones in blue. For example the most popular ones are those in which there is no missing data. The second most popular pattern is one with missing values in columns occupation and work class. Missing data percentage is low, but imputation should improve the results a little bit.
+Columns of the bottom part of *figure3.6.2* presents a pattern in which the missing data occurs. Each column stands for one pattern, which describes records containing missing data in red color and complete ones in blue. For example the most popular ones are those in which there is no missing data. The second most popular pattern is one with missing values in columns occupation and work class. Missing data percentage is low, but imputation should improve the results a little bit.
 
-#####  Imputation Results
+##### Imputation
 
-| Imputation type                	| AUPRC     	| AUC       	|
-|--------------------------------	|-----------	|-----------	|
-| none                           	| 0.6457237 	| 0.8357408 	|
-| Mean and mode basic imputation 	| 0.6472785 	| 0.8362379 	|
-| KNN imputation                 	| 0.6547221 	| 0.838437  	|
-| MICE imputation                	| 0.6452505 	| 0.834577  	|
-| Missing data removal           	| 0.6515376 	| 0.8355305 	|
-Table 3.6.2 - imputation results
-
-From *table 3.6.1* we can observe that the best results were achieved using KNN imputation so from now on this will be the used method.
+Considering the distribution of missing data we decided to impute it. Four different methods were used. 
+The first one was mean and mode imputation - replacing missing data with mean for numeric variables and mode for categorical. The next one was more advanced - KNN imputation - calculates the mean or mode from k nearest neighbours in training data. The third one was MICE imputation - the most advanced one, predictive mean matching. The last one was simply removing the rows containing missing data.
 
 #####  Skewness transformation
 
-![Figure 3.6.3 - transformation of fnlwgt](images/3-6-11.png)
+![Figure 3.6.3 - logarithmic transformation of skewed variable fnlwgt](images/3-6-11.png)
 
 Problem with skewness of fnlwgt distribution was presented in *figure 3.6.1*, to deal with it a simple logarithmic transformation was conducted. The transformation was successful and the new feature has an appropriate distribution. This is presented on *figure 3.6.3*.
 
-####  Feature Engineering and Tuning
+#### Feature Engineering and Tuning
 
 Firstly we are going to compare a few most popular Machine Learning models on our initially prepared dataset. We picked three popular explainable models: **KNN**, **Decision Tree** and **Logistic Regression**.
 
-#####  First comparison of models
-
-![Figure 3.6.4 - first results](images/3-6-12.png)
-
-The comparison of models performance can be observed on *figure 3.6.4*. The best result was achieved by logistic regression which was surprising and shows how capable explainable models can be even on complex data, non of later modifications had any impact on the model so we decided to exclude it from further considerations. The next best explainable model ranked by AUPRC was **KNN** and **Decision Tree**. Due to the fact that logistic regression obtained a better result than black boxes at the very start, and the **KNN** model is not globally interpretable, we will focus on the decision tree, which is a popular and easily interpretable model. That is the reason why we are going to work mainly with this model and initially with KNN for comparison in our goal to achieve similar results to Black Box models using it, but our final model will be a decision tree. The best Black boxes were **Random Forest** and **Adaboost**, because of that in the later phase of our project we will depend on them to make our results better. During the Feature Engineering we will utilize strategies such as transforming and extracting features using the SAFE algorithm mentioned in the article above. Amongst other strategies we will use variable selection based on random forest feature importance and tuning models with Bayesian optimization - mlrMBO [@BO] based on custom measure: AUPRC and not the typical AUC. Another interesting aspect that we are going to look into is changing the type of target to numeric and by doing so changing our task from classification to regression, surprisingly it improves our results.
+During the Feature Engineering we will utilize strategies such as transforming and extracting features using the SAFE algorithm mentioned in the article above. Amongst other strategies we will use variable selection based on random forest feature importance and tuning models with Bayesian optimization - mlrMBO [@BO] based on custom measure: AUPRC and not the typical AUC. Another interesting aspect that we are going to look into is changing the type of target to numeric and by doing so changing our task from classification to regression, surprisingly it improves our results.
 
 ##### rSAFE
 
@@ -116,11 +104,44 @@ The comparison of models performance can be observed on *figure 3.6.4*. The best
 
 To extract new variables we will use rSAFE, which will depend on two different Black Box models: Random Forest and Adaboost. Those models were tuned to increase the final result. Based on the initial variables and the new ones created by the rSafe algorithm, we will choose the combination that will be the best for this problem. We will achieve this by analyzing various values ​​of the "regularization penalty" parameter in the data extraction algorithm in the rSafe package and choosing the one that gives us the best result.
 
+##### Task change and variable selection
+
+Changing classification task to regression is not a common practice, but based on our previous it proves to be successful in decision tree models created on unbalanced data. In this case the outcome was similar - the prediction was more accurate, but the decision tree got more complex. The complexity comes from the increase in leaves, but the model retains it's interpretability which was crucial for our task.
+
+Additionally we carried out a variable selection on those that are currently used. It was based on feature importance from a random forest model. We used ten most important variables from fifteen that were being utilised before.
+
+##### Tuning
+
+Last phase was tuning our decision tree model. We based it on mlrMBO, but our method is adjusted to the task. The optimized measure is AUPRC, this proces is slightly different from optimizing AUC. Before using MBO we select the optimal range of parameters like: "minsplit" - the minimum number of observations that must exist in a node in order for a split to be attempted. and "minbucket" - the minimum number of observations in any terminal node. After selecting ten optimal values of the first one we select ten optimal for the second. For each of those hundred pairs we use MBO to find the optimal "cp" - complexity parameter. Any split that does not decrease the overall lack of fit by a factor of cp is not attempted. 
+
+### Results
+
+####  Imputation
+
+| Imputation type                	| AUPRC     	| AUC       	|
+|--------------------------------	|-----------	|-----------	|
+| none                           	| 0.6457237 	| 0.8357408 	|
+| Mean and mode basic imputation 	| 0.6472785 	| 0.8362379 	|
+| KNN imputation                 	| 0.6547221 	| 0.838437  	|
+| MICE imputation                	| 0.6452505 	| 0.834577  	|
+| Missing data removal           	| 0.6515376 	| 0.8355305 	|
+Table 3.6.2 - results of different imputation measured in AUC and AUPRC
+
+From *table 3.6.2* we can observe that the best results were achieved using KNN imputation so from now on this will be the used method. This is not surprising, because it is an advanced mean and mode imputation method. Difference between methods is little and even the KNN method improved AUPRC by less than one percent. Reason behind this is probably the low amount of missing data.
+
+#### First comparison of models
+
+![Figure 3.6.4 - first results. The comparison of models performance by AUPRC.](images/3-6-12.png)
+
+From *figure 3.6.4* we can see that the best result was achieved by logistic regression which was surprising and shows how capable explainable models can be even on complex data. Although being the best on raw data, none of the later modifications had any impact on the model so we decided to exclude it from further considerations. The next best explainable model ranked by AUPRC was **KNN** and **Decision Tree**. Due to the fact that logistic regression obtained a better result than black boxes at the very start, and the **KNN** model is not globally interpretable, we will focus on the decision tree, which is a popular and easily interpretable model. That is the reason why we are going to work mainly with this model and initially with KNN for comparison in our goal to achieve similar results to Black Box models using it, but our final model will be a decision tree. The best Black boxes were **Random Forest** and **Adaboost**, because of that in the later phase of our project we will depend on them to make our results better. 
+
+#### rSAFE
+
 | Model         	| From AUPRC 	| To AUPRC 	| From AUC 	| To AUC 	|
 |---------------	|----------	|--------	|------------	|----------	|
 | decision tree 	| 0.655    	| 0.674  	| 0.842      	| 0.851    	|
 | knn           	| 0.698    	| 0.706  	| 0.859      	| 0.868    	|
-Table 3.6.3 - Base models performance
+Table 3.6.3 - base models performance before and after applying rSAFE measured in AUC and AUPRC
 
 From *table 3.6.3* it can be observed that this method gave us a significant improvement in terms of AUC and AUPRC. New variables that were extracted and chosen with penalty regularization are:
 
@@ -129,41 +150,43 @@ From *table 3.6.3* it can be observed that this method gave us a significant imp
 * "hours.per.week_new - new levels: (-Inf, 40] and (40, Inf),
 * "race_new" - new levels: White_Asian-Pac-Islander and Amer-Indian-Eskimo_Other_Black.
 
-##### Change to regression
+#### Change to regression
 
-The next approach we chose based on our previous experience with unbalanced datasets is changing our task from classification to regression and by doing so we improved our prediction. Non of later modifications had any impact on the KNN model so we decided to exclude it from further considerations.
+Non of later modifications had any impact on the KNN model so we decided to exclude it from further considerations.
 
 | Model         	| From AUPRC 	| To AUPRC 	| From AUC 	| To AUC 	|
 |---------------	|------------	|----------	|----------	|--------	|
 | decision tree 	| 0.674      	| 0.716    	| 0.851    	| 0.865  	|
-Table 3.6.4 - Model performance after change to regression
+Table 3.6.4 - model performance before and after change to regression measured in AUC and AUPRC
 
-In case of KNN there was no visible improvement.
+Changing the task improved the performance vastly and so we considered it worth it despite the added complexity.
 
-##### Variable selection
-
-Additionally we carried out a variable selection on those that are currently used. It was based on feature importance from a random forest model, we use ten most important variables from fifteen that were being used before. 
+#### Variable selection
 
 | Model         	| From AUPRC 	| To AUPRC 	| From AUC 	| To AUC 	|
 |---------------	|------------	|----------	|----------	|--------	|
 | decision tree 	| 0.716      	| 0.720    	| 0.865    	| 0.871  	|
-Table 3.6.5 - Model performance after variable selection
+Table 3.6.5 - model performance before and after variable selection measured in AUC and AUPRC
 
 The improvement is slight, but because of this operation we are using a less complicated model, so we decided to use it.
 
-##### Tuning
+#### Tuning
 
-Last phase was tuning our decision tree model. We based it on mlrMBO, but our method is adjusted to the task. The optimized measure is AUPRC, this proces is slightly different from optimizing AUC. Before using MBO we select the optimal range of parameters like: "minsplit" - the minimum number of observations that must exist in a node in order for a split to be attempted. and "minbucket" - the minimum number of observations in any terminal node.. After selecting ten optimal values of the first one we select ten optimal for the second. For each of those hundred pairs we use MBO to find the optimal "cp" - complexity parameter. Any split that does not decrease the overall lack of fit by a factor of cp is not attempted. The result we achieved:
+The result we achieved:
 
 | Model         	| From AUPRC 	| To AUPRC 	| From AUC 	| To AUC 	|
 |---------------	|------------	|----------	|----------	|--------	|
 | decision tree 	| 0.720      	| 0.794    	| 0.871    	| 0.912  	|
-Table 3.6.6 - Model performance after tuning
+Table 3.6.6 - model performance before and after tuning measured in AUC and AUPRC
 
 Results presented in *table 3.6.6* achieved in this phase are really high, we managed to top those from black boxes and the logistic regression one.
 
-#### Results and conclusion
+### Final Results
 
-![Figure 3.6.5 - differences between each stage](images/3-6-13.png)
+![Figure 3.6.5 - improvement in AUPRC of decision tree model for each stage of workflow compared to other considered models](images/3-6-13.png)
 
-Summarizing the work on adult dataset, we were able to create an explainable decision tree surpassing any other model using various data preparation and tuning methods. We were not required to take any compromises concerning explainability to achieve the best performance. Methods used such as rSAFE,  imputation, or hyperparameter tuning do not affect the interpretability.  From *figure 3.6.5*, we can see that thanks to our actions the performance of a fully interpretable model surpassed all basic black boxes and logistic regression, which from the start had really high results. It proves that it is possible to achieve comparable or even better results with interpretable models than black boxes even on unbalanced datasets, such as "adult". It requires some work, but there are a lot of methods that make it possible to improve our performance. Some of them may be based on very well-functioning black box models. Probably in comparison with tuned black box model, we would achieve lesser results, but interpretable models have an advantage, people can understand why some choices were made and can be safely use when transparency and ease of understanding are needed. Using models such as logistic regression or decision trees make it possible. In this paper we showed that models built using these algorithms after some modifications are able to get similar results comparable to such powerful models as random forest or adaboost, and even artificial deep neural networks.
+From *figure 3.6.5*, we can see that thanks to our actions the performance of a fully interpretable model surpassed all basic black boxes and logistic regression, which from the start had really high results. Each  stage improved the performance, but the most significant part was variable selection and tuning. Changing task to regression gave a surprisingly impactful upswing in AUPRC despite being the easiest one to conduct. On the other hand rSAFE and imputation were the most demanding, but provided the least improvement. 
+
+### Conclusions
+
+Summarizing the work on adult dataset, we were able to create an explainable decision tree surpassing any other model using various data preparation and tuning methods. We were not required to take any compromises concerning explainability to achieve the best performance. Methods used such as rSAFE,  imputation, or hyperparameter tuning do not affect the interpretability. The final results prove that it is possible to achieve comparable or even better results with interpretable models than black boxes even on unbalanced datasets, such as "adult". It requires some work, but there are a lot of methods that make it possible to improve our performance. Some of them may be based on very well-functioning black box models. Probably in comparison with tuned black box model, we would achieve lesser results, but interpretable models have an advantage, people can understand why some choices were made and can be safely use when transparency and ease of understanding are needed. Using models such as logistic regression or decision trees make it possible. In this paper we showed that models built using these algorithms after some modifications are able to get similar results comparable to such powerful models as random forest or adaboost, and even artificial deep neural networks.
