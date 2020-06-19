@@ -4,9 +4,9 @@
 *Authors: Karol Saputa, Małgorzata Wachulec, Aleksandra Wichrowska (Warsaw University of Technology)*
 
 ### Abstract
-Achieving higher and higher metrics results by using bigger and more complex models is becoming popular.
-However, it is still possible to build accurate models that are less complex. Hence, possible to explain and interpret easily.
-For a specific task of ordinal classification and exemplary dataset of Eucalypti, we provide a model (with AUC metric better than considered black box model) with an explanation of techniques applied.
+It is popular nowadays to use black box models, which are complex and often unintuitive e.g. neural networks, in order to achieve high model performance without having to go in-depth into domain knowledge. However in some fields, e.g. banking or medicine it is crucial to understand not only what was the model outcome but also how was it obtained and why something was recommended - in other words we want to be able to explain models’ decisions. This is possible when using simpler models such as linear models or decision trees. 
+
+In this article we argue that by using exploratory data analysis, domain knowledge, variable selection and other model improvements, it is possible to build simpler and easily interpretable models that are as accurate as black box models. For a specific task of ordinal classification and exemplary dataset of Eucalypti, we provide a model (with AUC metric better than considered black box model) with an explanation of techniques applied.
 
 
 ### Introduction and Motivation
