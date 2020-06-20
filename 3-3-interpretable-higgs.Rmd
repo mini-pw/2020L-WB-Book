@@ -4,7 +4,7 @@
 
 ### Abstract
 This article focuses on comparing efficiency of explainable and black-box AI models in detection of the Higgs boson.
-Furthermore, it discusses possible modification to data, aiming to improve the performance of explainable models including both manual and automated methots, the latter represented by the `rSAFE` package. It concludes that some improvement is possible, but limited without obscuring variables used to explain model, thus reducing explainability.
+Furthermore, it discusses possible modification to data, aiming to improve the performance of explainable models including both manual and automated methots, the latter represented by the `rSAFE` package. It concludes that some improvement is possible, but limited without obscuring variables used to explain model, thus reducing explainability. It also leads to a remark that logistic regression is the most sensitive model to variable manipulation, allowing achieving scores comparable with black-box models with some data engineering.
 
 ### Introduction and Motivation
 ‘We fear that, which we do not understand’. This principle has often been used to portray artificial intelligence in popular culture. The notion that it is something beyond human comprehension became so common, that it started to affect the way we perceive computer algorithms. Because of that, it comes as no surprise that people become wary, hearing that the decisions which affect them directly were made by an AI.
@@ -124,7 +124,7 @@ Finally, we applied `rSafe` transformations as before, now on the dataset with n
 | logreg | 0.6900427 | 0.7582915 | 0.3099573 |
 Performance of models after adding logarithm and `rSAFE` transformations.
 
-This way we achieved additional performance increase for logistic regression, surpassing its previous scores. Similarly to before, removing excess variables negatively affected performance.
+This way we achieved additional performance increase for logistic regression, surpassing its previous scores. Similarly to before, removing excess variables negatively affected performance of logistic regression. This time it didn't really affect rpart model, but it performed badly, so it was out of the competition already.
 
 | model  | Accuracy  | AUC       | MMCE      |
 |--------|-----------|-----------|-----------|
