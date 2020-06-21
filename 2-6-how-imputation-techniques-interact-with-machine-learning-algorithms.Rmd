@@ -12,10 +12,16 @@ Its prediction effectiveness is assessed by F1 measure (also called F1 score) to
 ### Introduction and Motivation
 
 Missing data occurring in datasets is a common and sometimes difficult problem. Many real-world datasets, such as, for instance, medical records, are often incomplete. Unfortunately, in the field of machine learning, this is an issue which must be handled because many algorithms cannot work with missing values. Therefore, dealing with them is an important part of reprocessing data in the machine learning process.
-One way to do it is "omission" - removing observations or variables with at least one missing value. However, this strategy is frequently inappropriate because we can lose some important data or significantly reduce it if the percentage of missing values is high.
+\
+
+The first important step is to identify the missing data pattern (or mechanism). We commonly distinguish 3, according to @Rubin : Missing Completely at Random (MCAR), Missing at Random (MAR) and Missing Not at Random (MNAR), however, we will not focus on them in this study.
+\
+
+One way of getting rid of missing data is "omission" - removing observations or variables with at least one missing value. However, this strategy is frequently inappropriate because we can lose some important data or significantly reduce it if the percentage of missing values is high.
 Fortunately, imputation serves the need better. By definition, imputation is a process of replacing missing data with substituted values. We can distinguish 2 types of imputation. First one is single imputation - we the information from only one variable to impute missing values. 
 It includes the basic methods such as imputing with mean or mode, which are fast and easy to implement, however they do not guarantee a very good performance. The second one is multiple imputations, in which we impute many values (perform imputation many times), leading to creating many complete datasets. This type includes more sophisticated strategies for instance the ones using tree-based models, which usually result in better models, but enhance the algorithm's complexity and computational time.
-Before choosing an imputation approach, it is also important to identify the missing data pattern (or mechanism). We commonly distinguish 3, according to @Rubin : Missing Completely at Random (MCAR), Missing at Random (MAR) and Missing Not at Random (MNAR), however, we will not focus on them in this study.
+\
+
 For the R language, there are implemented multiple imputations techniques in many different packages. It is often hard to choose the best approach. Our goal is to examine how these methods perform on different datasets and how they interact with different classification algorithms.
 
 ### Methodology
@@ -89,13 +95,7 @@ We chose five different algorithms: two linear classifiers (NB, LDA), two tree-b
   
 After the training stage, the time has come to check how selected imputations and algorithms interact with each other. Again, for each - in this case - test set and every imputation all five classifiers listed above make a prediction. Assessing their performance is outlined in the next paragraph.
 
-#### Implementation and model evaluation
-
-To conduct the experiment two functions were written:
-
- * **save_files()** - takes a dataset, divides it into the train and test datasets, imputes them in 5 ways described above and saves the imputed datasets into files
-
- * **imputations_performance()** - takes dataset name and classification algorithm returns performance of each dataset imputation combined with the given algorithm
+#### Model evaluation
 
 The performance of algorithms is evaluated using **F1 Measure** -  the harmonic mean of the precision and recall.
  
@@ -108,16 +108,60 @@ Due to that measure, a ranking of imputations for each dataset is created. Imput
  * if imputation method failed to impute the data, it receives rank 5
  
 The overall measure of the imputation performance is a mean of its ranks from all datasets.
- 
+
+#### Summary of the process
+
+Before entering the results section, let's summarise the work that has been done up to this stage. 
+Firstly, all datasets were simply preprocessed (if needed) to make the imputation easier. Next, each of them was split into train and test dataset. The ratio was 80 to 20, the same for all datasets, with the same random seed. Each train and test set was imputed separately, with 5 different methods. Then, on each train set 5 different classification models were trained and following, the prediction was made on test sets. Finally, each combination of a test set, imputation method and classification algorithm was assessed by F1 score and proposed ranking.
+
 ### Results
 
-A missing value `NA` in the results table implicates, either that an imputation failed on this particular dataset, leaving missing values in it (when there are a few of them in a column), or that the model didn't manage to perform on the entire dataset, no matter what imputation (when there is a full row of missing values).
+A missing value `NA` in the results table implicates, either that an imputation failed on this particular dataset, leaving missing values in it (when there are a few of them in a column), or that the model didn't manage to perform on the entire dataset, no matter what imputation (when there is a full row of missing values). Additionally, for each dataset, the best result is bolded.
+
+```{r bold_function, echo=FALSE, warning=FALSE, message=FALSE, results='hide'}
+library(dplyr)
+format_cells <- function(df, rows ,cols, value = c("italics", "bold", "strikethrough")){
+
+  # select the correct markup
+  # one * for italics, two ** for bold
+  map <- setNames(c("*", "**", "~~"), c("italics", "bold", "strikethrough"))
+  markup <- map[value]  
+
+  for (r in rows){
+    for(c in cols){
+
+      # Make sure values are not factors
+      df[[c]] <- as.character( df[[c]])
+
+      # Update formatting
+      df[r, c] <- paste0(markup, df[r, c], markup)
+    }
+  }
+
+  return(df)
+}
+```
 
 ####  Results of Rpart classification algorithm
 
 ```{r rpart, echo=FALSE}
 rpart <- read.csv2("./data/2-6-data/rpart.csv")
-knitr::kable(rpart, format = "markdown", caption = "Tab. 2. Results of Rpart classification algorithm.") 
+
+
+rpart %>%
+  format_cells(2, 2:6, "bold") %>%
+  format_cells(3, 3, "bold") %>%
+  format_cells(5, c(2,6), "bold") %>%
+  format_cells(6, 2:6, "bold") %>%
+  format_cells(7, 6, "bold") %>%
+  format_cells(8, c(2,5), "bold") %>%
+  format_cells(9, 2:6, "bold") %>%
+  format_cells(11, 4, "bold") %>%
+  format_cells(12, c(3,5), "bold") %>%
+  format_cells(13, c(2,4,5,6), "bold") %>%
+  format_cells(14, 3, "bold") %>%
+  knitr::kable(., format = "markdown", caption = "Tab. 2. Results of Rpart classification algorithm.")
+
 ```
 
 *Tab. 2. Results of Rpart classification algorithm.*
@@ -137,7 +181,23 @@ Generally, VIM knn and MICE pmm imputations gave the best results when combined 
 
 ```{r nb, echo=FALSE}
 nb <- read.csv2("./data/2-6-data/nb.csv")
-knitr::kable(nb, format = "markdown",caption = "Tab. 3. Results of Naive Bayes classification algorithm.") 
+
+nb %>%
+  format_cells(1, 4, "bold") %>%
+  format_cells(2, 4, "bold") %>%
+  format_cells(3, 4, "bold") %>%
+  format_cells(4, 6, "bold") %>%
+  format_cells(5, 5, "bold") %>%
+  format_cells(6, 2:6, "bold") %>%
+  format_cells(7, c(2,4), "bold") %>%
+  format_cells(8, c(5,6), "bold") %>%
+  format_cells(9, 5, "bold") %>%
+  format_cells(10, 3, "bold") %>%
+  format_cells(11, c(2,3,4,6), "bold") %>%
+  format_cells(12, 4, "bold") %>%
+  format_cells(13, 4, "bold") %>%
+  format_cells(14, 2, "bold") %>%
+  knitr::kable(., format = "markdown",caption = "Tab. 3. Results of Naive Bayes classification algorithm.") 
 ```
 
 *Tab. 3. Results of Naive Bayes classification algorithm.*
@@ -155,7 +215,23 @@ Generally, MICE pmm imputation gave the best results when combined with the Naiv
 
 ```{r ranger, echo=FALSE}
 ranger <- read.csv2("./data/2-6-data/ranger.csv")
-knitr::kable(ranger, format = "markdown",caption = "Tab. 4. Results of Ranger classification algorithm.") 
+
+ranger %>%
+  format_cells(1, 2, "bold") %>%
+  format_cells(2, 3, "bold") %>%
+  format_cells(3, 4, "bold") %>%
+  format_cells(4, 6, "bold") %>%
+  format_cells(5, 4, "bold") %>%
+  format_cells(6, 5, "bold") %>%
+  format_cells(7, 4, "bold") %>%
+  format_cells(8, c(2,4,5,6), "bold") %>%
+  format_cells(9, 4, "bold") %>%
+  format_cells(10, 4, "bold") %>%
+  format_cells(11, 4, "bold") %>%
+  format_cells(12, 3, "bold") %>%
+  format_cells(13, 5, "bold") %>%
+  format_cells(14, c(2,5), "bold") %>%
+  knitr::kable(., format = "markdown",caption = "Tab. 4. Results of Ranger classification algorithm.") 
 ```
 
 *Tab. 4. Results of Ranger classification algorithm.*
@@ -173,7 +249,21 @@ Generally, softImpute and VIM hotdeck imputations gave the best results when com
 
 ```{r lda, echo=FALSE}
 lda <- read.csv2("./data/2-6-data/lda.csv")
-knitr::kable(lda, format = "markdown",caption = "Tab. 5. Results of LDA classification algorithm.") 
+
+lda%>%
+  format_cells(1, 3, "bold") %>%
+  format_cells(2, 4, "bold") %>%
+  format_cells(3, 6, "bold") %>%
+  format_cells(5, c(4,5), "bold") %>%
+  format_cells(6, c(2,4), "bold") %>%
+  format_cells(7, 4, "bold") %>%
+  format_cells(8, c(2,5), "bold") %>%
+  format_cells(9, 3, "bold") %>%
+  format_cells(11, c(2,3,6), "bold") %>%
+  format_cells(12, 2:6, "bold") %>%
+  format_cells(13, 4, "bold") %>%
+  format_cells(14, c(2,4,5,6), "bold") %>%
+  knitr::kable(., format = "markdown",caption = "Tab. 5. Results of LDA classification algorithm.") 
 ```
 
 *Tab. 5. Results of LDA classification algorithm.*
@@ -191,7 +281,23 @@ Generally, VIM hotdeck imputation gave the best results when combined with the L
 
 ```{r kknn, echo=FALSE}
 kknn <- read.csv2("./data/2-6-data/kknn.csv")
-knitr::kable(kknn, format = "markdown",caption = "Tab. 6. Results of KKNN classification algorithm.") 
+
+kknn %>%
+  format_cells(1, 4, "bold") %>%
+  format_cells(2, 5, "bold") %>%
+  format_cells(3, c(2,5,6), "bold") %>%
+  format_cells(4, c(2,3,4,5), "bold") %>%
+  format_cells(5, 4, "bold") %>%
+  format_cells(6, c(2,4,5), "bold") %>%
+  format_cells(7, 4, "bold") %>%
+  format_cells(8, 6, "bold") %>%
+  format_cells(9, 4, "bold") %>%
+  format_cells(10, 2:6, "bold") %>%
+  format_cells(11, 3, "bold") %>%
+  format_cells(12, 5, "bold") %>%
+  format_cells(13, 6, "bold") %>%
+  format_cells(14, 5, "bold") %>%
+  knitr::kable(., format = "markdown",caption = "Tab. 6. Results of KKNN classification algorithm.") 
 ```
 
 *Tab. 6. Results of KKNN classification algorithm.*
