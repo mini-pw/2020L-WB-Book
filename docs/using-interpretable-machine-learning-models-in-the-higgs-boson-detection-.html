@@ -355,13 +355,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>Authors: Mateusz Bakala, Michal Pastuszka, Karol Pysiak (Warsaw University of Technology)</em></p>
 <div id="abstract-15" class="section level3" number="3.3.1">
 <h3><span class="header-section-number">3.3.1</span> Abstract</h3>
-<p>In this section we compare efficiency of explainable and black-box AI models in detection of the Higgs boson. Afterwards, we explore possible improvements to explainable models which might boost their accuracy to be on par with black-boxes, of which the most notable is R package called <code>rSAFE</code>. Lastly, we conclude that some improvement is possible, but limited without obscuring variables used to explain model.</p>
+<p>This article focuses on comparing efficiency of explainable and black-box AI models in detection of the Higgs boson.
+Furthermore, it discusses possible modification to data, aiming to improve the performance of explainable models including both manual and automated methots, the latter represented by the <code>rSAFE</code> package. It concludes that some improvement is possible, but limited without obscuring variables used to explain model, thus reducing explainability. It also leads to a remark that logistic regression is the most sensitive model to variable manipulation, allowing achieving scores comparable with black-box models with some data engineering.</p>
 </div>
 <div id="introduction-and-motivation-11" class="section level3" number="3.3.2">
 <h3><span class="header-section-number">3.3.2</span> Introduction and Motivation</h3>
 <p>‘We fear that, which we do not understand’. This principle has often been used to portray artificial intelligence in popular culture. The notion that it is something beyond human comprehension became so common, that it started to affect the way we perceive computer algorithms. Because of that, it comes as no surprise that people become wary, hearing that the decisions which affect them directly were made by an AI.</p>
 <p>Machine Learning models, regardless of the algorithm used, are often treated as a black box that takes some data as an input and returns a prediction based on said data. This approach is most often seen from people who are unfamiliar with the methods used. In many fields, where the only concern is achieving results that are as accurate as possible, this is not a concern. There are however situations, where the risk of unpredictable or unjustified results is unacceptable. This includes uses in medical and judicial systems, where an incorrect decision may have severe consequences. Artificial intelligence could find plenty of uses in those areas, but it would require creating models, which make decisions based on a transparent set of rules. Those include algorithms such as decision trees and linear regression.</p>
-<p>That raises another problem. Such models often underperform in comparison to more advanced algorithms, notably artificial neural networks and ensemble based solutions, which are more capable at detecting nonlinearities and interactions in the data. Being able to achieve results comparable with said models, while retaining explainability would allow to increase the role of machine learning in fields where transparency is required. Furthermore, it would provide tools suitable for scientific analysis of relations between complex phenomena. Because of that, instead of using one of the popular medical datasets, we decided to test the viability of our approach on a set from a different field of science. The methods used will be tested on the Higgs dataset described later in the article.</p>
+<p>That raises another problem. Such models often underperform in comparison to more advanced algorithms, notably artificial neural networks and ensemble based solutions, which are more capable at detecting nonlinearities and interactions in the data. Being able to achieve results comparable with said models, while retaining explainability would allow to increase the role of machine learning in fields where transparency is required. Furthermore, it would provide tools suitable for scientific analysis of relations between complex phenomena. Because of that, instead of using one of the popular medical datasets, we decided to test the viability of our approach on a set from a different field of science. The methods used will be tested on the Higgs <span class="citation">(Baldi, Sadowski, and Whiteson <a href="#ref-Baldi2014" role="doc-biblioref">2014</a>)</span> dataset described later in the article. The dataset comes from the OpenML <span class="citation">(Vanschoren et al. <a href="#ref-OpenML2013" role="doc-biblioref">2013</a>)</span> website.</p>
 <p>The problem we study tackles methods of improving the predictions of simple models while retaining their transparency. In the rest of the paper we will describe methods of transforming the data to increase the quality of predictions. Most notably we will focus on a tool named rSAFE <span class="citation">(Gosiewska et al. <a href="#ref-gosiewska2019safe" role="doc-biblioref">2019</a>)</span>, which allows us to extract nonlinearities in the data, based on predictions of a so called ‘surrogate’ model. We will also try to improve predictions based on our knowledge about the data.</p>
 </div>
 <div id="related-work-4" class="section level3" number="3.3.3">
@@ -383,14 +384,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4><span class="header-section-number">3.3.4.2</span> Measures</h4>
 <p>The first measure that we will use is a simple accuracy. It can be misleading, especially when the target variable is unbalanced, but it is very intuitive and in our dataset the target variable is well-balanced.</p>
 <p>Second measure is the AUC score, which stands for Areas Under Curve of Receiver Operating Characteristic. It requires probabilities as an output of the model. We create the curve by moving the threshold of a minimal probability of a positive prediction from 0 to 1 and calculating the true positive rate to false positive rate ratio. This measure is much less prone to give falsely high scores than accuracy. The worst score in the AUC is <span class="math inline">\(0.5\)</span>. We want to get AUC score as close as possible to <span class="math inline">\(1\)</span>, however, close to <span class="math inline">\(0\)</span> is not bad, we just must invert the labels and we will get a close to <span class="math inline">\(1\)</span> AUC score.</p>
-<p>Our last measure is the Area Under the Precision Recall Curve (AUPRC). It is very similar to AUC score, we just use Precision and Recall measures instead of true and false positive rates. It is quite resistant to a bad balance of the target variable. We want to reach the score as close as possible to <span class="math inline">\(1\)</span> and the score of <span class="math inline">\(0\)</span> is the worst possible case.</p>
+<p>Our last measure is Mean Misclassification Error (mmce). It is defined as number of misclassified cases divided by total number of cases, that is <span class="math inline">\(1-accuracy\)</span>.</p>
 </div>
 <div id="models" class="section level4" number="3.3.4.3">
 <h4><span class="header-section-number">3.3.4.3</span> Models</h4>
 <p>The main goal of this research is to find a way of enhancing the performance of interpretable models, so now we will choose algorithms for this task. For the first test algorithm we chose the logistic regression. It is one of the simplest classification methods. Like in the linear regression algorithm we fit a function to the training data, just instead of a linear function we use a logistic function for the logistic regression algorithm. So the interpretability amounts to the understanding of how points are spread throughout the space.</p>
-<p>The second algorithm that we will use is a decision tree. It’s structure is very intuitive. We start our prediction from the root of a tree. Then we go up to the leaves basing our path on conditions stated in particular nodes. It is similar to how humans make their decisions. If we have to make one big decision we divide it into many smaller decisions which are much easier to make and after answering some yes/no questions we reach the final answer to the question, so to interpret this model we have to understand how these small decisions in every node are made.</p>
+<p>The second algorithm that we will use is a decision tree from the package rpart <span class="citation">(Therneau and Atkinson <a href="#ref-rpart" role="doc-biblioref">2019</a><a href="#ref-rpart" role="doc-biblioref">b</a>)</span>. It’s structure is very intuitive. We start our prediction from the root of a tree. Then we go up to the leaves basing our path on conditions stated in particular nodes. It is similar to how humans make their decisions. If we have to make one big decision we divide it into many smaller decisions which are much easier to make and after answering some yes/no questions we reach the final answer to the question, so to interpret this model we have to understand how these small decisions in every node are made.</p>
 <p>Black box models usually have very complex structure, which gives them advantage in recognising complex structures of the data. On the other hand, they are very hard to interpret and explain compared to white box models. There is a package in the R language named rSAFE that meets halfway between black box models and white box models. It is a kind of a hybrid that uses black box models for extracting new features from the data and then using them to fit interpretable models. We will use it for enhancing our interpretable model and compare them to pure white box models.</p>
-<p>To have some perspective of what level of quality of predictions we can reach we will test some black box models. The black box model that we will use is ranger. This is a fast implementation of random forests. This is a light and tunable model, so we will try to reach the best performance as we can with this algorithm.</p>
+<p>To have some perspective of what level of quality of predictions we can reach we will test some black box models. The black box model that we will use is ranger <span class="citation">(Wright and Ziegler <a href="#ref-ranger" role="doc-biblioref">2017</a>)</span>. This is a fast implementation of random forests. This is a light and tunable model, so we will try to reach the best performance as we can with this algorithm. As a second black box for comparison we used eXtreme Gradient Boosting <span class="citation">(Chen and Guestrin <a href="#ref-XGBoost" role="doc-biblioref">2016</a>)</span>.</p>
 <p>For easily comparable results we will use exactly the same training and testing dataset. However, we do not limit our feature engineering to only one process for all models, because every algorithm can perform better with different features than the rest. What is more, we will focus on augmenting data in a way that will enable us to get as much as we can from simple, interpretable models.</p>
 </div>
 </div>
@@ -433,7 +434,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<p>We could not illustrate scores with all three measures at once, so we decided to use AUC in our barplots. It makes no difference, though, as every measures behaves similarly.</p>
+<p>Initial model performance.</p>
+<p>We could not illustrate scores with all three measures at once, so we decided to use AUC in our barplots. It makes no difference, though, as every measures behaved similarly, that is, whenever model A had better score in metric X than model B, the same was true for metrics Y and Z. While it certainly isn’t an universal behaviour, it was so prevalent in our results that we gladly embraced it.</p>
 <p><img src="images/3-3-score1.png" /></p>
 <p>We noticed several patterns in data and modified features accordingly.</p>
 <p>Firstly, four jets are indistinguishable from each other, or at least we weren’t told they are. Thus our models should work equally well regardless of how we permute the order of jets in our data. However, this means that the coefficients should be equal, and that’s a serious limitation in our search space. Instead, we propose that each data point should be transformed to order jets by their <span class="math inline">\(p_T\)</span>, transverse momentum.</p>
@@ -474,6 +476,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
+<p>Performance of models after proposed transformations.</p>
 <p><img src="images/3-3-score2.png" /></p>
 <p>Applied transformations did not produce favourable results. Actually, every model performed slightly worse. Because of that, we decided to apply an automated method of transforming data using the <code>rSafe</code> package. As the ranger model performed significantly better than the others, we used it as a surrogate model to create new transformations. After that, we tested our models using the complete resulting data set, including both original variables and their transformations. The results are presented in the table.</p>
 <table>
@@ -500,6 +503,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
+<p>Performance of interpretable models after applying <code>rSAFE</code> transformations.</p>
 <p>Although the scores of rpart dropped, we achieved a significant improvement in the performance of logistic regression. It was still below the level of the ranger algorithm, but it managed to surpass xgboost. Increasing the number of variables lead, hovewer, to a decrease in interpretability. <code>rSAFE</code> includes a function, that selects the best subset of variables from it’s resulting dataset. We applied it to our data and trained the models once again.</p>
 <table>
 <thead>
@@ -525,12 +529,105 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
+<p>Performance of interpretable models after applying <code>rSAFE</code> transformations and subsetting variables.</p>
 <p><img src="images/3-3-score3.png" /></p>
 <p>As it turns out, removing variables lead to a decrease in scores. Logistic regression still performed better than on original data, but it no longer surpassed any of the blackbox models.</p>
+<p>After that, we decided to generate new variables as transformations of the existing ones. We tested raising numeric variables to different powers, and applying logarithms. While power transformations did not affect results, we noticed an improvement after adding logarithms in the performance of logistic regression.</p>
+<table>
+<thead>
+<tr class="header">
+<th>model</th>
+<th>Accuracy</th>
+<th>AUC</th>
+<th>MMCE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ranger</td>
+<td>0.7256474</td>
+<td>0.8031399</td>
+<td>0.2743526</td>
+</tr>
+<tr class="even">
+<td>rpart</td>
+<td>0.6530306</td>
+<td>0.6689441</td>
+<td>0.3469694</td>
+</tr>
+<tr class="odd">
+<td>xgboost</td>
+<td>0.6768758</td>
+<td>0.7388668</td>
+<td>0.3231242</td>
+</tr>
+<tr class="even">
+<td>logreg</td>
+<td>0.6690531</td>
+<td>0.7270340</td>
+<td>0.3309469</td>
+</tr>
+</tbody>
+</table>
+<p>Performance of models after adding logarithm transformations.</p>
+<p><img src="images/3-3-score4.png" /></p>
+<p>Finally, we applied <code>rSafe</code> transformations as before, now on the dataset with new variables.</p>
+<table>
+<thead>
+<tr class="header">
+<th>model</th>
+<th>Accuracy</th>
+<th>AUC</th>
+<th>MMCE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>rpart</td>
+<td>0.6332038</td>
+<td>0.6384015</td>
+<td>0.3667962</td>
+</tr>
+<tr class="even">
+<td>logreg</td>
+<td>0.6900427</td>
+<td>0.7582915</td>
+<td>0.3099573</td>
+</tr>
+</tbody>
+</table>
+<p>Performance of models after adding logarithm and <code>rSAFE</code> transformations.</p>
+<p>This way we achieved additional performance increase for logistic regression, surpassing its previous scores. Similarly to before, removing excess variables negatively affected performance of logistic regression. This time it didn’t really affect rpart model, but it performed badly, so it was out of the competition already.</p>
+<table>
+<thead>
+<tr class="header">
+<th>model</th>
+<th>Accuracy</th>
+<th>AUC</th>
+<th>MMCE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>rpart</td>
+<td>0.6368142</td>
+<td>0.6438115</td>
+<td>0.3631858</td>
+</tr>
+<tr class="even">
+<td>logreg</td>
+<td>0.6812818</td>
+<td>0.7479311</td>
+<td>0.3187182</td>
+</tr>
+</tbody>
+</table>
+<p>Performance of models after adding logarithm and <code>rSAFE</code> transformations and subsetting variables.</p>
+<p><img src="images/3-3-score5.png" /></p>
 </div>
 <div id="summary-and-conclusions-12" class="section level3" number="3.3.6">
 <h3><span class="header-section-number">3.3.6</span> Summary and conclusions</h3>
-<p>Our study shows that popular explainable machine learning models are significantly behind their black-box counterparts on prediction accuracy. Unfortunately, the latter are not of much use for physicians. We suppose that achieving a score comparable to the best black-box models would involve generating a lot of artificial variables. However, it would have an unwelcome side effect of obscuring the data and hampering the explainability of the model. Thus, expert domain knowledge should be deemed necessary – either this, or more effective XAI has to be developed.</p>
+<p>Our study shows that popular explainable machine learning models are significantly behind their black-box counterparts on prediction accuracy. Unfortunately, the latter are not of much use for physicists. We managed to improve our explainable models by creating new variables, but they were still falling behind the best black-boxes, while their explainability suffered. We suppose that achieving a score comparable to the best black-box models would involve generating a lot more artificial variables. However, it would have an unwelcome side effect of obscuring the data and hampering the explainability of the model even further. Thus, expert domain knowledge should be deemed necessary – either this, or more effective XAI has to be developed.</p>
 
 </div>
 </div>
@@ -539,8 +636,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="ref-Baldi2014">
 <p>Baldi, P., P. Sadowski, and D. Whiteson. 2014. “Searching for Exotic Particles in High-Energy Physics with Deep Learning.” <em>Nature Communications</em> 5 (1): 4308. <a href="https://doi.org/10.1038/ncomms5308">https://doi.org/10.1038/ncomms5308</a>.</p>
 </div>
+<div id="ref-XGBoost">
+<p>Chen, Tianqi, and Carlos Guestrin. 2016. “XGBoost: A Scalable Tree Boosting System.” <em>CoRR</em> abs/1603.02754. <a href="http://arxiv.org/abs/1603.02754">http://arxiv.org/abs/1603.02754</a>.</p>
+</div>
 <div id="ref-gosiewska2019safe">
 <p>Gosiewska, Alicja, Aleksandra Gacek, Piotr Lubon, and Przemyslaw Biecek. 2019. “SAFE Ml: Surrogate Assisted Feature Extraction for Model Learning.” <a href="http://arxiv.org/abs/1902.11035">http://arxiv.org/abs/1902.11035</a>.</p>
+</div>
+<div id="ref-rpart">
+<p>Therneau, Terry, and Beth Atkinson. 2019b. <em>Rpart: Recursive Partitioning and Regression Trees</em>. <a href="https://CRAN.R-project.org/package=rpart">https://CRAN.R-project.org/package=rpart</a>.</p>
+</div>
+<div id="ref-OpenML2013">
+<p>Vanschoren, Joaquin, Jan N. van Rijn, Bernd Bischl, and Luis Torgo. 2013. “OpenML: Networked Science in Machine Learning.” <em>SIGKDD Explorations</em> 15 (2): 49–60. <a href="https://doi.org/10.1145/2641190.2641198">https://doi.org/10.1145/2641190.2641198</a>.</p>
+</div>
+<div id="ref-ranger">
+<p>Wright, Marvin N., and Andreas Ziegler. 2017. “ranger: A Fast Implementation of Random Forests for High Dimensional Data in C++ and R.” <em>Journal of Statistical Software</em> 77 (1): 1–17. <a href="https://doi.org/10.18637/jss.v077.i01">https://doi.org/10.18637/jss.v077.i01</a>.</p>
 </div>
 </div>
             </section>
