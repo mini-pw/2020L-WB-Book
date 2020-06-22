@@ -334,11 +334,17 @@ We use accuracy because classes are balanced and any measure which accounts for 
 As expected Convolutional Neural Network is by far the best model here. However, we still achieved something. While using embedders such as K-means and SVD resulted in worse results, the accuracy was not that much worse and we reduced dimensionality at least a thousand folds, which resulted in much faster calculations. Using Convolutional embedder got us second-best results and while it is semi interpretable it is still better than base K-NN and Logistic regression which turned out to be not interpretable.
 
 
-### Conclusions
+### Discussion and Conclusion
 
 In this article, we proposed an easy way of getting interpretable computer vision using convolutional embedder. While it is not fully interpretable, explanations are not made post factum as in traditional neural networks and it is achieving better results than less robust classifiers.
 
-It may be possible to get even better results if we carefully search hyperparameter space: for example, tested more architectures of convolutional autoencoder and distance functions.
+Interpretability of a model in complex problems, such as image recognition is difficult to achieve. In computer vision, standard interpretable models not only don't give satisfying results but also fail to provide meaningful explanations due to high dimensionality of data and general lack of meaningfulness of individual variables (values of the brightness of pixels).
+
+While interpretability of decision trees or linear regression depends directly on the interpretability of variables, in k-NN we explain predictions by providing the most similar observations from training data set. In the case of computer vision, k-NN doesn't give as good results as deep neural networks. However, it's performance can be improved via more complex similarity measures. As we saw, measure composed of L2 distance measured between learned representations via autoencoders can increase the accuracy of a k-NN model. In addition, especially when it comes to images, if done correctly, explanation of the way the similarity of two images is calculated is almost always unnecessary, as the similarity is visible. 
+
+The technique presented in this paper is not only simple to implement, but also very general, as there exists a great variety of embedding techniques that can be used. Linear embedding techniques, such as SVD embedding turned out to be worse than a standard k-NN. Also, k-means encoding didn't improve classification accuracy. However, convolutional autoencoder, which is highly non-linear and can model a great variety of functions (instead of k-means) achieved much better results than a standard k-NN. Those results were not as good as the results of the black-box model but comparable. 
+
+In the future, it's worth to explore the use of different non-linear embedding techniques, as they are promising. This approach is very general and can be applied not only to computer vision, and so, the benefits of the use of it in different domains are also yet to be discovered.  
 
 </div>
 
