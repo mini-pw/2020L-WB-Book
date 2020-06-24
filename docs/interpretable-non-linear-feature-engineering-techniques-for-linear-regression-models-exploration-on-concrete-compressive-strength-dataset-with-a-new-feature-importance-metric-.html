@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-06-18" />
+<meta name="date" content="2020-06-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -50,6 +50,7 @@
 
 
 
+<script src="libs/accessible-code-block/empty-anchor.js"></script>
 <script src="libs/kePrint/kePrint.js"></script>
 
 
@@ -323,7 +324,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.8.2" data-path="explainable-computer-vision-with-embedding-and-k-nn-classifier.html"><a href="explainable-computer-vision-with-embedding-and-k-nn-classifier.html#introduction-3"><i class="fa fa-check"></i><b>3.8.2</b> Introduction</a></li>
 <li class="chapter" data-level="3.8.3" data-path="explainable-computer-vision-with-embedding-and-k-nn-classifier.html"><a href="explainable-computer-vision-with-embedding-and-k-nn-classifier.html#methodology-19"><i class="fa fa-check"></i><b>3.8.3</b> Methodology</a></li>
 <li class="chapter" data-level="3.8.4" data-path="explainable-computer-vision-with-embedding-and-k-nn-classifier.html"><a href="explainable-computer-vision-with-embedding-and-k-nn-classifier.html#results-20"><i class="fa fa-check"></i><b>3.8.4</b> Results</a></li>
-<li class="chapter" data-level="3.8.5" data-path="explainable-computer-vision-with-embedding-and-k-nn-classifier.html"><a href="explainable-computer-vision-with-embedding-and-k-nn-classifier.html#conclusions-3"><i class="fa fa-check"></i><b>3.8.5</b> Conclusions</a></li>
+<li class="chapter" data-level="3.8.5" data-path="explainable-computer-vision-with-embedding-and-k-nn-classifier.html"><a href="explainable-computer-vision-with-embedding-and-k-nn-classifier.html#discussion-and-conclusion"><i class="fa fa-check"></i><b>3.8.5</b> Discussion and Conclusion</a></li>
 </ul></li>
 <li class="chapter" data-level="3.8.6" data-path="explainable-computer-vision-with-embedding-and-k-nn-classifier.html"><a href="explainable-computer-vision-with-embedding-and-k-nn-classifier.html#bibliography"><i class="fa fa-check"></i><b>3.8.6</b> Bibliography</a></li>
 </ul></li>
@@ -458,15 +459,15 @@ which is then a global measure of Feature Importance of the <span class="math in
 <h4><span class="header-section-number">3.5.4.2</span> Models’ performance</h4>
 <center>
 <div class="figure"><span id="fig:mae3-5"></span>
-<img src="images/3-5-1.png" alt="MAE of the DT, LR, GLM, optimized GLM, SVM and RF models on the plain *Concrete_Data* dataset and after transformations" width="70%" />
+<img src="images/3-5-1.png" alt="MAE of the DT, LR, GLM, optimized GLM, SVM and RF models on the plain *Concrete_Data* dataset and after transformations. The lower the value, the better the model's performance." width="70%" />
 <p class="caption">
-FIGURE 3.2: MAE of the DT, LR, GLM, optimized GLM, SVM and RF models on the plain <em>Concrete_Data</em> dataset and after transformations
+FIGURE 3.2: MAE of the DT, LR, GLM, optimized GLM, SVM and RF models on the plain <em>Concrete_Data</em> dataset and after transformations. The lower the value, the better the model’s performance.
 </p>
 </div>
 <div class="figure"><span id="fig:mse3-5"></span>
-<img src="images/3-5-2.png" alt="MSE of the DT, LR, GLM, optimized GLM, SVM and RF models on the plain *Concrete_Data* dataset and after transformation" width="70%" />
+<img src="images/3-5-2.png" alt="MSE of the DT, LR, GLM, optimized GLM, SVM and RF models on the plain *Concrete_Data* dataset and after transformations. The lower the value, the better the model's performance." width="70%" />
 <p class="caption">
-FIGURE 3.3: MSE of the DT, LR, GLM, optimized GLM, SVM and RF models on the plain <em>Concrete_Data</em> dataset and after transformation
+FIGURE 3.3: MSE of the DT, LR, GLM, optimized GLM, SVM and RF models on the plain <em>Concrete_Data</em> dataset and after transformations. The lower the value, the better the model’s performance.
 </p>
 </div>
 </center>
@@ -478,21 +479,21 @@ FIGURE 3.3: MSE of the DT, LR, GLM, optimized GLM, SVM and RF models on the plai
 <h4><span class="header-section-number">3.5.4.3</span> Feature Importance comparison</h4>
 <p>We present the comparison of Feature Imprortance values between permutational Feature Importance calculated on the black-box models - Random Forest and SVM and the local and global Derivative Feature Importance calculated on the datasets after brute force transformations and after the Bayesian optimization.</p>
 <div class="figure"><span id="fig:fi3-5"></span>
-<img src="images/3-5-3.png" alt="Feature Importance of RFR and SVM on the untransformed *Concrete_Data* dataset" width="49%" height="49%" /><img src="images/3-5-4.png" alt="Feature Importance of RFR and SVM on the untransformed *Concrete_Data* dataset" width="49%" height="49%" />
+<img src="images/3-5-3.png" alt="Feature Importance of RFR and SVM on the untransformed *Concrete_Data* dataset. The longer the bar, the more important the feature is." width="49%" height="49%" /><img src="images/3-5-4.png" alt="Feature Importance of RFR and SVM on the untransformed *Concrete_Data* dataset. The longer the bar, the more important the feature is." width="49%" height="49%" />
 <p class="caption">
-FIGURE 3.4: Feature Importance of RFR and SVM on the untransformed <em>Concrete_Data</em> dataset
+FIGURE 3.4: Feature Importance of RFR and SVM on the untransformed <em>Concrete_Data</em> dataset. The longer the bar, the more important the feature is.
 </p>
 </div>
 <div class="figure"><span id="fig:fi3-5bf"></span>
-<img src="images/3-5-bfl.png" alt="Local (obs. 573) and global DFI of optimized GLM model on the *Concrete_Data* dataset after brute force transformations" width="49%" height="49%" /><img src="images/3-5-bfg.png" alt="Local (obs. 573) and global DFI of optimized GLM model on the *Concrete_Data* dataset after brute force transformations" width="49%" height="49%" />
+<img src="images/3-5-bfl.png" alt="Local (obs. 573) and global DFI of optimized GLM model on the *Concrete_Data* dataset after brute force transformations. The longer the bar, the more important the feature is." width="49%" height="49%" /><img src="images/3-5-bfg.png" alt="Local (obs. 573) and global DFI of optimized GLM model on the *Concrete_Data* dataset after brute force transformations. The longer the bar, the more important the feature is." width="49%" height="49%" />
 <p class="caption">
-FIGURE 3.5: Local (obs. 573) and global DFI of optimized GLM model on the <em>Concrete_Data</em> dataset after brute force transformations
+FIGURE 3.5: Local (obs. 573) and global DFI of optimized GLM model on the <em>Concrete_Data</em> dataset after brute force transformations. The longer the bar, the more important the feature is.
 </p>
 </div>
 <div class="figure"><span id="fig:fi3-5by"></span>
-<img src="images/3-5-byl.png" alt="Local (obs. 458) and global DFI of optimized GLM model on the *Concrete_Data* dataset after Bayesian transformations" width="49%" height="49%" /><img src="images/3-5-byg.png" alt="Local (obs. 458) and global DFI of optimized GLM model on the *Concrete_Data* dataset after Bayesian transformations" width="49%" height="49%" />
+<img src="images/3-5-byl.png" alt="Local (obs. 458) and global DFI of optimized GLM model on the *Concrete_Data* dataset after Bayesian transformations. The longer the bar, the more important the feature is." width="49%" height="49%" /><img src="images/3-5-byg.png" alt="Local (obs. 458) and global DFI of optimized GLM model on the *Concrete_Data* dataset after Bayesian transformations. The longer the bar, the more important the feature is." width="49%" height="49%" />
 <p class="caption">
-FIGURE 3.6: Local (obs. 458) and global DFI of optimized GLM model on the <em>Concrete_Data</em> dataset after Bayesian transformations
+FIGURE 3.6: Local (obs. 458) and global DFI of optimized GLM model on the <em>Concrete_Data</em> dataset after Bayesian transformations. The longer the bar, the more important the feature is.
 </p>
 </div>
 <p>The figure 3.3 present permutational Feature Importance of the black-box models, and the figures 3.4 and 3.5 present <span class="math inline">\(DFI\)</span> values - for one observation and calculated globally, respectively. The local <span class="math inline">\(DFI\)</span> were calculated on the observations nr <span class="math inline">\(573\)</span> and <span class="math inline">\(458\)</span>. We may notice high resemblance of the black-box Feature Importance to the local <span class="math inline">\(DFI\)</span> after Brute Force trtansformations, as well as similarities between all the Feature Importance calculations overall. The order of features in <span class="math inline">\(DFI\)</span> is not precisely equal to the order of feature after permutational Feature Importance of the black-boxes; however, the order still makes sense as far as we can say based on our little knowledge of materials. Moreover, the deviations of Feature Importance measures between various models is quite common in such research.</p>

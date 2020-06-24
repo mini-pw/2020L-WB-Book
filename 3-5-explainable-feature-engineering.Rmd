@@ -121,10 +121,10 @@ Note, that the transformations used in results section are only examples of the 
 #### Models' performance
 
  <center>
- ```{r mae3-5, echo=FALSE, fig.cap="MAE of the DT, LR, GLM, optimized GLM, SVM and RF models on the plain *Concrete_Data* dataset and after transformations", out.width = '70%'}
+ ```{r mae3-5, echo=FALSE, fig.cap="MAE of the DT, LR, GLM, optimized GLM, SVM and RF models on the plain *Concrete_Data* dataset and after transformations. The lower the value, the better the model's performance.", out.width = '70%'}
 knitr::include_graphics("images/3-5-1.png")
 ```
- ```{r mse3-5, echo=FALSE, fig.cap="MSE of the DT, LR, GLM, optimized GLM, SVM and RF models on the plain *Concrete_Data* dataset and after transformation", out.width = '70%'}
+ ```{r mse3-5, echo=FALSE, fig.cap="MSE of the DT, LR, GLM, optimized GLM, SVM and RF models on the plain *Concrete_Data* dataset and after transformations. The lower the value, the better the model's performance.", out.width = '70%'}
 knitr::include_graphics("images/3-5-2.png")
 ```
 
@@ -140,14 +140,14 @@ The remaining non-linear white-box model, namely the Decision Tree Regressor, se
 
 We present the comparison of Feature Imprortance values between permutational Feature Importance calculated on the black-box models - Random Forest and SVM and the local and global Derivative Feature Importance calculated on the datasets after brute force transformations and after the Bayesian optimization. 
 
- ```{r fi3-5, echo=FALSE, fig.cap="Feature Importance of RFR and SVM on the untransformed *Concrete_Data* dataset", out.width = '49%', out.height = '49%', fig.show='hold'}
+ ```{r fi3-5, echo=FALSE, fig.cap="Feature Importance of RFR and SVM on the untransformed *Concrete_Data* dataset. The longer the bar, the more important the feature is.", out.width = '49%', out.height = '49%', fig.show='hold'}
 knitr::include_graphics(c("images/3-5-3.png", "images/3-5-4.png"))
 
 ```
- ```{r fi3-5bf, echo=FALSE, fig.cap="Local (obs. 573) and global DFI of optimized GLM model on the *Concrete_Data* dataset after brute force transformations", out.width = '49%', out.height = '49%', fig.show='hold'}
+ ```{r fi3-5bf, echo=FALSE, fig.cap="Local (obs. 573) and global DFI of optimized GLM model on the *Concrete_Data* dataset after brute force transformations. The longer the bar, the more important the feature is.", out.width = '49%', out.height = '49%', fig.show='hold'}
 knitr::include_graphics(c("images/3-5-bfl.png", "images/3-5-bfg.png"))
 ```
- ```{r fi3-5by, echo=FALSE, fig.cap="Local (obs. 458) and global DFI of optimized GLM model on the *Concrete_Data* dataset after Bayesian transformations", out.width = '49%', out.height = '49%', fig.show='hold'}
+ ```{r fi3-5by, echo=FALSE, fig.cap="Local (obs. 458) and global DFI of optimized GLM model on the *Concrete_Data* dataset after Bayesian transformations. The longer the bar, the more important the feature is.", out.width = '49%', out.height = '49%', fig.show='hold'}
 knitr::include_graphics(c("images/3-5-byl.png", "images/3-5-byg.png"))
 ```
 
