@@ -4,10 +4,10 @@
 
 ### Abstract
 
-Imputation of missing values is a common step in the machine learning process and sometimes a difficult problem. Many real-life datasets contain incomplete observations and dealing with them is a key part of modelling as most of the algorithms provided by widely used R packages (for instance caret or mlr) require complete data.
-This report aims to measure the influence of five different imputation methods on the performance of selected classification models. Simple, common methods such as basic mean, median, and mode are compared with advanced imputation techniques from specialized R packages - mice, VIM, and softImpute.
+Imputation of missing values is a common step in the machine learning process. Many real-life datasets contain incomplete observations and dealing with them is a key part of modelling as most of the algorithms provided by R packages require complete data.
+This report aims to measure the influence of five different imputation methods on the performance of selected classification models. Simple methods such as mean, median, and mode are compared with advanced imputation techniques from specialized R packages - mice, VIM, and softImpute.
 As tested algorithms, Recursive Partitioning And Regression Trees, Naive Bayes, Ranger (Random forest),  Linear Discriminant Analysis, and k-Nearest Neighbours were chosen.
-Its prediction effectiveness is assessed by F1 measure (also called F1 score) to provide a proper measure for both balanced and imbalanced data.\
+Their prediction effectiveness is assessed by F1 score to provide a proper measure for both balanced and imbalanced data.\
 
 ### Introduction and Motivation
 
@@ -22,7 +22,7 @@ Fortunately, imputation serves the need better. By definition, imputation is a p
 It includes the basic methods such as imputing with mean or mode, which are fast and easy to implement, however they do not guarantee a very good performance. The second one is multiple imputations, in which we impute many values (perform imputation many times), leading to creating many complete datasets. This type includes more sophisticated strategies for instance the ones using tree-based models, which usually result in better models, but enhance the algorithm's complexity and computational time.
 \
 
-For the R language, there are implemented multiple imputations techniques in many different packages. It is often hard to choose the best approach. Our goal is to examine how these methods perform on different datasets and how they interact with different classification algorithms.
+For the R language, there are implemented multiple imputations techniques in many different packages. It is often hard to choose the best approach. Our goal is to examine how these methods perform on different datasets and how they interact with different classification algorithms. In order to do that, we impute each dataset with five chosen imputations and then on each one we execute modelling with selected algorithms. We base our conclusions about imputations influence on the values of F1 measure and our own ranking.\
 
 ### Methodology
 
