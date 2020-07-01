@@ -4,12 +4,17 @@
 
 ### Abstract
 
-There are many different ways of dealing with missing values. Depending on their quantity and properties, various methods turn out to be the best. The fact is, there is no one universal best method of imputation, and different problems require various solutions. Using one and the same solution for each dataset is certainly not the best option, but sometimes it is convenient or even necessary to focus on one particular method without much insight into its effect - for example, when time limits us or when, due to the complexity of the algorithm or class of problems, we are forced to choose only one method. In this chapter we will take a look at several popular imputation methods and try to compare them with each other, including ranking of algorithms taken into account and finally choosing the best one. For this purpose, we will analyse imputation times and machine learning classification models' quality and performance for imputed datasets.
+There are many different ways of dealing with missing values. Depending on their quantity and properties, various methods turn out to be the best. Using one and the same solution for each dataset is certainly not the best option, but sometimes it is convenient or even necessary to focus on one particular method without much insight into its effect. In this chapter we will take a look at several popular imputation methods and try to compare them with each other, including ranking algorithms and finally choosing the best one. For this purpose, we will analyse imputation times and predictions scores for several machine learning classification algorithms on various datasets.
 
 ### Introduction and Motivation
 
-In statistics, imputation is the process of replacing missing data with substituted values. Over the years, humanity has created many different methods accomplishing that, including the simple and instinctive ones but also more advanced and hard to be easily explained. Choosing the best-suited imputation method for the dataset with missing values is still the daily dilemma of every data scientist and there isn't one universally recognized best technique. Some scientists believe the crux lies in the most advanced and sophisticated algorithms, others trust the simplest of all possible. In a way, both sides are right - the first naturally win in speed of execution, but the second ones do not have advanced operations implemented for nothing and this usually results in data that more accurately reflects reality or what might be expected from it. How do the individual popular ways fall on the famous collections from OpenML100? 
-In this test, which we decided to name *The Hajada Imputation Test* (taken from the first two letters of creators' names), we will find the answer to this question, by delving into how well classification on imputed datasets can perform and when predictions are the best, rank algorithms taken into account and finally choosing the best one. Obviously its result will not be the final verdict declaring which imputation algorithm is clearly better or worse, but considering the comparison of their quality on different datasets, we will be able to assess their collective performance and effectiveness against the backdrop of the whole.
+In statistics, imputation is the process of replacing missing data with substituted values. Over the years, humanity has created many different methods accomplishing that, including the simple and instinctive ones, but also more advanced and hard to be easily explained. Choosing the best-suited imputation method for the dataset with missing values is still the daily dilemma of every data scientist and there isn't one universally recognized best technique. Some scientists believe the crux lies in the most advanced and sophisticated algorithms, others trust the simplest of all possible. In a way, both sides are right - the first naturally win in speed of execution, but the second ones do not have advanced operations implemented for nothing and this usually results in data that more accurately reflects reality or what might be expected from it. How do the individual popular ways fall on the famous collections from OpenML100? 
+In this test, which we decided to name *The Hajada Imputation Test* (taken from the first two letters of creators' names), we will find the answer to this question, by delving into how well classification on imputed datasets can perform and when predictions are the best, rank algorithms taken into account and finally choosing the best one. Hajada Test depends on prediction scores and imputation times. Obviously its result will not be the final verdict declaring which imputation algorithm is clearly better or worse, but considering the comparison of their quality on different datasets, we will be able to assess their collective performance and effectiveness against the backdrop of the whole.
+
+
+### Methodology
+
+To rank imputation methods fourteen datasets were taken into account, imputed by six different methods and each used to train five classification algorithms. Based on the predictions scores and imputation times methods were rated 1-6 grouped by datasets and algorithms, where 1 is the best method and 6 is the worst.
 
 #### Imputation functions
 
@@ -25,8 +30,6 @@ Methods compared in subsequent stages are:
 4. *mice* [@2-2-mice] - advanced method creating multiple imputations for multivariate missing data, based on *Fully Conditional Specification*, where each incomplete variable is imputed by a separate model. Standard imputation with *maxit* parameter of value 0 and default 5 number of imputed datasets.
 5. *VIM* [@2-2-VIM] - standard k-nearest neighbors algorithm taken from the library.
 6. *missForest* [@2-2-missForest] - imputation based on random forest offered by the package.
-
-### Methodology
 
 #### Datasets
 
@@ -61,9 +64,7 @@ In order to compare the quality of the imputed data and see how this supplementa
 * *random forest from ranger* [@2-2-ranger] - algorithm consisting of many decisions trees uses bagging and feature randomness when building each individual tree trying to create an uncorrelated forest of trees whose prediction by committee is more accurate than that of any individual tree.
 * *Support Vector Machine from e1071* [@2-2-e1071] - a discriminative classifier formally defined by a separating hyperplane.
 
-#### Work automation
-
-In order to automise our code we developed it in such a way so that it is possible to easily conduct further experiments with entirely new datasets, imputation methods and classification models. Plenty of time neccesary for imputation was saved using parallel processing.
+In order to automise our code we developed it in such a way so that it is possible to easily conduct further experiments with entirely new datasets, imputation methods and classification models. Plenty of time neccesary for imputation and modelling was saved using parallel processing.
 
 #### Metrics functions
 
@@ -98,7 +99,7 @@ Taking into account all the imputations which have been implemented, it is clear
 
 Considering such a large spread of data size, there is a very interesting difference between median and mean for VIM's  time - the first is almost seven minutes, the second - barely a second and a half. In general, however, it is certainly much longer than methods for removing incomplete rows and filling with mode/median.
 
-Also time was compared for those datasets for which all imputations were successful - these are ids 27, 38, 55, 56, 944, 188  (dataset with id 4 softened on removing rows containing any missing items, because each of its rows had at least one missing entry). Taking into account the mean time, definitely *missForest* was the slowest, but also its standard deviation seemed to be incomparably large - this is probably due to the fact that for smaller sets it is doing well, but due to its complexity, its slowdown can be seen for very sizeable datasets. *VIM* turned out to be better for quick calculations than *missForest* and *mice*, and considering the median, *mice* is comparable to *missForest* - so for small datasets there is not much difference between them, and a lot of time was definitely needed to devote to these larger data frames.
+Also time was compared for those datasets for which all imputations were successful - these are ids 27, 38, 55, 56, 944, 188  (dataset with id 4 failed on removing rows, because each of rows had at least one missing entry). Taking into account the mean time of imputation, definitely *missForest* was the slowest, but also its standard deviation seemed to be incomparably large - this is probably due to the fact that for smaller sets it is doing well, but due to its complexity, its slowdown can be seen for very sizeable datasets. *VIM* turned out to be better for quick calculations than *missForest* and *mice*; considering the median imputation time, *mice* is comparable to *missForest* - so for small datasets there is not much difference between them, and a lot of time was definitely needed to devote to these larger data frames.
 
 #### Best measures
 
@@ -112,6 +113,14 @@ It might seem that the results of the methods are very close to each other, but 
 
 Considering the imputation times and results, it can be said that the k-nearest neighbors algorithm from the VIM package proved to be "universally" the best. Out of the advanced methods it falls out the fastest, and its results are also the best. However, it is more difficult to choose second and subsequent places - looking at the results, the simple methods are very quick, but they differ from the more advanced ones. Looking at the advanced ones, with the exception of VIM, MissForest stands out. However, his problem is time. So after VIM, it seems second best to use mean / median replenishment for a small amount of time and missForest for a large one. However, although mode / medain usually obtained worse ranks, there was no extensive difference in results between the methods - which is not visible in the charts. "removeRows" is characterized by large fluctuations, and therefore we advise against using it.
 
-#### Summary and conclusions
+### Summary
 
-The experiment can be considered successful when it comes to the datasets and tools made available to us - calculated measures, visualizations made, as well as conclusions led us, among others, to the intuition that probably *VIM* is really a resplendent package, supplementing the missing values with medians from columns is not is such an unwise idea as it may seem and *missForest* is also noteworthy - if one has time for running it and the dataset isn't too sizeable. Unfortunately, it is impossible to draw an objective conclusion based on such a small number of tested data - with as few as 14 sets, problems with imputations on some of them or too small dataframes not giving a satisfactory answer. Nevertheless, the code is certainly very valuable and for more datasets it could confirm one or another belief.
+The experiment can be considered successful when it comes to the datasets and tools made available to us. After examining fourteen datasets with NA values, imputated with six different methods (including three simple and three more advanced), as well as tested for output quality on five binary classification algorithms, we obtained valuable results. Our work resulted in calculated measures and visualizations, which led us, among others, to the following intuition:
+
+* The use of VIM in all conditions results in a fairly satisfactory result in terms of classification's quality and time, which makes it the best tested imputation.
+* Supplementing the missing values with mode/medians from columns is not such an unwise idea as it may seem - not to mention the rapid action time, the results of this strategy also give good results.
+* *missForest* is also noteworthy - if one has time for running it and the dataset isn't too sizeable.
+
+### Conclusions
+
+Unfortunately, it is impossible to draw an objective conclusion based on such a small number of tested data - with as few as 14 sets, problems with imputations on some of them or too little data in frames not giving a satisfactory answer. Nevertheless, the code is certainly very valuable and for more datasets it could confirm one or another belief. Ready solutions and valuable code can be used to study the effects of imputation on a larger number of datasets, which would give even greater scientific value. Examining even all data sets from OpenML100 could more confidently answer the question of which imputations are doing better and which are worse. Looking at our small input, it would seem that VIM is a better method than missForest and definitely more effective than mice, but we can not be sure about such a conclusion due to the lack of a sufficiently large sample from a statistical point of view.
